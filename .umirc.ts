@@ -1,7 +1,4 @@
-import myFetch from '@/components/myFetch';
 import { defineConfig } from '@umijs/max';
-
-const initIp = '192.168.3.233';
 
 export default defineConfig({
   antd: {},

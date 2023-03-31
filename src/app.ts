@@ -30,48 +30,35 @@ export const layout = () => {
             path: '/dbm/site',
             component: './DBM/Site',
             // 这里必须由 异步去接收，因为 request 返回的是 promise成功，默认渲染的是data
-            routes: await fetch(`http://${initIp}:28800/sitemgr/dbm/sites`, {
+            routes: await fetch(`http://${initIp}:28800/sitemgr/dbm/sites1`, {
               method: 'Post',
             })
               .then((res) => res.json())
               .then((res) => {
-                console.log(1);
                 return res.data;
               })
               .catch(() => {
                 const res = [
+                  // {
+                  //   key: 1,
+                  //   name: 'Site9.0',
+                  //   path: '/dbm/site?site=Site6.0',
+                  //   component: './DBM/Site',
+                  // },
+                  // {
+                  //   key: 2,
+                  //   name: 'Site3.0',
+                  //   path: '/dbm/site?site=Site3.0',
+                  //   component: './DBM/Site',
+                  // },
                   {
-                    key: 1,
-                    name: 'Site9.0',
+                    name: '获取site失败',
                     path: '/dbm/site?site=Site6.0',
-                    component: './DBM/Site',
-                  },
-                  {
-                    key: 2,
-                    name: 'Site3.0',
-                    path: '/dbm/site?site=Site3.0',
                     component: './DBM/Site',
                   },
                 ];
                 return res;
               }),
-            // } catch (error) {
-            //   const xxx = [
-            //     {
-            //       key: 1,
-            //       name: 'Site6.0',
-            //       path: '/dbm/site?site=Site6.0',
-            //       component: './DBM/Site',
-            //     },
-            //     {
-            //       key: 2,
-            //       name: 'Site2.0',
-            //       path: '/dbm/site?site=Site2.0',
-            //       component: './DBM/Site',
-            //     },
-            //   ];
-            //   console.log(111, xxx);
-            //   return xxx;
           },
           {
             name: '权限演示',
