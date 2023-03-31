@@ -51,6 +51,11 @@ export default defineConfig({
       path: '/table',
       component: './Table',
     },
+    {
+      name: '固件升级',
+      path: '/fu',
+      component: './FU',
+    },
   ],
   npmClient: 'npm',
 });

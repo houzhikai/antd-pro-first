@@ -70,6 +70,11 @@ export const layout = () => {
             path: '/table',
             component: './Table',
           },
+          {
+            name: '固件升级',
+            path: '/fu',
+            component: './FU',
+          },
         ];
       },
     },
