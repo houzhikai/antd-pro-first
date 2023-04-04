@@ -1,4 +1,10 @@
+import FuNav from './blocks/FuNav';
+
 const FU = () => {
-  return <>12</>;
+  return (
+    <>
+      <FuNav />
+    </>
+  );
 };
 export default FU;
