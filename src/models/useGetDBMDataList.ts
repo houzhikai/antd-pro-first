@@ -15,7 +15,7 @@ export default () => {
     if (isRequest) {
       try {
         const res = await myFetch({
-          url: `http://${initIp}:28800/sitemgr/dbm/sites111`,
+          url: `http://${initIp}:28800/sitemgr/dbm/sites`,
         });
         console.log(res);
         setIsErrorPage(false);
