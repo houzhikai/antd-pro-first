@@ -46,6 +46,7 @@ export const layout = () => {
               .catch(() => {
                 const res = [
                   {
+                    key: 1,
                     name: '获取site失败',
                     path: '/dbm/site?site=Site6.0',
                     component: './DBM/Site',
