@@ -11,6 +11,14 @@ export async function getInitialState(): Promise<{ name: string }> {
 const initIp = '192.168.3.233';
 
 export const layout = () => {
+  // isHideMenu 设置菜单栏是否需要隐藏
+  const params = location.hash.split('?')[1] || '';
+
+  const result = params.replace(/&/g, '","').replace(/=/g, '":"');
+  const reqDataString = '{"' + result + '"}';
+  const obj = params === '' ? {} : JSON.parse(reqDataString);
+
+  const isHideMenu = obj.isHideMenu === 'true' ? false : null;
   return {
     logo,
     menu: {
@@ -54,11 +62,13 @@ export const layout = () => {
           {
             name: ' CRUD 示例',
             path: '/table',
+            menuRender: isHideMenu,
             component: './Table',
           },
           {
             name: '固件升级',
             path: '/fu',
+            menuRender: isHideMenu,
             component: './FU',
           },
         ];
