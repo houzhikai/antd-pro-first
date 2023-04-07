@@ -9,6 +9,9 @@ export default defineConfig({
   history: {
     type: 'hash',
   },
+  locale: {
+    antd: true,
+  },
   layout: {
     title: 'Tools',
   },

@@ -14,6 +14,7 @@
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-components": "^2.0.1",
     "@umijs/max": "^4.0.32",
+    "@umijs/plugin-locale": "^0.16.0",
     "ahooks": "^3.7.2",
     "antd": "^4.20.7",
     "react-window": "^1.8.8",

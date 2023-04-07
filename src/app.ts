@@ -22,7 +22,7 @@ export const layout = () => {
   return {
     logo,
     menu: {
-      locale: false,
+      locale: true,
       request: async () => {
         return [
           {
