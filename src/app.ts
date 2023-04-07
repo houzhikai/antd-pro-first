@@ -75,7 +75,7 @@ export const layout = () => {
             component: './Access',
           },
           {
-            name: 'crud',
+            name: 'table',
             path: '/table',
             menuRender: isHideMenu,
             component: './Table',

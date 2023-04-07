@@ -33,20 +33,20 @@ export default defineConfig({
       name: 'DBM',
       path: '/dbm/site',
       component: './DBM/Site',
-      routes: [
-        {
-          key: 1,
-          name: 'Site6.0',
-          path: '/dbm/site?site=Site6.0',
-          component: './DBM/Site',
-        },
-        {
-          key: 2,
-          name: 'Site2.0',
-          path: '/dbm/site?site=Site2.0',
-          component: './DBM/Site',
-        },
-      ],
+      // routes: [
+      //   {
+      //     key: 1,
+      //     name: 'Site6.0',
+      //     path: '/dbm/site?site=Site6.0',
+      //     component: './DBM/Site',
+      //   },
+      //   {
+      //     key: 2,
+      //     name: 'Site2.0',
+      //     path: '/dbm/site?site=Site2.0',
+      //     component: './DBM/Site',
+      //   },
+      // ],
     },
     {
       name: '权限演示',
@@ -54,7 +54,7 @@ export default defineConfig({
       component: './Access',
     },
     {
-      name: ' CRUD 示例',
+      name: '表格',
       path: '/table',
       component: './Table',
     },
