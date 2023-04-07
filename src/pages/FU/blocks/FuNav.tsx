@@ -8,7 +8,7 @@ const FuNav = () => {
   return (
     <div>
       <MyLogo src={FULogo} />
-      <Button type="primary">{formatMessage({ id: 'menu.home' })}</Button>
+      <Button type="primary">{formatMessage({ id: 'menu.home' })}1</Button>
     </div>
   );
 };
