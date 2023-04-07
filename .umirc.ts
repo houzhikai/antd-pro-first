@@ -10,7 +10,11 @@ export default defineConfig({
     type: 'hash',
   },
   locale: {
+    default: 'zh-CN',
     antd: true,
+    title: false,
+    baseNavigator: true,
+    baseSeparator: '-',
   },
   layout: {
     title: 'Tools',
