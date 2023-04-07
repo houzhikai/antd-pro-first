@@ -5,7 +5,8 @@ export default {
   'menu.table': '表格',
   'menu.fu': '固件升级',
   'menu.dbm.error': '获取site失败',
-
+  // https://blog.csdn.net/huai42717/article/details/128467502
+  // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': '首页',
   'menu.DBM': 'DBM',
   'menu.权限演示': '权限演示',
