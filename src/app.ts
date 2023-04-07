@@ -89,5 +89,9 @@ export const layout = () => {
         ];
       },
     },
+    // 展示用户名、头像、退出登录相关组件  initialState 是运行时配置 app.ts(x) 中的 getInitialState 返回的对象。
+    rightRender: () => {
+      return null;
+    },
   };
 };
