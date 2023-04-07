@@ -61,7 +61,7 @@ export const layout = () => {
                 const res = [
                   {
                     key: 1,
-                    name: '获取site失败',
+                    name: 'error',
                     path: '/dbm/site?site=Site6.0',
                     component: './DBM/Site',
                   },
