@@ -1,3 +1,5 @@
+import menu from './zh-CN/menu';
+
 export default {
-  'menu.home': '首页',
+  ...menu,
 };

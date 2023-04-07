@@ -59,6 +59,11 @@ export default defineConfig({
       path: '/fu',
       component: './FU',
     },
+    {
+      path: '*',
+      layout: false,
+      component: './404',
+    },
   ],
   npmClient: 'npm',
 });
