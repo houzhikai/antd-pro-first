@@ -3,6 +3,7 @@ import { setLocale } from '@umijs/max';
 
 import myFetch from './components/myFetch';
 import logo from '@/icon/logo.svg';
+import { changeLocale } from './components/changeLocale';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
@@ -22,9 +23,8 @@ export const layout = () => {
 
   const isHideMenu = obj.isHideMenu === 'true' ? false : null;
 
-  console.log(obj);
   // ['en-US', 'zh-CN']
-  setLocale(obj.locale === 'en-US' ? 'en-US' : 'zh-CN');
+  setLocale(changeLocale(obj.locale));
 
   return {
     logo,
