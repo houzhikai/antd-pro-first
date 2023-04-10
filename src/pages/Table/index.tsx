@@ -142,7 +142,7 @@ const TableList: React.FC<unknown> = () => {
   return (
     <PageContainer
       header={{
-        title: <div style={{ color: '#d7d7d7' }}>表格</div>,
+        title: '表格',
       }}
     >
       <ProTable<API.UserInfo>
