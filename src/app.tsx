@@ -4,6 +4,8 @@ import { setLocale } from '@umijs/max';
 import myFetch from './components/myFetch';
 import logo from '@/icon/logo.svg';
 import { changeLocale } from './components/changeLocale';
+import { SettingDrawer } from '@ant-design/pro-components';
+import { dark } from './theme/dark';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
@@ -13,7 +15,7 @@ export async function getInitialState(): Promise<{ name: string }> {
 
 const initIp = '192.168.3.233';
 
-export const layout = () => {
+export const layout = ({ initialState, setInitialState }: any) => {
   // isHideMenu 设置菜单栏是否需要隐藏
   const params = location.hash.split('?')[1] || '';
 
@@ -22,6 +24,8 @@ export const layout = () => {
   const obj = params === '' ? {} : JSON.parse(reqDataString);
 
   const isHideMenu = obj.isHideMenu === 'true' ? false : null;
+
+  const theme = obj.theme === 'dark' ? dark : null;
 
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
@@ -93,40 +97,27 @@ export const layout = () => {
     rightRender: () => {
       return null;
     },
-    // token: {
-    //   colorBgAppListIconHover: '#bfa',
-    //   colorTextAppListIconHover: '#bfa',
-    //   colorTextAppListIcon: '#bfa',
-    //   colorPrimary: '#bfa',
-    //   // 侧边菜单的色值，与顶部菜单不同。
-    //   sider: {
-    //     colorMenuBackground: '#242525', //menu 的背景颜色
-    //     colorTextMenuTitle: '#e5e0d8', //sider 的标题字体颜色
-    //     colorMenuItemDivider: '#999', //menuItem 分割线的颜色
-    //     colorTextMenu: '#c8c5be', //menuItem 的字体颜色
-    //     colorTextMenuSecondary: '#e5dcb1', //menu 的二级字体颜色，
-    //     colorTextMenuSelected: '#3990d0', //menuItem 的选中字体颜色
-    //     colorTextMenuActive: '#346a92', //menuItem hover 的选中字体颜色
-    //     colorTextMenuItemHover: '#409fe7', //menuItem 的 hover 字体颜色
-    //     colorBgMenuItemHover: '#242525', //menuItem 的 hover 背景颜色
-    //     colorBgMenuItemSelected: '#113545', //menuItem 的选中背景颜色
-    //     colorBgMenuItemCollapsedHover: '', //收起 menuItem 的 hover 背景颜色
-    //     colorBgMenuItemCollapsedSelected: '', //收起 menuItem 的选中背景颜色
-    //     colorBgMenuItemCollapsedElevated: '', //收起 menuItem 的弹出菜单背景颜色
-    //     colorBgCollapsedButton: '#1f1f1f', //展开收起按钮背景颜色
-    //     colorTextCollapsedButton: '#b1b1b1', //展开收起按钮 hover 字体颜色
-    //     colorTextCollapsedButtonHover: '#fff', //展开收起按钮 hover 时字体颜色
-    //   },
-    //   header: {
-    //     colorBgHeader: '#bfa', // header 的背景颜色
-    //   },
-    //   // 右边内容栏
-    //   pageContainer: {
-    //     paddingBlockPageContainerContent: '#242525', //pageContainer 自带的 padding block 默认 24
-    //     paddingInlinePageContainerContent: '', //pageContainer 自带的 padding inline 默认 40
-    //     colorBgPageContainer: '#242525', //pageContainer 的背景颜色 默认 透明
-    //     colorBgPageContainerFixed: '', //pageContainer 被固定时的背景颜色 默认 #FFF
-    //   },
-    // },
+    childrenRender: (children: any, props: any) => {
+      // if (initialState?.loading) return <PageLoading />;
+      return (
+        <>
+          {children}
+          {!props.location?.pathname?.includes('/login') && (
+            <SettingDrawer
+              enableDarkTheme
+              settings={initialState?.settings}
+              onSettingChange={(settings) => {
+                setInitialState((preInitialState: any) => ({
+                  ...preInitialState,
+                  settings,
+                }));
+              }}
+            />
+          )}
+        </>
+      );
+    },
+    ...initialState.settings,
+    token: theme,
   };
 };

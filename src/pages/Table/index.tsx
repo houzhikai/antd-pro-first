@@ -141,6 +141,7 @@ const TableList: React.FC<unknown> = () => {
 
   return (
     <PageContainer
+      style={{ height: '100vh' }}
       header={{
         title: '表格',
       }}

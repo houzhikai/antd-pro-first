@@ -15,7 +15,7 @@ const FuNav = () => {
     console.log(date, dateString);
   };
   return (
-    <div>
+    <div style={{ height: '100vh' }}>
       <MyLogo src={FULogo} />
       <Button type="primary">{formatMessage({ id: 'fu.button' })}</Button>
       <DatePicker onChange={onChange} picker="week" />
