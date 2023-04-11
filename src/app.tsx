@@ -33,13 +33,6 @@ export const layout = ({ initialState, setInitialState }: any) => {
   return {
     logo,
     menu: {
-      locale: {
-        default: 'zh-CN',
-        antd: true,
-        title: false,
-        baseNavigator: true,
-        baseSeparator: '-',
-      },
       request: async () => {
         // name 都是国际化语言
         return [
