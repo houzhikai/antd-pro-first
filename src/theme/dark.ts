@@ -15,21 +15,33 @@ export const dark = {
     colorTextMenuItemHover: '#409fe7', //menuItem 的 hover 字体颜色
     colorBgMenuItemHover: '#242525', //menuItem 的 hover 背景颜色
     colorBgMenuItemSelected: '#113545', //menuItem 的选中背景颜色
-    colorBgMenuItemCollapsedHover: '', //收起 menuItem 的 hover 背景颜色
-    colorBgMenuItemCollapsedSelected: '', //收起 menuItem 的选中背景颜色
-    colorBgMenuItemCollapsedElevated: '', //收起 menuItem 的弹出菜单背景颜色
+    colorBgMenuItemCollapsedHover: '#1c2f40', //收起 menuItem 的 hover 背景颜色
+    colorBgMenuItemCollapsedSelected: '#1c2f40', //收起 menuItem 的选中背景颜色
+    colorBgMenuItemCollapsedElevated: '#1c2f40', //收起 menuItem 的弹出菜单背景颜色
     colorBgCollapsedButton: '#1f1f1f', //展开收起按钮背景颜色
     colorTextCollapsedButton: '#b1b1b1', //展开收起按钮 hover 字体颜色
-    colorTextCollapsedButtonHover: '#fff', //展开收起按钮 hover 时字体颜色
+    colorTextCollapsedButtonHover: '#1c2f40', //展开收起按钮 hover 时字体颜色
   },
   header: {
-    colorBgHeader: '#bfa', // header 的背景颜色
+    colorBgHeader: '#1a1a1a', //header 的背景颜色	rgba(240, 242, 245, 0.4)
+    colorHeaderTitle: '#08111a', //sider 的标题字体颜色	colorTextHeading
+    colorTextMenu: '#9f9f9f', //menuItem 的字体颜色	colorText
+    colorTextMenuSecondary: '#9f9f9f', //menu 的二级字体颜色，比如 footer 和 action 的 icon	colorText
+    colorTextMenuSelected: '#ffffff', //	menuItem 的选中字体颜色	rgb(0,0,0)
+    colorTextMenuActive: '#cecece', //menuItem hover 的选中字体颜色	rgba(0, 0, 0, 0.85)
+    colorBgMenuItemHover: '#1a1a1a', //menuItem 的 hover 背景颜色	rgba(90, 75, 75, 0.03)
+    colorBgMenuItemSelected: '#1a1a1a', //menuItem 的选中背景颜色	rgba(0, 0, 0, 0.04)
+    colorBgMenuItemCollapsedHover: '#1a1a1a', //收起 menuItem 的 hover 背景颜色	rgba(0, 145, 255, 0.1)
+    colorBgMenuItemCollapsedSelected: '#1a1a1a', //收起 menuItem 的选中背景颜色	rgba(0, 145, 255, 0.08)
+    colorTextRightActionsItem: '#08111a', //右上角字体颜色	colorTextSecondary
+    colorBgRightActionsItemHover: '#08111a', //右上角选中的 hover 颜色	rgba(0, 0, 0, 0.03)
+    heightLayoutHeader: 56, //header 高度 56
   },
   // 右边内容栏
   pageContainer: {
-    paddingBlockPageContainerContent: '#242525', //pageContainer 自带的 padding block 默认 24
+    paddingBlockPageContainerContent: 24, //pageContainer 自带的 padding block 默认 24
     paddingInlinePageContainerContent: '', //pageContainer 自带的 padding inline 默认 40
     colorBgPageContainer: '#242525', //pageContainer 的背景颜色 默认 透明
-    colorBgPageContainerFixed: '', //pageContainer 被固定时的背景颜色 默认 #FFF
+    colorBgPageContainerFixed: '#1c2f40', //pageContainer 被固定时的背景颜色 默认 #FFF
   },
 };
