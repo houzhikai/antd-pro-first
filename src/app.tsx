@@ -30,8 +30,6 @@ export const layout = ({ initialState, setInitialState }: any) => {
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
 
-  console.log(params);
-  // const param = location.hash.includes('dbm') ?  :params
   return {
     logo,
     menu: {
