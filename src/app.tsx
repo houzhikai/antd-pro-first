@@ -30,6 +30,8 @@ export const layout = ({ initialState, setInitialState }: any) => {
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
 
+  console.log(params);
+  // const param = location.hash.includes('dbm') ?  :params
   return {
     logo,
     menu: {
@@ -49,12 +51,12 @@ export const layout = ({ initialState, setInitialState }: any) => {
           },
           {
             name: 'home',
-            path: '/home',
+            path: `/home?${params}`,
             component: './Home',
           },
           {
             name: 'dbm',
-            path: '/dbm/site',
+            path: `/dbm/site`,
             component: './DBM/Site',
             routes: await myFetch({
               url: `http://${initIp}:28800/sitemgr/dbm/sites`,
@@ -66,7 +68,7 @@ export const layout = ({ initialState, setInitialState }: any) => {
                   {
                     key: 1,
                     name: 'error',
-                    path: '/dbm/site?site=Site6.0',
+                    path: `/dbm/site?site=Site6.0&${params}`,
                     component: './DBM/Site',
                   },
                 ];
@@ -75,18 +77,18 @@ export const layout = ({ initialState, setInitialState }: any) => {
           },
           {
             name: 'access',
-            path: '/access',
+            path: `/access?${params}`,
             component: './Access',
           },
           {
             name: 'table',
-            path: '/table',
+            path: `/table?${params}`,
             menuRender: isHideMenu,
             component: './Table',
           },
           {
             name: 'fu',
-            path: '/fu',
+            path: `/fu?${params}`,
             menuRender: isHideMenu,
             component: './FU',
           },
