@@ -14,6 +14,8 @@ import UpdateForm, { FormValueType } from './components/UpdateForm';
 import '@/styles/dark.less';
 import queryParams from '@/components/queryParams';
 
+import { useIntl } from 'umi';
+
 const { addUser, queryUserList, deleteUser, modifyUser } =
   services.UserController;
 
@@ -146,6 +148,8 @@ const TableList: React.FC<unknown> = () => {
 
   const obj = queryParams();
 
+  const { formatMessage } = useIntl();
+
   return (
     <PageContainer
       style={{ height: '100vh' }}
@@ -154,7 +158,7 @@ const TableList: React.FC<unknown> = () => {
       }}
     >
       <ProTable<API.UserInfo>
-        headerTitle="查询表格"
+        headerTitle={formatMessage({ id: 'table.title' })}
         actionRef={actionRef}
         rowKey="id"
         search={{
