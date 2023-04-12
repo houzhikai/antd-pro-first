@@ -8,9 +8,11 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import { Button, Divider, Drawer, message } from 'antd';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
+import '@/styles/dark.less';
+import queryParams from '@/components/queryParams';
 
 const { addUser, queryUserList, deleteUser, modifyUser } =
   services.UserController;
@@ -138,12 +140,17 @@ const TableList: React.FC<unknown> = () => {
       ),
     },
   ];
+  useEffect(() => {
+    queryParams();
+  }, [location]);
+
+  const obj = queryParams();
 
   return (
     <PageContainer
       style={{ height: '100vh' }}
       header={{
-        title: '表格',
+        title: <span className={obj.theme === 'dark' ? 'dark' : ''}>表格</span>,
       }}
     >
       <ProTable<API.UserInfo>
