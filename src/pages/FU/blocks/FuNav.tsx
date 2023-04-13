@@ -1,6 +1,6 @@
 import MyLogo from '@/components/MyLogo';
 import FULogo from '@/icon/FULogo.svg';
-import { Button, DatePicker } from 'antd';
+import { Button, DatePicker, Input } from 'antd';
 import type { DatePickerProps } from 'antd';
 
 import { useIntl } from 'umi';
@@ -19,6 +19,7 @@ const FuNav = () => {
       <MyLogo src={FULogo} />
       <Button type="primary">{formatMessage({ id: 'fu.button' })}</Button>
       <DatePicker onChange={onChange} picker="week" />
+      <Input placeholder="请输入..." />
     </div>
   );
 };

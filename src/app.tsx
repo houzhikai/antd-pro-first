@@ -1,7 +1,7 @@
 // 运行时配置
 import { setLocale } from '@umijs/max';
 
-import myFetch from './components/myFetch';
+// import myFetch from './components/myFetch';
 import logo from '@/icon/logo.svg';
 import { changeLocale } from './components/changeLocale';
 import { SettingDrawer } from '@ant-design/pro-components';
@@ -13,7 +13,7 @@ export async function getInitialState(): Promise<{ name: string }> {
   return { name: '' };
 }
 
-const initIp = '192.168.3.233';
+// const initIp = '192.168.3.233';
 
 export const layout = ({ initialState, setInitialState }: any) => {
   // isHideMenu 设置菜单栏是否需要隐藏
@@ -49,22 +49,22 @@ export const layout = ({ initialState, setInitialState }: any) => {
             name: 'dbm',
             path: `/dbm/site`,
             component: './DBM/Site',
-            routes: await myFetch({
-              url: `http://${initIp}:28800/sitemgr/dbm/sites`,
-              timeout: 1,
-            })
-              .then((res) => res.data)
-              .catch(() => {
-                const res = [
-                  {
-                    key: 1,
-                    name: 'error',
-                    path: `/dbm/site?site=Site6.0&${params}`,
-                    component: './DBM/Site',
-                  },
-                ];
-                return res;
-              }),
+            // routes: await myFetch({
+            //   url: `http://${initIp}:28800/sitemgr/dbm/sites`,
+            //   timeout: 1,
+            // })
+            //   .then((res) => res.data)
+            //   .catch(() => {
+            //     const res = [
+            //       {
+            //         key: 1,
+            //         name: 'error',
+            //         path: `/dbm/site?site=Site6.0&${params}`,
+            //         component: './DBM/Site',
+            //       },
+            //     ];
+            //     return res;
+            //   }),
           },
           {
             name: 'access',

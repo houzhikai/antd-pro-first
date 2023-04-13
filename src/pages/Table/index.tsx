@@ -11,7 +11,7 @@ import { Button, Divider, Drawer, message } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import CreateForm from './components/CreateForm';
 import UpdateForm, { FormValueType } from './components/UpdateForm';
-import '@/styles/dark.less';
+// import '@/styles/dark.less';
 import queryParams from '@/components/queryParams';
 
 import { useIntl } from 'umi';
