@@ -9,8 +9,11 @@ import { dark } from './theme/dark';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
-export async function getInitialState(): Promise<{ name: string }> {
-  return { name: '' };
+// export async function getInitialState(): Promise<{ name: string }> {
+//   return { name: '' };
+// }
+export async function getInitialState() {
+  return {};
 }
 
 // const initIp = '192.168.3.233';
@@ -29,6 +32,13 @@ export const layout = ({ initialState, setInitialState }: any) => {
 
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
+
+  // setInitialState((pre: any) => ({
+  //   ...pre,
+  //   settings: {
+  //     navTheme: 'realDark',
+  //   },
+  // }));
 
   return {
     logo,

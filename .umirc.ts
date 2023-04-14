@@ -1,9 +1,9 @@
 import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
-  antd: {
-    dark: true,
-  },
+  // antd: {
+  //   dark: true,
+  // },
   access: {},
   model: {},
   initialState: {},
