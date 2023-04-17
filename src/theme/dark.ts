@@ -1,4 +1,4 @@
-export const dark = {
+export const custom_dark_page = {
   colorBgAppListIconHover: '#bfa',
   colorTextAppListIconHover: '#bfa',
   colorTextAppListIcon: '#bfa',
@@ -44,4 +44,19 @@ export const dark = {
     colorBgPageContainer: '#242525', //pageContainer 的背景颜色 默认 透明
     colorBgPageContainerFixed: '#1c2f40', //pageContainer 被固定时的背景颜色 默认 #FFF
   },
+};
+
+export const custom_dark_component = {
+  colorPrimaryText: '#fff',
+  colorPrimary: '#f1212c', //主按钮
+  borderRadius: 0, // 圆角
+  colorBgBase: '#242525', // 背景颜色
+  colorText: '#fff', // 文字颜色
+  colorTextPlaceholder: '#4c4c4c', // 提示信息文字颜色 placeholder
+  controlItemBgActiveDisabled: '#3c9ae8', //控制组件项在禁用状态下的激活背景颜色
+  controlOutline: '#424242', // 控制输入组件的外轮廓线颜色
+  colorTextSecondary: '#fff', //例如 Label 文本、Menu 的文本选中态等场景
+  controlTmpOutline: '#fff',
+  colorInfoText: '#fff',
+  // colorBgContainer: '#bfa', //组件的容器背景色 ,务必不要将其与 `colorBgElevated` 混淆
 };

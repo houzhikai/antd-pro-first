@@ -4,8 +4,9 @@ import { setLocale } from '@umijs/max';
 // import myFetch from './components/myFetch';
 import logo from '@/icon/logo.svg';
 import { changeLocale } from './components/changeLocale';
-import { SettingDrawer } from '@ant-design/pro-components';
-import { dark } from './theme/dark';
+// import { SettingDrawer } from '@ant-design/pro-components';
+import { custom_dark_page, custom_dark_component } from './theme/dark';
+import { ConfigProvider } from 'antd';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
@@ -18,7 +19,8 @@ export async function getInitialState() {
 
 // const initIp = '192.168.3.233';
 
-export const layout = ({ initialState, setInitialState }: any) => {
+// export const layout = ({ initialState, setInitialState }: any) => {
+export const layout = ({ initialState }: any) => {
   // isHideMenu 设置菜单栏是否需要隐藏
   const params = location.hash.split('?')[1] || '';
 
@@ -28,7 +30,7 @@ export const layout = ({ initialState, setInitialState }: any) => {
 
   const isHideMenu = obj.isHideMenu === 'true' ? false : null;
 
-  const theme = obj.theme === 'dark' ? dark : null;
+  // const theme = obj.theme === 'dark' ? custom_dark_page : null;
 
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
@@ -57,7 +59,7 @@ export const layout = ({ initialState, setInitialState }: any) => {
           },
           {
             name: 'dbm',
-            path: `/dbm/site`,
+            path: `/dbm/site?${params}`,
             component: './DBM/Site',
             // routes: await myFetch({
             //   url: `http://${initIp}:28800/sitemgr/dbm/sites`,
@@ -100,27 +102,39 @@ export const layout = ({ initialState, setInitialState }: any) => {
     rightRender: () => {
       return null;
     },
-    childrenRender: (children: any, props: any) => {
+    childrenRender: (children: any) => {
       // if (initialState?.loading) return <PageLoading />;
       return (
-        <>
+        <ConfigProvider
+          theme={{
+            token: obj.theme === 'dark' ? custom_dark_component : {},
+          }}
+        >
           {children}
-          {!props.location?.pathname?.includes('/login') && (
-            <SettingDrawer
-              enableDarkTheme
-              settings={initialState?.settings}
-              onSettingChange={(settings) => {
-                setInitialState((preInitialState: any) => ({
-                  ...preInitialState,
-                  settings,
-                }));
-              }}
-            />
-          )}
-        </>
+        </ConfigProvider>
       );
     },
+    // childrenRender: (children: any, props: any) => {
+    //   // if (initialState?.loading) return <PageLoading />;
+    //   return (
+    //     <>
+    //       {children}
+    //       {!props.location?.pathname?.includes('/login') && (
+    //         <SettingDrawer
+    //           enableDarkTheme
+    //           settings={initialState?.settings}
+    //           onSettingChange={(settings) => {
+    //             setInitialState((preInitialState: any) => ({
+    //               ...preInitialState,
+    //               settings,
+    //             }));
+    //           }}
+    //         />
+    //       )}
+    //     </>
+    //   );
+    // },
     ...initialState.settings,
-    token: theme,
+    token: obj.theme === 'dark' ? custom_dark_page : null,
   };
 };

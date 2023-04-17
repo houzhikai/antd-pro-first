@@ -20,7 +20,8 @@ const FuNav = () => {
       <Button type="primary">{formatMessage({ id: 'fu.button' })}</Button>
       <DatePicker onChange={onChange} picker="week" />
       <Input placeholder="请输入..." />
-      <div>111123</div>
+      <h1>h1标题</h1>
+      <div>111123</div>test
       <Descriptions title="User Info" bordered>
         <Descriptions.Item label="Product">Cloud Database</Descriptions.Item>
         <Descriptions.Item label="Billing Mode">Prepaid</Descriptions.Item>
@@ -48,7 +49,8 @@ const FuNav = () => {
           <br />
           Replication factor: 3
           <br />
-          Region: East China 1<br />
+          Region: East China 1
+          <br />
         </Descriptions.Item>
       </Descriptions>
     </div>
