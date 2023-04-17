@@ -13,13 +13,8 @@ export default function MyLogo(props: MyLogoProps) {
     history.push('/home');
   };
   return (
-    <div>
-      <Image
-        onClick={handleJumpHome}
-        src={src}
-        preview={false}
-        className="myLogo"
-      />
+    <div className="myLogo">
+      <Image onClick={handleJumpHome} src={src} preview={false} />
     </div>
   );
 }
