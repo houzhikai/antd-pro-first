@@ -39,8 +39,8 @@ export const custom_dark_page = {
   },
   // 右边内容栏
   pageContainer: {
-    paddingBlockPageContainerContent: 24, //pageContainer 自带的 padding block 默认 24
-    paddingInlinePageContainerContent: '', //pageContainer 自带的 padding inline 默认 40
+    paddingBlockPageContainerContent: 6, //pageContainer 自带的 padding block 默认 24
+    paddingInlinePageContainerContent: 40, //pageContainer 自带的 padding inline 默认 40
     colorBgPageContainer: '#242525', //pageContainer 的背景颜色 默认 透明
     colorBgPageContainerFixed: '#1c2f40', //pageContainer 被固定时的背景颜色 默认 #FFF
   },
@@ -48,15 +48,17 @@ export const custom_dark_page = {
 
 export const custom_dark_component = {
   colorPrimaryText: '#fff',
-  colorPrimary: '#f1212c', //主按钮
-  borderRadius: 0, // 圆角
-  colorBgBase: '#242525', // 背景颜色
-  colorText: '#fff', // 文字颜色
-  colorTextPlaceholder: '#4c4c4c', // 提示信息文字颜色 placeholder
+  colorPrimary: '#00b96b', //主按钮
+  borderRadius: 6, // 圆角
+  colorBgBase: '#242525', // 背景颜色，有boxshadow阴影，不建议使用
+  colorBgElevated: '#242525', // 背景颜色，但是按钮不会生成boxshadow阴影
+  colorText: '#dcdcdc', // 文字颜色
+  colorBorder: '#424242', // input 之类的border颜色
+  // colorTextLightSolid: '#424242', // Primary Button 组件中的文本高亮颜色
+  colorTextPlaceholder: '#4d4d4d', // 提示信息文字颜色 placeholder
+
   controlItemBgActiveDisabled: '#3c9ae8', //控制组件项在禁用状态下的激活背景颜色
-  controlOutline: '#424242', // 控制输入组件的外轮廓线颜色
-  colorTextSecondary: '#fff', //例如 Label 文本、Menu 的文本选中态等场景
-  controlTmpOutline: '#fff',
-  colorInfoText: '#fff',
+  colorTextSecondary: '#fff', //例如 Label 文本、Menu，Descriptions的label 的文本选中态等场景
+  controlTmpOutline: '#fff', // default 样式按钮会有 阴影
   // colorBgContainer: '#bfa', //组件的容器背景色 ,务必不要将其与 `colorBgElevated` 混淆
 };

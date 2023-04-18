@@ -7,6 +7,7 @@ import { changeLocale } from './components/changeLocale';
 // import { SettingDrawer } from '@ant-design/pro-components';
 import { custom_dark_page, custom_dark_component } from './theme/dark';
 import { ConfigProvider } from 'antd';
+import '@/styles/index.less';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate

@@ -1,9 +1,19 @@
 import MyLogo from '@/components/MyLogo';
 import FULogo from '@/icon/FULogo.svg';
-import { Button, DatePicker, Input, Badge, Descriptions } from 'antd';
+import {
+  Button,
+  DatePicker,
+  Input,
+  Badge,
+  Descriptions,
+  Typography,
+  Popconfirm,
+} from 'antd';
 import type { DatePickerProps } from 'antd';
 
 import { useIntl } from 'umi';
+
+const { Title, Text } = Typography;
 
 const FuNav = () => {
   const { formatMessage } = useIntl();
@@ -14,12 +24,27 @@ const FuNav = () => {
   ) => {
     console.log(date, dateString);
   };
+
+  const handleClick = () => {};
+
   return (
     <div style={{ height: '100vh' }}>
       <MyLogo src={FULogo} />
       <Button type="primary">{formatMessage({ id: 'fu.button' })}</Button>
+      <Popconfirm
+        title="Delete the task"
+        description="Are you sure to delete this task?"
+        onConfirm={handleClick}
+        showCancel={false}
+        okText="Yes"
+      >
+        <Button>按钮</Button>
+      </Popconfirm>
       <DatePicker onChange={onChange} picker="week" />
       <Input placeholder="请输入..." />
+      <a>121323</a>
+      <Title>h1. Ant Design</Title>
+      <Text>Ant Design (default)</Text>
       <h1>h1标题</h1>
       <div>111123</div>test
       <Descriptions title="User Info" bordered>
