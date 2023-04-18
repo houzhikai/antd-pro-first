@@ -6,8 +6,10 @@ import logo from '@/icon/logo.svg';
 import { changeLocale } from './components/changeLocale';
 // import { SettingDrawer } from '@ant-design/pro-components';
 import { custom_dark_page, custom_dark_component } from './theme/dark';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, Image } from 'antd';
 import '@/styles/index.less';
+import { HomeOutlined } from '@ant-design/icons';
+import FULogo from '@/icon/FULogo.svg';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
@@ -55,6 +57,7 @@ export const layout = ({ initialState }: any) => {
           },
           {
             name: 'home',
+            icon: <HomeOutlined />,
             path: `/home?${params}`,
             component: './Home',
           },
@@ -92,6 +95,7 @@ export const layout = ({ initialState }: any) => {
           },
           {
             name: 'fu',
+            icon: <Image src={FULogo} />,
             path: `/fu?${params}`,
             menuRender: isHideMenu,
             component: './FU',
