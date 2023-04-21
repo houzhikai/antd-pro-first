@@ -31,6 +31,10 @@ const FuNav = () => {
     <div style={{ height: '100vh' }}>
       <MyLogo src={FULogo} />
       <Button type="primary">{formatMessage({ id: 'fu.button' })}</Button>
+      <Button type="primary" disabled>
+        primary disabled
+      </Button>
+      <Button disabled>disabled</Button>
       <Popconfirm
         title="Delete the task"
         description="Are you sure to delete this task?"

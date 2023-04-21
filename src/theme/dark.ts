@@ -57,8 +57,11 @@ export const custom_dark_component = {
   // colorTextLightSolid: '#424242', // Primary Button 组件中的文本高亮颜色
   colorTextPlaceholder: '#4d4d4d', // 提示信息文字颜色 placeholder
 
-  controlItemBgActiveDisabled: '#3c9ae8', //控制组件项在禁用状态下的激活背景颜色
   colorTextSecondary: '#fff', //例如 Label 文本、Menu，Descriptions的label 的文本选中态等场景
   controlTmpOutline: '#fff', // default 样式按钮会有 阴影
   // colorBgContainer: '#bfa', //组件的容器背景色 ,务必不要将其与 `colorBgElevated` 混淆
+  controlItemBgActiveDisabled: '#bfa', //控制组件项在禁用状态下的激活背景颜色
+  colorBgContainerDisabled: '#f5f5f5', // 控制容器在禁用状态下的背景色。
+  colorTextDisabled: '#b7b7de', // 控制禁用状态下的字体颜色。
+  colorBorderSecondary: '#424242',
 };

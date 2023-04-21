@@ -23,7 +23,7 @@ export async function getInitialState() {
 // const initIp = '192.168.3.233';
 
 // export const layout = ({ initialState, setInitialState }: any) => {
-export const layout = ({ initialState }: any) => {
+export const layout = () => {
   // isHideMenu 设置菜单栏是否需要隐藏
   const params = location.hash.split('?')[1] || '';
 
@@ -65,22 +65,6 @@ export const layout = ({ initialState }: any) => {
             name: 'dbm',
             path: `/dbm/site?${params}`,
             component: './DBM/Site',
-            // routes: await myFetch({
-            //   url: `http://${initIp}:28800/sitemgr/dbm/sites`,
-            //   timeout: 1,
-            // })
-            //   .then((res) => res.data)
-            //   .catch(() => {
-            //     const res = [
-            //       {
-            //         key: 1,
-            //         name: 'error',
-            //         path: `/dbm/site?site=Site6.0&${params}`,
-            //         component: './DBM/Site',
-            //       },
-            //     ];
-            //     return res;
-            //   }),
           },
           {
             name: 'access',
@@ -119,27 +103,12 @@ export const layout = ({ initialState }: any) => {
         </ConfigProvider>
       );
     },
-    // childrenRender: (children: any, props: any) => {
-    //   // if (initialState?.loading) return <PageLoading />;
-    //   return (
-    //     <>
-    //       {children}
-    //       {!props.location?.pathname?.includes('/login') && (
-    //         <SettingDrawer
-    //           enableDarkTheme
-    //           settings={initialState?.settings}
-    //           onSettingChange={(settings) => {
-    //             setInitialState((preInitialState: any) => ({
-    //               ...preInitialState,
-    //               settings,
-    //             }));
-    //           }}
-    //         />
-    //       )}
-    //     </>
-    //   );
-    // },
-    ...initialState.settings,
     token: obj.theme === 'dark' ? custom_dark_page : null,
+    // 菜单栏的点击事件
+    menuProps: {
+      onClick: (item: { key: string }) => {
+        console.log(item.key);
+      },
+    },
   };
 };
