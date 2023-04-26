@@ -8,14 +8,29 @@ import {
   Descriptions,
   Typography,
   Popconfirm,
+  Tabs,
+  Checkbox,
+  Table,
 } from 'antd';
 import type { DatePickerProps } from 'antd';
-
+import { useParams } from 'react-router-dom';
 import { useIntl } from 'umi';
 
+import type { ColumnsType } from 'antd/es/table';
+import '../index.less';
+
 const { Title, Text } = Typography;
+interface DataType {
+  key: React.Key;
+  name: string;
+  age: number;
+  address: string;
+}
 
 const FuNav = () => {
+  const { path } = useParams();
+  console.log(path, useParams());
+
   const { formatMessage } = useIntl();
 
   const onChange: DatePickerProps['onChange'] = (
@@ -26,6 +41,53 @@ const FuNav = () => {
   };
 
   const handleClick = () => {};
+  const items = new Array(3).fill(null).map((_, i) => {
+    const id = String(i + 1);
+    return {
+      label: `Tab ${id}`,
+      key: id,
+      children: `Content of tab ${id}`,
+    };
+  });
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      className: 'form-title',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+      className: 'form-title',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      className: 'form-title',
+    },
+  ];
+
+  const data: DataType[] = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park',
+    },
+  ];
 
   return (
     <div style={{ height: '100vh' }}>
@@ -43,9 +105,12 @@ const FuNav = () => {
         okText="Yes"
       >
         <Button>按钮</Button>
+        <Button>按钮</Button>
       </Popconfirm>
       <DatePicker onChange={onChange} picker="week" />
       <Input placeholder="请输入..." />
+      <Checkbox>Checkbox</Checkbox>
+      <Table columns={columns} dataSource={data} size="middle" bordered />
       <a>121323</a>
       <Title>h1. Ant Design</Title>
       <Text>Ant Design (default)</Text>
@@ -82,6 +147,7 @@ const FuNav = () => {
           <br />
         </Descriptions.Item>
       </Descriptions>
+      <Tabs items={items} />
     </div>
   );
 };

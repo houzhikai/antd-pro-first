@@ -48,7 +48,7 @@ export const custom_dark_page = {
 
 export const custom_dark_component = {
   colorPrimaryText: '#fff',
-  colorPrimary: '#00b96b', //主按钮
+  colorPrimary: '#007bb1', //主按钮
   borderRadius: 6, // 圆角
   colorBgBase: '#242525', // 背景颜色，有boxshadow阴影，不建议使用
   colorBgElevated: '#242525', // 背景颜色，但是按钮不会生成boxshadow阴影

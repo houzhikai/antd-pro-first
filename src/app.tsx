@@ -1,52 +1,38 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 // 运行时配置
-import { setLocale } from '@umijs/max';
-
-// import myFetch from './components/myFetch';
-import logo from '@/icon/logo.svg';
+import logo from './icon/logo.svg';
 import { changeLocale } from './components/changeLocale';
-// import { SettingDrawer } from '@ant-design/pro-components';
+import { setLocale } from '@umijs/max';
+import { Button, ConfigProvider, Switch } from 'antd';
 import { custom_dark_page, custom_dark_component } from './theme/dark';
-import { ConfigProvider, Image } from 'antd';
-import '@/styles/index.less';
+
 import { HomeOutlined } from '@ant-design/icons';
-import FULogo from '@/icon/FULogo.svg';
+import queryParams from './components/queryParams';
+
+import useUrlState from '@ahooksjs/use-url-state'; 
+import '@/styles/index.less';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
-// 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
+// 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
 // export async function getInitialState(): Promise<{ name: string }> {
-//   return { name: '' };
-// }
-export async function getInitialState() {
-  return {};
-}
-
-// const initIp = '192.168.3.233';
-
-// export const layout = ({ initialState, setInitialState }: any) => {
+//   return { name: '111' };
 export const layout = () => {
-  // isHideMenu 设置菜单栏是否需要隐藏
-  const params = location.hash.split('?')[1] || '';
+  const [state, setState] = useUrlState({ locale: '', theme: '' });
+  let params = location.hash.split('?')[1] || '';
 
-  const result = params.replace(/&/g, '","').replace(/=/g, '":"');
-  const reqDataString = '{"' + result + '"}';
-  const obj = params === '' ? {} : JSON.parse(reqDataString);
+  const filterParams = params
+    .split('&')
+    .filter((item) => !item.includes('site'))
+    .join('&');
 
+  const obj = queryParams();
   const isHideMenu = obj.isHideMenu === 'true' ? false : null;
-
-  // const theme = obj.theme === 'dark' ? custom_dark_page : null;
 
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
 
-  // setInitialState((pre: any) => ({
-  //   ...pre,
-  //   settings: {
-  //     navTheme: 'realDark',
-  //   },
-  // }));
-
   return {
-    logo,
+    logo: logo,
     menu: {
       request: async () => {
         // name 都是国际化语言
@@ -57,42 +43,64 @@ export const layout = () => {
           },
           {
             name: 'home',
+            path: `/home?${filterParams}`,
             icon: <HomeOutlined />,
-            path: `/home?${params}`,
             component: './Home',
-          },
-          {
-            name: 'dbm',
-            path: `/dbm/site?${params}`,
-            component: './DBM/Site',
-          },
-          {
-            name: 'access',
-            path: `/access?${params}`,
-            component: './Access',
-          },
-          {
-            name: 'table',
-            path: `/table?${params}`,
             menuRender: isHideMenu,
-            component: './Table',
+          },
+          {
+            name: 'DBM',
+            path: `/dbm?${params}`,
+            component: './DBM',
+            menuRender: isHideMenu,
           },
           {
             name: 'fu',
-            icon: <Image src={FULogo} />,
-            path: `/fu?${params}`,
-            menuRender: isHideMenu,
+            path: `/fu?${filterParams}`,
             component: './FU',
+            menuRender: isHideMenu,
+          },
+          {
+            name: 'ins',
+            path: `/instrument?${filterParams}`,
+            component: './Instrument',
+            menuRender: isHideMenu,
+          },
+          {
+            path: '*',
+            layout: false,
+            component: './404',
           },
         ];
       },
     },
     // 展示用户名、头像、退出登录相关组件  initialState 是运行时配置 app.ts(x) 中的 getInitialState 返回的对象。
     rightRender: () => {
-      return null;
+      const localeParams = obj.locale === 'en-US' ? 'zh-CN' : 'en-US';
+
+      return (
+        <div className="menu-footer">
+          <Button
+            style={{ marginRight: 10 }}
+            size="small"
+            ghost={obj.theme === 'dark' ? true : false}
+            onClick={() => setState({ locale: localeParams || state.locale })}
+          >
+            {obj.locale === 'en-US' ? '中文' : 'English'}
+          </Button>
+          <Switch
+            checkedChildren="🌜"
+            unCheckedChildren="🌞"
+            defaultChecked={obj.theme === 'dark' ? true : false}
+            onChange={(checked) => {
+              setState({ theme: checked ? 'dark' : 'light' });
+              location.reload();
+            }}
+          />
+        </div>
+      );
     },
     childrenRender: (children: any) => {
-      // if (initialState?.loading) return <PageLoading />;
       return (
         <ConfigProvider
           theme={{
@@ -104,7 +112,6 @@ export const layout = () => {
       );
     },
     token: obj.theme === 'dark' ? custom_dark_page : null,
-    // 菜单栏的点击事件
     menuProps: {
       onClick: (item: { key: string }) => {
         console.log(item.key);
