@@ -1,4 +1,11 @@
+import { Access, useAccess } from '@umijs/max';
+
 const VirtualTable = () => {
-  return <div>1111</div>;
+  const access = useAccess();
+  return (
+    <>
+      <Access accessible={access.canSeevirtualTable}>1111</Access>
+    </>
+  );
 };
 export default VirtualTable;

@@ -69,6 +69,7 @@ export default defineConfig({
       name: '虚拟表格',
       path: `/virtualTable`,
       component: './VirtualTable',
+      access: 'canSeevirtualTable',
     },
     {
       path: '*',
