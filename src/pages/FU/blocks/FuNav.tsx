@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
 import { useIntl } from 'umi';
 
 import type { ColumnsType } from 'antd/es/table';
-import '../index.less';
+// import '../index.less';
 
 const { Title, Text } = Typography;
 interface DataType {
@@ -90,7 +90,7 @@ const FuNav = () => {
   ];
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div>
       <MyLogo src={FULogo} />
       <Button type="primary">{formatMessage({ id: 'fu.button' })}</Button>
       <Button type="primary" disabled>
