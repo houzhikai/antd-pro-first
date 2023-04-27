@@ -10,6 +10,8 @@ import queryParams from './components/queryParams';
 
 import useUrlState from '@ahooksjs/use-url-state';
 import '@/styles/index.less';
+import myFetch from './components/myFetch';
+import { routes } from './components/dataList/routes';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
@@ -19,62 +21,34 @@ export async function getInitialState(): Promise<{ name: string }> {
 
 export const layout = () => {
   const [state, setState] = useUrlState({ locale: '', theme: '' });
-  let params = location.hash.split('?')[1] || '';
+  // let params = location.hash.split('?')[1] || '';
 
-  const filterParams = params
-    .split('&')
-    .filter((item) => !item.includes('site'))
-    .join('&');
+  // const filterParams = params
+  //   .split('&')
+  //   .filter((item) => !item.includes('site'))
+  //   .join('&');
 
   const obj = queryParams();
-  const isHideMenu = obj.isHideMenu === 'true' ? false : null;
+  // const isHideMenu = obj.isHideMenu === 'true' ? false : null;
 
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
+
+  const initIp = '192.168.3.233';
 
   return {
     logo: logo,
     menu: {
       request: async () => {
-        // name 都是国际化语言
-        return [
-          {
-            name: 'home',
-            path: `/home?${filterParams}`,
-            component: './Home',
-            menuRender: isHideMenu,
-          },
-          {
-            name: 'dbm',
-            path: `/dbm/site?${filterParams}`,
-            component: './DBM/Site',
-            menuRender: isHideMenu,
-          },
-          {
-            name: 'access',
-            path: `/access?${filterParams}`,
-            component: './Access',
-            menuRender: isHideMenu,
-          },
-          {
-            name: 'table',
-            path: `/table?${filterParams}`,
-            component: './Table',
-            menuRender: isHideMenu,
-          },
-          {
-            name: 'fu',
-            path: `/fu?${filterParams}`,
-            component: './FU',
-            menuRender: isHideMenu,
-          },
-          // {
-          //   name: 'virtualTable',
-          //   path: `/virtualTable?${filterParams}`,
-          //   component: './VirtualTable',
-          //   menuRender: isHideMenu,
-          // },
-        ];
+        try {
+          const menuData = await myFetch({
+            url: `http://${initIp}:28800/sitemgr/dbm/sites`,
+          });
+          return menuData.routes;
+        } catch (error) {
+          // name 都是国际化语言
+          return routes.menu;
+        }
       },
     },
     // 展示用户名、头像、退出登录相关组件  initialState 是运行时配置 app.ts(x) 中的 getInitialState 返回的对象。

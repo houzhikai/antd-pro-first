@@ -19,7 +19,7 @@ const myFetch = (data: MyFetchProps) => {
     new Promise((resovle, reject) => {
       setTimeout(
         () => reject(false),
-        data.timeout ? data.timeout * 1000 : 3000,
+        data.timeout ? data.timeout * 1000 : 1000,
       );
     }),
   ]).then((res: any) => {

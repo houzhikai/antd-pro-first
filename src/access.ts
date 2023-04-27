@@ -7,7 +7,8 @@ export default (initialState: API.UserInfo) => {
     initialState && initialState.name !== 'dontHaveAccess'
   );
   const isCanSeevirtualTable =
-    queryParams().canSeevirtualTableAccess === 'true';
+    queryParams().canSeevirtualTableAccess === 'true' ? false : true;
+  // queryParams().canSeevirtualTableAccess === 'true';
   return {
     canSeeAdmin,
     canSeevirtualTable: isCanSeevirtualTable,

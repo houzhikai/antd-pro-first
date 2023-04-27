@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 import './index.less';
 const { Column, HeaderCell } = Table;
 
-const data = Array(13)
+const data = Array(13000)
   .fill(1)
   .map((item, index) => {
     return {
