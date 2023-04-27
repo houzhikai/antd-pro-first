@@ -6,10 +6,9 @@ import { setLocale } from '@umijs/max';
 import { Button, ConfigProvider, Switch } from 'antd';
 import { custom_dark_page, custom_dark_component } from './theme/dark';
 
-import { HomeOutlined } from '@ant-design/icons';
 import queryParams from './components/queryParams';
 
-import useUrlState from '@ahooksjs/use-url-state'; 
+import useUrlState from '@ahooksjs/use-url-state';
 import '@/styles/index.less';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
@@ -38,20 +37,27 @@ export const layout = () => {
         // name 都是国际化语言
         return [
           {
-            path: '/',
-            redirect: '/home',
-          },
-          {
             name: 'home',
             path: `/home?${filterParams}`,
-            icon: <HomeOutlined />,
             component: './Home',
             menuRender: isHideMenu,
           },
           {
-            name: 'DBM',
-            path: `/dbm?${params}`,
-            component: './DBM',
+            name: 'dbm',
+            path: `/dbm/site?${filterParams}`,
+            component: './DBM/Site',
+            menuRender: isHideMenu,
+          },
+          {
+            name: 'access',
+            path: `/access?${filterParams}`,
+            component: './Access',
+            menuRender: isHideMenu,
+          },
+          {
+            name: 'table',
+            path: `/table?${filterParams}`,
+            component: './Table',
             menuRender: isHideMenu,
           },
           {
@@ -59,17 +65,6 @@ export const layout = () => {
             path: `/fu?${filterParams}`,
             component: './FU',
             menuRender: isHideMenu,
-          },
-          {
-            name: 'ins',
-            path: `/instrument?${filterParams}`,
-            component: './Instrument',
-            menuRender: isHideMenu,
-          },
-          {
-            path: '*',
-            layout: false,
-            component: './404',
           },
         ];
       },
