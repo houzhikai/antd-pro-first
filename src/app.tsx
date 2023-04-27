@@ -68,6 +68,12 @@ export const layout = () => {
             component: './FU',
             menuRender: isHideMenu,
           },
+          {
+            name: 'virtualTable',
+            path: `/virtualTable?${filterParams}`,
+            component: './VirtualTable',
+            menuRender: isHideMenu,
+          },
         ];
       },
     },

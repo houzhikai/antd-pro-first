@@ -66,6 +66,11 @@ export default defineConfig({
       component: './FU',
     },
     {
+      name: '虚拟表格',
+      path: `/virtualTable`,
+      component: './VirtualTable',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',
