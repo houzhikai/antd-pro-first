@@ -11,3 +11,9 @@ git config --global http.sslVerify false
 只需要在“设置”->"搜索"->`compile-hero`,查询出来后,把所有打勾的选项去掉就可以了.
 
 # canSeevirtualTableAccess=true 有此参数才能看虚拟表格
+
+# openAPI 可以维护一个接口文档
+
+# swagger
+
+https://pro.ant.design/zh-CN/docs/openapi
