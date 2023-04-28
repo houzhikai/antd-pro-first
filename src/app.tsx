@@ -1,17 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 // 运行时配置
-import logo from './icon/logo.svg';
-import { changeLocale } from './components/changeLocale';
 import { setLocale } from '@umijs/max';
 import { Button, ConfigProvider, Switch } from 'antd';
+import useUrlState from '@ahooksjs/use-url-state';
+
+import { changeLocale } from './components/changeLocale';
+import myFetch from './components/myFetch';
+import queryParams from './components/queryParams';
+import { routes } from './components/dataList/menu/routes';
+import { iconList } from './components/dataList/menu/iconList';
 import { custom_dark_page, custom_dark_component } from './theme/dark';
 
-import queryParams from './components/queryParams';
+import logo from './icon/logo.svg';
 
-import useUrlState from '@ahooksjs/use-url-state';
 import '@/styles/index.less';
-import myFetch from './components/myFetch';
-import { routes } from './components/dataList/routes';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
@@ -32,14 +34,14 @@ export async function getInitialState() {
 
 export const layout = ({ initialState }) => {
   const [state, setState] = useUrlState({ locale: '', theme: '' });
-  let params = location.hash.split('?')[1] || '';
 
+  const obj = queryParams();
+
+  let params = location.hash.split('?')[1] || '';
   const filterParams = params
     .split('&')
     .filter((item) => !item.includes('site'))
     .join('&');
-
-  const obj = queryParams();
   const isHideMenu = obj.isHideMenu === 'true' ? false : null;
 
   // ['en-US', 'zh-CN']
@@ -50,14 +52,24 @@ export const layout = ({ initialState }) => {
     menu: {
       request: async () => {
         initialState.menu.forEach((item) => {
+          // 需要改的属性值都在这里添加
           item.path = `${item.path}?${filterParams}`;
         });
+
         let newArr: any = [];
-        initialState.menu.map((item) => {
-          return newArr.push(
-            Object.assign({}, { ...item, menuRender: isHideMenu }),
-          );
-        });
+        initialState.menu.map((item) =>
+          iconList.forEach((t) => {
+            if (item.name === t.name) {
+              return newArr.push(
+                // 后端返回缺少的属性都在这里添加
+                Object.assign(
+                  {},
+                  { ...item, menuRender: isHideMenu, icon: t.icon },
+                ),
+              );
+            }
+          }),
+        );
 
         return newArr;
       },
