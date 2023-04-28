@@ -57,19 +57,22 @@ export const layout = ({ initialState }) => {
         });
 
         let newArr: any = [];
-        initialState.menu.map((item) =>
-          iconList.forEach((t) => {
-            if (item.name === t.name) {
-              return newArr.push(
-                // 后端返回缺少的属性都在这里添加
-                Object.assign(
-                  {},
-                  { ...item, menuRender: isHideMenu, icon: t.icon },
-                ),
-              );
-            }
-          }),
-        );
+        initialState.menu.map((item) => {
+          const iconItem = iconList
+            .filter((t) => t.name === item.name)
+            .map((e) => e.icon);
+          return newArr.push(
+            // 后端返回缺少的属性都在这里添加
+            Object.assign(
+              {},
+              {
+                ...item,
+                menuRender: isHideMenu,
+                icon: iconItem.length > 0 ? iconItem[0] : '',
+              },
+            ),
+          );
+        });
 
         return newArr;
       },
