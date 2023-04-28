@@ -22,7 +22,7 @@ export const routes = {
     },
     {
       name: 'fu',
-      path: `/fu?`,
+      path: `/fu`,
       component: './FU',
     },
     {

@@ -32,12 +32,12 @@ export async function getInitialState() {
 
 export const layout = ({ initialState }) => {
   const [state, setState] = useUrlState({ locale: '', theme: '' });
-  // let params = location.hash.split('?')[1] || '';
+  let params = location.hash.split('?')[1] || '';
 
-  // const filterParams = params
-  //   .split('&')
-  //   .filter((item) => !item.includes('site'))
-  //   .join('&');
+  const filterParams = params
+    .split('&')
+    .filter((item) => !item.includes('site'))
+    .join('&');
 
   const obj = queryParams();
   // const isHideMenu = obj.isHideMenu === 'true' ? false : null;
@@ -50,6 +50,9 @@ export const layout = ({ initialState }) => {
     menu: {
       request: async () => {
         console.log({ initialState }, initialState.menu);
+        initialState.menu.forEach((item) => {
+          item.path = `${item.path}?${filterParams}`;
+        });
         return initialState.menu;
       },
     },
