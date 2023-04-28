@@ -33,6 +33,6 @@ export const routes = {
   ],
   access: {
     canSeeAdmin: true,
-    canSeevirtualTable: false,
+    isCanSeevirtualTable: true,
   },
 };

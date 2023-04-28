@@ -48,7 +48,9 @@ declare namespace API {
 
   interface UserInfo {
     id?: string;
-    virtualTable: boolean;
+    access: {
+      isCanSeevirtualTable: boolean;
+    };
     name?: string;
     /** nick */
     nickName?: string;

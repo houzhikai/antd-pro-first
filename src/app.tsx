@@ -15,11 +15,22 @@ import { routes } from './components/dataList/routes';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
-export async function getInitialState(): Promise<{ name: string }> {
-  return { name: '111' };
+
+const initIp = '192.168.3.233';
+
+export async function getInitialState() {
+  let menuData = {};
+  try {
+    menuData = await myFetch({
+      url: `http://${initIp}:28800/sitemgr/dbm/sites1`,
+    });
+    return menuData;
+  } catch (error) {
+    return (menuData = routes);
+  }
 }
 
-export const layout = () => {
+export const layout = ({ initialState }) => {
   const [state, setState] = useUrlState({ locale: '', theme: '' });
   // let params = location.hash.split('?')[1] || '';
 
@@ -34,21 +45,12 @@ export const layout = () => {
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
 
-  const initIp = '192.168.3.233';
-
   return {
     logo: logo,
     menu: {
       request: async () => {
-        try {
-          const menuData = await myFetch({
-            url: `http://${initIp}:28800/sitemgr/dbm/sites`,
-          });
-          return menuData.routes;
-        } catch (error) {
-          // name 都是国际化语言
-          return routes.menu;
-        }
+        console.log({ initialState }, initialState.menu);
+        return initialState.menu;
       },
     },
     // 展示用户名、头像、退出登录相关组件  initialState 是运行时配置 app.ts(x) 中的 getInitialState 返回的对象。
