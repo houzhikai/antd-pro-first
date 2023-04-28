@@ -22,7 +22,7 @@ export async function getInitialState() {
   let menuData = {};
   try {
     menuData = await myFetch({
-      url: `http://${initIp}:28800/sitemgr/dbm/sites1`,
+      url: `http://${initIp}:28800/sitemgr/dbm/sites`,
     });
     return menuData;
   } catch (error) {
@@ -40,7 +40,7 @@ export const layout = ({ initialState }) => {
     .join('&');
 
   const obj = queryParams();
-  // const isHideMenu = obj.isHideMenu === 'true' ? false : null;
+  const isHideMenu = obj.isHideMenu === 'true' ? false : null;
 
   // ['en-US', 'zh-CN']
   setLocale(changeLocale(obj.locale));
@@ -49,11 +49,17 @@ export const layout = ({ initialState }) => {
     logo: logo,
     menu: {
       request: async () => {
-        console.log({ initialState }, initialState.menu);
         initialState.menu.forEach((item) => {
           item.path = `${item.path}?${filterParams}`;
         });
-        return initialState.menu;
+        let newArr: any = [];
+        initialState.menu.map((item) => {
+          return newArr.push(
+            Object.assign({}, { ...item, menuRender: isHideMenu }),
+          );
+        });
+
+        return newArr;
       },
     },
     // 展示用户名、头像、退出登录相关组件  initialState 是运行时配置 app.ts(x) 中的 getInitialState 返回的对象。
