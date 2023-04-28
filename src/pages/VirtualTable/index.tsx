@@ -1,13 +1,14 @@
-import { Access, useAccess } from '@umijs/max';
+// import { Access, useAccess } from '@umijs/max';
 import VirtualTable from './blocks/VirtualTablePage';
 
 const VirtualTablePage = () => {
-  const access = useAccess();
+  //   const access = useAccess();
   return (
     <>
-      <Access accessible={access.canSeevirtualTable}>
-        <VirtualTable />
-      </Access>
+      {/* 没有权限的话不会展示组件内容 */}
+      {/* <Access accessible={access.canSeevirtualTable}> */}
+      <VirtualTable />
+      {/* </Access> */}
     </>
   );
 };
