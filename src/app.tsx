@@ -24,7 +24,7 @@ export async function getInitialState() {
   let menuData = {};
   try {
     menuData = await myFetch({
-      url: `http://${initIp}:28800/sitemgr/dbm/sites`,
+      url: `http://${initIp}:28800/sitemgr/dbm/xxx`,
     });
     return menuData;
   } catch (error) {
