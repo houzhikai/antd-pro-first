@@ -1,5 +1,5 @@
 import myFetch from '@/components/myFetch';
-import { useAsyncEffect } from 'ahooks';
+import { useAsyncEffect, useSet } from 'ahooks';
 import { message } from 'antd';
 import { useState } from 'react';
 
@@ -8,6 +8,9 @@ export default () => {
   const [isRequest, setIsRequest] = useState(false);
   const [dbmParams, setDbmParams] = useState('');
   const [isErrorPage, setIsErrorPage] = useState(false);
+
+  // 选择已勾选的
+  const [set, { add, remove }] = useSet(['']);
 
   const initIp = '192.168.3.233';
 
@@ -25,6 +28,8 @@ export default () => {
       }
     }
   }, [isRequest, dbmParams]);
+  const selectedAddressList = Array.from(set).filter((item) => item.length > 0);
+  console.log(1, selectedAddressList);
   return {
     siteList,
     setSiteList,
@@ -34,5 +39,8 @@ export default () => {
     setDbmParams,
     isErrorPage,
     setIsErrorPage,
+    add,
+    remove,
+    selectedAddressList,
   };
 };

@@ -1,282 +1,195 @@
-import services from '@/services/demo';
-import {
-  ActionType,
-  FooterToolbar,
-  PageContainer,
-  ProDescriptions,
-  ProDescriptionsItemProps,
-  ProTable,
-} from '@ant-design/pro-components';
-import { Button, Divider, Drawer, message } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
-import CreateForm from './components/CreateForm';
-import UpdateForm, { FormValueType } from './components/UpdateForm';
-// import '@/styles/dark.less';
-import queryParams from '@/components/queryParams';
+import { Table } from 'rsuite';
+import BaseCell from './components/BaseCell';
+import InputCell from './components/InputCell';
+import { useCallback, useState } from 'react';
+import './index.less';
+import { data } from '@/components/dataList/TablePage';
+const { Column, HeaderCell } = Table;
 
-import { useIntl } from 'umi';
+const App = () => {
+  const [emailList, setEmailList] = useState(data.map((item) => item.zero));
 
-const { addUser, queryUserList, deleteUser, modifyUser } =
-  services.UserController;
-
-/**
- * 添加节点
- * @param fields
- */
-const handleAdd = async (fields: API.UserInfo) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addUser({ ...fields });
-    hide();
-    message.success('添加成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('添加失败请重试！');
-    return false;
-  }
-};
-
-/**
- * 更新节点
- * @param fields
- */
-const handleUpdate = async (fields: FormValueType) => {
-  const hide = message.loading('正在配置');
-  try {
-    await modifyUser(
-      {
-        userId: fields.id || '',
-      },
-      {
-        name: fields.name || '',
-        nickName: fields.nickName || '',
-        email: fields.email || '',
-      },
-    );
-    hide();
-
-    message.success('配置成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('配置失败请重试！');
-    return false;
-  }
-};
-
-/**
- *  删除节点
- * @param selectedRows
- */
-const handleRemove = async (selectedRows: API.UserInfo[]) => {
-  const hide = message.loading('正在删除');
-  if (!selectedRows) return true;
-  try {
-    await deleteUser({
-      userId: selectedRows.find((row) => row.id)?.id || '',
+  const handleEmailChange = useCallback((id, value) => {
+    setEmailList((prevEmailList) => {
+      const nextMailList = [...prevEmailList];
+      nextMailList[id] = value;
+      return nextMailList;
     });
-    hide();
-    message.success('删除成功，即将刷新');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('删除失败，请重试');
-    return false;
-  }
-};
+  }, []);
 
-const TableList: React.FC<unknown> = () => {
-  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-  const [updateModalVisible, handleUpdateModalVisible] =
-    useState<boolean>(false);
-  const [stepFormValues, setStepFormValues] = useState({});
-  const actionRef = useRef<ActionType>();
-  const [row, setRow] = useState<API.UserInfo>();
-  const [selectedRowsState, setSelectedRows] = useState<API.UserInfo[]>([]);
-  const columns: ProDescriptionsItemProps<API.UserInfo>[] = [
-    {
-      title: '名称',
-      dataIndex: 'name',
-      tip: '名称是唯一的 key',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: '名称为必填项',
-          },
-        ],
-      },
-    },
-    {
-      title: '昵称',
-      dataIndex: 'nickName',
-      valueType: 'text',
-    },
-    {
-      title: '性别',
-      dataIndex: 'gender',
-      hideInForm: true,
-      valueEnum: {
-        0: { text: '男', status: 'MALE' },
-        1: { text: '女', status: 'FEMALE' },
-      },
-    },
-    {
-      title: '操作',
-      dataIndex: 'option',
-      valueType: 'option',
-      render: (_, record) => (
-        <>
-          <a
-            onClick={() => {
-              handleUpdateModalVisible(true);
-              setStepFormValues(record);
-            }}
-          >
-            配置
-          </a>
-          <Divider type="vertical" />
-          <a href="">订阅警报</a>
-        </>
-      ),
-    },
-  ];
-  useEffect(() => {
-    queryParams();
-  }, [location]);
-
-  const obj = queryParams();
-
-  const { formatMessage } = useIntl();
+  const columnWidths = 90;
 
   return (
-    <PageContainer
-      style={{ height: '100vh' }}
-      header={{
-        title: <span className={obj.theme === 'dark' ? 'dark' : ''}>表格</span>,
-      }}
+    <Table
+      cellBordered
+      shouldUpdateScroll={false}
+      height={705}
+      data={data}
+      headerHeight={46}
+      virtualized
+      rowHeight={() => 30}
+      loading={data.length > 0 ? false : true}
     >
-      <ProTable<API.UserInfo>
-        headerTitle={formatMessage({ id: 'table.title' })}
-        actionRef={actionRef}
-        rowKey="id"
-        search={{
-          labelWidth: 120,
-        }}
-        toolBarRender={() => [
-          <Button
-            key="1"
-            type="primary"
-            onClick={() => handleModalVisible(true)}
-          >
-            新建
-          </Button>,
-        ]}
-        request={async (params, sorter, filter) => {
-          const { data, success } = await queryUserList({
-            ...params,
-            // FIXME: remove @ts-ignore
-            // @ts-ignore
-            sorter,
-            filter,
-          });
-          return {
-            data: data?.list || [],
-            success,
-          };
-        }}
-        columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => setSelectedRows(selectedRows),
-        }}
-      />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              已选择{' '}
-              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-              项&nbsp;&nbsp;
-            </div>
-          }
-        >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            批量删除
-          </Button>
-          <Button type="primary">批量审批</Button>
-        </FooterToolbar>
-      )}
-      <CreateForm
-        onCancel={() => handleModalVisible(false)}
-        modalVisible={createModalVisible}
-      >
-        <ProTable<API.UserInfo, API.UserInfo>
-          onSubmit={async (value) => {
-            const success = await handleAdd(value);
-            if (success) {
-              handleModalVisible(false);
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          rowKey="id"
-          type="form"
-          columns={columns}
-        />
-      </CreateForm>
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <UpdateForm
-          onSubmit={async (value) => {
-            const success = await handleUpdate(value);
-            if (success) {
-              handleUpdateModalVisible(false);
-              setStepFormValues({});
-              if (actionRef.current) {
-                actionRef.current.reload();
-              }
-            }
-          }}
-          onCancel={() => {
-            handleUpdateModalVisible(false);
-            setStepFormValues({});
-          }}
-          updateModalVisible={updateModalVisible}
-          values={stepFormValues}
-        />
-      ) : null}
+      <Column width={columnWidths} align="center">
+        <HeaderCell>address</HeaderCell>
+        <BaseCell style={{ paddingTop: 10 }} dataKey="id" />
+      </Column>
 
-      <Drawer
-        width={600}
-        open={!!row}
-        onClose={() => {
-          setRow(undefined);
-        }}
-        closable={false}
-      >
-        {row?.name && (
-          <ProDescriptions<API.UserInfo>
-            column={2}
-            title={row?.name}
-            request={async () => ({
-              data: row || {},
-            })}
-            params={{
-              id: row?.name,
-            }}
-            columns={columns}
-          />
-        )}
-      </Drawer>
-    </PageContainer>
+      <Column width={columnWidths} align="center">
+        <HeaderCell>0</HeaderCell>
+        <InputCell
+          column="zero0"
+          dataKey="0"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>1</HeaderCell>
+        <InputCell
+          column="one"
+          dataKey="1"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>2</HeaderCell>
+        <InputCell
+          column="two"
+          dataKey="2"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>3</HeaderCell>
+        <InputCell
+          column="three"
+          dataKey="3"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>4</HeaderCell>
+        <InputCell
+          column="four"
+          dataKey="4"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>5</HeaderCell>
+        <InputCell
+          column="five"
+          dataKey="5"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>6</HeaderCell>
+        <InputCell
+          column="six"
+          dataKey="6"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>7</HeaderCell>
+        <InputCell
+          column="seven"
+          dataKey="7"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>8</HeaderCell>
+        <InputCell
+          column="eight"
+          dataKey="8"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>9</HeaderCell>
+        <InputCell
+          column="nine"
+          dataKey="9"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths} align="center">
+        <HeaderCell>A</HeaderCell>
+        <InputCell
+          column="A"
+          dataKey="A"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths}>
+        <HeaderCell>B</HeaderCell>
+        <InputCell
+          dataKey="email"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+      <Column width={columnWidths}>
+        <HeaderCell>C</HeaderCell>
+        <InputCell
+          dataKey="email"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths}>
+        <HeaderCell>D</HeaderCell>
+        <InputCell
+          dataKey="email"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths}>
+        <HeaderCell>E</HeaderCell>
+        <InputCell
+          dataKey="email"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+
+      <Column width={columnWidths}>
+        <HeaderCell>F</HeaderCell>
+        <InputCell
+          dataKey="email"
+          data={emailList}
+          onChange={handleEmailChange}
+        />
+      </Column>
+    </Table>
   );
 };
 
-export default TableList;
+export default App;
