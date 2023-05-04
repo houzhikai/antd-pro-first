@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 
 import BaseCell from './BaseCell';
 
-import styles from '../index.less';
+import styles from '../../index.less';
 
 const InputCell = ({
   rowData,
