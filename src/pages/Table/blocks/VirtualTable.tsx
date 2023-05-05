@@ -145,7 +145,7 @@ const App = () => {
         />
       </Column>
 
-      <Column width={columnWidths}>
+      <Column width={columnWidths} align="center">
         <HeaderCell>B</HeaderCell>
         <InputCell
           dataKey="email"
@@ -153,7 +153,7 @@ const App = () => {
           onChange={handleEmailChange}
         />
       </Column>
-      <Column width={columnWidths}>
+      <Column width={columnWidths} align="center">
         <HeaderCell>C</HeaderCell>
         <InputCell
           dataKey="email"
@@ -162,7 +162,7 @@ const App = () => {
         />
       </Column>
 
-      <Column width={columnWidths}>
+      <Column width={columnWidths} align="center">
         <HeaderCell>D</HeaderCell>
         <InputCell
           dataKey="email"
@@ -171,7 +171,7 @@ const App = () => {
         />
       </Column>
 
-      <Column width={columnWidths}>
+      <Column width={columnWidths} align="center">
         <HeaderCell>E</HeaderCell>
         <InputCell
           dataKey="email"
@@ -180,7 +180,7 @@ const App = () => {
         />
       </Column>
 
-      <Column width={columnWidths}>
+      <Column width={columnWidths} align="center">
         <HeaderCell>F</HeaderCell>
         <InputCell
           dataKey="email"
