@@ -30,6 +30,11 @@ export const routes = {
       path: `/virtualTable`,
       component: './VirtualTable',
     },
+    {
+      name: 'echarts',
+      path: `/echarts`,
+      component: './Echarts',
+    },
   ],
   access: {
     canSeeAdmin: true,

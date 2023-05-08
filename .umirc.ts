@@ -72,6 +72,11 @@ export default defineConfig({
       access: 'canSeevirtualTable',
     },
     {
+      name: 'echarts',
+      path: `/echarts`,
+      component: './Echarts',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',
