@@ -14,6 +14,7 @@ const Echarts = () => {
       tooltip: {
         position: 'top',
       },
+      animation: false,
       //   其实不是一个圆，暂时先不加
       //   graphic: [
       //     {
@@ -51,11 +52,19 @@ const Echarts = () => {
       ],
       xAxis: {
         type: 'category',
+        splitNumber: 2,
         data: xAxisData,
         position: axis.x,
         inverse: isAxisInverse.x,
         splitArea: {
           show: true,
+        },
+        splitLine: {
+          show: true,
+          lineStyle: {
+            color: ['#ccc'],
+            width: 2,
+          },
         },
       },
       yAxis: {
@@ -66,14 +75,26 @@ const Echarts = () => {
         splitArea: {
           show: true,
         },
+        splitLine: {
+          show: true,
+          z: 100,
+          lineStyle: {
+            color: ['#ccc'],
+            width: 2,
+          },
+        },
       },
       visualMap: {
         min: 0,
-        max: 10,
-        calculable: true,
+        max: 3,
+        calculable: false,
         orient: 'horizontal',
         left: 'center',
         bottom: '0%',
+        show: false,
+        inRange: {
+          color: ['#fba', '#f60', '#bfa'],
+        },
       },
       series: [
         {
@@ -81,7 +102,14 @@ const Echarts = () => {
           type: 'heatmap',
           data: data,
           label: {
-            show: true,
+            show: true, // 格子上是否要加上数字
+          },
+          itemStyle: {
+            // 格子的边框设置
+            borderColor: '#ccc',
+            borderWidth: 2,
+            borderType: 'solid',
+            // borderRadius: 6
           },
           emphasis: {
             itemStyle: {
