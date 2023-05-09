@@ -44,7 +44,9 @@ const CoordinateSystemOrientation = () => {
       placement="bottom"
       arrow={{ pointAtCenter: true }}
     >
-      <Button type="primary">坐标系方向</Button>
+      <Button size="large" type="primary">
+        坐标系方向
+      </Button>
     </Dropdown>
   );
 };
