@@ -23,4 +23,5 @@ export const yAxisData = [
   '21',
   '22',
   '23',
+  '24',
 ];

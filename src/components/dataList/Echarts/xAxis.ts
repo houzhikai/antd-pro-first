@@ -23,4 +23,5 @@ export const xAxisData = [
   '21',
   '22',
   '23',
+  '24',
 ];
