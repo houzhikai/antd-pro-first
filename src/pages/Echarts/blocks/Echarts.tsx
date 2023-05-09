@@ -1,9 +1,9 @@
 import * as echarts from 'echarts';
 import { useEffect } from 'react';
-import { xAxisData } from '@/components/dataList/Echarts/xAxis';
-import { yAxisData } from '@/components/dataList/Echarts/yAxis';
-import { data } from '@/components/dataList/Echarts/data';
 import { useModel } from '@umijs/max';
+
+import { data } from '@/components/dataList/Echarts/data';
+import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 
 const Echarts = () => {
   const { axis, isAxisInverse } = useModel('useEchartsModel');
@@ -52,8 +52,9 @@ const Echarts = () => {
       ],
       xAxis: {
         type: 'category',
-        splitNumber: 2,
-        data: xAxisData,
+        splitNumber: 1,
+        interval: 10,
+        data: takeMiddleNumber(-50, 50),
         position: axis.x,
         inverse: isAxisInverse.x,
         splitArea: {
@@ -69,7 +70,7 @@ const Echarts = () => {
       },
       yAxis: {
         type: 'category',
-        data: yAxisData,
+        data: takeMiddleNumber(-50, 50),
         position: axis.y,
         inverse: isAxisInverse.y,
         splitArea: {
@@ -86,7 +87,7 @@ const Echarts = () => {
       },
       visualMap: {
         min: 0,
-        max: 3,
+        max: 10,
         calculable: false,
         orient: 'horizontal',
         left: 'center',
