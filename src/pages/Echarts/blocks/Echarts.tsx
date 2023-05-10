@@ -10,6 +10,16 @@ const Echarts = () => {
   useEffect(() => {
     const myChart = echarts.init(document.getElementById('echart') as any);
 
+    const xAxisValueList = takeMiddleNumber(axisValue.xMin, axisValue.xMax);
+    const yAxisValueList = takeMiddleNumber(axisValue.yMin, axisValue.yMax);
+    const dataList = data.map((item) => {
+      return [
+        xAxisValueList.indexOf(item[0]),
+        yAxisValueList.indexOf(item[1]),
+        item[2],
+      ];
+    });
+
     myChart.setOption({
       tooltip: {
         position: 'top',
@@ -54,7 +64,7 @@ const Echarts = () => {
         type: 'category',
         splitNumber: 1,
         interval: 10,
-        data: takeMiddleNumber(axisValue.xMin, axisValue.xMax),
+        data: xAxisValueList,
         position: axis.x,
         inverse: isAxisInverse.x,
         splitArea: {
@@ -70,7 +80,7 @@ const Echarts = () => {
       },
       yAxis: {
         type: 'category',
-        data: takeMiddleNumber(axisValue.yMin, axisValue.yMax),
+        data: yAxisValueList,
         position: axis.y,
         inverse: isAxisInverse.y,
         splitArea: {
@@ -101,9 +111,9 @@ const Echarts = () => {
         {
           name: 'Punch Card',
           type: 'heatmap',
-          data: data,
+          data: dataList,
           label: {
-            show: false, // 格子上是否要加上数字
+            show: true, // 格子上是否要加上数字
           },
           itemStyle: {
             // 格子的边框设置
