@@ -1,6 +1,7 @@
 import Echarts from './blocks/Echarts';
 import NavAction from './blocks/NavAction';
 import DataStatistics from './blocks/DataStatistics';
+import ColorListModal from './blocks/ColorListModal';
 
 const WaferMap = () => {
   return (
@@ -10,6 +11,7 @@ const WaferMap = () => {
         <Echarts />
         <DataStatistics />
       </div>
+      <ColorListModal />
     </>
   );
 };
