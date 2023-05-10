@@ -41,7 +41,6 @@ const Content = () => {
     });
   };
   const handleClickX = () => {
-    console.log(axis.xMin, axis.xMax);
     setAsisValue((obj) => {
       return {
         ...obj,
@@ -74,6 +73,7 @@ const Content = () => {
             defaultValue={axisValue.xMax}
             onChange={handleChangeXMax}
             controls={false}
+            onPressEnter={handleClickX}
           />
           <Button
             danger
@@ -97,6 +97,7 @@ const Content = () => {
             defaultValue={axisValue.yMax}
             onChange={handleChangeYMax}
             controls={false}
+            onPressEnter={handleClickY}
           />
           <Button
             danger

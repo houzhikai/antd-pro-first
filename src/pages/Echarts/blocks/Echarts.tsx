@@ -10,7 +10,6 @@ const Echarts = () => {
   useEffect(() => {
     const myChart = echarts.init(document.getElementById('echart') as any);
 
-    console.log({ axisValue });
     myChart.setOption({
       tooltip: {
         position: 'top',
@@ -104,7 +103,7 @@ const Echarts = () => {
           type: 'heatmap',
           data: data,
           label: {
-            show: true, // 格子上是否要加上数字
+            show: false, // 格子上是否要加上数字
           },
           itemStyle: {
             // 格子的边框设置

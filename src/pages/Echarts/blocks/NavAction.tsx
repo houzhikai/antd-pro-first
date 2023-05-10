@@ -11,6 +11,8 @@ const NavAction = () => {
       <CoordinateSystemOrientation />
       {/* 设置坐标轴的首尾数值 */}
       <SetAxisValue />
+      {/* 自定义颜色 */}
+      {/* 是否展示格子数据 */}
     </div>
   );
 };
