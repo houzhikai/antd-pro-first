@@ -6,10 +6,11 @@ import { data } from '@/components/dataList/Echarts/data';
 import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 
 const Echarts = () => {
-  const { axis, isAxisInverse } = useModel('useEchartsModel');
+  const { axis, isAxisInverse, axisValue } = useModel('useEchartsModel');
   useEffect(() => {
     const myChart = echarts.init(document.getElementById('echart') as any);
 
+    console.log({ axisValue });
     myChart.setOption({
       tooltip: {
         position: 'top',
@@ -54,14 +55,14 @@ const Echarts = () => {
         type: 'category',
         splitNumber: 1,
         interval: 10,
-        data: takeMiddleNumber(-50, 50),
+        data: takeMiddleNumber(axisValue.xMin, axisValue.xMax),
         position: axis.x,
         inverse: isAxisInverse.x,
         splitArea: {
           show: true,
         },
         splitLine: {
-          show: true,
+          show: true, // 是否展示网格线
           lineStyle: {
             color: ['#ccc'],
             width: 2,
@@ -70,14 +71,14 @@ const Echarts = () => {
       },
       yAxis: {
         type: 'category',
-        data: takeMiddleNumber(-50, 50),
+        data: takeMiddleNumber(axisValue.yMin, axisValue.yMax),
         position: axis.y,
         inverse: isAxisInverse.y,
         splitArea: {
           show: true,
         },
         splitLine: {
-          show: true,
+          show: true, // 是否展示网格线
           z: 100,
           lineStyle: {
             color: ['#ccc'],
@@ -121,7 +122,7 @@ const Echarts = () => {
         },
       ],
     });
-  }, [axis, isAxisInverse]);
+  }, [axis, isAxisInverse, axisValue]);
   return (
     <>
       <div id="echart" style={{ width: '600px', height: '600px' }}></div>
