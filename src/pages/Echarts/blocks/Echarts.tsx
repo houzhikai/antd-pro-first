@@ -96,15 +96,23 @@ const Echarts = () => {
         },
       },
       visualMap: {
-        min: 0,
-        max: 10,
+        min: 1,
+        max: 7,
         calculable: false,
         orient: 'horizontal',
         left: 'center',
         bottom: '0%',
         show: false,
         inRange: {
-          color: ['#fba', '#f60', '#bfa'],
+          color: [
+            '#04b200',
+            '#03ff01',
+            '#fd0003',
+            '#3f6063',
+            '#fffd00',
+            '#00007e',
+            '#ff00ff',
+          ],
         },
       },
       series: [
@@ -113,7 +121,7 @@ const Echarts = () => {
           type: 'heatmap',
           data: dataList,
           label: {
-            show: true, // 格子上是否要加上数字
+            show: false, // 格子上是否要加上数字
           },
           itemStyle: {
             // 格子的边框设置
