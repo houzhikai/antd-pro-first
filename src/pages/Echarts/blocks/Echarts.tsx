@@ -65,6 +65,14 @@ const Echarts = () => {
         },
       ],
       xAxis: {
+        name: 'X(Columns)', // name名称，默认 ''
+        nameLocation: 'middle', // 位置 start/middle/end 默认end
+        nameGap: 30, // 离轴线的距离 默认15
+        nameTextStyle: {
+          // name 样式
+          fontSize: 16,
+          fontWeight: 800,
+        },
         type: 'category',
         splitNumber: 1,
         interval: 10,
@@ -83,6 +91,15 @@ const Echarts = () => {
         },
       },
       yAxis: {
+        name: 'Y(Columns)', // name名称，默认 ''
+        nameLocation: 'middle', // 位置 start/middle/end 默认end
+        nameGap: 30, // 离轴线的距离 默认15
+        // nameRotate: 0, // name 转的角度，默认90
+        nameTextStyle: {
+          // name 样式
+          fontSize: 16,
+          fontWeight: 800,
+        },
         type: 'category',
         data: yAxisValueList,
         position: axis.y,
