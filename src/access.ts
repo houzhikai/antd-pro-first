@@ -5,7 +5,8 @@ export default (initialState: API.UserInfo) => {
     initialState && initialState.name !== 'dontHaveAccess'
   );
   return {
-    canSeeAdmin,
+    // canSeeAdmin,
+    canSeeAdmin: initialState.access.canSeeAdmin,
     canSeevirtualTable: initialState.access.isCanSeevirtualTable,
   };
 };

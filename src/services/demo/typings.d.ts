@@ -50,6 +50,7 @@ declare namespace API {
     id?: string;
     access: {
       isCanSeevirtualTable: boolean;
+      canSeeAdmin: boolean;
     };
     name?: string;
     /** nick */

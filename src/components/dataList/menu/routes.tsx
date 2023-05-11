@@ -37,7 +37,7 @@ export const routes = {
     },
   ],
   access: {
-    canSeeAdmin: true,
-    isCanSeevirtualTable: true,
+    canSeeAdmin: false,
+    isCanSeevirtualTable: false,
   },
 };
