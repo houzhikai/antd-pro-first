@@ -2,14 +2,25 @@ import { useModel } from '@umijs/max';
 import { Modal, Tooltip } from 'antd';
 
 function ColorListModal() {
-  const { isShowModal, setIsShowModal } = useModel('useEchartsModel');
+  const { isShowModal, setIsShowModal, setChangeColor } =
+    useModel('useEchartsModel');
 
   const handleOk = () => {
-    setIsShowModal(false);
+    setIsShowModal((obj) => {
+      return {
+        ...obj,
+        isOpen: false,
+      };
+    });
   };
 
   const handleCancel = () => {
-    setIsShowModal(false);
+    setIsShowModal((obj) => {
+      return {
+        ...obj,
+        isOpen: false,
+      };
+    });
   };
   const colorList = [
     { name: '科技蓝', color: '#1677ff' },
@@ -20,18 +31,22 @@ function ColorListModal() {
     { name: '灰色', color: '#d0d0d0' },
   ];
   const handleSelectColor = (color: string) => {
-    console.log(1, color);
+    setChangeColor((pre) => {
+      let newArr = [...pre];
+      newArr.splice(isShowModal.order, 1, color); // 选中第n个坐标，删除一个，将color替换
+      return newArr;
+    });
   };
 
   return (
     <Modal
       title="选择想要更改的颜色"
-      open={isShowModal}
+      open={isShowModal.isOpen}
       onOk={handleOk}
       onCancel={handleCancel}
     >
       <div style={{ display: 'flex', marginTop: 20 }}>
-        {colorList.map((item) => (
+        {colorList.map((item, index) => (
           <Tooltip title={item.name} color={item.color}>
             <div
               style={{

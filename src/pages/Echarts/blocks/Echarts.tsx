@@ -6,7 +6,8 @@ import { data } from '@/components/dataList/Echarts/data';
 import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 
 const Echarts = () => {
-  const { axis, isAxisInverse, axisValue } = useModel('useEchartsModel');
+  const { axis, isAxisInverse, axisValue, changeColor } =
+    useModel('useEchartsModel');
   useEffect(() => {
     const myChart = echarts.init(document.getElementById('echart') as any);
 
@@ -104,15 +105,7 @@ const Echarts = () => {
         bottom: '0%',
         show: false,
         inRange: {
-          color: [
-            '#04b200',
-            '#03ff01',
-            '#fd0003',
-            '#3f6063',
-            '#fffd00',
-            '#00007e',
-            '#ff00ff',
-          ],
+          color: changeColor,
         },
       },
       series: [
@@ -139,7 +132,7 @@ const Echarts = () => {
         },
       ],
     });
-  }, [axis, isAxisInverse, axisValue]);
+  }, [axis, isAxisInverse, axisValue, changeColor]);
   return (
     <>
       <div id="echart" style={{ width: '600px', height: '600px' }}></div>

@@ -15,7 +15,18 @@ export default () => {
     yMax: 50,
   });
 
-  const [isShowModal, setIsShowModal] = useState(false); // 是否打开颜色选择器
+  const [isShowModal, setIsShowModal] = useState({ isOpen: false, order: 0 }); // 1. 是否打开颜色选择器 2. 点击颜色的序号
+
+  const [changeColor, setChangeColor] = useState([
+    '#04b200',
+    '#03ff01',
+    '#fd0003',
+    '#3f6063',
+    '#fffd00',
+    '#00007e',
+    '#ff00ff',
+  ]); // 自定义背景颜色
+
   return {
     axis,
     setAxis,
@@ -25,5 +36,7 @@ export default () => {
     setAsisValue,
     isShowModal,
     setIsShowModal,
+    changeColor,
+    setChangeColor,
   };
 };
