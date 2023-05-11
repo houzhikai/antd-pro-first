@@ -46,8 +46,8 @@ function ColorListModal() {
       onCancel={handleCancel}
     >
       <div style={{ display: 'flex', marginTop: 20 }}>
-        {colorList.map((item, index) => (
-          <Tooltip title={item.name} color={item.color}>
+        {colorList.map((item) => (
+          <Tooltip key={item.color} title={item.name} color={item.color}>
             <div
               style={{
                 margin: '0 10px',

@@ -24,6 +24,9 @@ const Echarts = () => {
     myChart.setOption({
       tooltip: {
         position: 'top',
+        formatter: (params) => {
+          return `横轴：${params.data[0]}，<br />纵轴：${params.data[1]}，<br />value：${params.data[2]}`;
+        },
       },
       animation: false,
       //   其实不是一个圆，暂时先不加
