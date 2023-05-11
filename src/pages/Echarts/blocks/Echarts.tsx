@@ -21,6 +21,11 @@ const Echarts = () => {
       ];
     });
 
+    // 点击事件
+    myChart.on('click', (e) => {
+      console.log(11, e);
+    });
+
     myChart.setOption({
       tooltip: {
         position: 'top',
