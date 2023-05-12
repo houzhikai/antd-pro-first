@@ -27,6 +27,12 @@ export default () => {
     '#ff00ff',
   ]); // 自定义背景颜色
 
+  // 修改横纵轴的name
+  const [changeAxisName, setChangeAxisName] = useState({
+    x: 'X(Columns)',
+    y: 'Y(Columns)',
+  });
+
   return {
     axis,
     setAxis,
@@ -38,5 +44,7 @@ export default () => {
     setIsShowModal,
     changeColor,
     setChangeColor,
+    changeAxisName,
+    setChangeAxisName,
   };
 };

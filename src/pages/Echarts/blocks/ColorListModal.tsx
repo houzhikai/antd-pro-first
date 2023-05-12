@@ -35,6 +35,7 @@ const ColorListModal = () => {
     <Modal
       title="选择想要更改的颜色"
       open={isShowModal.isOpen}
+      onCancel={handleCancel}
       footer={[
         <Button key="cancel" type="primary" onClick={handleCancel}>
           关闭

@@ -6,7 +6,7 @@ import { data } from '@/components/dataList/Echarts/data';
 import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 
 const Echarts = () => {
-  const { axis, isAxisInverse, axisValue, changeColor } =
+  const { axis, isAxisInverse, axisValue, changeColor, changeAxisName } =
     useModel('useEchartsModel');
   useEffect(() => {
     const myChart = echarts.init(document.getElementById('echart') as any);
@@ -70,7 +70,7 @@ const Echarts = () => {
         },
       ],
       xAxis: {
-        name: 'X(Columns)', // name名称，默认 ''
+        name: changeAxisName.x, // name名称，默认 ''
         nameLocation: 'middle', // 位置 start/middle/end 默认end
         nameGap: 30, // 离轴线的距离 默认15
         nameTextStyle: {
@@ -96,7 +96,7 @@ const Echarts = () => {
         },
       },
       yAxis: {
-        name: 'Y(Columns)', // name名称，默认 ''
+        name: changeAxisName.y, // name名称，默认 ''
         nameLocation: 'middle', // 位置 start/middle/end 默认end
         nameGap: 30, // 离轴线的距离 默认15
         // nameRotate: 0, // name 转的角度，默认90
@@ -157,7 +157,7 @@ const Echarts = () => {
         },
       ],
     });
-  }, [axis, isAxisInverse, axisValue, changeColor]);
+  }, [axis, isAxisInverse, axisValue, changeColor, changeAxisName]);
   return (
     <>
       <div id="echart" style={{ width: '600px', height: '600px' }}></div>
