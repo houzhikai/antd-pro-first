@@ -41,6 +41,7 @@ const SetAxisName = () => {
         title="修改坐标轴名称"
         open={isModalOpen}
         centered
+        maskClosable={false}
         onCancel={handleCancel}
         footer={[
           <Button key="cancel" type="primary" onClick={handleCancel}>

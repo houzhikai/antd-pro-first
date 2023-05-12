@@ -35,21 +35,21 @@ const Echarts = () => {
       },
       animation: false,
       //   其实不是一个圆，暂时先不加
-      //   graphic: [
-      //     {
-      //       type: 'circle',
-      //       z: 100,
-      //       style: {
-      //         fill: 'transparent',
-      //         stroke: '#74746c',
-      //       },
-      //       shape: {
-      //         cx: 300,
-      //         cy: 300,
-      //         r: 235,
-      //       },
-      //     },
-      //   ],
+      graphic: [
+        {
+          type: 'circle',
+          z: 100,
+          style: {
+            fill: 'transparent',
+            stroke: '#74746c',
+          },
+          shape: {
+            cx: 300,
+            cy: 300,
+            r: 235,
+          },
+        },
+      ],
       grid: {
         height: '80%',
         top: '10%',
