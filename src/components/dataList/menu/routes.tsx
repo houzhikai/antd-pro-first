@@ -35,6 +35,11 @@ export const routes = {
       path: `/echarts`,
       component: './Echarts',
     },
+    {
+      name: 'interfaceDoc',
+      path: `/interfaceDoc`,
+      component: './InterfaceDoc',
+    },
   ],
   access: {
     canSeeAdmin: false,

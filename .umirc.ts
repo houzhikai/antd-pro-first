@@ -35,20 +35,6 @@ export default defineConfig({
       name: 'DBM',
       path: '/dbm/site',
       component: './DBM/Site',
-      // routes: [
-      //   {
-      //     key: 1,
-      //     name: 'Site6.0',
-      //     path: '/dbm/site?site=Site6.0',
-      //     component: './DBM/Site',
-      //   },
-      //   {
-      //     key: 2,
-      //     name: 'Site2.0',
-      //     path: '/dbm/site?site=Site2.0',
-      //     component: './DBM/Site',
-      //   },
-      // ],
     },
     {
       name: '权限演示',
@@ -75,6 +61,11 @@ export default defineConfig({
       name: 'echarts',
       path: `/echarts`,
       component: './Echarts',
+    },
+    {
+      name: '接口使用文档',
+      path: `/interfaceDoc`,
+      component: './InterfaceDoc',
     },
     {
       path: '*',
