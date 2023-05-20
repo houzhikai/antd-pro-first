@@ -4,6 +4,7 @@ import {
   ProDescriptions,
   WaterMark,
 } from '@ant-design/pro-components';
+import InterfaceStyle from './blocls/InterfaceStyle';
 
 const InterfaceDoc = () => {
   return (
@@ -13,15 +14,29 @@ const InterfaceDoc = () => {
           title: '',
         }}
       >
-        <ProDescriptions bordered column={2} title="接口使用文档" />
+        <ProDescriptions bordered column={2} title="接口使用文档">
+          <ProDescriptions.Item
+            span={2}
+            valueType="text"
+            contentStyle={{
+              maxWidth: '80%',
+            }}
+            renderText={(_) => {
+              return _ + _;
+            }}
+            ellipsis
+            label=""
+          >
+            这是一个用来测试的接口文档
+          </ProDescriptions.Item>
+        </ProDescriptions>
         <ProCard
-          title="API"
+          title="DBM"
           style={{ marginBlockStart: 16 }}
           headerBordered
           collapsible
-          //   defaultCollapsed
         >
-          内容
+          <InterfaceStyle />
         </ProCard>
       </PageContainer>
     </WaterMark>
