@@ -1,10 +1,7 @@
-import {
-  PageContainer,
-  ProCard,
-  ProDescriptions,
-  WaterMark,
-} from '@ant-design/pro-components';
-import InterfaceStyle from './blocls/InterfaceStyle';
+import { PageContainer, ProCard, WaterMark } from '@ant-design/pro-components';
+import InterfaceData from './blocls/components/InterfaceData';
+import HeaderPage from './blocls/components/HeaderPage';
+import { interfaceDocDataList } from '@/components/dataList/InterfaceDoc';
 
 const InterfaceDoc = () => {
   return (
@@ -14,30 +11,21 @@ const InterfaceDoc = () => {
           title: '',
         }}
       >
-        <ProDescriptions bordered column={2} title="接口使用文档">
-          <ProDescriptions.Item
-            span={2}
-            valueType="text"
-            contentStyle={{
-              maxWidth: '80%',
-            }}
-            renderText={(_) => {
-              return _ + _;
-            }}
-            ellipsis
-            label=""
+        <HeaderPage />
+        {interfaceDocDataList.map((item) => (
+          <ProCard
+            key={item.title}
+            style={{ marginBlockStart: 16 }}
+            title={item.title}
+            defaultCollapsed
+            headerBordered
+            collapsible
           >
-            这是一个用来测试的接口文档
-          </ProDescriptions.Item>
-        </ProDescriptions>
-        <ProCard
-          title="DBM"
-          style={{ marginBlockStart: 16 }}
-          headerBordered
-          collapsible
-        >
-          <InterfaceStyle />
-        </ProCard>
+            {item.content.map((p) => (
+              <InterfaceData key={p.url} type={p.type} url={p.url} />
+            ))}
+          </ProCard>
+        ))}
       </PageContainer>
     </WaterMark>
   );

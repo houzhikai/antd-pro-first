@@ -5,7 +5,6 @@ const InterfaceStyle = () => {
   return (
     <div>
       <ProCard
-        title=""
         type="inner"
         bordered
         bodyStyle={{
@@ -22,7 +21,6 @@ const InterfaceStyle = () => {
       </ProCard>
       <ProCard
         style={{ margin: '20px 0' }}
-        title=""
         type="inner"
         bordered
         bodyStyle={{
