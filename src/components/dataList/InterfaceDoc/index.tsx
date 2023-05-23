@@ -7,7 +7,7 @@ interface InterfaceDocDataListProps {
   // 主要为了约束 type 类型
   title: string;
   content: {
-    type?: 'get' | 'post';
+    type?: 'GET' | 'POST';
     url: string;
   }[];
 }
@@ -16,11 +16,11 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
     title: 'DBM',
     content: [
       {
-        type: 'get',
+        type: 'GET',
         url: '/api/dbm/site/reader1',
       },
       {
-        type: 'post',
+        type: 'POST',
         url: '/api/dbm/site/reader2',
       },
     ],
@@ -29,11 +29,11 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
     title: '固件升级',
     content: [
       {
-        type: 'post',
+        type: 'POST',
         url: '/api/dbm/site/writer1',
       },
       {
-        type: 'post',
+        type: 'POST',
         url: '/api/dbm/site/writer2',
       },
     ],
