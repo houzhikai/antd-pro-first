@@ -1,18 +1,13 @@
 import { useModel } from '@umijs/max';
-import { Button, Modal, Tooltip } from 'antd';
+import { Button, Modal, Tooltip, Image } from 'antd';
+import otherColor from '@/icon/otherColor.svg';
+import { colorList, standardColorList } from './components/data';
+import { Colorpicker, AnyColorFormat } from 'antd-colorpicker';
+import { useState } from 'react';
 
 const ColorListModal = () => {
   const { isShowModal, setIsShowModal, setChangeColor } =
     useModel('useEchartsModel');
-
-  const colorList = [
-    { name: '科技蓝', color: '#1677ff' },
-    { name: '明清', color: '#13c2c2' },
-    { name: '日暮', color: '#faad14' },
-    { name: '火山', color: '#f6531c' },
-    { name: '暗绿', color: '#84af9b' },
-    { name: '灰色', color: '#d0d0d0' },
-  ];
 
   const handleCancel = () => {
     setIsShowModal((obj) => {
@@ -31,6 +26,18 @@ const ColorListModal = () => {
     });
   };
 
+  const [color, setColor] = useState<AnyColorFormat>({
+    r: 0,
+    g: 0,
+    b: 0,
+    a: 0.5,
+  });
+
+  const onChange = (color: AnyColorFormat) => {
+    console.log(color, 11);
+    setColor(color);
+  };
+
   return (
     <Modal
       title="选择想要更改的颜色"
@@ -42,7 +49,24 @@ const ColorListModal = () => {
         </Button>,
       ]}
     >
-      <div style={{ display: 'flex', marginTop: 20 }}>
+      <div>标准色</div>
+      <div style={{ display: 'flex', margin: '20px 0' }}>
+        {standardColorList.map((item) => (
+          <div
+            key={item}
+            style={{
+              margin: '0 10px',
+              width: 20,
+              height: 20,
+              cursor: 'pointer',
+              background: item,
+            }}
+            onClick={() => handleSelectColor(item)}
+          />
+        ))}
+      </div>
+      <div>主题颜色</div>
+      <div style={{ display: 'flex', margin: '20px 0' }}>
         {colorList.map((item) => (
           <Tooltip key={item.color} title={item.name} color={item.color}>
             <div
@@ -58,6 +82,16 @@ const ColorListModal = () => {
           </Tooltip>
         ))}
       </div>
+      <div>
+        <Image
+          style={{ width: 18, height: 18, marginRight: 10 }}
+          src={otherColor}
+          preview={false}
+        />
+        自定义颜色...
+      </div>
+
+      <Colorpicker value={color} onChange={onChange} />
     </Modal>
   );
 };

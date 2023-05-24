@@ -72,3 +72,23 @@ export const data: DataType[] = [
     percent: '100%',
   },
 ];
+
+export const colorList = [
+  { name: '科技蓝', color: '#1677ff' },
+  { name: '明清', color: '#13c2c2' },
+  { name: '日暮', color: '#faad14' },
+  { name: '火山', color: '#f6531c' },
+  { name: '暗绿', color: '#84af9b' },
+  { name: '灰色', color: '#d0d0d0' },
+];
+export const standardColorList = [
+  '#c00000',
+  '#ff0000',
+  '#ffff00',
+  '#92d050',
+  '#00b050',
+  '#00b0f0',
+  '#0070c0',
+  '#002060',
+  '#7030a0',
+];

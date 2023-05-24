@@ -46,10 +46,23 @@
   dependencies:
     "@ctrl/tinycolor" "^3.4.0"
 
-"@ant-design/cssinjs@^1.5.6", "@ant-design/cssinjs@^1.7.1":
+"@ant-design/cssinjs@^1.5.6":
   version "1.7.1"
   resolved "https://registry.npmmirror.com/@ant-design/cssinjs/-/cssinjs-1.7.1.tgz"
   integrity sha512-7pwBx1ozVXDKLXKrORRCetIxIvDxZLVSzj8hTuD/SYGXDPkMzT0PxvJIyBPixAJ/eqejFARP0hrgk4XREOgGbA==
+  dependencies:
+    "@babel/runtime" "^7.11.1"
+    "@emotion/hash" "^0.8.0"
+    "@emotion/unitless" "^0.7.5"
+    classnames "^2.3.1"
+    csstype "^3.0.10"
+    rc-util "^5.27.0"
+    stylis "^4.0.13"
+
+"@ant-design/cssinjs@^1.9.1":
+  version "1.9.1"
+  resolved "https://registry.npmmirror.com/@ant-design/cssinjs/-/cssinjs-1.9.1.tgz#cc2e602afab14c795af20fd22b3f9d5ccf304d8a"
+  integrity sha512-CZt1vCMs/sY7RoacYuIkZwQmb8Bhp99ReNNE9Y8lnUzik8fmCdKAQA7ecvVOFwmNFdcBHga7ye/XIRrsbkiqWw==
   dependencies:
     "@babel/runtime" "^7.11.1"
     "@emotion/hash" "^0.8.0"
@@ -85,6 +98,17 @@
     "@babel/runtime" "^7.11.2"
     classnames "^2.2.6"
     rc-util "^5.9.4"
+
+"@ant-design/icons@^5.1.0":
+  version "5.1.1"
+  resolved "https://registry.npmmirror.com/@ant-design/icons/-/icons-5.1.1.tgz#e403b5d20277d7e439628940b6e447dde6715636"
+  integrity sha512-zXDpDzdWbxcINEueSKIfvWxb/aNNplkX8bt/hFqz84dqGGQwZOH8sLVwaHYdslHCXAx8uZi6S46ScuTjvSqp+Q==
+  dependencies:
+    "@ant-design/colors" "^7.0.0"
+    "@ant-design/icons-svg" "^4.2.1"
+    "@babel/runtime" "^7.11.2"
+    classnames "^2.2.6"
+    rc-util "^5.31.1"
 
 "@ant-design/pro-card@^2.3.2":
   version "2.3.2"
@@ -1865,6 +1889,11 @@
     kolorist "^1.6.0"
     local-pkg "^0.4.2"
 
+"@icons/material@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.npmmirror.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
+  integrity sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.npmmirror.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz"
@@ -2063,6 +2092,16 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
+"@rc-component/color-picker@~1.1.1":
+  version "1.1.1"
+  resolved "https://registry.npmmirror.com/@rc-component/color-picker/-/color-picker-1.1.1.tgz#9f54276a10c0ce198fe88281499aa4b924bdac77"
+  integrity sha512-MKYqgEncpISQiZIaj8ykcdzZewgjslEfDo2iHg627jPnt+DbWIKG1T8MS55qXjuxkokgL0cNueyGnOndfaaNKw==
+  dependencies:
+    "@babel/runtime" "^7.10.1"
+    "@ctrl/tinycolor" "^3.6.0"
+    classnames "^2.2.6"
+    rc-util "^5.30.0"
+
 "@rc-component/context@^1.3.0":
   version "1.3.0"
   resolved "https://registry.npmmirror.com/@rc-component/context/-/context-1.3.0.tgz"
@@ -2119,6 +2158,19 @@
     rc-motion "^2.0.0"
     rc-resize-observer "^1.3.1"
     rc-util "^5.29.2"
+
+"@rc-component/trigger@^1.13.0":
+  version "1.13.2"
+  resolved "https://registry.npmmirror.com/@rc-component/trigger/-/trigger-1.13.2.tgz#30e3824dcbf9ecf03ce18b52550155f9ebdf2cd0"
+  integrity sha512-vmxa5bLIKzx2NzBOVZjco07mtm/lC5wy2ZFOb+cKH8JOwbongQbYVmY7FtqK+dqU3WXrztyyq3PHVPKQtJpG4w==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    "@rc-component/portal" "^1.1.0"
+    classnames "^2.3.2"
+    rc-align "^4.0.0"
+    rc-motion "^2.0.0"
+    rc-resize-observer "^1.3.1"
+    rc-util "^5.31.1"
 
 "@remix-run/router@1.5.0":
   version "1.5.0"
@@ -3237,10 +3289,69 @@ ansi-styles@^6.0.0:
   resolved "https://registry.npmmirror.com/ansi-styles/-/ansi-styles-6.2.1.tgz"
   integrity sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==
 
+antd-colorpicker@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/antd-colorpicker/-/antd-colorpicker-1.0.0.tgz#0d4c3f77616c1bd034af16f4ff51de4a299dddaa"
+  integrity sha512-FNfYVrP8GLGlemEu/goKqOnlV5X88bwnj08S5Qj2Jv/D4LAjwzGtVZC8Gabj0eAqUIHRjsG0ux/o8hK+7Pvlgg==
+  dependencies:
+    antd "^4.20.1"
+    prop-types "^15.8.1"
+    react-color "^2.19.3"
+    tinycolor2 "^1.4.2"
+
 antd-dayjs-webpack-plugin@^1.0.6:
   version "1.0.6"
   resolved "https://registry.npmmirror.com/antd-dayjs-webpack-plugin/-/antd-dayjs-webpack-plugin-1.0.6.tgz"
   integrity sha512-UlK3BfA0iE2c5+Zz/Bd2iPAkT6cICtrKG4/swSik5MZweBHtgmu1aUQCHvICdiv39EAShdZy/edfP6mlkS/xXg==
+
+antd@^4.20.1:
+  version "4.24.10"
+  resolved "https://registry.npmmirror.com/antd/-/antd-4.24.10.tgz#9bf371c3b351b881c5b56049a410d5cf16f077ac"
+  integrity sha512-GihdwTGFW0dUaWjcvSIfejFcT63HjEp2EbYd+ojEXayldhey230KrHDJ+C53rkrkzLvymrPBfSxlLxJzyFIZsg==
+  dependencies:
+    "@ant-design/colors" "^6.0.0"
+    "@ant-design/icons" "^4.7.0"
+    "@ant-design/react-slick" "~0.29.1"
+    "@babel/runtime" "^7.18.3"
+    "@ctrl/tinycolor" "^3.4.0"
+    classnames "^2.2.6"
+    copy-to-clipboard "^3.2.0"
+    lodash "^4.17.21"
+    moment "^2.29.2"
+    rc-cascader "~3.7.0"
+    rc-checkbox "~3.0.0"
+    rc-collapse "~3.4.2"
+    rc-dialog "~9.0.2"
+    rc-drawer "~6.1.0"
+    rc-dropdown "~4.0.0"
+    rc-field-form "~1.27.0"
+    rc-image "~5.13.0"
+    rc-input "~0.1.4"
+    rc-input-number "~7.3.9"
+    rc-mentions "~1.13.1"
+    rc-menu "~9.8.0"
+    rc-motion "^2.6.1"
+    rc-notification "~4.6.0"
+    rc-pagination "~3.2.0"
+    rc-picker "~2.7.0"
+    rc-progress "~3.4.1"
+    rc-rate "~2.9.0"
+    rc-resize-observer "^1.2.0"
+    rc-segmented "~2.1.0"
+    rc-select "~14.1.17"
+    rc-slider "~10.0.0"
+    rc-steps "~5.0.0-alpha.2"
+    rc-switch "~3.2.0"
+    rc-table "~7.26.0"
+    rc-tabs "~12.5.6"
+    rc-textarea "~0.4.5"
+    rc-tooltip "~5.2.0"
+    rc-tree "~5.7.0"
+    rc-tree-select "~5.5.0"
+    rc-trigger "^5.2.10"
+    rc-upload "~4.3.0"
+    rc-util "^5.22.5"
+    scroll-into-view-if-needed "^2.2.25"
 
 antd@^4.20.6:
   version "4.24.8"
@@ -3291,55 +3402,55 @@ antd@^4.20.6:
     rc-util "^5.22.5"
     scroll-into-view-if-needed "^2.2.25"
 
-antd@^5.4.2:
-  version "5.4.2"
-  resolved "https://registry.npmmirror.com/antd/-/antd-5.4.2.tgz"
-  integrity sha512-OxXZ7joFf6Um4zeXm07tyJ9WV6eMwUw1KUmewfM/BDceUFVtJVf7YbBTBfX3JTl+jOuSpMSb4naFhOCgVwtyFw==
+antd@^5.5.1:
+  version "5.5.1"
+  resolved "https://registry.npmmirror.com/antd/-/antd-5.5.1.tgz#84615c17db0a6d46ca69c26831130f1fae162896"
+  integrity sha512-H9vPVGQ/8fT9Zidl4fzMSVAOCDIe/ZQtiU2hDzrN2tqAbaxOet+1HqfoKv7dfy+e0ttKIFvs6Y2yWw/ign1MwQ==
   dependencies:
     "@ant-design/colors" "^7.0.0"
-    "@ant-design/cssinjs" "^1.7.1"
-    "@ant-design/icons" "^5.0.0"
+    "@ant-design/cssinjs" "^1.9.1"
+    "@ant-design/icons" "^5.1.0"
     "@ant-design/react-slick" "~1.0.0"
     "@babel/runtime" "^7.18.3"
     "@ctrl/tinycolor" "^3.6.0"
+    "@rc-component/color-picker" "~1.1.1"
     "@rc-component/mutate-observer" "^1.0.0"
     "@rc-component/tour" "~1.8.0"
-    "@rc-component/trigger" "^1.7.0"
+    "@rc-component/trigger" "^1.13.0"
     classnames "^2.2.6"
     copy-to-clipboard "^3.2.0"
     dayjs "^1.11.1"
     qrcode.react "^3.1.0"
-    rc-cascader "~3.10.0"
+    rc-cascader "~3.12.0"
     rc-checkbox "~3.0.0"
     rc-collapse "~3.5.2"
     rc-dialog "~9.1.0"
     rc-drawer "~6.1.1"
-    rc-dropdown "~4.0.0"
-    rc-field-form "~1.29.0"
+    rc-dropdown "~4.1.0"
+    rc-field-form "~1.31.0"
     rc-image "~5.16.0"
     rc-input "~1.0.4"
     rc-input-number "~7.4.0"
     rc-mentions "~2.2.0"
     rc-menu "~9.8.3"
-    rc-motion "^2.6.1"
-    rc-notification "~5.0.0"
-    rc-pagination "~3.3.1"
-    rc-picker "~3.6.1"
+    rc-motion "^2.7.3"
+    rc-notification "~5.0.4"
+    rc-pagination "~3.4.2"
+    rc-picker "~3.7.4"
     rc-progress "~3.4.1"
     rc-rate "~2.10.0"
     rc-resize-observer "^1.2.0"
-    rc-segmented "~2.1.2"
-    rc-select "~14.4.3"
+    rc-segmented "~2.2.0"
+    rc-select "~14.5.0"
     rc-slider "~10.1.0"
     rc-steps "~6.0.0"
-    rc-switch "~4.0.0"
-    rc-table "~7.31.0"
-    rc-tabs "~12.5.6"
+    rc-switch "~4.1.0"
+    rc-table "~7.32.1"
+    rc-tabs "~12.6.0"
     rc-textarea "~1.2.2"
     rc-tooltip "~6.0.0"
     rc-tree "~5.7.0"
-    rc-tree-select "~5.8.0"
-    rc-trigger "^5.3.4"
+    rc-tree-select "~5.9.0"
     rc-upload "~4.3.0"
     rc-util "^5.27.0"
     scroll-into-view-if-needed "^3.0.3"
@@ -6884,6 +6995,11 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
+lodash-es@^4.17.15:
+  version "4.17.21"
+  resolved "https://registry.npmmirror.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npmmirror.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
@@ -7020,6 +7136,11 @@ map-obj@^4.0.0:
   version "4.3.0"
   resolved "https://registry.npmmirror.com/map-obj/-/map-obj-4.3.0.tgz"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
+
+material-colors@^1.2.1:
+  version "1.2.6"
+  resolved "https://registry.npmmirror.com/material-colors/-/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
+  integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
 
 mathml-tag-names@^2.1.3:
   version "2.1.3"
@@ -8498,15 +8619,15 @@ rc-align@^4.0.0:
     rc-util "^5.26.0"
     resize-observer-polyfill "^1.5.1"
 
-rc-cascader@~3.10.0:
-  version "3.10.1"
-  resolved "https://registry.npmmirror.com/rc-cascader/-/rc-cascader-3.10.1.tgz"
-  integrity sha512-tImBYEAqLlIZ+jnRmfQQEm5gOXa09N9aGV9AKxriXlCvsNEfdZMIRyY0p74sEZIUn0ycXHo8VcOlqsgLcgFknQ==
+rc-cascader@~3.12.0:
+  version "3.12.0"
+  resolved "https://registry.npmmirror.com/rc-cascader/-/rc-cascader-3.12.0.tgz#709fdbede6c36f7e62d0daea76ba76b825cc7182"
+  integrity sha512-QTeGPTNYX33alozNy9lYg7YKpvYVwquai/mrFRR8mHlHnK7QlqJyMqbs2p7rc5eeKARKMRTUeoN5CfO+Gr9UBw==
   dependencies:
     "@babel/runtime" "^7.12.5"
     array-tree-filter "^2.1.0"
     classnames "^2.3.1"
-    rc-select "~14.4.0"
+    rc-select "~14.5.0"
     rc-tree "~5.7.0"
     rc-util "^5.6.1"
 
@@ -8603,6 +8724,16 @@ rc-dropdown@~4.0.0:
     rc-trigger "^5.3.1"
     rc-util "^5.17.0"
 
+rc-dropdown@~4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npmmirror.com/rc-dropdown/-/rc-dropdown-4.1.0.tgz#418a68939631520de80d0865d02b440eeeb4168e"
+  integrity sha512-VZjMunpBdlVzYpEdJSaV7WM7O0jf8uyDjirxXLZRNZ+tAC+NzD3PXPEtliFwGzVwBBdCmGuSqiS9DWcOLxQ9tw==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    "@rc-component/trigger" "^1.7.0"
+    classnames "^2.2.6"
+    rc-util "^5.17.0"
+
 rc-field-form@~1.27.0:
   version "1.27.4"
   resolved "https://registry.npmmirror.com/rc-field-form/-/rc-field-form-1.27.4.tgz"
@@ -8612,10 +8743,10 @@ rc-field-form@~1.27.0:
     async-validator "^4.1.0"
     rc-util "^5.8.0"
 
-rc-field-form@~1.29.0:
-  version "1.29.1"
-  resolved "https://registry.npmmirror.com/rc-field-form/-/rc-field-form-1.29.1.tgz"
-  integrity sha512-LbspDMu1ei71LoAdot0QRcMQn3WyAwgAp/P4thqUFLOy0eQsbtLZN24a3KV7xdv/b9KAd/A4/T9apWz7YZqalQ==
+rc-field-form@~1.31.0:
+  version "1.31.0"
+  resolved "https://registry.npmmirror.com/rc-field-form/-/rc-field-form-1.31.0.tgz#c48a6a362bb37fab1fda3474753abc7b73e873df"
+  integrity sha512-3u6crithuSQMfHaDL3rMvzjG5oXJQIgCTxDfT0pJL9kI/C2LWuR8GrApzOvB9gKcf8VvvnejzmSPnsUJz4YGmQ==
   dependencies:
     "@babel/runtime" "^7.18.0"
     async-validator "^4.1.0"
@@ -8728,6 +8859,15 @@ rc-motion@^2.0.0, rc-motion@^2.0.1, rc-motion@^2.2.0, rc-motion@^2.3.0, rc-motio
     classnames "^2.2.1"
     rc-util "^5.21.0"
 
+rc-motion@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.npmmirror.com/rc-motion/-/rc-motion-2.7.3.tgz#126155bb3e687174fb3b92fddade2835c963b04d"
+  integrity sha512-2xUvo8yGHdOHeQbdI8BtBsCIrWKchEmFEIskf0nmHtJsou+meLd/JE+vnvSX2JxcBrJtXY2LuBpxAOxrbY/wMQ==
+  dependencies:
+    "@babel/runtime" "^7.11.1"
+    classnames "^2.2.1"
+    rc-util "^5.21.0"
+
 rc-notification@~4.6.0:
   version "4.6.1"
   resolved "https://registry.npmmirror.com/rc-notification/-/rc-notification-4.6.1.tgz"
@@ -8738,10 +8878,10 @@ rc-notification@~4.6.0:
     rc-motion "^2.2.0"
     rc-util "^5.20.1"
 
-rc-notification@~5.0.0:
-  version "5.0.3"
-  resolved "https://registry.npmmirror.com/rc-notification/-/rc-notification-5.0.3.tgz"
-  integrity sha512-+wHbHu6RiTNtsZYx42WxWA+tC5m0qyKvJAauO4/6LIEyJspK8fRlFQz+OCFgFwGuNs3cOdo9tLs+cPfztSZwbQ==
+rc-notification@~5.0.4:
+  version "5.0.4"
+  resolved "https://registry.npmmirror.com/rc-notification/-/rc-notification-5.0.4.tgz#4ad33d4aa291528fee9095b0be80ae41f1728a38"
+  integrity sha512-3535oellIRlt1LspERfK8yvCqb8Gio3R02rULciaSc1xe3H7ArTU/khlUTv1ddGzua4HhmF4D4Rwz/+mBxETvg==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "2.x"
@@ -8766,10 +8906,10 @@ rc-pagination@~3.2.0:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.1"
 
-rc-pagination@~3.3.1:
-  version "3.3.1"
-  resolved "https://registry.npmmirror.com/rc-pagination/-/rc-pagination-3.3.1.tgz"
-  integrity sha512-eI4dSeB3OrFxll7KzWa3ZH63LV2tHxt0AUmZmDwuI6vc3CK5lZhaKUYq0fRowb5586hN+L26j5WZoSz9cwEfjg==
+rc-pagination@~3.4.2:
+  version "3.4.2"
+  resolved "https://registry.npmmirror.com/rc-pagination/-/rc-pagination-3.4.2.tgz#19aef804b98b77e7636a35eebed62e3fea53eb4c"
+  integrity sha512-arFQKD15h26+rSXRnQNA8b/tHy98/853W/leXkas2WlViOYG5A2qgEg7CRX64GKb9TqJjdqnDzaMAvl0qF4Tig==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.1"
@@ -8788,15 +8928,15 @@ rc-picker@~2.7.0:
     rc-util "^5.4.0"
     shallowequal "^1.1.0"
 
-rc-picker@~3.6.1:
-  version "3.6.2"
-  resolved "https://registry.npmmirror.com/rc-picker/-/rc-picker-3.6.2.tgz"
-  integrity sha512-acLNCi2WTNAuvTtcEzKp72mU15ni0sqrIKVlEcj04KgLZxhlVPMabCS+Sc8VuOCPJbOcW0XeOydbNnJbWTvzxg==
+rc-picker@~3.7.4:
+  version "3.7.5"
+  resolved "https://registry.npmmirror.com/rc-picker/-/rc-picker-3.7.5.tgz#66282e02dde5bc1bd69ac5004abfbe06cc5c1eee"
+  integrity sha512-t9duzOtk8uN+mFr+WYcH7jZzTImfPVLzz8h3zD+hObURqpI36mfCvhPRc4blCflbhWZ7NAJQDGWbAMXixxFLYA==
   dependencies:
     "@babel/runtime" "^7.10.1"
     "@rc-component/trigger" "^1.5.0"
     classnames "^2.2.1"
-    rc-util "^5.27.0"
+    rc-util "^5.30.0"
 
 rc-progress@~3.4.1:
   version "3.4.1"
@@ -8835,10 +8975,20 @@ rc-resize-observer@^1.0.0, rc-resize-observer@^1.1.0, rc-resize-observer@^1.2.0,
     rc-util "^5.27.0"
     resize-observer-polyfill "^1.5.1"
 
-rc-segmented@~2.1.0, rc-segmented@~2.1.2:
+rc-segmented@~2.1.0:
   version "2.1.2"
   resolved "https://registry.npmmirror.com/rc-segmented/-/rc-segmented-2.1.2.tgz"
   integrity sha512-qGo1bCr83ESXpXVOCXjFe1QJlCAQXyi9KCiy8eX3rIMYlTeJr/ftySIaTnYsitL18SvWf5ZEHsfqIWoX0EMfFQ==
+  dependencies:
+    "@babel/runtime" "^7.11.1"
+    classnames "^2.2.1"
+    rc-motion "^2.4.4"
+    rc-util "^5.17.0"
+
+rc-segmented@~2.2.0:
+  version "2.2.2"
+  resolved "https://registry.npmmirror.com/rc-segmented/-/rc-segmented-2.2.2.tgz#a34f12ce6c0975fc3042ae7656bcd18e1744798e"
+  integrity sha512-Mq52M96QdHMsNdE/042ibT5vkcGcD5jxKp7HgPC2SRofpia99P5fkfHy1pEaajLMF/kj0+2Lkq1UZRvqzo9mSA==
   dependencies:
     "@babel/runtime" "^7.11.1"
     classnames "^2.2.1"
@@ -8858,10 +9008,23 @@ rc-select@~14.1.0, rc-select@~14.1.13:
     rc-util "^5.16.1"
     rc-virtual-list "^3.2.0"
 
-rc-select@~14.4.0, rc-select@~14.4.3:
-  version "14.4.3"
-  resolved "https://registry.npmmirror.com/rc-select/-/rc-select-14.4.3.tgz"
-  integrity sha512-qoz4gNqm3SN+4dYKSCRiRkxKSEEdbS3jC6gdFYoYwEjDZ9sdQFo5jHlfQbF+hhai01HOoj1Hf8Gq6tpUvU+Gmw==
+rc-select@~14.1.17:
+  version "14.1.17"
+  resolved "https://registry.npmmirror.com/rc-select/-/rc-select-14.1.17.tgz#e623eabeaa0dd117d5a63354e6ddaaa118abc5ee"
+  integrity sha512-6qQhMqtoUkkboRqXKKFRR5Nu1mrnw2mC1uxIBIczg7aiJ94qCZBg4Ww8OLT9f4xdyCgbFSGh6r3yB9EBsjoHGA==
+  dependencies:
+    "@babel/runtime" "^7.10.1"
+    classnames "2.x"
+    rc-motion "^2.0.1"
+    rc-overflow "^1.0.0"
+    rc-trigger "^5.0.4"
+    rc-util "^5.16.1"
+    rc-virtual-list "^3.2.0"
+
+rc-select@~14.5.0:
+  version "14.5.0"
+  resolved "https://registry.npmmirror.com/rc-select/-/rc-select-14.5.0.tgz#7af36b5003dc680122ccabaf55d8677ac374fe5a"
+  integrity sha512-YMcbbT6Y9Nf0pWP2PfudU3iSymfMx5kYdNpjpf5aqmFYYVswagO8ILJD+c5JU0GRDt9YSqYWVbYe/aBfibvR4A==
   dependencies:
     "@babel/runtime" "^7.10.1"
     "@rc-component/trigger" "^1.5.0"
@@ -8869,7 +9032,7 @@ rc-select@~14.4.0, rc-select@~14.4.3:
     rc-motion "^2.0.1"
     rc-overflow "^1.0.0"
     rc-util "^5.16.1"
-    rc-virtual-list "^3.4.13"
+    rc-virtual-list "^3.5.2"
 
 rc-slider@~10.0.0:
   version "10.0.1"
@@ -8917,14 +9080,14 @@ rc-switch@~3.2.0:
     classnames "^2.2.1"
     rc-util "^5.0.1"
 
-rc-switch@~4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmmirror.com/rc-switch/-/rc-switch-4.0.0.tgz"
-  integrity sha512-IfrYC99vN0gKaTyjQdqYuADU0eH00SAFHg3jOp8HrmUpJruhV1SohJzrCbPqPraZeX/6X/QKkdLfkdnUub05WA==
+rc-switch@~4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npmmirror.com/rc-switch/-/rc-switch-4.1.0.tgz#f37d81b4e0c5afd1274fd85367b17306bf25e7d7"
+  integrity sha512-TI8ufP2Az9oEbvyCeVE4+90PDSljGyuwix3fV58p7HV2o4wBnVToEyomJRVyTaZeqNPAp+vqeo4Wnj5u0ZZQBg==
   dependencies:
-    "@babel/runtime" "^7.10.1"
+    "@babel/runtime" "^7.21.0"
     classnames "^2.2.1"
-    rc-util "^5.0.1"
+    rc-util "^5.30.0"
 
 rc-table@~7.26.0:
   version "7.26.0"
@@ -8937,10 +9100,10 @@ rc-table@~7.26.0:
     rc-util "^5.22.5"
     shallowequal "^1.1.0"
 
-rc-table@~7.31.0:
-  version "7.31.1"
-  resolved "https://registry.npmmirror.com/rc-table/-/rc-table-7.31.1.tgz"
-  integrity sha512-KZPi35aGpv2VaL1Jbc58FBJo063HtKyVjhOFWX4AkBV7tjHHQokMdUoua5E+GPJh6QZUpK/a8PjKa9IZzPLIEA==
+rc-table@~7.32.1:
+  version "7.32.1"
+  resolved "https://registry.npmmirror.com/rc-table/-/rc-table-7.32.1.tgz#7130a94727ac3870a6ddb9778b6f8496e388bce0"
+  integrity sha512-fHMQteKMocUC9I9Vex3eBLH7QsiaMR/qtzh3B1Ty2PoNGwVTwVdDFyRL05zch+JU3KnNNczgQeVvtf/p//gdrQ==
   dependencies:
     "@babel/runtime" "^7.10.1"
     "@rc-component/context" "^1.3.0"
@@ -8956,6 +9119,19 @@ rc-tabs@~12.5.6:
     "@babel/runtime" "^7.11.2"
     classnames "2.x"
     rc-dropdown "~4.0.0"
+    rc-menu "~9.8.0"
+    rc-motion "^2.6.2"
+    rc-resize-observer "^1.0.0"
+    rc-util "^5.16.0"
+
+rc-tabs@~12.6.0:
+  version "12.6.0"
+  resolved "https://registry.npmmirror.com/rc-tabs/-/rc-tabs-12.6.0.tgz#b69547cb6d48004e202d5bd15b03750536d2f24d"
+  integrity sha512-L9yIptdrmft573MEsc+xKoGbXzfg3V6NYvgT0sNh+PSzWaeF34W7CIPi98lcWjtsYB80oFMOcAXRilUFxLHTaA==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    classnames "2.x"
+    rc-dropdown "~4.1.0"
     rc-menu "~9.8.0"
     rc-motion "^2.6.2"
     rc-resize-observer "^1.0.0"
@@ -9012,14 +9188,14 @@ rc-tree-select@~5.5.0:
     rc-tree "~5.7.0"
     rc-util "^5.16.1"
 
-rc-tree-select@~5.8.0:
-  version "5.8.0"
-  resolved "https://registry.npmmirror.com/rc-tree-select/-/rc-tree-select-5.8.0.tgz"
-  integrity sha512-NozrkVLR8k3cpx8R5/YFmJMptgOacR5zEQHZGMQg31bD6jEgGiJeOn2cGRI6x0Xdyvi1CSqCbUsIoqiej74wzw==
+rc-tree-select@~5.9.0:
+  version "5.9.0"
+  resolved "https://registry.npmmirror.com/rc-tree-select/-/rc-tree-select-5.9.0.tgz#e8af859ff7751d22b6f4d98941cf13f775686475"
+  integrity sha512-oh3blESzLfLCBPSiVDtZ2irzrWWZUMeHvnSwRvFo79br8Z+K/1OhXhXBZmROvfKwaH8YUugAQy8B2j5EGQbdyA==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "2.x"
-    rc-select "~14.4.0"
+    rc-select "~14.5.0"
     rc-tree "~5.7.0"
     rc-util "^5.16.1"
 
@@ -9034,7 +9210,7 @@ rc-tree@~5.7.0:
     rc-util "^5.16.1"
     rc-virtual-list "^3.4.8"
 
-rc-trigger@^5.0.0, rc-trigger@^5.0.4, rc-trigger@^5.1.2, rc-trigger@^5.2.10, rc-trigger@^5.3.1, rc-trigger@^5.3.4:
+rc-trigger@^5.0.0, rc-trigger@^5.0.4, rc-trigger@^5.1.2, rc-trigger@^5.2.10, rc-trigger@^5.3.1:
   version "5.3.4"
   resolved "https://registry.npmmirror.com/rc-trigger/-/rc-trigger-5.3.4.tgz"
   integrity sha512-mQv+vas0TwKcjAO2izNPkqR4j86OemLRmvL2nOzdP9OWNWA1ivoTt5hzFqYNW9zACwmTezRiN8bttrC7cZzYSw==
@@ -9073,7 +9249,15 @@ rc-util@^5.0.1, rc-util@^5.0.6, rc-util@^5.15.0, rc-util@^5.16.0, rc-util@^5.16.
     "@babel/runtime" "^7.18.3"
     react-is "^16.12.0"
 
-rc-virtual-list@^3.2.0, rc-virtual-list@^3.4.13, rc-virtual-list@^3.4.8:
+rc-util@^5.30.0, rc-util@^5.31.1:
+  version "5.31.1"
+  resolved "https://registry.npmmirror.com/rc-util/-/rc-util-5.31.1.tgz#e64321e2c9589d6f9d6e91e310b8b461eb91f425"
+  integrity sha512-ecgQsqv7j0ZTNMsQU1M/xLBnboSoiJxwE9R0rQEe0MaxOCZmhTTCjDP+6KPQjTaXlyIkVuZT3lC4CNkr+cp9Lw==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    react-is "^16.12.0"
+
+rc-virtual-list@^3.2.0, rc-virtual-list@^3.4.8:
   version "3.4.13"
   resolved "https://registry.npmmirror.com/rc-virtual-list/-/rc-virtual-list-3.4.13.tgz"
   integrity sha512-cPOVDmcNM7rH6ANotanMDilW/55XnFPw0Jh/GQYtrzZSy3AmWvCnqVNyNC/pgg3lfVmX2994dlzAhuUrd4jG7w==
@@ -9082,6 +9266,29 @@ rc-virtual-list@^3.2.0, rc-virtual-list@^3.4.13, rc-virtual-list@^3.4.8:
     classnames "^2.2.6"
     rc-resize-observer "^1.0.0"
     rc-util "^5.15.0"
+
+rc-virtual-list@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.npmmirror.com/rc-virtual-list/-/rc-virtual-list-3.5.2.tgz#5e1028869bae900eacbae6788d4eca7210736006"
+  integrity sha512-sE2G9hTPjVmatQni8OP2Kx33+Oth6DMKm67OblBBmgMBJDJQOOFpSGH7KZ6Pm85rrI2IGxDRXZCr0QhYOH2pfQ==
+  dependencies:
+    "@babel/runtime" "^7.20.0"
+    classnames "^2.2.6"
+    rc-resize-observer "^1.0.0"
+    rc-util "^5.15.0"
+
+react-color@^2.19.3:
+  version "2.19.3"
+  resolved "https://registry.npmmirror.com/react-color/-/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"
+  integrity sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==
+  dependencies:
+    "@icons/material" "^0.2.4"
+    lodash "^4.17.15"
+    lodash-es "^4.17.15"
+    material-colors "^1.2.1"
+    prop-types "^15.5.10"
+    reactcss "^1.2.0"
+    tinycolor2 "^1.4.1"
 
 react-dom@18.1.0:
   version "18.1.0"
@@ -9226,7 +9433,7 @@ react@18.1.0:
   dependencies:
     loose-envify "^1.1.0"
 
-reactcss@^1.2.3:
+reactcss@^1.2.0, reactcss@^1.2.3:
   version "1.2.3"
   resolved "https://registry.npmmirror.com/reactcss/-/reactcss-1.2.3.tgz"
   integrity sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==
@@ -10541,7 +10748,7 @@ tiny-pinyin@^1.3.2:
   resolved "https://registry.npmmirror.com/tiny-pinyin/-/tiny-pinyin-1.3.2.tgz"
   integrity sha512-uHNGu4evFt/8eNLldazeAM1M8JrMc1jshhJJfVRARTN3yT8HEEibofeQ7QETWQ5ISBjd6fKtTVBCC/+mGS6FpA==
 
-tinycolor2@^1.4.2:
+tinycolor2@^1.4.1, tinycolor2@^1.4.2:
   version "1.6.0"
   resolved "https://registry.npmmirror.com/tinycolor2/-/tinycolor2-1.6.0.tgz"
   integrity sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==
