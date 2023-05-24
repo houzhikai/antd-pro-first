@@ -1,5 +1,5 @@
 import { PageContainer, ProCard, WaterMark } from '@ant-design/pro-components';
-import InterfaceData from './blocls/components/InterfaceData';
+import InterfaceData from './blocls/InterfaceData';
 import HeaderPage from './blocls/components/HeaderPage';
 import { interfaceDocDataList } from '@/components/dataList/InterfaceDoc';
 
@@ -22,7 +22,7 @@ const InterfaceDoc = () => {
             collapsible
           >
             {item.content.map((p) => (
-              <InterfaceData key={p.url} type={p.type} url={p.url} />
+              <InterfaceData id={p.id} key={p.id} type={p.type} url={p.url} />
             ))}
           </ProCard>
         ))}
