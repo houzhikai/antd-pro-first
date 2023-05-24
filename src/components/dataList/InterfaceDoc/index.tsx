@@ -10,6 +10,7 @@ interface InterfaceDocDataListProps {
     id: string;
     type?: 'GET' | 'POST';
     url: string;
+    interfaceDataDetail?: any;
   }[];
 }
 export const interfaceDocDataList: InterfaceDocDataListProps[] = [
@@ -20,8 +21,24 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
         id: '1-1',
         type: 'GET',
         url: '/api/dbm/site/reader1',
+        interfaceDataDetail: {
+          process: 'sitemgred',
+          module: 'DBM',
+          person: 'soma',
+          beforeInterface: '无1',
+        },
       },
-      { id: '1-2', type: 'POST', url: '/api/dbm/site/reader2' },
+      {
+        id: '1-2',
+        type: 'POST',
+        url: '/api/dbm/site/reader2',
+        interfaceDataDetail: {
+          process: 'sitemgred',
+          module: 'DBM',
+          person: 'soma',
+          beforeInterface: '无2',
+        },
+      },
     ],
   },
   {

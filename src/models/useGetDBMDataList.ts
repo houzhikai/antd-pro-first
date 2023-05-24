@@ -29,7 +29,6 @@ export default () => {
     }
   }, [isRequest, dbmParams]);
   const selectedAddressList = Array.from(set).filter((item) => item.length > 0);
-  console.log(1, selectedAddressList);
   return {
     siteList,
     setSiteList,

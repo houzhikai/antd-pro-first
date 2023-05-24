@@ -7,6 +7,7 @@ interface InterfaceDataProps {
   id: string;
   type?: 'GET' | 'POST';
   url: string;
+  interfaceDataDetail: any;
 }
 
 const InterfaceData = (data: InterfaceDataProps) => {
@@ -44,7 +45,9 @@ const InterfaceData = (data: InterfaceDataProps) => {
           <div style={{ marginLeft: 20 }}>{url}</div>
         </div>
       </ProCard>
-      {openList.includes(data.id) ? <DetailsData /> : null}
+      {openList.includes(data.id) ? (
+        <DetailsData data={data.interfaceDataDetail} />
+      ) : null}
     </div>
   );
 };
