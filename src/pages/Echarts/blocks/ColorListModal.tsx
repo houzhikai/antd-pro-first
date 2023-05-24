@@ -4,10 +4,13 @@ import otherColor from '@/icon/otherColor.svg';
 import { colorList, standardColorList } from './components/data';
 import { Colorpicker, AnyColorFormat } from 'antd-colorpicker';
 import { useState } from 'react';
+import styles from '../index.less';
 
 const ColorListModal = () => {
   const { isShowModal, setIsShowModal, setChangeColor } =
     useModel('useEchartsModel');
+  const [color, setColor] = useState<AnyColorFormat>({ hex: '#4f4a67' });
+  const [isOpenColorpicker, setIsOpenColorpicker] = useState(false);
 
   const handleCancel = () => {
     setIsShowModal((obj) => {
@@ -16,6 +19,7 @@ const ColorListModal = () => {
         isOpen: false,
       };
     });
+    setIsOpenColorpicker(false);
   };
 
   const handleSelectColor = (color: string) => {
@@ -26,16 +30,17 @@ const ColorListModal = () => {
     });
   };
 
-  const [color, setColor] = useState<AnyColorFormat>({
-    r: 0,
-    g: 0,
-    b: 0,
-    a: 0.5,
-  });
-
   const onChange = (color: AnyColorFormat) => {
-    console.log(color, 11);
     setColor(color);
+    setChangeColor((pre) => {
+      let newArr = [...pre];
+      newArr.splice(isShowModal.order, 1, color.hex); // 选中第n个坐标，删除一个，将color替换
+      return newArr;
+    });
+  };
+
+  const handleOpenColorpicker = () => {
+    setIsOpenColorpicker((c) => !c);
   };
 
   return (
@@ -81,17 +86,18 @@ const ColorListModal = () => {
             />
           </Tooltip>
         ))}
+        <div className={styles.customLabel} onClick={handleOpenColorpicker}>
+          <Image
+            style={{ width: 18, height: 18, marginRight: 10 }}
+            src={otherColor}
+            preview={false}
+          />
+          自定义颜色...
+        </div>
       </div>
-      <div>
-        <Image
-          style={{ width: 18, height: 18, marginRight: 10 }}
-          src={otherColor}
-          preview={false}
-        />
-        自定义颜色...
-      </div>
-
-      <Colorpicker value={color} onChange={onChange} />
+      {isShowModal.isOpen && isOpenColorpicker ? (
+        <Colorpicker value={color} onChange={onChange} />
+      ) : null}
     </Modal>
   );
 };
