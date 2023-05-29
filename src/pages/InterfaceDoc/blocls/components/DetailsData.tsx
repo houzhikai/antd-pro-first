@@ -1,29 +1,20 @@
-import styles from '../../index.less';
+import { ProCard } from '@ant-design/pro-components';
+import LeftConent from './LeftConent';
 
 const DetailsData = (props: any) => {
   const { data } = props;
   return (
-    <div className={styles.details}>
-      <div className={styles.content}>
-        <div className={styles.label}>进程:</div>
-        <div className={styles.right}>{data.process}</div>
-      </div>
-
-      <div className={styles.content}>
-        <div className={styles.label}>模块:</div>
-        <div className={styles.right}>{data.module}</div>
-      </div>
-
-      <div className={styles.content}>
-        <div className={styles.label}>责任人:</div>
-        <div className={styles.right}>{data.person}</div>
-      </div>
-
-      <div className={styles.content}>
-        <div className={styles.label}>前置接口:</div>
-        <div className={styles.right}>{data.beforeInterface}</div>
-      </div>
-    </div>
+    <ProCard split="vertical" bordered>
+      <ProCard title="左侧详情" colSpan="30%">
+        <LeftConent data={data} />
+      </ProCard>
+      <ProCard title="入参" headerBordered>
+        <div>入参内容</div>
+      </ProCard>
+      <ProCard title="出参" headerBordered>
+        <div>出参内容</div>
+      </ProCard>
+    </ProCard>
   );
 };
 
