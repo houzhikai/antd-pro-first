@@ -27,6 +27,22 @@ const Echarts = () => {
     });
 
     myChart.setOption({
+      title: {
+        text: 'Example',
+        subtext: 'Sub Title',
+        left: 'center', // left/center/right
+        top: 'top', // top/middle/bottom
+        textStyle: {
+          fontSize: 26,
+          textShadowColor: 'rgba(238, 13, 13, 1)',
+          textShadowBlur: 3.5,
+        },
+        subtextStyle: {
+          fontSize: 16,
+          textShadowColor: 'rgba(238, 13, 13, 1)',
+          textShadowBlur: 3.5,
+        },
+      },
       tooltip: {
         position: 'top',
         formatter: (params) => {
@@ -163,7 +179,10 @@ const Echarts = () => {
   }, [axis, isAxisInverse, axisValue, changeColor, changeAxisName]);
   return (
     <>
-      <div id="echart" style={{ width: '600px', height: '600px' }}></div>
+      <div
+        id="echart"
+        style={{ width: '600px', height: '600px', marginTop: 30 }}
+      ></div>
     </>
   );
 };
