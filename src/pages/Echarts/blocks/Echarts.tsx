@@ -38,15 +38,17 @@ const Echarts = () => {
       graphic: [
         {
           type: 'circle',
-          z: 100,
-          style: {
-            fill: 'transparent',
-            stroke: '#74746c',
-          },
+          scale: [1, 1], // 缩放，默认值为 [1, 1]。表示缩放的倍数。
+          z: -1, // 层级
+          origin: [25, 25], // 旋转和缩放的中心点，默认值为 [0, 0]。
           shape: {
             cx: 300,
             cy: 300,
             r: 235,
+          },
+          style: {
+            fill: 'transparent',
+            stroke: '#6e7079',
           },
         },
       ],
@@ -131,6 +133,7 @@ const Echarts = () => {
         show: false,
         inRange: {
           color: changeColor,
+          // symbolSize: [200, 600], // 图元大小
         },
       },
       series: [
