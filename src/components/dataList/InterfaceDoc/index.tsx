@@ -11,6 +11,7 @@ interface InterfaceDocDataListProps {
     type?: 'GET' | 'POST';
     url: string;
     interfaceDataDetail?: any;
+    describe?: string;
   }[];
 }
 export const interfaceDocDataList: InterfaceDocDataListProps[] = [
@@ -21,6 +22,7 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
         id: '1-1',
         type: 'GET',
         url: '/api/dbm/site/reader1',
+        describe: '获取site中的DBM1',
         interfaceDataDetail: {
           process: 'sitemgred',
           module: 'DBM',
@@ -32,6 +34,7 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
         id: '1-2',
         type: 'POST',
         url: '/api/dbm/site/reader2',
+        describe: '获取site中的DBM2',
         interfaceDataDetail: {
           process: 'sitemgred',
           module: 'DBM',

@@ -22,13 +22,7 @@ const InterfaceDoc = () => {
             collapsible
           >
             {item.content.map((p) => (
-              <InterfaceData
-                interfaceDataDetail={p.interfaceDataDetail}
-                id={p.id}
-                key={p.id}
-                type={p.type}
-                url={p.url}
-              />
+              <InterfaceData key={p.url} data={p} />
             ))}
           </ProCard>
         ))}

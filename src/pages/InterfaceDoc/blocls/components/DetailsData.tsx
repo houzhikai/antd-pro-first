@@ -3,7 +3,7 @@ import styles from '../../index.less';
 const DetailsData = (props: any) => {
   const { data } = props;
   return (
-    <div className={styles.detailsWrapper}>
+    <div className={styles.details}>
       <div className={styles.content}>
         <div className={styles.label}>进程:</div>
         <div className={styles.right}>{data.process}</div>

@@ -3,14 +3,8 @@ import styles from '../index.less';
 import { useState } from 'react';
 import DetailsData from './components/DetailsData';
 
-interface InterfaceDataProps {
-  id: string;
-  type?: 'GET' | 'POST';
-  url: string;
-  interfaceDataDetail: any;
-}
-
-const InterfaceData = (data: InterfaceDataProps) => {
+const InterfaceData = (value) => {
+  const data = value.data;
   const [openList, setOpenList] = useState<string[]>([]);
   const type = data.type || 'GET';
   const url = data.url;
@@ -43,6 +37,7 @@ const InterfaceData = (data: InterfaceDataProps) => {
         <div className={styles.content} onClick={() => handleClick(data.id)}>
           <div className={isGetType ? styles.get : styles.post}>{type}</div>
           <div style={{ marginLeft: 20 }}>{url}</div>
+          <div className={styles.describe}>{data.describe}</div>
         </div>
       </ProCard>
       {openList.includes(data.id) ? (
