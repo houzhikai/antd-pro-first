@@ -1,6 +1,7 @@
 import { ProCard } from '@ant-design/pro-components';
 import LeftConent from './LeftConent';
 import InputParams from './InputParams';
+import ResponseParams from './ResponseParams';
 
 const DetailsData = (props: any) => {
   const data = props.data;
@@ -16,8 +17,8 @@ const DetailsData = (props: any) => {
       >
         <InputParams data={data.inputParams} />
       </ProCard>
-      <ProCard title="出参" headerBordered>
-        <div>出参内容</div>
+      <ProCard title="Responses" headerBordered>
+        <ResponseParams />
       </ProCard>
     </ProCard>
   );
