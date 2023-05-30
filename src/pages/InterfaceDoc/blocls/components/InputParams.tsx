@@ -5,7 +5,7 @@ const InputParams = (props) => {
   return (
     <ProDescriptions>
       {Object.keys(data).length !== 0 ? (
-        <ProDescriptions.Item className="xxx" label="入参" valueType="jsonCode">
+        <ProDescriptions.Item label="入参" valueType="jsonCode">
           {`${JSON.stringify(data)}`}
         </ProDescriptions.Item>
       ) : (

@@ -10,15 +10,11 @@ const DetailsData = (props: any) => {
       <ProCard title="左侧详情" colSpan="30%">
         <LeftConent data={data.interfaceDataDetail} />
       </ProCard>
-      <ProCard
-        title="Params"
-        headerBordered
-        bodyStyle={{ background: '#ebf3fb', minHeight: 123 }}
-      >
+      <ProCard title="Params" headerBordered>
         <InputParams data={data.inputParams} />
       </ProCard>
       <ProCard title="Responses" headerBordered>
-        <ResponseParams />
+        <ResponseParams data={data.response} />
       </ProCard>
     </ProCard>
   );

@@ -15,6 +15,9 @@ interface InterfaceDocDataListProps {
     inputParams?: {
       [key: string]: any;
     }; // 参数不确定的对象
+    response?: {
+      [key: string]: any;
+    };
   }[];
 }
 export const interfaceDocDataList: InterfaceDocDataListProps[] = [
@@ -34,6 +37,11 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
         },
         inputParams: {
           page: 0,
+        },
+        response: {
+          result: '0',
+          msg: '',
+          data: [],
         },
       },
       {
@@ -66,6 +74,7 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
           beforeInterface: '无1',
         },
         inputParams: {},
+        response: {},
       },
       {
         id: '2-2',
