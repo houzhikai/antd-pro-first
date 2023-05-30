@@ -40,9 +40,7 @@ const InterfaceData = (value) => {
           <div className={styles.describe}>{data.describe}</div>
         </div>
       </ProCard>
-      {openList.includes(data.id) ? (
-        <DetailsData data={data.interfaceDataDetail} />
-      ) : null}
+      {openList.includes(data.id) ? <DetailsData data={data} /> : null}
     </div>
   );
 };

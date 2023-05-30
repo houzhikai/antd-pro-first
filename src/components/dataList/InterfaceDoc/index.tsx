@@ -12,6 +12,9 @@ interface InterfaceDocDataListProps {
     url: string;
     interfaceDataDetail?: any;
     describe?: string;
+    inputParams?: {
+      [key: string]: any;
+    }; // 参数不确定的对象
   }[];
 }
 export const interfaceDocDataList: InterfaceDocDataListProps[] = [
@@ -29,6 +32,9 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
           person: 'soma',
           beforeInterface: '无1',
         },
+        inputParams: {
+          page: 0,
+        },
       },
       {
         id: '1-2',
@@ -41,6 +47,7 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
           person: 'soma',
           beforeInterface: '无2',
         },
+        inputParams: {},
       },
     ],
   },
@@ -50,9 +57,32 @@ export const interfaceDocDataList: InterfaceDocDataListProps[] = [
       {
         id: '2-1',
         type: 'POST',
-        url: '/api/dbm/site/writer1',
+        url: '/api/fu/site/heartbeat',
+        describe: '心跳接口，每5秒轮询一次',
+        interfaceDataDetail: {
+          process: 'sitemgred',
+          module: 'DBM',
+          person: 'soma',
+          beforeInterface: '无1',
+        },
+        inputParams: {},
       },
-      { id: '2-2', type: 'POST', url: '/api/dbm/site/writer2' },
+      {
+        id: '2-2',
+        type: 'POST',
+        url: '/api/fu/site/upload',
+        describe: '上传文件接口',
+        interfaceDataDetail: {
+          process: 'sitemgred',
+          module: 'DBM',
+          person: 'soma',
+          beforeInterface: '无1',
+        },
+        inputParams: {
+          page: 0,
+          filename: ['111', '222', '333'],
+        },
+      },
     ],
   },
 ];
