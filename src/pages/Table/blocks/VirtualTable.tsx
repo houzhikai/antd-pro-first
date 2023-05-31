@@ -20,7 +20,7 @@ const App = () => {
   const columnWidths = 90;
 
   return (
-    <div style={{ height: `80vh` }}>
+    <div style={{ width: 1536, height: `80vh` }}>
       <Table
         cellBordered
         shouldUpdateScroll={false}
