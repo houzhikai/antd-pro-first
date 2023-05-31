@@ -8,6 +8,7 @@ export default () => {
   const [isRequest, setIsRequest] = useState(false);
   const [dbmParams, setDbmParams] = useState('');
   const [isErrorPage, setIsErrorPage] = useState(false);
+  const [page, setPage] = useState(0);
 
   // 选择已勾选的
   const [set, { add, remove }] = useSet(['']);
@@ -41,5 +42,7 @@ export default () => {
     add,
     remove,
     selectedAddressList,
+    page,
+    setPage,
   };
 };

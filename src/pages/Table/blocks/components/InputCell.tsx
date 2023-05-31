@@ -12,6 +12,7 @@ const InputCell = ({
   val,
   //   onChange,
   dataKey,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   column,
   //   mode,
   //   setList,
@@ -28,7 +29,7 @@ const InputCell = ({
     });
     if (selectedDiv) {
       remove(`${rowData.id}${dataKey}`);
-      console.log('remove');
+      console.log('remove', `${rowData.id}${dataKey}`);
     } else {
       console.log('add');
       add(`${rowData.id}${dataKey}`);
