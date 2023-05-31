@@ -20,175 +20,178 @@ const App = () => {
   const columnWidths = 90;
 
   return (
-    <Table
-      cellBordered
-      shouldUpdateScroll={false}
-      height={705}
-      data={data}
-      headerHeight={46}
-      virtualized
-      rowHeight={() => 30}
-      loading={data.length > 0 ? false : true}
-    >
-      <Column width={columnWidths} align="center">
-        <HeaderCell>address</HeaderCell>
-        <BaseCell style={{ paddingTop: 10 }} dataKey="id" />
-      </Column>
+    <div style={{ height: `80vh` }}>
+      <Table
+        cellBordered
+        shouldUpdateScroll={false}
+        fillHeight
+        height={400}
+        data={data}
+        headerHeight={46}
+        virtualized
+        rowHeight={() => 30}
+        loading={data.length > 0 ? false : true}
+      >
+        <Column width={columnWidths} align="center">
+          <HeaderCell>address</HeaderCell>
+          <BaseCell style={{ paddingTop: 10 }} dataKey="id" />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>0</HeaderCell>
-        <InputCell
-          column="zero0"
-          dataKey="0"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>0</HeaderCell>
+          <InputCell
+            column="zero0"
+            dataKey="0"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>1</HeaderCell>
-        <InputCell
-          column="one"
-          dataKey="1"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>1</HeaderCell>
+          <InputCell
+            column="one"
+            dataKey="1"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>2</HeaderCell>
-        <InputCell
-          column="two"
-          dataKey="2"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>2</HeaderCell>
+          <InputCell
+            column="two"
+            dataKey="2"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>3</HeaderCell>
-        <InputCell
-          column="three"
-          dataKey="3"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>3</HeaderCell>
+          <InputCell
+            column="three"
+            dataKey="3"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>4</HeaderCell>
-        <InputCell
-          column="four"
-          dataKey="4"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>4</HeaderCell>
+          <InputCell
+            column="four"
+            dataKey="4"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>5</HeaderCell>
-        <InputCell
-          column="five"
-          dataKey="5"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>5</HeaderCell>
+          <InputCell
+            column="five"
+            dataKey="5"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>6</HeaderCell>
-        <InputCell
-          column="six"
-          dataKey="6"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>6</HeaderCell>
+          <InputCell
+            column="six"
+            dataKey="6"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>7</HeaderCell>
-        <InputCell
-          column="seven"
-          dataKey="7"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>7</HeaderCell>
+          <InputCell
+            column="seven"
+            dataKey="7"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>8</HeaderCell>
-        <InputCell
-          column="eight"
-          dataKey="8"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>8</HeaderCell>
+          <InputCell
+            column="eight"
+            dataKey="8"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>9</HeaderCell>
-        <InputCell
-          column="nine"
-          dataKey="9"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>9</HeaderCell>
+          <InputCell
+            column="nine"
+            dataKey="9"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>A</HeaderCell>
-        <InputCell
-          column="A"
-          dataKey="A"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>A</HeaderCell>
+          <InputCell
+            column="A"
+            dataKey="A"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>B</HeaderCell>
-        <InputCell
-          dataKey="email"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
-      <Column width={columnWidths} align="center">
-        <HeaderCell>C</HeaderCell>
-        <InputCell
-          dataKey="email"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>B</HeaderCell>
+          <InputCell
+            dataKey="email"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>C</HeaderCell>
+          <InputCell
+            dataKey="email"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>D</HeaderCell>
-        <InputCell
-          dataKey="email"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>D</HeaderCell>
+          <InputCell
+            dataKey="email"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>E</HeaderCell>
-        <InputCell
-          dataKey="email"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>E</HeaderCell>
+          <InputCell
+            dataKey="email"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
 
-      <Column width={columnWidths} align="center">
-        <HeaderCell>F</HeaderCell>
-        <InputCell
-          dataKey="email"
-          data={emailList}
-          onChange={handleEmailChange}
-        />
-      </Column>
-    </Table>
+        <Column width={columnWidths} align="center">
+          <HeaderCell>F</HeaderCell>
+          <InputCell
+            dataKey="email"
+            data={emailList}
+            onChange={handleEmailChange}
+          />
+        </Column>
+      </Table>
+    </div>
   );
 };
 
