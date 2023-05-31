@@ -68,7 +68,13 @@ export const layout = ({ initialState }) => {
               {
                 ...item,
                 menuRender: isHideMenu,
-                icon: iconItem.length > 0 ? iconItem[0] : '',
+                icon:
+                  iconItem.length > 0 ? (
+                    iconItem[0]
+                  ) : (
+                    // 没有icon时的占位符
+                    <div style={{ width: 100 }} />
+                  ),
               },
             ),
           );
