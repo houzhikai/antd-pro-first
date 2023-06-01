@@ -40,6 +40,11 @@ export const routes = {
       path: `/interfaceDoc`,
       component: './InterfaceDoc',
     },
+    {
+      name: 'draggable',
+      path: `/draggable`,
+      component: './Draggable',
+    },
   ],
   access: {
     canSeeAdmin: false,

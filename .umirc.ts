@@ -68,6 +68,11 @@ export default defineConfig({
       component: './InterfaceDoc',
     },
     {
+      name: '拖拽',
+      path: `/draggable`,
+      component: './Draggable',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',

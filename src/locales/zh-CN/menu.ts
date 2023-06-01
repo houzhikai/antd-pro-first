@@ -8,6 +8,7 @@ export default {
   'menu.dbm.error': '获取site失败',
   'menu.echarts': '图表',
   'menu.interfaceDoc': '接口使用文档',
+  'menu.draggable': '拖拽',
   // https://blog.csdn.net/huai42717/article/details/128467502
   // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': '首页',
@@ -19,4 +20,5 @@ export default {
   'menu.DBM.获取site失败': '获取site失败',
   'menu.图表': '图表',
   'menu.接口使用文档': '接口使用文档',
+  'menu.拖拽': '拖拽',
 };
