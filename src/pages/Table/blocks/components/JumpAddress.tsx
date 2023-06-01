@@ -1,26 +1,28 @@
 import { useModel } from '@umijs/max';
 import { Input } from 'antd';
+import { useCallback } from 'react';
 
 const { Search } = Input;
 
 const JumpAddress = () => {
-  const { add } = useModel('useGetDBMDataList');
+  const { add, setJumpValue, selectedAddressList, jumpValue } =
+    useModel('useGetDBMDataList');
 
   //   只有选中功能，没有跳转功能
-  const handleJump = (value) => {
-    console.log(1, value);
-    if (value.length > 1) {
-      add(value);
-    } else {
-      add(`0${value}`);
-    }
+  const handleJump = useCallback(
+    (value) => {
+      console.log(1, selectedAddressList, value);
 
-    // css添加边框样式
-    // setSelectedDiv((c: string) => {
-    //   console.log(c, 12);
-    //   return c ? '' : 'selected';
-    // });
-  };
+      if (value.length > 1) {
+        add(value);
+        setJumpValue(value);
+      } else {
+        add(`0${value}`);
+        setJumpValue(`0${value}`);
+      }
+    },
+    [jumpValue],
+  );
   return (
     <div
       style={{

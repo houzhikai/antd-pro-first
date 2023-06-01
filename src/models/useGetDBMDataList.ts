@@ -9,6 +9,7 @@ export default () => {
   const [dbmParams, setDbmParams] = useState('');
   const [isErrorPage, setIsErrorPage] = useState(false);
   const [page, setPage] = useState(0);
+  const [jumpValue, setJumpValue] = useState(''); // 单元格跳转聚焦
 
   // 选择已勾选的
   const [set, { add, remove }] = useSet(['']);
@@ -30,6 +31,7 @@ export default () => {
     }
   }, [isRequest, dbmParams]);
   const selectedAddressList = Array.from(set).filter((item) => item.length > 0);
+  console.log({ jumpValue });
   return {
     siteList,
     setSiteList,
@@ -44,5 +46,7 @@ export default () => {
     selectedAddressList,
     page,
     setPage,
+    jumpValue,
+    setJumpValue,
   };
 };

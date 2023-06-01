@@ -8,7 +8,7 @@ const ActionBar = () => {
       style={{
         display: 'flex',
         marginTop: 20,
-        justifyContent: 'space-between',
+        justifyContent: 'end',
       }}
     >
       <JumpAddress />
