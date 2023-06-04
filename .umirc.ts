@@ -73,6 +73,11 @@ export default defineConfig({
       component: './Draggable',
     },
     {
+      name: '汇总',
+      path: `/summary`,
+      component: './Summary',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',

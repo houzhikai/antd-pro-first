@@ -45,6 +45,11 @@ export const routes = {
       path: `/draggable`,
       component: './Draggable',
     },
+    {
+      name: 'summary',
+      path: `/summary`,
+      component: './Summary',
+    },
   ],
   access: {
     canSeeAdmin: false,
