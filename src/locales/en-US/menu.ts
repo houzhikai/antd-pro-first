@@ -10,6 +10,7 @@ export default {
   'menu.interfaceDoc': 'interfaceDoc',
   'menu.draggable': 'draggable',
   'menu.summary': 'summary',
+  'menu.testFlow': 'Test Flow',
   // https://blog.csdn.net/huai42717/article/details/128467502
   // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': 'home',
@@ -23,4 +24,5 @@ export default {
   'menu.接口使用文档': 'interfaceDoc',
   'menu.拖拽': 'draggable',
   'menu.汇总': 'summary',
+  'menu.流程图': 'Test Flow',
 };

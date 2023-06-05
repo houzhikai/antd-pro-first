@@ -78,6 +78,11 @@ export default defineConfig({
       component: './Summary',
     },
     {
+      name: '流程图',
+      path: `/testFlow`,
+      component: './TestFlow',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',

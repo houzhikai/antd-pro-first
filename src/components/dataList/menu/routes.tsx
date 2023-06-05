@@ -50,6 +50,11 @@ export const routes = {
       path: `/summary`,
       component: './Summary',
     },
+    {
+      name: '流程图',
+      path: `/testFlow`,
+      component: './TestFlow',
+    },
   ],
   access: {
     canSeeAdmin: false,
