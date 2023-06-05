@@ -22,6 +22,7 @@
     "echarts": "^5.4.2",
     "react-draggable": "^4.4.5",
     "react-window": "^1.8.8",
+    "reactflow": "^11.7.2",
     "rsuite": "^5.22.2",
     "umi-request": "^1.4.0"
   },
