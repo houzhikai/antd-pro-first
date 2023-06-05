@@ -17,19 +17,16 @@ import { useParams } from 'react-router-dom';
 import { useIntl } from 'umi';
 
 import type { ColumnsType } from 'antd/es/table';
+import { useModel } from '@umijs/max';
+import { DataType } from '@/models/useFuDataListModel';
 // import '../index.less';
 
 const { Title, Text } = Typography;
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
 
 const FuNav = () => {
+  const { data } = useModel('useFuDataListModel');
   const { path } = useParams();
-  console.log(path, useParams());
+  console.log('path', path, 'useParams()', useParams());
 
   const { formatMessage } = useIntl();
 
@@ -68,27 +65,6 @@ const FuNav = () => {
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-    },
-  ];
-
   return (
     <div>
       <MyLogo src={FULogo} />
@@ -110,7 +86,13 @@ const FuNav = () => {
       <DatePicker onChange={onChange} picker="week" />
       <Input placeholder="请输入..." />
       <Checkbox>Checkbox</Checkbox>
-      <Table columns={columns} dataSource={data} size="middle" bordered />
+      <Table
+        key={Math.floor(Math.random() * 10)}
+        columns={columns}
+        dataSource={data}
+        size="large"
+        bordered
+      />
       <a>121323</a>
       <Title>h1. Ant Design</Title>
       <Text>Ant Design (default)</Text>
