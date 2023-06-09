@@ -1,4 +1,3 @@
-import 'reactflow/dist/style.css';
 // import TestFlow from './blocks/TestFlow';
 // import Demo2 from './blocks/Demo2';
 import CustomNode from './blocks/CustomNode';
