@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import ReactFlow, { useNodesState, useEdgesState, addEdge } from 'reactflow';
 
-import initialNodes from './components/nodes';
-import initialEdges from './components/edges';
+import initialNodes from './components/testflow/nodes';
+import initialEdges from './components/testflow/edges';
 
 import 'reactflow/dist/style.css';
 
