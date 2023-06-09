@@ -1,0 +1,24 @@
+.animation {
+    display: block;
+    animation: example 6s infinite linear;
+}
+
+@keyframes example {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-24px);
+        opacity: 0;
+    }
+
+    75% {
+        transform: translateY(24px);
+        opacity: 0;
+    }
+
+    // 100% {
+    //     transform: translateY(0);
+    // }
+}

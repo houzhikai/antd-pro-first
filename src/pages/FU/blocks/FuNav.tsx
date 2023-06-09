@@ -1,5 +1,6 @@
 import MyLogo from '@/components/MyLogo';
 import FULogo from '@/icon/FULogo.svg';
+import up from '@/icon/up.svg';
 import {
   Button,
   DatePicker,
@@ -11,6 +12,8 @@ import {
   Tabs,
   Checkbox,
   Table,
+  Image,
+  Tag,
 } from 'antd';
 import type { DatePickerProps } from 'antd';
 import { useParams } from 'react-router-dom';
@@ -19,7 +22,7 @@ import { useIntl } from 'umi';
 import type { ColumnsType } from 'antd/es/table';
 import { useModel } from '@umijs/max';
 import { DataType } from '@/models/useFuDataListModel';
-// import '../index.less';
+import styles from '../index.less';
 
 const { Title, Text } = Typography;
 
@@ -68,6 +71,22 @@ const FuNav = () => {
   return (
     <div>
       <MyLogo src={FULogo} />
+      {/* <div>
+        <Image src={up} preview={false} className={styles.animation} />
+      </div> */}
+      <Tag
+        icon={
+          <Image
+            src={up}
+            style={{ width: 20, height: 16 }}
+            preview={false}
+            className={styles.animation}
+          />
+        }
+        color="processing"
+      >
+        正在升级
+      </Tag>
       <Button type="primary">{formatMessage({ id: 'fu.button' })}</Button>
       <Button type="primary" disabled>
         primary disabled
