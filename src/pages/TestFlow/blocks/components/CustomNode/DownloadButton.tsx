@@ -47,13 +47,8 @@ function DownloadButton() {
   };
 
   return (
-    <Panel position="top-right">
-      <Button
-        type="primary"
-        style={{ marginRight: 200 }}
-        className="download-btn"
-        onClick={onClick}
-      >
+    <Panel position="top-left">
+      <Button type="primary" className="download-btn" onClick={onClick}>
         Download Image
       </Button>
     </Panel>

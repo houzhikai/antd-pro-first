@@ -1,4 +1,5 @@
 import { useModel } from '@umijs/max';
+import './CustomNode.less';
 
 const CustomEdit = () => {
   const {
