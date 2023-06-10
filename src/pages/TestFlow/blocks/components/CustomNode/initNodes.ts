@@ -15,10 +15,11 @@ export const initialNodes: any = [
   },
   {
     id: '3',
-    data: { label: 'drag me around 😎' },
+    data: { label: '自定义节点' },
     position: { x: 100, y: 300 },
     type: 'custom',
     targetPosition: Position.Top,
+    deletable: true,
   },
   {
     id: '4',

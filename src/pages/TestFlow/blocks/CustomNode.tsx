@@ -4,6 +4,9 @@ import ReactFlow, {
   addEdge,
   useNodesState,
   useEdgesState,
+  getConnectedEdges,
+  getIncomers,
+  getOutgoers,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
@@ -28,6 +31,8 @@ const DnDFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+
+  const nodeTypes = { custom: TextUpdaterNode };
 
   useEffect(() => {
     setNodes((nds) =>
@@ -84,7 +89,33 @@ const DnDFlow = () => {
     (params) => setEdges((eds) => addEdge(params, eds)),
     [],
   );
-  const nodeTypes = { custom: TextUpdaterNode };
+
+  const onNodesDelete = useCallback(
+    (deleted) => {
+      setEdges(
+        deleted.reduce((acc, node) => {
+          const incomers = getIncomers(node, nodes, edges);
+          const outgoers = getOutgoers(node, nodes, edges);
+          const connectedEdges = getConnectedEdges([node], edges);
+
+          const remainingEdges = acc.filter(
+            (edge) => !connectedEdges.includes(edge),
+          );
+
+          const createdEdges = incomers.flatMap(({ id: source }) =>
+            outgoers.map(({ id: target }) => ({
+              id: `${source}->${target}`,
+              source,
+              target,
+            })),
+          );
+
+          return [...remainingEdges, ...createdEdges];
+        }, edges),
+      );
+    },
+    [nodes, edges],
+  );
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -129,6 +160,7 @@ const DnDFlow = () => {
             nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
+            onNodesDelete={onNodesDelete}
             onConnect={onConnect}
             onInit={setReactFlowInstance}
             onDrop={onDrop}
