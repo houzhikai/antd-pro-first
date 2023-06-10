@@ -9,6 +9,7 @@ import './components/CustomNode/CustomNode.less';
 import CustomEdit from './components/CustomNode/CustomEdit';
 import { useModel } from '@umijs/max';
 import TextUpdaterNode from './components/CustomNode/TextUpdaterNode';
+import DownloadButton from './components/CustomNode/DownloadButton';
 
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
 
@@ -84,6 +85,7 @@ const CustomNode = () => {
       attributionPosition="bottom-left"
     >
       <CustomEdit />
+      <DownloadButton />
     </ReactFlow>
   );
 };

@@ -20,6 +20,7 @@
     "ahooks": "^3.7.2",
     "antd": "^5.5.1",
     "echarts": "^5.4.2",
+    "html-to-image": "^1.11.11",
     "react-draggable": "^4.4.5",
     "react-window": "^1.8.8",
     "reactflow": "^11.7.2",

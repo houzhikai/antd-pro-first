@@ -3,7 +3,7 @@ import { Position } from 'reactflow';
 export const initialNodes: any = [
   {
     id: '1',
-    data: { label: 'Node 1' },
+    data: { label: 'start' },
     position: { x: 100, y: 100 },
     type: 'input',
   },

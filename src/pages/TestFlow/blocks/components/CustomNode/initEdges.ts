@@ -5,7 +5,7 @@ export const initialEdges = [
     id: 'e1-2',
     source: '1',
     target: '2',
-    type: 'smoothstep',
+    type: 'straight',
     markerEnd: {
       type: MarkerType.ArrowClosed,
       color: '#b1b1b7',
@@ -15,8 +15,8 @@ export const initialEdges = [
     id: 'e2-5',
     source: '2',
     target: '3',
-    type: 'smoothstep',
-    animated: true, // 虚线
+    type: 'step',
+    // animated: true, // 虚线
     markerEnd: {
       type: MarkerType.ArrowClosed,
     },
@@ -26,6 +26,7 @@ export const initialEdges = [
     id: 'e3-4',
     source: '3',
     target: '4',
+    type: 'smoothstep',
     animated: true, // 虚线
     sourceHandle: 'b',
     markerEnd: {
@@ -43,7 +44,7 @@ export const initialEdges = [
       type: MarkerType.ArrowClosed,
     },
     label: 'Pass',
-    labelStyle: { fill: 'red', fillOpacity: 0.7 },
+    labelStyle: { fill: 'red', fillOpacity: 0.7, paddingLeft: 20 },
     labelBgStyle: { fill: 'transparent' },
   },
 ];
