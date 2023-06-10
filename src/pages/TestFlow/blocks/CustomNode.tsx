@@ -1,93 +1,88 @@
-import React, { useEffect } from 'react';
-import ReactFlow, { useNodesState, useEdgesState } from 'reactflow';
+import React, { useState, useRef, useCallback } from 'react';
+import ReactFlow, {
+  ReactFlowProvider,
+  addEdge,
+  useNodesState,
+  useEdgesState,
+  Controls,
+} from 'reactflow';
+import 'reactflow/dist/style.css';
+
+import Sidebar from './components/ReactFlowProvider/Sidebar';
+
+import './components/ReactFlowProvider/indx.less';
 import { initialNodes } from './components/CustomNode/initNodes';
 import { initialEdges } from './components/CustomNode/initEdges';
 
-import 'reactflow/dist/style.css';
+let id = 0;
+const getId = () => `dndnode_${id++}`;
 
-import './components/CustomNode/CustomNode.less';
-import CustomEdit from './components/CustomNode/CustomEdit';
-import { useModel } from '@umijs/max';
-import TextUpdaterNode from './components/CustomNode/TextUpdaterNode';
-import DownloadButton from './components/CustomNode/DownloadButton';
-
-const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
-
-const CustomNode = () => {
-  const { nodeName, nodeBg, nodeHidden } = useModel('useTestFlowModel');
-
+const DnDFlow = () => {
+  const reactFlowWrapper = useRef<any>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
-  useEffect(() => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if (node.id === '1') {
-          node.data = {
-            ...node.data,
-            label: nodeName,
-          };
-        }
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    [],
+  );
 
-        return node;
-      }),
-    );
-  }, [nodeName, setNodes]);
+  const onDragOver = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
 
-  useEffect(() => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if (node.id === '1') {
-          // it's important that you create a new object here
-          // in order to notify react flow about the change
-          node.style = { ...node.style, backgroundColor: nodeBg };
-        }
+  const onDrop = useCallback(
+    (event) => {
+      event.preventDefault();
 
-        return node;
-      }),
-    );
-  }, [nodeBg, setNodes]);
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+      const type = event.dataTransfer.getData('application/reactflow');
 
-  useEffect(() => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if (node.id === '1') {
-          // when you update a simple type you can just update the value
-          node.hidden = nodeHidden;
-        }
+      // check if the dropped element is valid
+      if (typeof type === 'undefined' || !type) {
+        return;
+      }
 
-        return node;
-      }),
-    );
-    setEdges((eds) =>
-      eds.map((edge) => {
-        if (edge.id === 'e1-2') {
-          edge.hidden = nodeHidden;
-        }
+      const position = reactFlowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+      const newNode = {
+        id: getId(),
+        type,
+        position,
+        data: { label: `${type} node` },
+      };
 
-        return edge;
-      }),
-    );
-  }, [nodeHidden, setNodes, setEdges]);
-
-  const nodeTypes = {
-    custom: TextUpdaterNode,
-  };
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [reactFlowInstance],
+  );
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      defaultViewport={defaultViewport}
-      nodeTypes={nodeTypes}
-      attributionPosition="bottom-left"
-    >
-      <CustomEdit />
-      <DownloadButton />
-    </ReactFlow>
+    <div className="dndflow">
+      <ReactFlowProvider>
+        <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onInit={setReactFlowInstance}
+            onDrop={onDrop}
+            onDragOver={onDragOver}
+            fitView
+          >
+            <Controls />
+          </ReactFlow>
+        </div>
+        <Sidebar />
+      </ReactFlowProvider>
+    </div>
   );
 };
 
-export default CustomNode;
+export default DnDFlow;
