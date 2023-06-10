@@ -1,6 +1,7 @@
 // import TestFlow from './blocks/TestFlow';
 // import Demo2 from './blocks/Demo2';
-import CustomNode from './blocks/CustomNode';
+// import CustomNode from './blocks/CustomNode';
+import ReactFlowProviderPage from './blocks/ReactFlowProviderPage';
 
 import 'reactflow/dist/style.css';
 const TestFlowPage = () => {
@@ -8,7 +9,8 @@ const TestFlowPage = () => {
     <div style={{ height: '80vh', border: '1px solid #ccc' }}>
       {/* <TestFlow /> */}
       {/* <Demo2 /> */}
-      <CustomNode />
+      {/* <CustomNode /> */}
+      <ReactFlowProviderPage />
     </div>
   );
 };
