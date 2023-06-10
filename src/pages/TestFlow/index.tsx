@@ -5,7 +5,7 @@ import CustomNode from './blocks/CustomNode';
 import 'reactflow/dist/style.css';
 const TestFlowPage = () => {
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '80vh', border: '1px solid #ccc' }}>
       {/* <TestFlow /> */}
       {/* <Demo2 /> */}
       <CustomNode />

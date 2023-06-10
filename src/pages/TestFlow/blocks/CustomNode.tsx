@@ -1,11 +1,14 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ReactFlow, { useNodesState, useEdgesState } from 'reactflow';
 import { initialNodes } from './components/CustomNode/initNodes';
 import { initialEdges } from './components/CustomNode/initEdges';
 
+import 'reactflow/dist/style.css';
+
 import './components/CustomNode/CustomNode.less';
 import CustomEdit from './components/CustomNode/CustomEdit';
 import { useModel } from '@umijs/max';
+import TextUpdaterNode from './components/CustomNode/TextUpdaterNode';
 
 const defaultViewport = { x: 0, y: 0, zoom: 1.5 };
 
@@ -34,6 +37,8 @@ const CustomNode = () => {
     setNodes((nds) =>
       nds.map((node) => {
         if (node.id === '1') {
+          // it's important that you create a new object here
+          // in order to notify react flow about the change
           node.style = { ...node.style, backgroundColor: nodeBg };
         }
 
@@ -64,6 +69,10 @@ const CustomNode = () => {
     );
   }, [nodeHidden, setNodes, setEdges]);
 
+  const nodeTypes = {
+    custom: TextUpdaterNode,
+  };
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -71,8 +80,7 @@ const CustomNode = () => {
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       defaultViewport={defaultViewport}
-      minZoom={0.2}
-      maxZoom={4}
+      nodeTypes={nodeTypes}
       attributionPosition="bottom-left"
     >
       <CustomEdit />
