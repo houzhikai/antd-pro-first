@@ -1,11 +1,7 @@
-import React from 'react';
+import CustomNode1 from './CustomNode1';
+import { onDragStart } from '@/components/onDragStart';
 
 export default () => {
-  const onDragStart = (event, nodeType) => {
-    event.dataTransfer.setData('application/reactflow', nodeType);
-    event.dataTransfer.effectAllowed = 'move';
-  };
-
   return (
     <aside>
       <div className="description">
@@ -32,6 +28,8 @@ export default () => {
       >
         Output Node
       </div>
+      {/* 自定义的上右下节点node */}
+      <CustomNode1 />
     </aside>
   );
 };
