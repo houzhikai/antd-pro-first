@@ -22,6 +22,8 @@ import { useModel } from '@umijs/max';
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
+// defined outside of the component
+const nodeTypes = { custom: TextUpdaterNode };
 
 const DnDFlow = () => {
   const { nodeName, nodeBg, nodeHidden } = useModel('useTestFlowModel');
@@ -31,8 +33,6 @@ const DnDFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
-
-  const nodeTypes = { custom: TextUpdaterNode };
 
   useEffect(() => {
     setNodes((nds) =>

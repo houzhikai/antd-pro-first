@@ -2,7 +2,6 @@ import { Button } from 'antd';
 import { Handle, NodeToolbar, Position } from 'reactflow';
 
 function TextUpdaterNode({ data }) {
-  console.log(data);
   function remModelData() {
     throw new Error('Function not implemented.');
   }
