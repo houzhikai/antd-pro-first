@@ -2,6 +2,7 @@ import { Button } from 'antd';
 import { Handle, NodeToolbar, Position } from 'reactflow';
 
 function TextUpdaterNode({ data }) {
+  console.log(data);
   function remModelData() {
     throw new Error('Function not implemented.');
   }
@@ -24,9 +25,14 @@ function TextUpdaterNode({ data }) {
         type="target"
         position={Position.Top}
         id="a"
-        isConnectable={true}
+        isConnectable={data.edge > 1 ? false : true}
       />
-      <Handle type="source" position={Position.Right} id="b" />
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="b"
+        isConnectable={data.edge > 1 ? false : true}
+      />
       <Handle type="source" position={Position.Bottom} id="c" />
       {/* <Handle type="source" position={Position.Left} id="d" /> */}
     </div>

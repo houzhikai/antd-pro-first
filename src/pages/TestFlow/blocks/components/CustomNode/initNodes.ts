@@ -15,7 +15,7 @@ export const initialNodes: any = [
   },
   {
     id: '3',
-    data: { label: '自定义节点' },
+    data: { label: '自定义节点', edge: 2 },
     position: { x: 100, y: 300 },
     type: 'custom',
     targetPosition: Position.Top,
