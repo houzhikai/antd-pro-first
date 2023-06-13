@@ -19,9 +19,10 @@ import CustomEdit from './components/CustomNode/CustomEdit';
 import DownloadButton from './components/CustomNode/DownloadButton';
 import TextUpdaterNode from './components/CustomNode/TextUpdaterNode';
 import { useModel } from '@umijs/max';
+import { message } from 'antd';
 
 let id = 0;
-const getId = () => `dndnode_${id++}`;
+const getId = () => `custom_${id++}`;
 // defined outside of the component
 const nodeTypes = { custom: TextUpdaterNode };
 
@@ -86,8 +87,32 @@ const DnDFlow = () => {
   }, [nodeHidden, setNodes, setEdges]);
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [],
+    (params) => {
+      const existingEdge = edges.find((e) => {
+        if (e.sourceHandle || e.targetHandle) {
+          return (
+            e.sourceHandle === params.sourceHandle &&
+            e.targetHandle === params.targetHandle
+          );
+        }
+        return e.source === params.source && e.target === params.target;
+      });
+      // console.log(
+      //   'edges',
+      //   edges,
+      //   'existingEdge',
+      //   existingEdge,
+      //   'params',
+      //   params,
+      // );
+      if (existingEdge) {
+        message.error('Edge already exists!');
+        return;
+      }
+
+      setEdges((eds) => addEdge(params, eds));
+    },
+    [edges],
   );
 
   const onNodesDelete = useCallback(

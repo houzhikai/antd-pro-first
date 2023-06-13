@@ -30,7 +30,7 @@ function TextUpdaterNode({ data }) {
         type="source"
         position={Position.Right}
         id="b"
-        isConnectable={data.edge > 1 ? false : true}
+        isConnectable={data.edge > 2 ? false : true}
       />
       <Handle type="source" position={Position.Bottom} id="c" />
       {/* <Handle type="source" position={Position.Left} id="d" /> */}
