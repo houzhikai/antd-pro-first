@@ -76,7 +76,7 @@ export default () => {
   //     clearInterval(timer);
   //   };
   // }, []);
-  console.log(data);
+  // console.log(data);
   return {
     data,
     setData,
