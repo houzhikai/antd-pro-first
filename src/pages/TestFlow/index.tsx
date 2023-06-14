@@ -2,13 +2,14 @@
 // import Demo2 from './blocks/Demo2';
 // import CustomNode from './blocks/CustomNode';
 import ReactFlowProviderPage from './blocks/ReactFlowProviderPage';
+import Nav from './blocks/components/ReactFlowProvider/Nav';
 
 import 'reactflow/dist/style.css';
-import Save from './blocks/components/ReactFlowProvider/Save';
+
 const TestFlowPage = () => {
   return (
     <div>
-      <Save />
+      <Nav />
 
       <div style={{ height: '80vh', border: '1px solid #ccc' }}>
         {/* <TestFlow /> */}
