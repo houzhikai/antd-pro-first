@@ -2,24 +2,19 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
-  useNodesState,
-  useEdgesState,
   getConnectedEdges,
   getIncomers,
   getOutgoers,
 } from 'reactflow';
-import 'reactflow/dist/style.css';
 
-// import Sidebar from './components/ReactFlowProvider/Sidebar';
-
-import './components/ReactFlowProvider/indx.less';
-import { initialNodes } from './components/CustomNode/initNodes';
-import { initialEdges } from './components/CustomNode/initEdges';
 import CustomEdit from './components/CustomNode/CustomEdit';
 import DownloadButton from './components/CustomNode/DownloadButton';
 import TextUpdaterNode from './components/CustomNode/TextUpdaterNode';
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
+
+import 'reactflow/dist/style.css';
+import './components/ReactFlowProvider/indx.less';
 
 let id = 0;
 const getId = () => `custom_${id++}`;
@@ -27,12 +22,20 @@ const getId = () => `custom_${id++}`;
 const nodeTypes = { custom: TextUpdaterNode };
 
 const DnDFlow = () => {
-  const { nodeName, nodeBg, nodeHidden } = useModel('useTestFlowModel');
+  const {
+    nodeName,
+    nodeBg,
+    nodeHidden,
+    nodes,
+    setNodes,
+    onNodesChange,
+    edges,
+    setEdges,
+    onEdgesChange,
+  } = useModel('useTestFlowModel');
 
   const reactFlowWrapper = useRef<any>(null);
 
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
   useEffect(() => {
@@ -106,8 +109,7 @@ const DnDFlow = () => {
       //   params,
       // );
       if (existingEdge) {
-        message.error('Edge already exists!');
-        return;
+        return message.error('Edge already exists!');
       }
 
       setEdges((eds) => addEdge(params, eds));
