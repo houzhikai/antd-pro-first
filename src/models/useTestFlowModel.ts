@@ -12,6 +12,28 @@ export default () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  const newNodeSource: any = [];
+  const newNodeTarget: any = [];
+
+  // 获取 source/target
+  nodes.forEach((node) =>
+    edges.forEach((edge) => {
+      // source
+      if (edge.source === node.id) {
+        return newNodeSource.push(node.data.label);
+      }
+      // target
+      if (edge.target === node.id) {
+        return newNodeTarget.push(node.data.label);
+      }
+    }),
+  );
+  // 合并数组
+  const newArr = newNodeSource.map((item, index) => ({
+    source: item,
+    target: newNodeTarget[index],
+  }));
+
   return {
     nodeName,
     setNodeName,
@@ -25,5 +47,6 @@ export default () => {
     edges,
     setEdges,
     onEdgesChange,
+    newArr,
   };
 };

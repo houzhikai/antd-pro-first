@@ -10,6 +10,10 @@ git config --global http.sslVerify false
 
 只需要在“设置”->"搜索"->`compile-hero`,查询出来后,把所有打勾的选项去掉就可以了.
 
+# 取消 http 代理，如果取消 https 代理的话，将 http 改成 https
+
+git config --global --unset http.proxy
+
 # canSeevirtualTableAccess=true 有此参数才能看虚拟表格
 
 # openAPI 可以维护一个接口文档
