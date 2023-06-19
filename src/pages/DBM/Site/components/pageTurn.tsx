@@ -1,9 +1,11 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { useModel } from 'umi';
-import { Button, InputNumber } from 'antd';
+import { Button, Input } from 'antd';
+import { useState } from 'react';
 
 const PageTurn = () => {
   const { page, setPage } = useModel('useGetDBMDataList');
+  const [pageVal, setPageVal] = useState('0');
   const handlePre = () => {
     setPage((c) => c - 1);
   };
@@ -11,12 +13,26 @@ const PageTurn = () => {
     setPage((c) => c + 1);
   };
   const handleOk = (e: any) => {
+    console.log({ pageVal });
+
     if (e.target.value >= 0 && e.target.value <= 4095) {
       setPage(Number(e.target.value));
     } else if (e.target.value > 4095) {
       setPage(4095);
     } else if (e.target.value < 0) {
       setPage(0);
+    }
+  };
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+
+    const subPageVal = inputValue.replace(/^[0]+/, ''); // 去除前面多余的0
+    if (!Number.isNaN(Number(inputValue))) {
+      setPageVal(subPageVal);
+    }
+    // inputValue !== '' value 为空时的判断
+    if (Number(inputValue) === 0 && inputValue !== '') {
+      setPageVal('0');
     }
   };
 
@@ -30,15 +46,14 @@ const PageTurn = () => {
         disabled={page <= 0 ? true : false}
         icon={<LeftOutlined />}
       />
-      <InputNumber
+      <Input
+        style={{ width: 49, margin: '0 10px' }}
         defaultValue={page}
-        controls={false}
-        min={0}
-        max={4095}
+        value={pageVal}
         size="small"
+        onChange={handleChange}
         onPressEnter={handleOk}
         onBlur={handleOk}
-        style={{ width: 49, margin: '0 10px' }}
       />
       / 4095
       <Button
