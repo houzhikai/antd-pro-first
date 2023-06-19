@@ -17,8 +17,10 @@ const Save = () => {
     // console.log('xxx', newArr);
     // return xxx;
     const xxx = newArr.map(
-      (item) =>
-        `et::Unit<${item.source}>('${item.source}',true, et::Port(0,${item.target}), et::Port(1,'FB1', Bin)) 
+      (item, index) =>
+        `et::Unit<${item.source}>('${item.source}'${
+          index === 0 ? ', true' : ''
+        }, et::Port(0, ${item.target}), et::Port(1, 'FB1', Bin)) 
         `,
     );
     const splitArr = startNote.concat(xxx).join('');
