@@ -36,7 +36,24 @@ export default () => {
     source: item,
     target: newNodeTarget[index],
   }));
+  // 合并相同的source属性
+  const mergeArr = (arr) => {
+    let dataInfo = {};
+    arr.forEach((item) => {
+      let { source } = item;
+      if (!dataInfo[source]) {
+        dataInfo[source] = {
+          source,
+          child: [],
+        };
+      }
+      dataInfo[source].child.push({ target: item.target });
+    });
+    let list = Object.values(dataInfo);
+    return list;
+  };
 
+  const mergeArrList = mergeArr(newArr);
   return {
     nodeName,
     setNodeName,
@@ -53,5 +70,6 @@ export default () => {
     newArr,
     title,
     setTitle,
+    mergeArrList,
   };
 };

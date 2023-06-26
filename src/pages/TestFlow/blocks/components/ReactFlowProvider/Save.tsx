@@ -2,29 +2,26 @@ import { useModel } from '@umijs/max';
 import { Button } from 'antd';
 
 const Save = () => {
-  const { newArr, title } = useModel('useTestFlowModel');
+  const { title, mergeArrList } = useModel('useTestFlowModel');
+
   const handleSave = () => {
     // ` `换行也可以使console表示换行
     const startNote = [
       `et::MainFlow('${title}'), true,
     `,
     ];
-    //   const xxx = `
-    //  et::MainFlow(25QH256CHIQ_SPIFalsh), true,
-    //      et::Unit<${startNodeName}>('${startNodeName}',true, et::Port(0,'IO_ADC_OS'), et::Port(1,'FB1', Bin))
-    //      et::Unit<IO_ADC_OS>('IO_ADC_OS', et::Port(0,'IO_PPMU_OS'), et::Port(1,'FB1', Bin))
-    //  `;
-    // console.log('xxx', newArr);
-    // return xxx;
-    const xxx = newArr.map(
-      (item, index) =>
+
+    const outputTestFlowList = mergeArrList.map(
+      (item: any, index) =>
         `et::Unit<${item.source}>('${item.source}'${
           index === 0 ? ', true' : ''
-        }, et::Port(0, ${item.target}), et::Port(1, 'FB1', Bin)) 
-        `,
+        }, ${item.child.map((p, idx) => `et::Port(${idx}, ${p.target}),`)}
+          `,
     );
-    const splitArr = startNote.concat(xxx).join('');
-    console.log('xxx', xxx, splitArr);
+
+    const outputTestFlowBuilder = startNote.concat(outputTestFlowList).join('');
+    console.log('mergeArrList=======', mergeArrList);
+    console.log('outputTestFlowBuilder=======', outputTestFlowBuilder);
   };
 
   return (
