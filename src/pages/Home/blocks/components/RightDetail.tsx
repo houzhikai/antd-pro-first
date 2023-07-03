@@ -53,7 +53,7 @@ const RightDetail = () => {
           </div>
         </Col>
         <Col span={10}>
-          <div className="title">测试方案</div>
+          <div className="title">关于我们</div>
           <div className="layout">
             <Image
               style={{ width: 128, height: 128, marginTop: 10 }}
