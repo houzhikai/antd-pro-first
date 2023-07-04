@@ -1,5 +1,6 @@
 // import { Access, useAccess } from '@umijs/max';
-import VirtualTable from './blocks/VirtualTablePage';
+import ActionBar from '../Table/blocks/ActionBar';
+import VirtualTable from './blocks/VirtualTable';
 
 const VirtualTablePage = () => {
   //   const access = useAccess();
@@ -8,6 +9,7 @@ const VirtualTablePage = () => {
       {/* 没有权限的话不会展示组件内容 */}
       {/* <Access accessible={access.canSeevirtualTable}> */}
       <VirtualTable />
+      <ActionBar />
       {/* </Access> */}
     </>
   );

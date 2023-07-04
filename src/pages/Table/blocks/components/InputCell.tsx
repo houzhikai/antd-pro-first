@@ -3,14 +3,15 @@ import { useCallback, useState } from 'react';
 
 import BaseCell from './BaseCell';
 
-import styles from '../../index.less';
+// import styles from '../../index.less';
+import { Input } from 'antd';
 
 const InputCell = ({
   rowData,
   data,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   val,
-  //   onChange,
+  onChange,
   dataKey,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   column,
@@ -20,7 +21,12 @@ const InputCell = ({
 }: any) => {
   const { add, remove } = useModel('useGetDBMDataList');
   let [selectedDiv, setSelectedDiv] = useState('');
+  // let [value, setValue] = useState(rowData[column]);
 
+  function handleChange(event: any) {
+    onChange(rowData.id, event.target.value);
+    // setValue(event.target.value);
+  }
   const handleClick = useCallback(() => {
     // console.log(value, rowData.id, dataKey, data[rowData.id]);
     // css添加边框样式
@@ -38,21 +44,21 @@ const InputCell = ({
 
   return (
     <BaseCell {...props}>
-      {/* <Input
+      <Input
         value={data[rowData.id]}
         onChange={handleChange}
         bordered={false}
         onPressEnter={handleClick}
         onBlur={handleClick}
-      /> */}
-      <div
+      />
+      {/* <div
         className={`${
           selectedDiv === 'selected' ? styles.selected : styles.default
         }`}
         onClick={handleClick}
       >
         {data[rowData.id]}
-      </div>
+      </div> */}
     </BaseCell>
   );
 };
