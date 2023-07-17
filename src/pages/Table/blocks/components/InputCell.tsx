@@ -8,7 +8,6 @@ import { Input } from 'antd';
 
 const InputCell = ({
   rowData,
-  data,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   val,
   onChange,
@@ -21,44 +20,57 @@ const InputCell = ({
 }: any) => {
   const { add, remove } = useModel('useGetDBMDataList');
   let [selectedDiv, setSelectedDiv] = useState('');
-  // let [value, setValue] = useState(rowData[column]);
+  let [value, setValue] = useState(rowData[column]);
 
-  function handleChange(event: any) {
-    onChange(rowData.id, event.target.value);
-    // setValue(event.target.value);
-  }
-  const handleClick = useCallback(() => {
-    // console.log(value, rowData.id, dataKey, data[rowData.id]);
-    // css添加边框样式
-    setSelectedDiv((c: string) => {
-      return c ? '' : 'selected';
-    });
-    if (selectedDiv) {
-      remove(`${rowData.id}${dataKey}`);
-      console.log('remove', `${rowData.id}${dataKey}`);
-    } else {
-      console.log('add');
-      add(`${rowData.id}${dataKey}`);
+  const handleChange = useCallback(
+    (event: any) => {
+      onChange(rowData.id, event.target.value, column);
+      setValue(() => event.target.value);
+    },
+    [value],
+  );
+  const handleClick = useCallback(
+    (e) => {
+      // console.log(value, rowData.id, dataKey, data[rowData.id]);
+      // css添加边框样式
+      setSelectedDiv((c: string) => {
+        return c ? '' : 'selected';
+      });
+      if (selectedDiv) {
+        remove(`${rowData.id}${dataKey}`);
+      } else {
+        add(`${rowData.id}${dataKey}`);
+      }
+      e.preventDefault();
+    },
+    [`${rowData.id}${dataKey}`, selectedDiv],
+  );
+  const handleMouseDown = (e: any) => {
+    // ctrl时 modifyValue可以输入值
+    if (e.ctrlKey && e.button === 0) {
+      e.preventDefault();
+      // css添加边框样式
+      setSelectedDiv((c: string) => {
+        return c ? '' : 'selected';
+      });
+      if (selectedDiv) {
+        remove(`${rowData.id}${dataKey}`);
+      } else {
+        add(`${rowData.id}${dataKey}`);
+      }
     }
-  }, [`${rowData.id}${dataKey}`, selectedDiv]);
+  };
 
   return (
     <BaseCell {...props}>
       <Input
-        value={data[rowData.id]}
+        value={value}
         onChange={handleChange}
         bordered={false}
         onPressEnter={handleClick}
         onBlur={handleClick}
+        onMouseDown={handleMouseDown}
       />
-      {/* <div
-        className={`${
-          selectedDiv === 'selected' ? styles.selected : styles.default
-        }`}
-        onClick={handleClick}
-      >
-        {data[rowData.id]}
-      </div> */}
     </BaseCell>
   );
 };

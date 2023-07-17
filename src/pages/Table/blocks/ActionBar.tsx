@@ -1,5 +1,5 @@
 import JumpAddress from './components/JumpAddress';
-// import ModifiedValue from './components/ModifiedValue';
+import ModifiedValue from './components/ModifiedValue';
 import PageTurn from '@/pages/DBM/Site/components/pageTurn';
 
 const ActionBar = () => {
@@ -11,9 +11,9 @@ const ActionBar = () => {
         justifyContent: 'end',
       }}
     >
+      <ModifiedValue />
       <JumpAddress />
       <PageTurn />
-      {/* <ModifiedValue /> */}
     </div>
   );
 };

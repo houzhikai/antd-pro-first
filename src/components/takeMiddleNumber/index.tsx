@@ -1,7 +1,7 @@
 export const takeMiddleNumber = (min: number, max: number) => {
-  let arry: number[] = [];
+  let array: number[] = [];
   for (let d = min; d <= max; d++) {
-    arry.push(d);
+    array.push(d);
   }
-  return arry;
+  return array;
 };
