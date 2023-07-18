@@ -74,6 +74,12 @@ const FuNav = () => {
       {/* <div>
         <Image src={up} preview={false} className={styles.animation} />
       </div> */}
+      <div className={styles.flicker}>闪烁</div>
+      <div className={styles.flicker}>闪烁</div>
+      <div className={styles.flicker}>闪烁</div>
+      <Badge status="processing" text="Processing" />
+      <Badge status="processing" text="Processing" />
+      <Badge status="processing" text="Processing" />
       <Tag
         icon={
           <Image

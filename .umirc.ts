@@ -1,6 +1,10 @@
 import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
+  chainWebpack: (config) => {
+    config.cache(true);
+    // config.plugin('cache').use(HardSourceWebpackPlugin);
+  },
   // antd: {
   //   dark: true,
   // },
