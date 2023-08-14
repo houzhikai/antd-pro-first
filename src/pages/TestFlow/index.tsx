@@ -5,6 +5,7 @@ import ReactFlowProviderPage from './blocks/ReactFlowProviderPage';
 import Nav from './blocks/components/ReactFlowProvider/Nav';
 
 import 'reactflow/dist/style.css';
+import './index.less';
 
 const TestFlowPage = () => {
   return (
