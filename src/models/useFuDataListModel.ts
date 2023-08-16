@@ -53,7 +53,7 @@ export default () => {
         });
     } catch (error) {
       setData(data1);
-      message.error(111);
+      // message.error(111);
     }
   }, []);
   // 轮询

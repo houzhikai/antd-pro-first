@@ -1,0 +1,19 @@
+.bottom() {
+    position: absolute;
+    top: calc(100% - 3px);
+    left: calc(50% + 6px);
+    font-size: 10px;
+    color: #000;
+}
+
+.display-none-bottom() {
+    display: none;
+    content: '0';
+    .bottom()
+}
+
+.display-show-bottom() {
+    content: '0';
+    position: absolute;
+    .bottom()
+}

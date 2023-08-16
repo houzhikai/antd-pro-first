@@ -9,9 +9,9 @@ import ReactFlow, {
 
 import CustomEdit from './components/CustomNode/CustomEdit';
 import DownloadButton from './components/CustomNode/DownloadButton';
-import TextUpdaterNode from './components/CustomNode/TextUpdaterNode';
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
+import { nodeTypes } from '@/pages/TestFlow/blocks/nodeTypes';
 
 import 'reactflow/dist/style.css';
 import './components/ReactFlowProvider/indx.less';
@@ -19,7 +19,6 @@ import './components/ReactFlowProvider/indx.less';
 let id = 0;
 const getId = () => `custom_${id++}`;
 // defined outside of the component
-const nodeTypes = { custom: TextUpdaterNode };
 
 const DnDFlow = () => {
   const {
@@ -100,18 +99,9 @@ const DnDFlow = () => {
         }
         return e.source === params.source && e.target === params.target;
       });
-      // console.log(
-      //   'edges',
-      //   edges,
-      //   'existingEdge',
-      //   existingEdge,
-      //   'params',
-      //   params,
-      // );
       if (existingEdge) {
         return message.error('Edge already exists!');
       }
-
       setEdges((eds) => addEdge(params, eds));
     },
     [edges],
@@ -124,7 +114,6 @@ const DnDFlow = () => {
           const incomers = getIncomers(node, nodes, edges);
           const outgoers = getOutgoers(node, nodes, edges);
           const connectedEdges = getConnectedEdges([node], edges);
-
           const remainingEdges = acc.filter(
             (edge) => !connectedEdges.includes(edge),
           );

@@ -1,12 +1,13 @@
 import CustomNode1 from './CustomNode1';
 import { onDragStart } from '@/components/onDragStart';
+import CustomInput from './customNodes/CustomInput';
+import GoodBin from './customNodes/OutBin/GoodBin.tsx';
+import BadBin from './customNodes/OutBin/BadBin.tsx';
 
 export default () => {
   return (
     <aside>
-      <div className="description">
-        You can drag these nodes to the pane on the right.
-      </div>
+      <div className="description">您能将下面测试项拖到右边操作</div>
       <div
         className="dndnode input"
         onDragStart={(event) => onDragStart(event, 'input')}
@@ -30,6 +31,9 @@ export default () => {
       </div>
       {/* 自定义的上右下节点node */}
       <CustomNode1 />
+      <CustomInput />
+      <GoodBin />
+      <BadBin />
     </aside>
   );
 };
