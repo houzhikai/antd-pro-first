@@ -4,6 +4,7 @@ import CustomInput from './customNodes/CustomInput';
 import GoodBin from './customNodes/OutBin/GoodBinNode';
 import BadBin from './customNodes/OutBin/BadBinNode';
 import MiddleNode from './customNodes/MiddleNode';
+import Subflow from './customNodes/subflow';
 
 export default () => {
   return (
@@ -36,6 +37,7 @@ export default () => {
       <MiddleNode />
       <GoodBin />
       <BadBin />
+      <Subflow />
     </aside>
   );
 };

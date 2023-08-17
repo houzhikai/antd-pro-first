@@ -1,9 +1,13 @@
 import styles from './index.less';
 import { Handle, Position } from 'reactflow';
 
-const GoodBin = () => {
+interface GoodBinProp {
+  maxWidth?: number;
+}
+
+const GoodBin = (prop: GoodBinProp) => {
   return (
-    <div className={styles.wrapper}>
+    <div style={{ maxWidth: prop.maxWidth }} className={styles.wrapper}>
       <div className={styles.name}>goodBin</div>
       <Handle
         className={styles.top}
