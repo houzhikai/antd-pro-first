@@ -1,17 +1,16 @@
 import { onDragStart } from '@/components/onDragStart';
 import styles from './index.less';
 
-const GoodBin = () => {
+const MiddleNode = () => {
   return (
     <div
       className={styles.wrapper}
-      onDragStart={(event) => onDragStart(event, 'good-bin')}
+      onDragStart={(event) => onDragStart(event, 'custom-middleNode')}
       draggable
-      // 为了上下边距
     >
-      <div className={styles.name}>goodBin</div>
+      <div className={styles.name}>MiddleNode</div>
     </div>
   );
 };
 
-export default GoodBin;
+export default MiddleNode;

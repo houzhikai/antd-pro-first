@@ -158,7 +158,7 @@ const DnDFlow = () => {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type}${id} node` },
       };
 
       setNodes((nds) => nds.concat(newNode));

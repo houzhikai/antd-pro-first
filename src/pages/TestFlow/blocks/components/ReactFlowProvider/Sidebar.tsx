@@ -3,6 +3,7 @@ import { onDragStart } from '@/components/onDragStart';
 import CustomInput from './customNodes/CustomInput';
 import GoodBin from './customNodes/OutBin/GoodBinNode';
 import BadBin from './customNodes/OutBin/BadBinNode';
+import MiddleNode from './customNodes/MiddleNode';
 
 export default () => {
   return (
@@ -32,6 +33,7 @@ export default () => {
       {/* 自定义的上右下节点node */}
       <CustomNode1 />
       <CustomInput />
+      <MiddleNode />
       <GoodBin />
       <BadBin />
     </aside>

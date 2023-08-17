@@ -1,0 +1,38 @@
+@import url('../mixin.less');
+
+.wrapper {
+    margin: 10px;
+}
+
+.name {
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: grab;
+    background: #4c85d9;
+    color: #fff;
+}
+
+.top {
+    &::after {
+        .after-top()
+    }
+}
+
+.left {
+    &::after {
+        .after-left()
+    }
+}
+
+.right {
+    &::after {
+        .after-right()
+    }
+}
+
+.bottom {
+    &::after {
+        .after-bottom()
+    }
+}
