@@ -7,6 +7,8 @@ const GoodBin = () => {
       className={styles.wrapper}
       onDragStart={(event) => onDragStart(event, 'good-bin')}
       draggable
+      // 为了上下边距
+      style={{ margin: 10 }}
     >
       <div className={styles.name}>goodBin</div>
     </div>

@@ -1,3 +1,5 @@
+@import url('../../mixin.less');
+
 .wrapper {
     display: flex;
     justify-content: center;
@@ -6,7 +8,6 @@
 
 .name {
     width: 85px;
-    margin: 10px;
     height: calc(85px * 1.1547);
     display: inline-block;
     font-size: initial;
@@ -15,4 +16,30 @@
     // transform: rotate(90deg);
     background: #bfa;
     padding: 33px 0;
+    position: relative;
+}
+
+.top {
+
+    &::after {
+        .after-top()
+    }
+}
+
+.left {
+    &::after {
+        .after-left()
+    }
+}
+
+.right {
+    &::after {
+        .after-right()
+    }
+}
+
+.bottom {
+    &::after {
+        .after-bottom()
+    }
 }
