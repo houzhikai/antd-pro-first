@@ -1,9 +1,13 @@
+.afterFont() {
+    font-size: 10px;
+    color: #000;
+}
+
 .bottom() {
     position: absolute;
     top: calc(100% - 3px);
     left: calc(50% + 6px);
-    font-size: 10px;
-    color: #000;
+    .afterFont()
 }
 
 .display-none-bottom() {
@@ -16,4 +20,36 @@
     content: '0';
     position: absolute;
     .bottom()
+}
+
+.top() {
+    content: '0';
+    position: absolute;
+    left: 6px;
+    bottom: 3px;
+    .afterFont()
+}
+
+.left() {
+    content: '1';
+    position: absolute;
+    right: 6px;
+    top: 3px;
+    .afterFont()
+}
+
+.right() {
+    content: '2';
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    .afterFont()
+}
+
+.bottom() {
+    content: '3';
+    position: absolute;
+    left: 6px;
+    bottom: 3px;
+    .afterFont()
 }

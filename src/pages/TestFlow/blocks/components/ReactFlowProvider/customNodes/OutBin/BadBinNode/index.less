@@ -1,3 +1,4 @@
+@import url('../../mixin.less');
 @width: 50px;
 
 .wrapper {
@@ -20,4 +21,32 @@
 
 .top {
   top: -@width - 2px;
+
+  &::after {
+    .top()
+  }
+}
+
+.left {
+  left: -(@width / 2);
+  top: -(@width / 2 - 2px);
+
+  &::after {
+    .left()
+  }
+}
+
+.right {
+  right: -(@width / 2);
+  top: -(@width / 2 - 2px);
+
+  &::after {
+    .right()
+  }
+}
+
+.bottom {
+  &::after {
+    .bottom()
+  }
 }

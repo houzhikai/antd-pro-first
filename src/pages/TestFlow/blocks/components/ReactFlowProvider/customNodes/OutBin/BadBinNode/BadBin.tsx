@@ -11,6 +11,24 @@ const BadBin = () => {
         position={Position.Top}
         id="a"
       />
+      <Handle
+        type="target"
+        className={styles.left}
+        position={Position.Left}
+        id="b"
+      />
+      <Handle
+        type="target"
+        className={styles.bottom}
+        position={Position.Bottom}
+        id="c"
+      />
+      <Handle
+        type="target"
+        className={styles.right}
+        position={Position.Right}
+        id="d"
+      />
     </div>
   );
 };
