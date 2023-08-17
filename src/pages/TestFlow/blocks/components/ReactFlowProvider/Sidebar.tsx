@@ -1,8 +1,8 @@
 import CustomNode1 from './CustomNode1';
 import { onDragStart } from '@/components/onDragStart';
 import CustomInput from './customNodes/CustomInput';
-import GoodBin from './customNodes/OutBin/GoodBin.tsx';
-import BadBin from './customNodes/OutBin/BadBin.tsx';
+import GoodBin from './customNodes/OutBin/GoodBinNode';
+import BadBin from './customNodes/OutBin/BadBinNode';
 
 export default () => {
   return (

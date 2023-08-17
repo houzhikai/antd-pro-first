@@ -8,7 +8,7 @@ const BadBin = () => {
       <Handle
         type="target"
         className={styles.top}
-        position={Position.Left}
+        position={Position.Top}
         id="a"
       />
     </div>
