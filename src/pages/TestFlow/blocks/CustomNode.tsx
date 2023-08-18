@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, {
+  MarkerType,
   ReactFlowProvider,
   addEdge,
   getConnectedEdges,
@@ -165,7 +166,14 @@ const DnDFlow = () => {
     },
     [reactFlowInstance],
   );
-
+  const defaultEdgeOptions = {
+    // style: { strokeWidth: 3, stroke: 'black' },
+    type: 'simplebezier',
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: 'black',
+    },
+  };
   return (
     <div className="dndflow">
       <ReactFlowProvider>
@@ -183,6 +191,7 @@ const DnDFlow = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
             fitView
+            defaultEdgeOptions={defaultEdgeOptions}
           >
             <CustomEdit />
             <DownloadButton />
