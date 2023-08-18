@@ -1,4 +1,4 @@
-export const initialEdges = [
+export const subflowEdge = [
   { id: 'e1-2', source: '1', target: '2', animated: true },
   { id: 'e1-3', source: '1', target: '3' },
   { id: 'e2a-4a', source: '2a', target: '4a' },

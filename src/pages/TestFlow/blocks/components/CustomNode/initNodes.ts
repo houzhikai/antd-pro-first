@@ -1,6 +1,6 @@
 import { Position } from 'reactflow';
 
-export const initialNodes: any = [
+export const mainFlowNode: any = [
   {
     id: '1',
     data: { label: 'start' },

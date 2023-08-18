@@ -1,6 +1,6 @@
 import { MarkerType } from 'reactflow';
 
-export const initialEdges = [
+export const mainFlowEdges = [
   {
     id: 'e1-2',
     source: '1',

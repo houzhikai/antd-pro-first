@@ -1,4 +1,4 @@
-export const initialNodes: any = [
+export const subflowNode: any = [
   {
     id: '1',
     type: 'input',

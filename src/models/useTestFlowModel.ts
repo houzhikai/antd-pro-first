@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNodesState, useEdgesState } from 'reactflow';
-import { initialNodes } from '@/pages/TestFlow/blocks/components/CustomNode/initNodes';
-import { initialEdges } from '@/pages/TestFlow/blocks/components/CustomNode/initEdges';
-// import { initialNodes } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/subflow/node';
-// import { initialEdges } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/subflow/edges';
+import { mainFlowNode } from '@/pages/TestFlow/blocks/components/CustomNode/initNodes';
+import { mainFlowEdges } from '@/pages/TestFlow/blocks/components/CustomNode/initEdges';
+import { subflowNode } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/subflow/node';
+import { subflowEdge } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/subflow/edges';
 import { random } from '@/components/random';
 // \u4e00-\u9fa5_a-zA-Z0-9_]{11}
 
@@ -11,11 +11,19 @@ export default () => {
   const [nodeName, setNodeName] = useState('start');
   const [nodeBg, setNodeBg] = useState('#eee');
   const [nodeHidden, setNodeHidden] = useState(false);
+  const [selectFlow, setSelectFlow] = useState('test1');
   const [title, setTitle] = useState(`${random()}_SPIFlash`); // 测试流名称
 
+  const initialNodes = selectFlow === 'test1' ? mainFlowNode : subflowNode;
+  const initialEdges = selectFlow === 'test1' ? mainFlowEdges : subflowEdge;
   // 保存时需要用到nodes和edges
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  useEffect(() => {
+    setNodes(initialNodes);
+    setEdges(initialEdges);
+  }, [initialEdges, initialNodes]);
 
   const newNodeSource: any = [];
   const newNodeTarget: any = [];
@@ -73,5 +81,7 @@ export default () => {
     title,
     setTitle,
     mergeArrList,
+    selectFlow,
+    setSelectFlow,
   };
 };
