@@ -41,3 +41,31 @@
     left: @left;
     .afterFont()
 }
+
+// after样式，会显示 0，1，2，3
+.afterContent() {
+    .top {
+
+        &::after {
+            .after-top()
+        }
+    }
+
+    .left {
+        &::after {
+            .after-left()
+        }
+    }
+
+    .right {
+        &::after {
+            .after-right()
+        }
+    }
+
+    .bottom {
+        &::after {
+            .after-bottom()
+        }
+    }
+}

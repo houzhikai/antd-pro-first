@@ -3,7 +3,7 @@ import styles from './index.less';
 
 const Subflow = ({ data }) => {
   return (
-    <div>
+    <div className={styles.wrapper1}>
       <div className={styles.name}>{data.label}-11</div>
       <Handle
         type="target"
