@@ -20,7 +20,7 @@
 // }
 
 .top {
-  top: -@width - 2px;
+  // top: -@width - 2px;
 
   &::after {
     .after-top()
@@ -28,8 +28,10 @@
 }
 
 .left {
-  left: -(@width / 2);
-  top: -(@width / 2 - 2px);
+  // left: -(@width / 2);
+  // top: -(@width / 2 - 2px);
+  left: 33px;
+  top: 36px;
 
   &::after {
     .after-left()
@@ -37,8 +39,10 @@
 }
 
 .right {
-  right: -(@width / 2);
-  top: -(@width / 2 - 2px);
+  // right: -(@width / 2);
+  // top: -(@width / 2 - 2px);
+  right: 33px;
+  top: 36px;
 
   &::after {
     .after-right()
@@ -46,6 +50,8 @@
 }
 
 .bottom {
+  top: 56px;
+
   &::after {
     .after-bottom()
   }
