@@ -32,6 +32,7 @@ const Subflow = () => {
           <GoodBin maxWidth={102} margin="10px 0" />
         </div>
         <div className={styles.item}>
+          {/* 横线 */}
           <div className={`${styles['arrow-cross']}`} />
           {/* 向下的箭头 */}
           <div

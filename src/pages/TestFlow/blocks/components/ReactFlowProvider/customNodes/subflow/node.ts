@@ -3,7 +3,7 @@ export const initialNodes = [
     id: 'A',
     type: 'group',
     data: { label: null },
-    position: { x: 0, y: 0 },
+    position: { x: 300, y: 500 },
     style: {
       width: 170,
       height: 140,
