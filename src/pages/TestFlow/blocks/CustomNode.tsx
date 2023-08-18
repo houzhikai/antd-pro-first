@@ -173,6 +173,7 @@ const DnDFlow = () => {
           <ReactFlow
             nodes={nodes}
             edges={edges}
+            // @ts-ignore
             nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
