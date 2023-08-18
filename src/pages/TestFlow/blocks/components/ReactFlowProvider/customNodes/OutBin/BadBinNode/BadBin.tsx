@@ -3,7 +3,8 @@ import styles from './index.less';
 
 const BadBin = () => {
   return (
-    <div className={styles.wrapper}>
+    <div>
+      <div className={styles.test}></div>
       <div className={styles.name}>BadBin</div>
       <Handle
         type="target"

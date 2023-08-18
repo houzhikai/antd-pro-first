@@ -3,11 +3,13 @@ import { Handle, Position } from 'reactflow';
 
 interface GoodBinProp {
   maxWidth?: number;
+  margin?: string;
 }
 
 const GoodBin = (prop: GoodBinProp) => {
+  const { maxWidth, margin } = prop;
   return (
-    <div style={{ maxWidth: prop.maxWidth }} className={styles.wrapper}>
+    <div style={{ maxWidth, margin }} className={styles.wrapper}>
       <div className={styles.name}>goodBin</div>
       <Handle
         className={styles.top}

@@ -29,7 +29,7 @@ const Subflow = () => {
           <div
             className={` ${styles.arrow} ${styles['arrow-hor']} ${styles.right}`}
           />
-          <GoodBin maxWidth={102} />
+          <GoodBin maxWidth={102} margin="10px 0" />
         </div>
         <div className={styles.item}>
           <div className={`${styles['arrow-cross']}`} />

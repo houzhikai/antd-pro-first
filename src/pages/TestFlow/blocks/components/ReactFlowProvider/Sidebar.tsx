@@ -35,7 +35,7 @@ export default () => {
       <CustomNode1 />
       <CustomInput />
       <MiddleNode />
-      <GoodBin />
+      <GoodBin margin="10px 0" />
       <BadBin />
       <Subflow />
     </aside>
