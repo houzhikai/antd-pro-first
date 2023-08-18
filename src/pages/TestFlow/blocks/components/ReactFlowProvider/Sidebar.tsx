@@ -5,6 +5,7 @@ import GoodBin from './customNodes/OutBin/GoodBinNode';
 import BadBin from './customNodes/OutBin/BadBinNode';
 import MiddleNode from './customNodes/MiddleNode';
 import Subflow from './customNodes/subflow';
+import LoopNode from './customNodes/LoopNode';
 
 export default () => {
   return (
@@ -37,6 +38,7 @@ export default () => {
       <MiddleNode />
       <GoodBin margin="10px 0" />
       <BadBin />
+      <LoopNode />
       <Subflow />
     </aside>
   );
