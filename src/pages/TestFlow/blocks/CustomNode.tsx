@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, {
+  Background,
   MarkerType,
   ReactFlowProvider,
   addEdge,
@@ -32,6 +33,7 @@ const DnDFlow = () => {
     edges,
     setEdges,
     onEdgesChange,
+    variant,
   } = useModel('useTestFlowModel');
 
   const reactFlowWrapper = useRef<any>(null);
@@ -160,6 +162,8 @@ const DnDFlow = () => {
         type,
         position,
         data: { label: `${type}${id} node` },
+        // parentNode: '1',
+        // extends: 'parent'
       };
 
       setNodes((nds) => nds.concat(newNode));
@@ -174,6 +178,8 @@ const DnDFlow = () => {
       color: 'black',
     },
   };
+
+
   return (
     <div className="dndflow">
       <ReactFlowProvider>
@@ -193,6 +199,7 @@ const DnDFlow = () => {
             fitView
             defaultEdgeOptions={defaultEdgeOptions}
           >
+            <Background color="#ccc" variant={variant} />
             <CustomEdit />
             <DownloadButton />
           </ReactFlow>

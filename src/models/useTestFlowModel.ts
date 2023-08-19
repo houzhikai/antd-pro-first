@@ -13,6 +13,8 @@ export default () => {
   const [nodeHidden, setNodeHidden] = useState(false);
   const [selectFlow, setSelectFlow] = useState('test1');
   const [title, setTitle] = useState(`${random()}_SPIFlash`); // 测试流名称
+  
+  const[ variant,setVariant] = useState('cross')
 
   const initialNodes = selectFlow === 'test1' ? mainFlowNode : subflowNode;
   const initialEdges = selectFlow === 'test1' ? mainFlowEdges : subflowEdge;
@@ -83,5 +85,6 @@ export default () => {
     mergeArrList,
     selectFlow,
     setSelectFlow,
+    variant,setVariant
   };
 };
