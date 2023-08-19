@@ -47,4 +47,5 @@ export const mainFlowEdges = [
     labelStyle: { fill: 'red', fillOpacity: 0.7, paddingLeft: 20 },
     labelBgStyle: { fill: 'transparent' },
   },
+  { id: 'b-c', source: 'B', target: 'C' }
 ];

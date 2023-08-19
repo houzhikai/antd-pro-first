@@ -187,7 +187,6 @@ const DnDFlow = () => {
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            // @ts-ignore
             nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
@@ -198,7 +197,7 @@ const DnDFlow = () => {
             onDragOver={onDragOver}
             fitView
             defaultEdgeOptions={defaultEdgeOptions}
-            style={{backgroundColor: '#000'}} // 流程图的背景颜色
+            style={{backgroundColor: '#fff'}} // 流程图的背景颜色
           >
             <Background color="#ccc" variant={variant} />
             <CustomEdit />
