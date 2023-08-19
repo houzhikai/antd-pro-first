@@ -198,6 +198,7 @@ const DnDFlow = () => {
             onDragOver={onDragOver}
             fitView
             defaultEdgeOptions={defaultEdgeOptions}
+            style={{backgroundColor: '#000'}} // 流程图的背景颜色
           >
             <Background color="#ccc" variant={variant} />
             <CustomEdit />
