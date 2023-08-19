@@ -9,6 +9,7 @@ import ReactFlow, {
   getOutgoers,
 } from 'reactflow';
 
+import DagreTree from './DagreTree';
 import CustomEdit from './components/CustomNode/CustomEdit';
 import DownloadButton from './components/CustomNode/DownloadButton';
 import { useModel } from '@umijs/max';
@@ -179,7 +180,6 @@ const DnDFlow = () => {
     },
   };
 
-
   return (
     <div className="dndflow">
       <ReactFlowProvider>
@@ -197,8 +197,9 @@ const DnDFlow = () => {
             onDragOver={onDragOver}
             fitView
             defaultEdgeOptions={defaultEdgeOptions}
-            style={{backgroundColor: '#fff'}} // 流程图的背景颜色
+            style={{ backgroundColor: '#fff' }} // 流程图的背景颜色
           >
+            <DagreTree />
             <Background color="#ccc" variant={variant} />
             <CustomEdit />
             <DownloadButton />

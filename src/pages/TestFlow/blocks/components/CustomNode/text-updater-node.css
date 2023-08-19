@@ -1,9 +1,10 @@
 .updatenode__controls {
     position: absolute;
     right: 10px;
-    top: 10px;
+    top: 20px;
     z-index: 4;
     font-size: 12px;
+    margin-top: 20px;
   }
   
   .updatenode__controls label {
