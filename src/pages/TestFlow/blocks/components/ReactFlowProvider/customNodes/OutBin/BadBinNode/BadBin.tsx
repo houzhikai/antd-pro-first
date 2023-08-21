@@ -18,7 +18,7 @@ const BadBin = () => {
   return (
     <div>
       <div
-        style={{ '--background': bgColor } as any}
+        style={{ '--background': bgColor } as React.CSSProperties}
         className={styles.test1}
       />
       <div className={styles.name}>

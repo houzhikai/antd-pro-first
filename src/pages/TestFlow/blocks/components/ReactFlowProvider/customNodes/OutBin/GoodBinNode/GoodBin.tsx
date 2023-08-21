@@ -23,7 +23,10 @@ const GoodBin = (prop: GoodBinProp) => {
   };
   return (
     <div style={{ maxWidth, margin }} className={styles.wrapper}>
-      <div style={{ '--background': bgColor } as any} className={styles.name1}>
+      <div
+        style={{ '--background': bgColor } as React.CSSProperties}
+        className={styles.name1}
+      >
         <select className={styles['select-style']} onChange={handleChange}>
           {options.HardBin.map((item) => (
             <option key={item.Name} value={item.Name}>

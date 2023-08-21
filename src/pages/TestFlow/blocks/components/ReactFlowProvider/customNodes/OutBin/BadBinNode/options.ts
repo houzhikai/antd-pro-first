@@ -1,7 +1,7 @@
 export const options = {
   HardBin: [
-    { Name: 'HB1', Number: 1, Type: 'Pass', Color: 'Green' },
-    { Name: 'HB2', Number: 2, Type: 'Fail', Color: 'Red' },
+    { Name: 'HB1', Number: 1, Type: 'Pass', Color: '#bfa' },
+    { Name: 'HB2', Number: 2, Type: 'Fail', Color: '#fba' },
   ],
   SoftBin: [
     {
