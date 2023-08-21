@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { options } from './options';
 
 const BadBin = () => {
-  const defaultBg = options.SoftBin[0].Color;
+  const defaultBg = options.SoftBin[0].Color; // SoftBin
   const [bgColor, setBgColor] = useState(defaultBg);
 
   const handleChange = (e) => {
@@ -20,7 +20,7 @@ const BadBin = () => {
       <div
         style={{ '--background': bgColor } as any}
         className={styles.test1}
-      ></div>
+      />
       <div className={styles.name}>
         <select className={styles['select-style']} onChange={handleChange}>
           {options.SoftBin.map((item) => (

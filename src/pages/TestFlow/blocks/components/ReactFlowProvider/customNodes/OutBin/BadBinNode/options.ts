@@ -19,7 +19,7 @@ export const options = {
       HardBin: 'HB2',
       MaxCount: 65536,
       CheckOverflow: true,
-      Color: 'Green',
+      Color: '#3CF',
       Comment: '',
     },
     {

@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import styles from './index.less';
 import { Handle, Position } from 'reactflow';
+import { options } from '../BadBinNode/options';
 
 interface GoodBinProp {
   maxWidth?: number;
@@ -8,30 +10,49 @@ interface GoodBinProp {
 
 const GoodBin = (prop: GoodBinProp) => {
   const { maxWidth, margin } = prop;
+  const defaultBg = options.HardBin[0].Color; // HardBin
+  const [bgColor, setBgColor] = useState(defaultBg);
+
+  const handleChange = (e) => {
+    const bgColor = options.HardBin.filter(
+      (item) => item.Name === e.target.value,
+    )
+      .map((item) => item.Color)
+      .join('');
+    setBgColor(bgColor);
+  };
   return (
     <div style={{ maxWidth, margin }} className={styles.wrapper}>
-      <div className={styles.name}>goodBin</div>
+      <div style={{ '--background': bgColor } as any} className={styles.name1}>
+        <select className={styles['select-style']} onChange={handleChange}>
+          {options.HardBin.map((item) => (
+            <option key={item.Name} value={item.Name}>
+              {item.Name}
+            </option>
+          ))}
+        </select>
+      </div>
       <Handle
         className={styles.top}
-        type="source"
+        type="target"
         position={Position.Top}
         id="a"
       />
       <Handle
         className={styles.left}
-        type="source"
+        type="target"
         position={Position.Left}
         id="b"
       />
       <Handle
         className={styles.right}
-        type="source"
+        type="target"
         position={Position.Right}
         id="c"
       />
       <Handle
         className={styles.bottom}
-        type="source"
+        type="target"
         position={Position.Bottom}
         id="d"
       />
