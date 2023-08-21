@@ -35,6 +35,7 @@ const DnDFlow = () => {
     setEdges,
     onEdgesChange,
     variant,
+    theme,
   } = useModel('useTestFlowModel');
 
   const reactFlowWrapper = useRef<any>(null);
@@ -197,7 +198,7 @@ const DnDFlow = () => {
             onDragOver={onDragOver}
             fitView
             defaultEdgeOptions={defaultEdgeOptions}
-            style={{ backgroundColor: '#fff' }} // 流程图的背景颜色
+            style={{ backgroundColor: theme }} // 流程图的背景颜色
           >
             <DagreTree />
             <Background color="#ccc" variant={variant} />

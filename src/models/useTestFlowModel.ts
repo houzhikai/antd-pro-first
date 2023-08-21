@@ -14,6 +14,8 @@ export default () => {
   const [selectFlow, setSelectFlow] = useState('test1');
   const [title, setTitle] = useState(`${random()}_SPIFlash`); // 测试流名称
 
+  const [theme, setTheme] = useState('#fff');
+
   const [variant, setVariant] = useState<any>('cross');
 
   const initialNodes = selectFlow === 'test1' ? mainFlowNode : subflowNode;
@@ -87,5 +89,7 @@ export default () => {
     setSelectFlow,
     variant,
     setVariant,
+    theme,
+    setTheme,
   };
 };

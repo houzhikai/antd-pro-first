@@ -5,7 +5,8 @@ import { useCallback } from 'react';
 import { useModel } from '@umijs/max';
 
 const DagreTree = () => {
-  const { nodes, edges, setNodes, setEdges } = useModel('useTestFlowModel');
+  const { nodes, edges, setNodes, setEdges, theme, setTheme } =
+    useModel('useTestFlowModel');
 
   const { fitView } = useReactFlow();
   const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
@@ -40,10 +41,19 @@ const DagreTree = () => {
     [nodes, edges],
   );
 
+  const handleClick = () => {
+    console.log(11);
+    setTheme((c) => (c === '#fff' ? '#272822' : '#fff'));
+  };
+  console.log(theme);
+
   return (
     <div>
       <Panel position="bottom-right">
         <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Button onClick={handleClick}>
+            {theme === '#fff' ? '浅色主题' : '暗色主题'}
+          </Button>
           <Button onClick={() => handleToggle('TB')}>vertical layout</Button>
           <Button onClick={() => handleToggle('LR')}>horizontal layout</Button>
         </div>
