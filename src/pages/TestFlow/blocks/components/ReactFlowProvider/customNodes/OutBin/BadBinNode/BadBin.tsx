@@ -1,11 +1,35 @@
 import { Handle, Position } from 'reactflow';
 import styles from './index.less';
+import { useState } from 'react';
+import { options } from './options';
 
 const BadBin = () => {
+  const defaultBg = options.SoftBin[0].Color;
+  const [bgColor, setBgColor] = useState(defaultBg);
+
+  const handleChange = (e) => {
+    const bgColor = options.SoftBin.filter(
+      (item) => item.Name === e.target.value,
+    )
+      .map((item) => item.Color)
+      .join('');
+    setBgColor(bgColor);
+  };
   return (
     <div>
-      <div className={styles.test}></div>
-      <div className={styles.name}>BadBin</div>
+      <div
+        style={{ '--background': bgColor } as any}
+        className={styles.test1}
+      ></div>
+      <div className={styles.name}>
+        <select className={styles['select-style']} onChange={handleChange}>
+          {options.SoftBin.map((item) => (
+            <option key={item.Name} value={item.Name}>
+              {item.Name}
+            </option>
+          ))}
+        </select>
+      </div>
       <Handle
         type="target"
         className={styles.top}

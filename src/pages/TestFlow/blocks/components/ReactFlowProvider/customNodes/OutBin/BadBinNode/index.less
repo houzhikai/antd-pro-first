@@ -19,7 +19,7 @@
 //   bottom: calc(50% + @width / 2);
 // }
 
-.test {
+.common(@background) {
   text-align: center;
   display: flex;
   align-items: center;
@@ -33,8 +33,9 @@
     width: 0;
     height: 0;
     border: 30px solid transparent;
-    border-top-color: #fc5531;
-    border-right-color: #fc5531;
+    // border-top-color: var(--background);
+    border-top-color: @background;
+    border-right-color: @background;
   }
 
   &::after {
@@ -45,17 +46,31 @@
     width: 0;
     height: 0;
     border: 30px solid transparent;
-    border-top-color: #fc5531;
-    border-left-color: #fc5531;
+    border-top-color: @background;
+    border-left-color: @background;
   }
+}
+
+.test {
+  .common(#fc5531)
+}
+
+.test1 {
+  .common(var(--background))
 }
 
 .name {
   text-align: center;
   position: static;
   margin-bottom: 47px;
-  margin-top: -47px;
+  margin-top: -53px;
   cursor: grab;
+
+  .select-style {
+    border: none;
+    width: 50px;
+  }
+
 }
 
 .top {
