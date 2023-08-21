@@ -42,10 +42,8 @@ const DagreTree = () => {
   );
 
   const handleClick = () => {
-    console.log(11);
     setTheme((c) => (c === '#fff' ? '#272822' : '#fff'));
   };
-  console.log(theme);
 
   return (
     <div>
