@@ -1,4 +1,5 @@
 import { Handle, Position } from 'reactflow';
+
 import styles from './index.less';
 
 const CustomInputNode = () => {
