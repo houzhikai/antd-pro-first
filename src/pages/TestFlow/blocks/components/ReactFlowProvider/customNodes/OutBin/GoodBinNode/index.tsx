@@ -1,7 +1,13 @@
 import { onDragStart } from '@/components/onDragStart';
 import styles from './index.less';
 
-const GoodBin = ({ margin, maxWidth }) => {
+interface GoodBinProps {
+  margin: string;
+  maxWidth?: string;
+}
+
+const GoodBin = (props: GoodBinProps) => {
+  const { margin, maxWidth } = props;
   return (
     <div
       className={styles.wrapper}

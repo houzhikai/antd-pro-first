@@ -6,10 +6,12 @@ import BadBin from './customNodes/OutBin/BadBinNode';
 import MiddleNode from './customNodes/MiddleNode';
 import Subflow from './customNodes/subflow';
 import LoopNode from './customNodes/LoopNode';
+import { useModel } from '@umijs/max';
 
 export default () => {
+  const { theme } = useModel('useTestFlowModel');
   return (
-    <aside>
+    <aside style={{ background: theme === '#fff' ? '#fff' : '#272822' }}>
       <div className="description">您能将下面测试项拖到右边操作</div>
       <div
         className="dndnode input"
