@@ -3,7 +3,7 @@ import styles from './index.less';
 import CustomInput from '../CustomInput';
 import MiddleNode from '../MiddleNode';
 import BadBin from '../OutBin/BadBinNode';
-import GoodBin from '../OutBin/GoodBinNode/GoodBin';
+import GoodBin from '../OutBin/GoodBinNode';
 
 const Subflow = () => {
   return (

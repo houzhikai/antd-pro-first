@@ -3,7 +3,7 @@ import styles from './index.less';
 
 interface GoodBinProps {
   margin: string;
-  maxWidth?: string;
+  maxWidth?: string | number;
 }
 
 const GoodBin = (props: GoodBinProps) => {
