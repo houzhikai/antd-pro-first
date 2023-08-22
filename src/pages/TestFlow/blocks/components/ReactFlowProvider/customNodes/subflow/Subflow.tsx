@@ -2,6 +2,8 @@ import { useModel } from '@umijs/max';
 import { subflowNode } from './node';
 import { subflowEdge } from './edges';
 import { useEffect } from 'react';
+import { Handle, Position } from 'reactflow';
+import styles from './index.less';
 
 const Subflow = () => {
   let { nodes, setNodes, edges, setEdges } = useModel('useTestFlowModel');
@@ -15,7 +17,34 @@ const Subflow = () => {
     setEdges(newEdges);
   }, []);
 
-  return <div></div>;
+  return (
+    <div>
+      <Handle
+        className={styles.top}
+        type="target"
+        position={Position.Top}
+        id="a"
+      />
+      <Handle
+        className={styles.left}
+        type="target"
+        position={Position.Left}
+        id="b"
+      />
+      <Handle
+        className={styles.right}
+        type="target"
+        position={Position.Right}
+        id="c"
+      />
+      <Handle
+        className={styles.bottom}
+        type="target"
+        position={Position.Bottom}
+        id="d"
+      />
+    </div>
+  );
 };
 
 export default Subflow;
