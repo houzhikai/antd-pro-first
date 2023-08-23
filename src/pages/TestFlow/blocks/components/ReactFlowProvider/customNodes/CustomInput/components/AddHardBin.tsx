@@ -65,7 +65,7 @@ const AddHardBin = () => {
   );
 
   const handleAddOption = () => {
-    const xxx = [
+    const newHardBin = [
       {
         Name: `HB${count}`,
         Number: count,
@@ -73,11 +73,11 @@ const AddHardBin = () => {
         Color: option.bg,
       },
     ];
-    const yyy = binMap.HardBin.concat(xxx);
+    const hardBin = binMap.HardBin.concat(newHardBin);
     setBinMap((c: any) => {
       return {
         ...c,
-        HardBin: yyy,
+        HardBin: hardBin,
       };
     });
     setCount((c) => c + 1);
