@@ -1,7 +1,7 @@
 import { Handle, Position } from 'reactflow';
 import styles from './index.less';
 import { useState } from 'react';
-import { options } from './options';
+import { options } from '../options';
 
 const BadBin = () => {
   const defaultBg = options.SoftBin[0].Color; // SoftBin

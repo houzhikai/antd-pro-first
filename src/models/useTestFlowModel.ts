@@ -5,6 +5,7 @@ import { mainFlowEdges } from '@/pages/TestFlow/blocks/components/CustomNode/ini
 import { subflowNode } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/subflow/node';
 import { subflowEdge } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/subflow/edges';
 import { random } from '@/components/random';
+import { options } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/OutBin/options';
 // \u4e00-\u9fa5_a-zA-Z0-9_]{11}
 
 export default () => {
@@ -23,6 +24,9 @@ export default () => {
   // 保存时需要用到nodes和edges
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  // hardBin、softBin 更新
+  const [binMap, setBinMap] = useState(options);
 
   useEffect(() => {
     setNodes(initialNodes);
@@ -91,5 +95,7 @@ export default () => {
     setVariant,
     theme,
     setTheme,
+    binMap,
+    setBinMap,
   };
 };

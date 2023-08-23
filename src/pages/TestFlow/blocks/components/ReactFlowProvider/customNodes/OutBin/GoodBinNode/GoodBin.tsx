@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import styles from './index.less';
 import { Handle, Position } from 'reactflow';
-import { options } from '../BadBinNode/options';
+// import { options as binMap } from '../options';
+import { Popover } from 'antd';
+import PopoverButtonList from '../../CustomInput/PopoverButtonList';
+import { useModel } from '@umijs/max';
 
 interface GoodBinProp {
   maxWidth?: number;
@@ -9,12 +12,14 @@ interface GoodBinProp {
 }
 
 const GoodBin = (prop: GoodBinProp) => {
+  const { binMap } = useModel('useTestFlowModel');
   const { maxWidth, margin } = prop;
-  const defaultBg = options.HardBin[0].Color; // HardBin
+  const defaultBg = binMap.HardBin[0].Color; // HardBin
   const [bgColor, setBgColor] = useState(defaultBg);
 
   const handleChange = (e) => {
-    const bgColor = options.HardBin.filter(
+    e.preventDefault();
+    const bgColor = binMap.HardBin.filter(
       (item) => item.Name === e.target.value,
     )
       .map((item) => item.Color)
@@ -23,42 +28,49 @@ const GoodBin = (prop: GoodBinProp) => {
   };
   return (
     <div style={{ maxWidth, margin }} className={styles.wrapper}>
-      <div
-        style={{ '--background': bgColor } as React.CSSProperties}
-        className={styles.name1}
+      <Popover
+        placement="right"
+        title=""
+        content={PopoverButtonList}
+        trigger="click"
       >
-        <select className={styles['select-style']} onChange={handleChange}>
-          {options.HardBin.map((item) => (
-            <option key={item.Name} value={item.Name}>
-              {item.Name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <Handle
-        className={styles.top}
-        type="target"
-        position={Position.Top}
-        id="a"
-      />
-      <Handle
-        className={styles.left}
-        type="target"
-        position={Position.Left}
-        id="b"
-      />
-      <Handle
-        className={styles.right}
-        type="target"
-        position={Position.Right}
-        id="c"
-      />
-      <Handle
-        className={styles.bottom}
-        type="target"
-        position={Position.Bottom}
-        id="d"
-      />
+        <div
+          style={{ '--background': bgColor } as React.CSSProperties}
+          className={styles.name1}
+        >
+          <select className={styles['select-style']} onChange={handleChange}>
+            {binMap.HardBin.map((item) => (
+              <option key={item.Name} value={item.Name}>
+                {item.Name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <Handle
+          className={styles.top}
+          type="target"
+          position={Position.Top}
+          id="a"
+        />
+        <Handle
+          className={styles.left}
+          type="target"
+          position={Position.Left}
+          id="b"
+        />
+        <Handle
+          className={styles.right}
+          type="target"
+          position={Position.Right}
+          id="c"
+        />
+        <Handle
+          className={styles.bottom}
+          type="target"
+          position={Position.Bottom}
+          id="d"
+        />
+      </Popover>
     </div>
   );
 };

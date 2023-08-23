@@ -1,10 +1,12 @@
 import { Button } from 'antd';
+
 import styles from './index.less';
+import AddHardBin from './components/AddHardBin';
 
 const PopoverButtonList = () => {
   return (
     <div>
-      <Button className={styles['bottom-item']}>test button</Button>
+      <AddHardBin />
       <Button className={styles['bottom-item']}>test button</Button>
       <Button className={styles['bottom-item']}>test button</Button>
       <Button className={styles['bottom-item']}>test button</Button>
