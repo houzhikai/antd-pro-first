@@ -32,7 +32,7 @@ const GoodBin = (prop: GoodBinProp) => {
         placement="right"
         title=""
         content={PopoverButtonList}
-        trigger="click"
+        trigger="hover"
       >
         <div
           style={{ '--background': bgColor } as React.CSSProperties}
