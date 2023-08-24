@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNodesState, useEdgesState } from 'reactflow';
-import { mainFlowNode } from '@/pages/TestFlow/blocks/components/CustomNode/initNodes';
-import { mainFlowEdges } from '@/pages/TestFlow/blocks/components/CustomNode/initEdges';
-import { subflowNode } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/subflow/node';
-import { subflowEdge } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/subflow/edges';
-import { random } from '@/components/random';
 import { options } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/OutBin/options';
+import { selectFlowNodeEdge } from '@/pages/TestFlow/blocks/selectFlow';
 // \u4e00-\u9fa5_a-zA-Z0-9_]{11}
 
 export default () => {
@@ -13,14 +9,16 @@ export default () => {
   const [nodeBg, setNodeBg] = useState('#eee');
   const [nodeHidden, setNodeHidden] = useState(false);
   const [selectFlow, setSelectFlow] = useState('test1');
-  const [title, setTitle] = useState(`${random()}_SPIFlash`); // 测试流名称
+  const [title, setTitle] = useState(`${selectFlow}_SPIFlash`); // 测试流名称
 
   const [theme, setTheme] = useState('#fff');
 
   const [variant, setVariant] = useState<any>('cross');
 
-  const initialNodes = selectFlow === 'test1' ? mainFlowNode : subflowNode;
-  const initialEdges = selectFlow === 'test1' ? mainFlowEdges : subflowEdge;
+  // const initialNodes = selectFlow === 'test1' ? mainFlowNode : subflowNode;
+  // const initialEdges = selectFlow === 'test1' ? mainFlowEdges : subflowEdge;
+  const initialNodes = selectFlowNodeEdge(selectFlow).node;
+  const initialEdges = selectFlowNodeEdge(selectFlow).edge;
   // 保存时需要用到nodes和edges
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -31,7 +29,8 @@ export default () => {
   useEffect(() => {
     setNodes(initialNodes);
     setEdges(initialEdges);
-  }, [initialEdges, initialNodes]);
+    setTitle(selectFlow);
+  }, [initialEdges, initialNodes, selectFlow]);
 
   const newNodeSource: any = [];
   const newNodeTarget: any = [];
