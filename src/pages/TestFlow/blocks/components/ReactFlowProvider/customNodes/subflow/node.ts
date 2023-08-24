@@ -4,7 +4,6 @@ export const subflowNode: any = [
   {
     id: 'subflow',
     data: { label: 'subflow-test' },
-    type: 'custom-subflow',
     position: { x: 0, y: 0 },
     style: {
       background: 'rgba(187, 255, 170, 0.2)',
