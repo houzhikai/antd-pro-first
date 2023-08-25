@@ -1,22 +1,22 @@
 import { Popover, Button, message } from 'antd';
-import styles from '../index.less';
 import { useModel } from '@umijs/max';
+
+import styles from '../index.less';
 
 const RemoveHardBin = () => {
   const { binMap, setBinMap } = useModel('useTestFlowModel');
 
   const handleRemoveItem = (Name: string) => {
     if (binMap.HardBin.length > 1) {
-      const xxx = binMap.HardBin.filter((item) => item.Name !== Name);
-      console.log(xxx);
+      const hardBinList = binMap.HardBin.filter((item) => item.Name !== Name);
       setBinMap((obj) => {
         return {
           ...obj,
-          HardBin: xxx,
+          HardBin: hardBinList,
         };
       });
     } else {
-      message.error('只剩下一个HardBin，不可删除');
+      message.error('最少保留一个HardBin');
     }
   };
   const list = (
