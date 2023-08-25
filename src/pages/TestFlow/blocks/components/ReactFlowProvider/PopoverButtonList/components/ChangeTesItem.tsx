@@ -1,11 +1,11 @@
 import { Button, Popover } from 'antd';
-import LoopNode from '../../LoopNode';
-import MiddleNode from '../../MiddleNode';
-import BadBin from '../../OutBin/BadBinNode';
-import GoodBin from '../../OutBin/GoodBinNode';
-import CustomInputNode from '../index';
 
 import styles from '../index.less';
+import LoopNode from '../../customNodes/LoopNode';
+import MiddleNode from '../../customNodes/MiddleNode';
+import BadBin from '../../customNodes/OutBin/BadBinNode';
+import GoodBin from '../../customNodes/OutBin/GoodBinNode';
+import CustomInputNode from '../../customNodes/CustomInput';
 
 const ChangeTesItem = () => {
   const list = (

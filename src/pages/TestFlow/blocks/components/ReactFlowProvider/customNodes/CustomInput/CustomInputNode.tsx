@@ -1,8 +1,9 @@
 import { Handle, Position } from 'reactflow';
 import InputToolTip from '@/components/InputToolTip';
-import styles from './index.less';
 import { Popover } from 'antd';
-import PopoverButtonList from './PopoverButtonList';
+import PopoverButtonList from '../../PopoverButtonList';
+
+import styles from './index.less';
 
 const CustomInputNode = () => {
   return (

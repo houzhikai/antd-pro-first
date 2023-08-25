@@ -3,8 +3,9 @@ import styles from './index.less';
 import { Handle, Position } from 'reactflow';
 // import { options as binMap } from '../options';
 import { Popover } from 'antd';
-import PopoverButtonList from '../../CustomInput/PopoverButtonList';
+// import PopoverButtonList from '../../CustomInput/PopoverButtonList';
 import { useModel } from '@umijs/max';
+import PopoverButtonList from '../../../PopoverButtonList';
 
 interface GoodBinProp {
   maxWidth?: number;

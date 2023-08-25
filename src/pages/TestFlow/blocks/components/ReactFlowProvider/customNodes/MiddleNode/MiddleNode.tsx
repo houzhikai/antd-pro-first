@@ -1,10 +1,9 @@
 import { Handle, Position } from 'reactflow';
-import styles from './index.less';
 import InputToolTip from '@/components/InputToolTip';
 import { Popover } from 'antd';
+import PopoverButtonList from '../../PopoverButtonList';
 
-// import PopoverButtonList from '../../CustomInput/PopoverButtonList';
-import PopoverButtonList from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/CustomInput/PopoverButtonList';
+import styles from './index.less';
 
 const MiddleNode = ({ data }) => {
   return (

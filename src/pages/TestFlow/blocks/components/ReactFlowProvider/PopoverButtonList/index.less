@@ -1,0 +1,67 @@
+@import url('../customNodes/mixin.less');
+
+// 开始节点的bottom样式
+.input-bottom() {
+    position: absolute;
+    top: calc(100% - 3px);
+    left: calc(50% + 6px);
+    .afterFont()
+}
+
+.display-none-bottom() {
+    display: none;
+    content: '0';
+    .input-bottom()
+}
+
+.display-show-bottom() {
+    content: '0';
+    position: absolute;
+    .input-bottom()
+}
+
+.mixin() {
+    padding: 10px 20px;
+    border-radius: 14px;
+    // margin-top: 10px;
+    text-align: center;
+    background: #fda98d;
+    color: #fff;
+    cursor: grab;
+    position: relative;
+}
+
+.name {
+    .mixin()
+}
+
+.name::after {
+    .display-none-bottom()
+}
+
+.name1 {
+    width: 116px;
+    .mixin();
+    padding: 5px;
+
+    .input-label {
+        font-size: 12px;
+        color: #fff;
+    }
+}
+
+.name1::after {
+    .display-show-bottom()
+}
+
+// 点击测试项 弹出button list
+.bottom-item {
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+}
+
+// 删除hardBin div的样式
+.remove-bin-item-div {
+    cursor: pointer;
+}
