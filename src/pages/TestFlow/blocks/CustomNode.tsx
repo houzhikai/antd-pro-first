@@ -9,7 +9,7 @@ import ReactFlow, {
   getOutgoers,
 } from 'reactflow';
 
-import DagreTree from './DagreTree';
+import DagreTree from './components/ReactFlowProvider/DagreTree/DagreTree';
 // import CustomEdit from './components/CustomNode/CustomEdit';
 // import DownloadButton from './components/CustomNode/DownloadButton';
 import { useModel } from '@umijs/max';

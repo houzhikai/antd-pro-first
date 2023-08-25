@@ -3,10 +3,11 @@ import { Select } from 'antd';
 
 const ChangeBackground = () => {
   const { setVariant } = useModel('useTestFlowModel');
+
   const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
     setVariant(value);
   };
+
   return (
     <div
       style={{

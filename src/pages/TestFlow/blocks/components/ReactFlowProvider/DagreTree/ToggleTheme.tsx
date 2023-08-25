@@ -1,11 +1,10 @@
 import { Button } from 'antd';
-import { Panel, useReactFlow } from 'reactflow';
-import Dagre from '@dagrejs/dagre';
 import { useCallback } from 'react';
+import Dagre from '@dagrejs/dagre';
 import { useModel } from '@umijs/max';
-import ChangeBackground from './components/ReactFlowProvider/ChangeBackground';
+import { useReactFlow } from 'reactflow';
 
-const DagreTree = () => {
+const ToggleTheme = () => {
   const { nodes, edges, setNodes, setEdges, theme, setTheme } =
     useModel('useTestFlowModel');
 
@@ -45,21 +44,15 @@ const DagreTree = () => {
   const handleClick = () => {
     setTheme((c) => (c === '#fff' ? '#272822' : '#fff'));
   };
-
   return (
-    <div>
-      <Panel position="bottom-right">
-        <ChangeBackground />
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Button onClick={handleClick}>
-            {theme === '#fff' ? '浅色主题' : '暗色主题'}
-          </Button>
-          <Button onClick={() => handleToggle('TB')}>vertical layout</Button>
-          <Button onClick={() => handleToggle('LR')}>horizontal layout</Button>
-        </div>
-      </Panel>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Button onClick={handleClick}>
+        {theme === '#fff' ? '浅色主题' : '暗色主题'}
+      </Button>
+      <Button onClick={() => handleToggle('TB')}>vertical layout</Button>
+      <Button onClick={() => handleToggle('LR')}>horizontal layout</Button>
     </div>
   );
 };
 
-export default DagreTree;
+export default ToggleTheme;
