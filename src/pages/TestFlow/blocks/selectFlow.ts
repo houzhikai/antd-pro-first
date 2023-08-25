@@ -1,7 +1,11 @@
-import { mainFlowEdges } from './components/CustomNode/initEdges';
-import { mainFlowNode } from './components/CustomNode/initNodes';
-import { subflowEdge } from './components/ReactFlowProvider/customNodes/subflow/edges';
-import { subflowNode } from './components/ReactFlowProvider/customNodes/subflow/node';
+import {
+  mainFlowEdges,
+  mainFlowNode,
+} from './components/ReactFlowProvider/CustomFlow/mainFlow';
+import {
+  subflowEdge,
+  subflowNode,
+} from './components/ReactFlowProvider/CustomFlow/subflow';
 
 export const selectFlowNodeEdge = (val: string) => {
   let value: any = { node: [], edge: [] };
@@ -17,18 +21,3 @@ export const selectFlowNodeEdge = (val: string) => {
   }
   return value;
 };
-
-// export const selectFlowEdge = (val: string) => {
-//   let value;
-//   switch (val) {
-//     case 'test1':
-//       value.e = mainFlowEdges;
-//       break;
-//     case 'test2':
-//       value = subflowEdge;
-//       break;
-//     default:
-//       value = mainFlowEdges;
-//   }
-//   return value;
-// };
