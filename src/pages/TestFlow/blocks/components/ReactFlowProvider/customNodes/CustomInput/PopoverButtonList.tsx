@@ -3,6 +3,7 @@ import AddHardBin from './components/AddHardBin';
 import RemoveHardBin from './components/RemoveHardBin';
 import SettingStartNode from './components/SettingStartNode';
 import SettingStopNode from './components/SettingStopNode';
+import ChangeTesItem from './components/ChangeTesItem';
 
 import styles from './index.less';
 
@@ -13,7 +14,7 @@ const PopoverButtonList = () => {
       <RemoveHardBin />
       <SettingStartNode />
       <SettingStopNode />
-      <Button className={styles['bottom-item']}>test button</Button>
+      <ChangeTesItem />
       <Button className={styles['bottom-item']}>test button</Button>
       <Button className={styles['bottom-item']}>test button</Button>
       <Button className={styles['bottom-item']}>test button</Button>
