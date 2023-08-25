@@ -1,8 +1,9 @@
 import { useModel } from '@umijs/max';
 import { useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
-import styles from './index.less';
 import { subflowEdge, subflowNode } from '../../CustomFlow/subflow';
+
+import styles from './index.less';
 
 const Subflow = () => {
   let { nodes, setNodes, edges, setEdges } = useModel('useTestFlowModel');
