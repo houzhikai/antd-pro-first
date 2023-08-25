@@ -198,6 +198,7 @@ const DnDFlow = () => {
             onDragOver={onDragOver}
             fitView
             defaultEdgeOptions={defaultEdgeOptions}
+            deleteKeyCode="Delete" // 删除键快捷方式，首字母大写
             style={{ backgroundColor: theme }} // 流程图的背景颜色
           >
             {/* 放在右下角的操作栏 */}
