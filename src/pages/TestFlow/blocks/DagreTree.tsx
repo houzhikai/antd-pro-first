@@ -3,6 +3,7 @@ import { Panel, useReactFlow } from 'reactflow';
 import Dagre from '@dagrejs/dagre';
 import { useCallback } from 'react';
 import { useModel } from '@umijs/max';
+import ChangeBackground from './components/ReactFlowProvider/ChangeBackground';
 
 const DagreTree = () => {
   const { nodes, edges, setNodes, setEdges, theme, setTheme } =
@@ -48,6 +49,7 @@ const DagreTree = () => {
   return (
     <div>
       <Panel position="bottom-right">
+        <ChangeBackground />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <Button onClick={handleClick}>
             {theme === '#fff' ? '浅色主题' : '暗色主题'}

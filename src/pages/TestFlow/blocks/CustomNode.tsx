@@ -10,8 +10,8 @@ import ReactFlow, {
 } from 'reactflow';
 
 import DagreTree from './DagreTree';
-import CustomEdit from './components/CustomNode/CustomEdit';
-import DownloadButton from './components/CustomNode/DownloadButton';
+// import CustomEdit from './components/CustomNode/CustomEdit';
+// import DownloadButton from './components/CustomNode/DownloadButton';
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
 import { nodeTypes } from '@/pages/TestFlow/blocks/nodeTypes';
@@ -200,10 +200,11 @@ const DnDFlow = () => {
             defaultEdgeOptions={defaultEdgeOptions}
             style={{ backgroundColor: theme }} // 流程图的背景颜色
           >
+            {/* 放在右下角的操作栏 */}
             <DagreTree />
             <Background color="#ccc" variant={variant} />
-            <CustomEdit />
-            <DownloadButton />
+            {/* <CustomEdit />
+            <DownloadButton /> */}
           </ReactFlow>
         </div>
       </ReactFlowProvider>

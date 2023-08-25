@@ -8,11 +8,19 @@ const ChangeBackground = () => {
     setVariant(value);
   };
   return (
-    <div>
-      流程图背景色：
+    <div
+      style={{
+        border: 'none',
+        background: '#fff',
+        paddingLeft: 6,
+        borderRadius: 6,
+      }}
+    >
+      背景图样式：
       <Select
         defaultValue="cross"
         style={{ width: 120 }}
+        placement="topRight"
         onChange={handleChange}
         options={[
           { value: 'cross', label: 'cross' },

@@ -1,4 +1,4 @@
-import ChangeBackground from './ChangeBackground';
+// import ChangeBackground from './ChangeBackground';
 import Save from './Save';
 import SelectFlow from './SelectFlow';
 import TestFlowName from './TestFlowName';
@@ -8,7 +8,7 @@ const Nav = () => {
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <TestFlowName />
       <SelectFlow />
-      <ChangeBackground />
+      {/* <ChangeBackground /> */}
       <Save />
     </div>
   );
