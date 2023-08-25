@@ -3,6 +3,12 @@ import { Select } from 'antd';
 
 const SelectFlow = () => {
   const { setSelectFlow } = useModel('useTestFlowModel');
+
+  const options = [
+    { value: 'test1', label: 'test1' },
+    { value: 'test2', label: 'test2' },
+  ];
+
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
     setSelectFlow(value);
@@ -14,10 +20,7 @@ const SelectFlow = () => {
         defaultValue="test1"
         style={{ width: 120 }}
         onChange={handleChange}
-        options={[
-          { value: 'test1', label: 'test1' },
-          { value: 'test2', label: 'test2' },
-        ]}
+        options={options}
       />
     </div>
   );
