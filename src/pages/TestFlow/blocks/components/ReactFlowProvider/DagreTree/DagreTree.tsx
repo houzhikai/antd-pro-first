@@ -1,6 +1,6 @@
 import { Panel } from 'reactflow';
 
-import ChangeBackground from '../ChangeBackground';
+import ChangeBackground from './ChangeBackground';
 import ToggleTheme from './ToggleTheme';
 
 const DagreTree = () => {

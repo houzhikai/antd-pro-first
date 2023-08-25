@@ -2,7 +2,7 @@
 // import Demo2 from './blocks/Demo2';
 // import CustomNode from './blocks/CustomNode';
 import ReactFlowProviderPage from './blocks/ReactFlowProviderPage';
-import Nav from './blocks/components/ReactFlowProvider/Nav';
+import Nav from './blocks/components/ReactFlowProvider/NavAction/Nav';
 
 import 'reactflow/dist/style.css';
 import './index.less';
