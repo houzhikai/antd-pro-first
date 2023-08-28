@@ -48,8 +48,12 @@ const DnDFlow = () => {
 
   // 监听 delete 键盘事件，按下为 true，抬起为false， deleteType为null时，表示不可删除
   useEffect(() => {
+    console.log({ deleteKey, deleteType });
     if (deleteKey && !deleteType) {
-      message.warning('subflow中的节点不可在流程图中删除');
+      message.error('subflow中的节点不可在流程图中删除', 6);
+    } else if (deleteKey && deleteType === 'isDelete') {
+      setDeleteType('Delete');
+      message.warning('请再次输入Delete键删除该subflow', 6);
     }
   }, [deleteKey]);
 
@@ -194,10 +198,12 @@ const DnDFlow = () => {
 
   const handleClick = useCallback(
     (e, node) => {
+      console.log({ node });
       if (node.parentNode) {
         setDeleteType(null);
-      } else {
-        setDeleteType('Delete');
+      } else if (node.type === 'group' || node.id.includes('subflow')) {
+        // node.type === 'group' 需要排除非subflow的情况
+        setDeleteType('isDelete');
       }
     },
     [deleteType],
