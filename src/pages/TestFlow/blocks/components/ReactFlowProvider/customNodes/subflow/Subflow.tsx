@@ -1,7 +1,7 @@
 import { useModel } from '@umijs/max';
 import { useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
-import { subflowEdge, subflowNode } from '../../CustomFlow/subflow';
+import { customNode, customEdge } from '../../CustomFlow/customFlow';
 
 import styles from './index.less';
 
@@ -10,8 +10,8 @@ const Subflow = () => {
   let newNodes: any = [];
   let newEdges: any = [];
   useEffect(() => {
-    newNodes = nodes.concat(subflowNode);
-    newEdges = edges.concat(subflowEdge);
+    newNodes = nodes.concat(customNode);
+    newEdges = edges.concat(customEdge);
     // console.log({ nodes, subflowNode, subflowEdge, newNodes });
     setNodes(newNodes);
     setEdges(newEdges);
@@ -39,7 +39,7 @@ const Subflow = () => {
       />
       <Handle
         className={styles.bottom}
-        type="target"
+        type="source"
         position={Position.Bottom}
         id="d"
       />

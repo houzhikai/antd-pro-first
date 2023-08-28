@@ -27,19 +27,19 @@ const MiddleNode = ({ data }) => {
           id="a"
         />
         <Handle
-          type="target"
+          type="source"
           className={styles.left}
           position={Position.Left}
           id="b"
         />
         <Handle
-          type="target"
+          type="source"
           className={styles.bottom}
           position={Position.Bottom}
           id="c"
         />
         <Handle
-          type="target"
+          type="source"
           className={styles.right}
           position={Position.Right}
           id="d"
