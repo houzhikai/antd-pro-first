@@ -7,6 +7,7 @@ import ReactFlow, {
   getConnectedEdges,
   getIncomers,
   getOutgoers,
+  useKeyPress,
 } from 'reactflow';
 
 import DagreTree from './components/ReactFlowProvider/DagreTree/DagreTree';
@@ -37,10 +38,20 @@ const DnDFlow = () => {
     variant,
     theme,
   } = useModel('useTestFlowModel');
+  const deleteKey = useKeyPress('Delete');
 
   const reactFlowWrapper = useRef<any>(null);
+  type DeleteTypeProps = string | string[] | null;
+  const [deleteType, setDeleteType] = useState<DeleteTypeProps>('Delete');
 
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+
+  // 监听 delete 键盘事件，按下为 true，抬起为false， deleteType为null时，表示不可删除
+  useEffect(() => {
+    if (deleteKey && !deleteType) {
+      message.warning('subflow中的节点不可在流程图中删除');
+    }
+  }, [deleteKey]);
 
   useEffect(() => {
     setNodes((nds) =>
@@ -167,11 +178,11 @@ const DnDFlow = () => {
         // parentNode: '1',
         // extends: 'parent'
       };
-
       setNodes((nds) => nds.concat(newNode));
     },
     [reactFlowInstance],
   );
+
   const defaultEdgeOptions = {
     // style: { strokeWidth: 3, stroke: 'black' },
     type: 'simplebezier',
@@ -181,6 +192,17 @@ const DnDFlow = () => {
     },
   };
 
+  const handleClick = useCallback(
+    (e, node) => {
+      if (node.parentNode) {
+        setDeleteType(null);
+      } else {
+        setDeleteType('Delete');
+      }
+    },
+    [deleteType],
+  );
+
   return (
     <div className="dndflow">
       <ReactFlowProvider>
@@ -189,6 +211,7 @@ const DnDFlow = () => {
             nodes={nodes}
             edges={edges}
             nodeTypes={nodeTypes}
+            onNodeClick={handleClick}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onNodesDelete={onNodesDelete}
@@ -198,7 +221,7 @@ const DnDFlow = () => {
             onDragOver={onDragOver}
             fitView
             defaultEdgeOptions={defaultEdgeOptions}
-            deleteKeyCode="Delete" // 删除键快捷方式，首字母大写
+            deleteKeyCode={deleteType} // 删除键快捷方式，首字母大写
             style={{ backgroundColor: theme }} // 流程图的背景颜色
           >
             {/* 放在右下角的操作栏 */}
