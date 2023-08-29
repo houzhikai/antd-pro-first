@@ -1,8 +1,8 @@
 import { Handle, Position } from 'reactflow';
 import InputToolTip from '@/components/InputToolTip';
+import { useModel } from '@umijs/max';
 import { Popover } from 'antd';
 import PopoverButtonList from '../../PopoverButtonList';
-import { useModel } from '@umijs/max';
 
 import styles from './index.less';
 
@@ -22,13 +22,15 @@ const MiddleNode = ({ data }) => {
           background="#4c85d9"
           className={styles.name1}
         />
-        {handleList.map((item) => (
+        {handleList.map((item, index) => (
           <Handle
             key={item.id}
             type={item.type}
             className={styles[item.className]}
             position={Position[item.position]}
             id={item.id}
+            //@ts-ignore
+            test={index}
             style={item?.style}
           />
         ))}

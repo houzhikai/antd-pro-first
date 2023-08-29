@@ -21,3 +21,15 @@ git config --global --unset http.proxy
 # swagger
 
 https://pro.ant.design/zh-CN/docs/openapi
+
+# 向伪元素传递值时在 css 使用 attr 方法
+
+```
+https://developer.mozilla.org/zh-CN/docs/Web/CSS/attr
+
+ html: <div 自定义='想要的值'>
+
+ css： ::after{
+    content: attr(自定义)
+ }
+```

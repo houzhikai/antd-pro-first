@@ -12,7 +12,7 @@
 @bottom: 3px;
 
 .after-top() {
-    content: '0';
+    content: attr(test);
     position: @position;
     left: @left;
     bottom: @bottom;
@@ -20,7 +20,7 @@
 }
 
 .after-left() {
-    content: '1';
+    content: attr(test);
     position: @position;
     right: @right;
     top: @top;
@@ -28,7 +28,7 @@
 }
 
 .after-right() {
-    content: '2';
+    content: attr(test);
     position: @position;
     left: @left;
     top: @top;
@@ -36,7 +36,7 @@
 }
 
 .after-bottom() {
-    content: '3';
+    content: attr(test);
     position: @position;
     left: @left;
     .afterFont()
