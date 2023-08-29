@@ -5,7 +5,7 @@ const SettingStartNode = () => {
   return (
     <Popconfirm
       placement="right"
-      title="确定将该测试项设为开始测试项？"
+      title="确定将该测试项设为开始节点？"
       okText="Yes"
       cancelText="No"
     >

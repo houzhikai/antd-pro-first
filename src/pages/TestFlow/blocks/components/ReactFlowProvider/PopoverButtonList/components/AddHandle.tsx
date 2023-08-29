@@ -10,6 +10,8 @@ const AddHandle = () => {
   const positionList = handleList.map((item) => item.position);
 
   const handleAddHandle = (item) => {
+    console.log({ item });
+    // source为空心，target为实心
     if (item.type === 'source') {
       item.style = { background: '#FFF', border: '1px solid #1a192b' };
     }
