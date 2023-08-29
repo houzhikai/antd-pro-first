@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNodesState, useEdgesState } from 'reactflow';
 import { options } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/OutBin/options';
 import { selectFlowNodeEdge } from '@/pages/TestFlow/blocks/selectFlow';
-// \u4e00-\u9fa5_a-zA-Z0-9_]{11}
+import { initHandleList } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/dataList';
 
 export default () => {
   const [nodeName, setNodeName] = useState('start');
@@ -25,6 +25,7 @@ export default () => {
 
   // hardBin、softBin 更新
   const [binMap, setBinMap] = useState(options);
+  const [handleList, setHandleList] = useState(initHandleList);
 
   useEffect(() => {
     setNodes(initialNodes);
@@ -96,5 +97,7 @@ export default () => {
     setTheme,
     binMap,
     setBinMap,
+    handleList,
+    setHandleList,
   };
 };

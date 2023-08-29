@@ -19,7 +19,7 @@ const ChangeTesItem = () => {
   );
   return (
     <Popover placement="right" title="" content={list} trigger="hover">
-      <Button className={styles['bottom-item']}>切换测试项</Button>
+      <Button className={styles['bottom-item']}>切换测试项(暂无功能)</Button>
     </Popover>
   );
 };
