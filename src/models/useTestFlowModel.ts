@@ -31,7 +31,7 @@ export default () => {
     setNodes(initialNodes);
     setEdges(initialEdges);
     setTitle(selectFlow);
-  }, [initialEdges, initialNodes, selectFlow]);
+  }, [initialEdges, initialNodes, selectFlow, nodeBg, nodeName]);
 
   const newNodeSource: any = [];
   const newNodeTarget: any = [];

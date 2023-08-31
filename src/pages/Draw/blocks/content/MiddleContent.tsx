@@ -25,7 +25,7 @@ const MiddleContent = () => {
   const {
     nodeName,
     nodeBg,
-    nodeHidden,
+    // nodeHidden,
     nodes,
     setNodes,
     onNodesChange,
@@ -35,6 +35,7 @@ const MiddleContent = () => {
     variant,
     theme,
   } = useModel('useTestFlowModel');
+  const { selectedNode, setSelectedNode } = useModel('useDrawModel');
   const deleteKey = useKeyPress('Delete');
 
   const reactFlowWrapper = useRef<any>(null);
@@ -56,7 +57,7 @@ const MiddleContent = () => {
   useEffect(() => {
     setNodes((nds) =>
       nds.map((node) => {
-        if (node.id === '1') {
+        if (node.id === selectedNode.id) {
           node.data = {
             ...node.data,
             label: nodeName,
@@ -71,38 +72,35 @@ const MiddleContent = () => {
   useEffect(() => {
     setNodes((nds) =>
       nds.map((node) => {
-        if (node.id === '1') {
-          // it's important that you create a new object here
-          // in order to notify react flow about the change
-          node.style = { ...node.style, backgroundColor: nodeBg };
+        if (node.id === selectedNode.id) {
+          node.style = { backgroundColor: nodeBg };
         }
-
         return node;
       }),
     );
-  }, [nodeBg, setNodes]);
+  }, [nodeBg]);
 
-  useEffect(() => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if (node.id === '1') {
-          // when you update a simple type you can just update the value
-          node.hidden = nodeHidden;
-        }
+  // useEffect(() => {
+  //   setNodes((nds) =>
+  //     nds.map((node) => {
+  //       if (node.id === '1') {
+  //         // when you update a simple type you can just update the value
+  //         node.hidden = nodeHidden;
+  //       }
 
-        return node;
-      }),
-    );
-    setEdges((eds) =>
-      eds.map((edge) => {
-        if (edge.id === 'e1-2') {
-          edge.hidden = nodeHidden;
-        }
+  //       return node;
+  //     }),
+  //   );
+  //   setEdges((eds) =>
+  //     eds.map((edge) => {
+  //       if (edge.id === 'e1-2') {
+  //         edge.hidden = nodeHidden;
+  //       }
 
-        return edge;
-      }),
-    );
-  }, [nodeHidden, setNodes, setEdges]);
+  //       return edge;
+  //     }),
+  //   );
+  // }, [nodeHidden, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params) => {
@@ -192,7 +190,10 @@ const MiddleContent = () => {
   };
 
   const handleClick = useCallback(
-    (e, node) => {
+    (_, node) => {
+      console.log({ node });
+      // 选中node节点，为了展示右边的信息
+      setSelectedNode(node);
       if (node.parentNode) {
         setDeleteType(null);
       } else if (node.type === 'group' || node.id.includes('subflow')) {
@@ -209,6 +210,7 @@ const MiddleContent = () => {
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
             <ReactFlow
+              // key={Math.round(Math.random())}
               nodes={nodes}
               edges={edges}
               nodeTypes={nodeTypes}
