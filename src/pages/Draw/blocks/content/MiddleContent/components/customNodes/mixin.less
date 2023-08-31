@@ -1,0 +1,71 @@
+.afterFont() {
+    font-size: 10px;
+    color: #000;
+}
+
+// ::after属性
+@width: 50px;
+@position: absolute;
+@top: 3px;
+@left: 6px;
+@right: 6px;
+@bottom: 3px;
+
+.after-top() {
+    content: attr(test);
+    position: @position;
+    left: @left;
+    bottom: @bottom;
+    .afterFont()
+}
+
+.after-left() {
+    content: attr(test);
+    position: @position;
+    right: @right;
+    top: @top;
+    .afterFont()
+}
+
+.after-right() {
+    content: attr(test);
+    position: @position;
+    left: @left;
+    top: @top;
+    .afterFont()
+}
+
+.after-bottom() {
+    content: attr(test);
+    position: @position;
+    left: @left;
+    .afterFont()
+}
+
+// after样式，会显示 0，1，2，3
+.afterContent() {
+    .top {
+
+        &::after {
+            .after-top()
+        }
+    }
+
+    .left {
+        &::after {
+            .after-left()
+        }
+    }
+
+    .right {
+        &::after {
+            .after-right()
+        }
+    }
+
+    .bottom {
+        &::after {
+            .after-bottom()
+        }
+    }
+}

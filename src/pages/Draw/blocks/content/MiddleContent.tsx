@@ -1,37 +1,152 @@
-import styles from '../index.less';
-
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, {
+  Background,
+  MarkerType,
   ReactFlowProvider,
   addEdge,
-  useNodesState,
-  useEdgesState,
+  getConnectedEdges,
+  getIncomers,
+  getOutgoers,
+  useKeyPress,
 } from 'reactflow';
+
+import { nodeTypes } from './MiddleContent/components/nodeTypes';
+import { useModel } from '@umijs/max';
+import { message } from 'antd';
+
 import 'reactflow/dist/style.css';
-
-import './MiddleContent/index.less';
-
-const initialNodes = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
-  },
-];
+import styles from '../index.less';
+import DagreTree from './MiddleContent/components/DagreTree/DagreTree';
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const MiddleContent = () => {
+  const {
+    nodeName,
+    nodeBg,
+    nodeHidden,
+    nodes,
+    setNodes,
+    onNodesChange,
+    edges,
+    setEdges,
+    onEdgesChange,
+    variant,
+    theme,
+  } = useModel('useTestFlowModel');
+  const deleteKey = useKeyPress('Delete');
+
   const reactFlowWrapper = useRef<any>(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  type DeleteTypeProps = string | string[] | null;
+  const [deleteType, setDeleteType] = useState<DeleteTypeProps>('Delete');
+
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
+  // 监听 delete 键盘事件，按下为 true，抬起为false， deleteType为null时，表示不可删除
+  useEffect(() => {
+    if (deleteKey && !deleteType) {
+      message.error('subflow中的节点不可在流程图中删除', 6);
+    } else if (deleteKey && deleteType === 'isDelete') {
+      setDeleteType('Delete');
+      message.warning('请再次输入Delete键删除该subflow', 6);
+    }
+  }, [deleteKey]);
+
+  useEffect(() => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        if (node.id === '1') {
+          node.data = {
+            ...node.data,
+            label: nodeName,
+          };
+        }
+
+        return node;
+      }),
+    );
+  }, [nodeName, setNodes]);
+
+  useEffect(() => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        if (node.id === '1') {
+          // it's important that you create a new object here
+          // in order to notify react flow about the change
+          node.style = { ...node.style, backgroundColor: nodeBg };
+        }
+
+        return node;
+      }),
+    );
+  }, [nodeBg, setNodes]);
+
+  useEffect(() => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        if (node.id === '1') {
+          // when you update a simple type you can just update the value
+          node.hidden = nodeHidden;
+        }
+
+        return node;
+      }),
+    );
+    setEdges((eds) =>
+      eds.map((edge) => {
+        if (edge.id === 'e1-2') {
+          edge.hidden = nodeHidden;
+        }
+
+        return edge;
+      }),
+    );
+  }, [nodeHidden, setNodes, setEdges]);
+
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [],
+    (params) => {
+      const existingEdge = edges.find((e) => {
+        if (e.sourceHandle || e.targetHandle) {
+          return (
+            e.sourceHandle === params.sourceHandle &&
+            e.targetHandle === params.targetHandle
+          );
+        }
+        return e.source === params.source && e.target === params.target;
+      });
+      if (existingEdge) {
+        return message.error('Edge already exists!');
+      }
+      setEdges((eds) => addEdge(params, eds));
+    },
+    [edges],
+  );
+
+  const onNodesDelete = useCallback(
+    (deleted) => {
+      setEdges(
+        deleted.reduce((acc, node) => {
+          const incomers = getIncomers(node, nodes, edges);
+          const outgoers = getOutgoers(node, nodes, edges);
+          const connectedEdges = getConnectedEdges([node], edges);
+          const remainingEdges = acc.filter(
+            (edge) => !connectedEdges.includes(edge),
+          );
+
+          const createdEdges = incomers.flatMap(({ id: source }) =>
+            outgoers.map(({ id: target }) => ({
+              id: `${source}->${target}`,
+              source,
+              target,
+            })),
+          );
+
+          return [...remainingEdges, ...createdEdges];
+        }, edges),
+      );
+    },
+    [nodes, edges],
   );
 
   const onDragOver = useCallback((event) => {
@@ -67,6 +182,27 @@ const MiddleContent = () => {
     [reactFlowInstance],
   );
 
+  const defaultEdgeOptions = {
+    // style: { strokeWidth: 3, stroke: 'black' },
+    type: 'simplebezier',
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: 'black',
+    },
+  };
+
+  const handleClick = useCallback(
+    (e, node) => {
+      if (node.parentNode) {
+        setDeleteType(null);
+      } else if (node.type === 'group' || node.id.includes('subflow')) {
+        // node.type === 'group' 需要排除非subflow的情况
+        setDeleteType('isDelete');
+      }
+    },
+    [deleteType],
+  );
+
   return (
     <div className={styles.draw}>
       <div className="dndflow">
@@ -75,14 +211,26 @@ const MiddleContent = () => {
             <ReactFlow
               nodes={nodes}
               edges={edges}
+              nodeTypes={nodeTypes}
+              onNodeClick={handleClick}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
+              onNodesDelete={onNodesDelete}
               onConnect={onConnect}
               onInit={setReactFlowInstance}
               onDrop={onDrop}
               onDragOver={onDragOver}
               fitView
-            />
+              defaultEdgeOptions={defaultEdgeOptions}
+              deleteKeyCode={deleteType} // 删除键快捷方式，首字母大写
+              style={{ backgroundColor: theme }} // 流程图的背景颜色
+            >
+              {/* 放在右下角的操作栏 */}
+              <DagreTree />
+              <Background color="#ccc" variant={variant} />
+              {/* <CustomEdit />
+            <DownloadButton /> */}
+            </ReactFlow>
           </div>
         </ReactFlowProvider>
       </div>

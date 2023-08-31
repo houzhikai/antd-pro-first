@@ -1,0 +1,68 @@
+@import url('../mixin.less');
+
+.wrapper {
+    cursor: grab
+}
+
+@judge-width: 120px;
+@judge-height: 60px;
+
+.box {
+    width: @judge-width;
+    height: @judge-height;
+    background: #ffc000;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    transition: 1s clip-path;
+    margin: auto;
+    position: relative;
+}
+
+.box span {
+    position: absolute;
+    color: #fff;
+    left: calc((@judge-width / 2) - 16px);
+    top: calc(@judge-height / 3);
+}
+
+.top {
+
+    &::after {
+        .after-top()
+    }
+}
+
+.left {
+
+    &::after {
+        .after-left()
+    }
+}
+
+.bottom {
+
+    &::after {
+        .after-bottom()
+    }
+}
+
+.right {
+
+    &::after {
+        .after-right()
+    }
+}
+
+// .rhomboid {
+//     width: 80px;
+//     height: 80px;
+//     transform: rotateZ(135deg) skew(30deg, 30deg);
+//     background: #ffc000;
+//     color: #fff;
+//     margin: auto;
+// }
+
+// .name {
+//     position: absolute;
+//     top: 40%;
+//     left: 36%;
+// }

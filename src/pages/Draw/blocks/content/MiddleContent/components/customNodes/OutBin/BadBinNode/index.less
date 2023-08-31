@@ -1,0 +1,112 @@
+@import url('../../mixin.less');
+
+// .wrapper {
+//   position: relative;
+//   display: flex;
+//   justify-content: center;
+//   width: 0;
+//   height: 0;
+//   border: @width solid #fc5531;
+//   border-right-color: transparent;
+//   border-bottom-color: transparent;
+//   border-left-color: transparent;
+//   cursor: grab;
+//   margin: auto;
+// }
+
+// .name {
+//   position: absolute;
+//   bottom: calc(50% + @width / 2);
+// }
+
+.common(@background) {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+
+  &::before {
+    content: '';
+    vertical-align: top;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 30px solid transparent;
+    // border-top-color: var(--background);
+    border-top-color: @background;
+    border-right-color: @background;
+  }
+
+  &::after {
+    content: "";
+    display: inline-block;
+    top: 45px;
+    height: 45px;
+    width: 0;
+    height: 0;
+    border: 30px solid transparent;
+    border-top-color: @background;
+    border-left-color: @background;
+  }
+}
+
+.test {
+  .common(#fc5531)
+}
+
+.test1 {
+  .common(var(--background))
+}
+
+.name {
+  text-align: center;
+  position: static;
+  margin-bottom: 47px;
+  margin-top: -53px;
+  cursor: grab;
+
+  .select-style {
+    border: none;
+    width: 50px;
+  }
+
+}
+
+.top {
+  // top: -@width - 2px;
+
+  &::after {
+    .after-top()
+  }
+}
+
+.left {
+  // left: -(@width / 2);
+  // top: -(@width / 2 - 2px);
+  left: 33px;
+  top: 36px;
+
+  &::after {
+    .after-left()
+  }
+}
+
+.right {
+  // right: -(@width / 2);
+  // top: -(@width / 2 - 2px);
+  right: 33px;
+  top: 36px;
+
+  &::after {
+    .after-right()
+  }
+}
+
+.bottom {
+  top: 56px;
+
+  &::after {
+    .after-bottom()
+  }
+}

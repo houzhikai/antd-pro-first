@@ -1,5 +1,5 @@
-import React from 'react';
 import styles from './index.less';
+import Nav from './NavAction/Nav';
 
 const NavAction = () => {
   const handleRefresh = () => {
@@ -7,8 +7,11 @@ const NavAction = () => {
   };
   return (
     <div className={styles.nav}>
-      <div className={styles.logo} onClick={handleRefresh}></div>
-      <div className={styles.title}>未命名绘图</div>
+      <div style={{ display: 'flex', lineHeight: '52px' }}>
+        <div className={styles.logo} onClick={handleRefresh}></div>
+        <div className={styles.title}>未命名绘图</div>
+      </div>
+      <Nav />
     </div>
   );
 };
