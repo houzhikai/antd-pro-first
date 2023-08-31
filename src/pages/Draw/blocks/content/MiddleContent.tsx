@@ -12,11 +12,11 @@ import ReactFlow, {
 
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
+import DagreTree from './MiddleContent/DagreTree/DagreTree';
+import { nodeTypes } from './MiddleContent/nodeTypes';
 
 import 'reactflow/dist/style.css';
 import styles from '../index.less';
-import { nodeTypes } from './MiddleContent/nodeTypes';
-import DagreTree from './MiddleContent/DagreTree/DagreTree';
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
@@ -228,8 +228,8 @@ const MiddleContent = () => {
               {/* 放在右下角的操作栏 */}
               <DagreTree />
               <Background color="#ccc" variant={variant} />
-              {/* <CustomEdit />
-            <DownloadButton /> */}
+              {/* <CustomEdit /> 
+              <DownloadButton /> */}
             </ReactFlow>
           </div>
         </ReactFlowProvider>
