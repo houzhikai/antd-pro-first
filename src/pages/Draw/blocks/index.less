@@ -34,6 +34,7 @@
 .toolbar {
     padding: 6px 20px;
     border-bottom: 1px solid @dividerColor;
+    box-shadow: 2px 2px 5px -4px @dividerColor;
 }
 
 .content {
@@ -42,6 +43,12 @@
 
     .left {
         width: 256px;
+        overflow-y: auto;
+
+        .header {
+            font-weight: 600;
+            text-align: start;
+        }
     }
 
     .right {
@@ -51,4 +58,13 @@
     .draw {
         flex: 1;
     }
+}
+
+// 修改antd组件的样式
+:where(.css-dev-only-do-not-override-k7429z).ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box {
+    padding: 0;
+}
+
+:where(.css-dev-only-do-not-override-k7429z).ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    padding: 0;
 }
