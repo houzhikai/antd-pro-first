@@ -87,6 +87,11 @@ export default defineConfig({
       component: './TestFlow',
     },
     {
+      name: '画图工具',
+      path: `/draw`,
+      component: './Draw',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',

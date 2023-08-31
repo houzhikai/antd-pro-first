@@ -11,6 +11,7 @@ export default {
   'menu.draggable': '拖拽',
   'menu.summary': '汇总',
   'menu.testFlow': '流程图',
+  'menu.draw': '画图工具',
   // https://blog.csdn.net/huai42717/article/details/128467502
   // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': '首页',
@@ -25,4 +26,5 @@ export default {
   'menu.拖拽': '拖拽',
   'menu.汇总': '汇总',
   'menu.流程图': '流程图',
+  'menu.画图工具': '画图工具',
 };

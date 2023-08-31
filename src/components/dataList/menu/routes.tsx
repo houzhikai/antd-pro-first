@@ -55,6 +55,11 @@ export const routes = {
       path: `/testFlow`,
       component: './TestFlow',
     },
+    {
+      name: '画图工具',
+      path: `/draw`,
+      component: './Draw',
+    },
   ],
   access: {
     canSeeAdmin: false,
