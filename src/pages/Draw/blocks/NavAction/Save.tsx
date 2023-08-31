@@ -2,7 +2,7 @@ import { useModel } from '@umijs/max';
 import { Image, Tooltip } from 'antd';
 import save from '@/icon/draw/save.svg';
 
-import styles from './index.less';
+import styles from '../index.less';
 
 const Save = () => {
   const { title, mergeArrList } = useModel('useTestFlowModel');
@@ -29,13 +29,15 @@ const Save = () => {
 
   return (
     <Tooltip placement="bottomLeft" title="保存">
-      <Image
-        src={save}
-        preview={false}
-        width={16}
-        className={styles.save}
-        onClick={handleSave}
-      />
+      <div className={styles.gap}>
+        <Image
+          src={save}
+          preview={false}
+          width={16}
+          className={styles.save}
+          onClick={handleSave}
+        />
+      </div>
     </Tooltip>
   );
 };

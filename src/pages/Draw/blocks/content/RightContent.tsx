@@ -1,7 +1,13 @@
+import { useModel } from '@umijs/max';
 import styles from '../index.less';
 
 const RightContent = () => {
-  return <div className={styles.right}>RightContent</div>;
+  const { isHiddenFormat } = useModel('useDrawModel');
+  return (
+    <>
+      {isHiddenFormat ? <div className={styles.right}>RightContent</div> : null}
+    </>
+  );
 };
 
 export default RightContent;
