@@ -1,18 +1,15 @@
 import { Collapse } from 'antd';
 import styles from '../index.less';
+import Sidebar from './MiddleContent/Sidebar';
 
 const { Panel } = Collapse;
 
 const LeftContent = () => {
-  const text = `
-A dog is a type of domesticated animal.
-Known for its loyalty and faithfulness,
-it can be found as a welcome guest in many households across the world.
-`;
+  const text = `test demo`;
 
   return (
     <div className={styles.left}>
-      <Collapse defaultActiveKey={['hardBin']} ghost>
+      <Collapse defaultActiveKey={['hardBin']} size="small" ghost>
         <Panel
           header={<div className={styles.header}>hardBin</div>}
           key="hardBin"
@@ -29,7 +26,7 @@ it can be found as a welcome guest in many households across the world.
           header={<div className={styles.header}>测试项</div>}
           key="test-item"
         >
-          {text}
+          <Sidebar />
         </Panel>
         <Panel
           header={<div className={styles.header}>subflow</div>}

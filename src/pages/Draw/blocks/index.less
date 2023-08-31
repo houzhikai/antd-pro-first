@@ -44,15 +44,18 @@
     .left {
         width: 256px;
         overflow-y: auto;
+        border: 1px solid @dividerColor;
 
         .header {
             font-weight: 600;
             text-align: start;
+            padding: 4px 0;
         }
     }
 
     .right {
         width: 256px;
+        border: 1px solid @dividerColor;
     }
 
     .draw {
@@ -61,10 +64,14 @@
 }
 
 // 修改antd组件的样式
-:where(.css-dev-only-do-not-override-k7429z).ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box {
-    padding: 0;
-}
 
-:where(.css-dev-only-do-not-override-k7429z).ant-collapse .ant-collapse-content>.ant-collapse-content-box {
-    padding: 0;
+:global {
+    .ant-collapse-header {
+        border-bottom: 1px solid @dividerColor;
+        border-top: 1px solid @dividerColor;
+    }
+
+    .ant-collapse-content-box {
+        padding-block: 4px;
+    }
 }
