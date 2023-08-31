@@ -10,13 +10,13 @@ import ReactFlow, {
   useKeyPress,
 } from 'reactflow';
 
-import { nodeTypes } from './MiddleContent/components/nodeTypes';
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
 
 import 'reactflow/dist/style.css';
 import styles from '../index.less';
-import DagreTree from './MiddleContent/components/DagreTree/DagreTree';
+import { nodeTypes } from './MiddleContent/nodeTypes';
+import DagreTree from './MiddleContent/DagreTree/DagreTree';
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;

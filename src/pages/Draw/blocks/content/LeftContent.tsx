@@ -1,6 +1,6 @@
 import { Collapse } from 'antd';
 import styles from '../index.less';
-import Sidebar from './MiddleContent/Sidebar';
+import Sidebar from './LeftContent/Sidebar';
 
 const { Panel } = Collapse;
 
