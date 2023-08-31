@@ -1,5 +1,8 @@
 import { useModel } from '@umijs/max';
-import { Button } from 'antd';
+import { Image, Tooltip } from 'antd';
+import save from '@/icon/draw/save.svg';
+
+import styles from './index.less';
 
 const Save = () => {
   const { title, mergeArrList } = useModel('useTestFlowModel');
@@ -25,11 +28,15 @@ const Save = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'end' }}>
-      <Button type="primary" onClick={handleSave}>
-        保存流程图
-      </Button>
-    </div>
+    <Tooltip placement="bottomLeft" title="保存">
+      <Image
+        src={save}
+        preview={false}
+        width={16}
+        className={styles.save}
+        onClick={handleSave}
+      />
+    </Tooltip>
   );
 };
 
