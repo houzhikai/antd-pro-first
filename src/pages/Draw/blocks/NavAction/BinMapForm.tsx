@@ -1,10 +1,10 @@
-import { Tooltip, Image } from 'antd';
+import { Tooltip, Image, message } from 'antd';
 import binMap from '@/icon/draw/binMap.svg';
 import styles from '../index.less';
 
 const BinMapForm = () => {
   const handleSave = () => {
-    console.log('打开binmapform表单');
+    message.warning('暂无开发');
   };
   return (
     <Tooltip placement="bottomLeft" title="binMap">
