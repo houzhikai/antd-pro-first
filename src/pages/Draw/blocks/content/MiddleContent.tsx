@@ -191,7 +191,6 @@ const MiddleContent = () => {
 
   const handleClick = useCallback(
     (_, node) => {
-      console.log({ node });
       // 选中node节点，为了展示右边的信息
       setSelectedNode(node);
       if (node.parentNode) {
