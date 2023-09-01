@@ -1,7 +1,9 @@
 import { Collapse } from 'antd';
-import styles from '../index.less';
-import Sidebar from './LeftContent/Sidebar';
 import { useModel } from '@umijs/max';
+import TestItem from './LeftContent/TestItem';
+import Sidebar from './LeftContent/Sidebar';
+
+import styles from '../index.less';
 
 const { Panel } = Collapse;
 
@@ -13,18 +15,18 @@ const LeftContent = () => {
     <>
       {isHiddenSide ? (
         <div className={styles.left}>
-          <Collapse defaultActiveKey={['hardBin']} size="small" ghost>
+          <Collapse defaultActiveKey={['test-item']} size="small" ghost>
             <Panel
               header={<div className={styles.header}>测试项</div>}
               key="test-item"
             >
-              <Sidebar />
+              <TestItem />
             </Panel>
             <Panel
               header={<div className={styles.header}>subflow</div>}
               key="subflow"
             >
-              {text}
+              <Sidebar />
             </Panel>
             <Panel
               header={<div className={styles.header}>mainFlow</div>}
