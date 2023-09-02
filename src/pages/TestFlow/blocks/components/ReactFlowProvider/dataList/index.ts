@@ -8,13 +8,19 @@ interface HandleList {
 
 export const initHandleList: HandleList[] = [
   {
-    type: 'source',
+    type: 'target',
     className: 'top',
     position: 'Top',
     id: 'a',
   },
   {
-    type: 'target',
+    type: 'source',
+    className: 'right',
+    position: 'Right',
+    id: 'b',
+  },
+  {
+    type: 'source',
     className: 'bottom',
     position: 'Bottom',
     id: 'c',

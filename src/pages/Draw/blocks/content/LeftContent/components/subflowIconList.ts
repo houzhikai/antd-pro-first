@@ -7,8 +7,8 @@ export const subflowIconList = [
   //   { icon: filletCorner, type: 'custom-input', size: 54 },
   //   { icon: ellipse, type: 'default' },
   //   { icon: round, type: 'output' },
-  { icon: demo, type: 'input', size: 54 },
-  { icon: demo, type: 'input', size: 54 },
-  { icon: demo, type: 'input', size: 54 },
-  { icon: demo, type: 'input', size: 54 },
+  { icon: demo, type: 'custom-subflow', size: 54 },
+  { icon: demo, type: 'custom-subflow', size: 54 },
+  { icon: demo, type: 'custom-subflow', size: 54 },
+  { icon: demo, type: 'custom-subflow', size: 54 },
 ];
