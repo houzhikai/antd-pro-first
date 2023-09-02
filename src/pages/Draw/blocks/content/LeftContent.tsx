@@ -1,15 +1,25 @@
-import { Collapse } from 'antd';
+import { Collapse, message } from 'antd';
 import { useModel } from '@umijs/max';
 import TestItem from './LeftContent/TestItem';
 import Sidebar from './LeftContent/Sidebar';
 import SubflowList from './LeftContent/SubflowList';
 
 import styles from '../index.less';
+import { PlusOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;
 
 const LeftContent = () => {
   const { isHiddenSide } = useModel('useDrawModel');
+
+  const extra = (
+    <PlusOutlined
+      onClick={(event) => {
+        event.stopPropagation();
+        message.warning('添加subflow，暂无开发');
+      }}
+    />
+  );
 
   return (
     <>
@@ -25,6 +35,7 @@ const LeftContent = () => {
             <Panel
               header={<div className={styles.header}>subflow</div>}
               key="subflow"
+              extra={extra}
             >
               <SubflowList />
             </Panel>
@@ -32,6 +43,7 @@ const LeftContent = () => {
               header={<div className={styles.header}>mainFlow</div>}
               key="mainFlow"
             >
+              {/*   TODO，当删除Sidebar时，流程图也不会展示*/}
               <Sidebar />
             </Panel>
           </Collapse>
