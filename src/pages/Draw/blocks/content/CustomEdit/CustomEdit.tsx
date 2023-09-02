@@ -17,8 +17,6 @@ const CustomEdit = () => {
     setNodeBg(e.target.value);
   };
 
-  console.log({ selectedNode });
-
   return (
     <div className={styles.wrapper}>
       {Object.keys(selectedNode).length > 0 ? (
