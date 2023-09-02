@@ -21,20 +21,23 @@ const CustomEdit = () => {
     <div className={styles.wrapper}>
       {Object.keys(selectedNode).length > 0 ? (
         <>
-          <Input
-            addonBefore="测试流name："
-            placeholder="请输入名称"
-            defaultValue={selectedNode.data.label}
-            value={nodeName}
-            onChange={(evt) => setNodeName(evt.target.value)}
-          />
-
-          <Input
-            defaultValue={selectedNode.style ?? null}
-            addonBefore="background："
-            onPressEnter={handleChangeBg}
-            onBlur={handleChangeBg}
-          />
+          <div className={styles['detail-item']}>
+            <Input
+              addonBefore="测试流name："
+              placeholder="请输入名称"
+              defaultValue={selectedNode.data.label}
+              value={nodeName}
+              onChange={(evt) => setNodeName(evt.target.value)}
+            />
+          </div>
+          <div className={styles['detail-item']}>
+            <Input
+              defaultValue={selectedNode.style ?? null}
+              addonBefore="background："
+              onPressEnter={handleChangeBg}
+              onBlur={handleChangeBg}
+            />
+          </div>
         </>
       ) : null}
 

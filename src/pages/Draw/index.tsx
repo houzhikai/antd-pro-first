@@ -1,7 +1,11 @@
 import LayoutPage from './blocks/LayoutPage';
 
 const index = () => {
-  return <LayoutPage />;
+  return (
+    <div aria-label="test-flow">
+      <LayoutPage />
+    </div>
+  );
 };
 
 export default index;
