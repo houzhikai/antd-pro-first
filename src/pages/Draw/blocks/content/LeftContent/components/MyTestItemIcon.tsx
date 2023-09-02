@@ -8,7 +8,7 @@ interface MyTestItemIconProps {
 
 const MyTestItemIcon = (props: MyTestItemIconProps) => {
   const { src, onDragStart, size } = props;
-  console.log({ size });
+
   return (
     <Image
       src={src}
