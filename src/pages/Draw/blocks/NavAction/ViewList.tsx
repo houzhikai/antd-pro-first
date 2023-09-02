@@ -1,11 +1,11 @@
 import { Dropdown, Image, Space } from 'antd';
 import { DownOutlined, CheckOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
+import { useModel } from '@umijs/max';
 
 import viewList from '@/icon/draw/list.svg';
 
 import styles from '../index.less';
-import { useModel } from '@umijs/max';
 
 const ViewList = () => {
   const { isHiddenSide, setIsHiddenSide, isHiddenFormat, setIsHiddenFormat } =
