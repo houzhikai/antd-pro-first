@@ -1,4 +1,5 @@
 import NavAction from './NavAction';
+import BinMapForm from './NavAction/components/BinMapForm';
 import ToolbarContainer from './ToolbarContainer';
 import LeftContent from './content/LeftContent';
 import MiddleContent from './content/MiddleContent';
@@ -16,6 +17,7 @@ const Layout = () => {
         <MiddleContent />
         <RightContent />
       </div>
+      <BinMapForm />
     </div>
   );
 };

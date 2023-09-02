@@ -1,10 +1,14 @@
-import { Tooltip, Image, message } from 'antd';
+import { Tooltip, Image } from 'antd';
 import binMap from '@/icon/draw/binMap.svg';
 import styles from '../index.less';
+import { useModel } from '@umijs/max';
 
-const BinMapForm = () => {
+const BinMapIcon = () => {
+  const { setOpenBinMapForm } = useModel('useDrawModel');
   const handleSave = () => {
-    message.warning('暂无开发');
+    console.log(11);
+    setOpenBinMapForm(true);
+    // message.warning('暂无开发');
   };
   return (
     <Tooltip placement="bottomLeft" title="binMap">
@@ -21,4 +25,4 @@ const BinMapForm = () => {
   );
 };
 
-export default BinMapForm;
+export default BinMapIcon;

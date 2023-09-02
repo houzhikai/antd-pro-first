@@ -5,6 +5,7 @@ export default () => {
   const [isHiddenFormat, setIsHiddenFormat] = useState(true); // true 表示展示在页面上
 
   const [selectedNode, setSelectedNode] = useState<any>({});
+  const [openBinMapForm, setOpenBinMapForm] = useState(false);
 
   return {
     isHiddenSide,
@@ -13,5 +14,7 @@ export default () => {
     setIsHiddenFormat,
     selectedNode,
     setSelectedNode,
+    openBinMapForm,
+    setOpenBinMapForm,
   };
 };

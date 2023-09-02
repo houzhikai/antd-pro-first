@@ -1,4 +1,4 @@
-import BinMapForm from './NavAction/BinMapForm';
+import BinMapIcon from './NavAction/BinMapIcon';
 import DefaultArrowStyle from './NavAction/DefaultArrowStyle';
 import Save from './NavAction/Save';
 import ViewList from './NavAction/ViewList';
@@ -8,7 +8,7 @@ const ToolbarContainer = () => {
   return (
     <div className={styles.toolbar}>
       <ViewList />
-      <BinMapForm />
+      <BinMapIcon />
       <DefaultArrowStyle />
       <Save />
     </div>
