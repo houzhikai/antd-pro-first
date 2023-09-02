@@ -207,7 +207,12 @@ const MiddleContent = () => {
     <div className={styles.draw}>
       <div className="dndflow">
         <ReactFlowProvider>
-          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+          {/* 必须要加height属性，不然看不到react flow */}
+          <div
+            style={{ height: 'calc(100vh - 145px)' }}
+            className="reactflow-wrapper"
+            ref={reactFlowWrapper}
+          >
             <ReactFlow
               // key={Math.round(Math.random())}
               nodes={nodes}

@@ -43,7 +43,6 @@ const LeftContent = () => {
               header={<div className={styles.header}>mainFlow</div>}
               key="mainFlow"
             >
-              {/*   TODO，当删除Sidebar时，流程图也不会展示*/}
               <Sidebar />
             </Panel>
           </Collapse>
