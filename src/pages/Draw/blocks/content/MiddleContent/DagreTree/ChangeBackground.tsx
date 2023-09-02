@@ -27,6 +27,7 @@ const ChangeBackground = () => {
           { value: 'cross', label: 'cross' },
           { value: 'dots', label: 'dots' },
           { value: 'lines', label: 'lines' },
+          { value: 'none', label: 'none' },
         ]}
       />
     </div>

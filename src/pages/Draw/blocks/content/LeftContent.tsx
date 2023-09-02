@@ -3,9 +3,9 @@ import { useModel } from '@umijs/max';
 import TestItem from './LeftContent/TestItem';
 import Sidebar from './LeftContent/Sidebar';
 import SubflowList from './LeftContent/SubflowList';
+import { PlusOutlined } from '@ant-design/icons';
 
 import styles from '../index.less';
-import { PlusOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;
 

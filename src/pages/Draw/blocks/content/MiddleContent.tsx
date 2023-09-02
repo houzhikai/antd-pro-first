@@ -228,7 +228,9 @@ const MiddleContent = () => {
             >
               {/* 放在右下角的操作栏 */}
               <DagreTree />
-              <Background color="#ccc" variant={variant} />
+              {variant !== 'none' ? (
+                <Background color="#ccc" variant={variant} />
+              ) : null}
               {/* <CustomEdit /> 
               <DownloadButton /> */}
             </ReactFlow>
