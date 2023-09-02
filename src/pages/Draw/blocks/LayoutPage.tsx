@@ -7,7 +7,7 @@ import styles from './index.less';
 
 const Layout = () => {
   return (
-    <div>
+    <div className={styles.layout}>
       <NavAction />
       {/* 用来存放图片icon栏 */}
       <ToolbarContainer />

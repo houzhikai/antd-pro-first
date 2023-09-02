@@ -13,7 +13,6 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
     <Image
       src={src}
       width={size ?? 24}
-      style={{ margin: '0 10px' }}
       preview={false}
       onDragStart={(event) => onDragStart(event, 'input')}
     />

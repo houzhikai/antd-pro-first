@@ -1,11 +1,7 @@
 import LayoutPage from './blocks/LayoutPage';
 
 const index = () => {
-  return (
-    <div>
-      <LayoutPage />
-    </div>
-  );
+  return <LayoutPage />;
 };
 
 export default index;

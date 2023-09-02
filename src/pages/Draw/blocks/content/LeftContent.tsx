@@ -2,6 +2,7 @@ import { Collapse } from 'antd';
 import { useModel } from '@umijs/max';
 import TestItem from './LeftContent/TestItem';
 import Sidebar from './LeftContent/Sidebar';
+import SubflowList from './LeftContent/SubflowList';
 
 import styles from '../index.less';
 
@@ -9,7 +10,6 @@ const { Panel } = Collapse;
 
 const LeftContent = () => {
   const { isHiddenSide } = useModel('useDrawModel');
-  const text = `test demo`;
 
   return (
     <>
@@ -26,13 +26,13 @@ const LeftContent = () => {
               header={<div className={styles.header}>subflow</div>}
               key="subflow"
             >
-              <Sidebar />
+              <SubflowList />
             </Panel>
             <Panel
               header={<div className={styles.header}>mainFlow</div>}
               key="mainFlow"
             >
-              {text}
+              <Sidebar />
             </Panel>
           </Collapse>
         </div>
