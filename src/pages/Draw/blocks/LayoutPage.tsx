@@ -2,6 +2,7 @@ import NavAction from './NavAction';
 import BinMapForm from './NavAction/components/BinMapForm';
 import ToolbarContainer from './ToolbarContainer';
 import LeftContent from './content/LeftContent';
+import AddMainFlowModal from './content/LeftContent/components/AddMainFlowModal';
 import MiddleContent from './content/MiddleContent';
 import RightContent from './content/RightContent';
 import styles from './index.less';
@@ -18,6 +19,7 @@ const Layout = () => {
         <RightContent />
       </div>
       <BinMapForm />
+      <AddMainFlowModal />
     </div>
   );
 };

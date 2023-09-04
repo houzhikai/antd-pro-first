@@ -1,4 +1,4 @@
-import { Collapse, message } from 'antd';
+import { Collapse } from 'antd';
 import { useModel } from '@umijs/max';
 import TestItem from './LeftContent/TestItem';
 import Sidebar from './LeftContent/Sidebar';
@@ -10,13 +10,13 @@ import styles from '../index.less';
 const { Panel } = Collapse;
 
 const LeftContent = () => {
-  const { isHiddenSide } = useModel('useDrawModel');
+  const { isHiddenSide, setOpenMainFlowModal } = useModel('useDrawModel');
 
   const extra = (
     <PlusOutlined
       onClick={(event) => {
         event.stopPropagation();
-        message.warning('添加subflow，暂无开发');
+        setOpenMainFlowModal(true);
       }}
     />
   );
@@ -26,6 +26,12 @@ const LeftContent = () => {
       {isHiddenSide ? (
         <div className={styles.left}>
           <Collapse defaultActiveKey={['test-item']} size="small" ghost>
+            <Panel
+              header={<div className={styles.header}>BinMap</div>}
+              key="SoftBin"
+            >
+              展示SoftBin信息
+            </Panel>
             <Panel
               header={<div className={styles.header}>测试项</div>}
               key="test-item"
@@ -42,6 +48,7 @@ const LeftContent = () => {
             <Panel
               header={<div className={styles.header}>mainFlow</div>}
               key="mainFlow"
+              extra={extra}
             >
               <Sidebar />
             </Panel>

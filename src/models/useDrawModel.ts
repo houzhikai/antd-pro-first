@@ -6,6 +6,7 @@ export default () => {
 
   const [selectedNode, setSelectedNode] = useState<any>({});
   const [openBinMapForm, setOpenBinMapForm] = useState(false);
+  const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
 
   return {
     isHiddenSide,
@@ -16,5 +17,7 @@ export default () => {
     setSelectedNode,
     openBinMapForm,
     setOpenBinMapForm,
+    openMainFlowModal,
+    setOpenMainFlowModal,
   };
 };
