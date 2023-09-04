@@ -19,7 +19,7 @@ const ChangeBackground = () => {
     >
       背景图样式：
       <Select
-        defaultValue="cross"
+        defaultValue="none"
         style={{ width: 120 }}
         placement="topRight"
         onChange={handleChange}

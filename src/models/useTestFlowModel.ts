@@ -13,7 +13,7 @@ export default () => {
 
   const [theme, setTheme] = useState('#fff');
 
-  const [variant, setVariant] = useState<any>('cross');
+  const [variant, setVariant] = useState<any>('none');
 
   // const initialNodes = selectFlow === 'test1' ? mainFlowNode : subflowNode;
   // const initialEdges = selectFlow === 'test1' ? mainFlowEdges : subflowEdge;

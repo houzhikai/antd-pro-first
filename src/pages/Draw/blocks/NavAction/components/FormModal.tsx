@@ -1,64 +1,154 @@
 import type { ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProForm } from '@ant-design/pro-components';
-import { Input } from 'antd';
 import React, { useState } from 'react';
 
-type DataSourceType = {
+type HardBinDataSourceType = {
   id: React.Key;
-  title?: string;
-  decs?: string;
-  state?: string;
-  created_at?: number;
-  children?: DataSourceType[];
+  name?: string;
+  number?: string;
+  type?: string;
+  color?: string;
+  children?: HardBinDataSourceType[];
 };
 
-const defaultData: DataSourceType[] = [
+const defaultHardBinData: HardBinDataSourceType[] = [
   {
-    id: 624748504,
-    title: '活动名称一',
-    decs: '这个活动真好玩',
-    state: 'open',
-    created_at: 1590486176000,
+    id: 0,
+    name: 'HB1',
+    number: '0',
+    type: 'pass',
+    color: '#bfa',
   },
   {
-    id: 624691229,
-    title: '活动名称二',
-    decs: '这个活动真好玩',
-    state: 'closed',
-    created_at: 1590481162000,
+    id: 1,
+    name: 'HB2',
+    number: '1',
+    type: 'fail',
+    color: '#fba',
+  },
+  {
+    id: 2,
+    name: 'HB1',
+    number: '1',
+    type: 'fail',
+    color: '#fba',
   },
 ];
 
-const columns: ProColumns<DataSourceType>[] = [
+const HardBinColumns: ProColumns<HardBinDataSourceType>[] = [
   {
-    title: '活动名称',
-    dataIndex: 'title',
-    width: '30%',
+    title: 'Name',
+    dataIndex: 'name',
+    width: '20%',
   },
   {
-    title: '状态',
-    key: 'state',
-    dataIndex: 'state',
+    title: 'Number',
+    dataIndex: 'number',
+    width: '20%',
+  },
+  {
+    title: 'Type',
+    dataIndex: 'type',
+    valueType: 'select',
+    width: '20%',
+    valueEnum: {
+      pass: { text: 'Pass', status: 'pass' },
+      fail: { text: 'Fail', status: 'fail' },
+    },
+  },
+  {
+    title: 'Color',
+    dataIndex: 'color',
+    width: '20%',
+  },
+  {
+    title: '操作',
+    valueType: 'option',
+  },
+];
+
+type SoftBinDataSourceType = {
+  id: React.Key;
+  name?: string;
+  number?: string;
+  hardBin?: string;
+  maxCount?: string;
+  checkOverflow?: string;
+  color?: string;
+  comment?: string;
+};
+
+const defaultSoftBinData: SoftBinDataSourceType[] = [
+  {
+    id: 0,
+    name: 'FB1',
+    number: '1001',
+    hardBin: 'HB1',
+    maxCount: '65536',
+    checkOverflow: 'pass',
+    color: '#bfa',
+    comment: '',
+  },
+  {
+    id: 1,
+    name: 'FB2',
+    number: '1002',
+    hardBin: 'HB2',
+    maxCount: '65536',
+    checkOverflow: 'fail',
+    color: '#fba',
+    comment: '',
+  },
+  {
+    id: 2,
+    name: 'FB1',
+    number: '1003',
+    hardBin: 'HB1',
+    maxCount: '65536',
+    checkOverflow: 'fail',
+    color: '#abf',
+    comment: '',
+  },
+];
+
+const SoftBinColumns: ProColumns<SoftBinDataSourceType>[] = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+  },
+  {
+    title: 'Number',
+    dataIndex: 'number',
+  },
+  {
+    title: 'HardBin',
+    dataIndex: 'hardBin',
     valueType: 'select',
     valueEnum: {
-      all: { text: '全部', status: 'Default' },
-      open: {
-        text: '未解决',
-        status: 'Error',
-      },
-      closed: {
-        text: '已解决',
-        status: 'Success',
-      },
+      HB1: { text: 'HB1', status: 'HB1' },
+      HB2: { text: 'HB2', status: 'HB2' },
     },
   },
   {
-    title: '描述',
-    dataIndex: 'decs',
-    renderFormItem: (_, { record }) => {
-      console.log('----===>', record);
-      return <Input addonBefore={(record as any)?.addonBefore} />;
+    title: 'MaxCount',
+    dataIndex: 'maxCount',
+  },
+  {
+    title: 'CheckOverflow',
+    dataIndex: 'checkOverflow',
+    valueType: 'select',
+    valueEnum: {
+      pass: { text: 'true', status: 'true' },
+      fail: { text: 'false', status: 'false' },
     },
+  },
+  {
+    title: 'Color',
+    dataIndex: 'color',
+  },
+  {
+    title: 'Comment',
+    dataIndex: 'comment',
   },
   {
     title: '操作',
@@ -67,9 +157,12 @@ const columns: ProColumns<DataSourceType>[] = [
 ];
 
 const FormModal = () => {
-  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() =>
-    defaultData.map((item) => item.id),
-  );
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() => {
+    return defaultHardBinData.map((item) => item.id);
+  });
+  const [keys, setKeys] = useState<React.Key[]>(() => {
+    return defaultSoftBinData.map((item) => item.id);
+  });
   return (
     <ProForm<{
       name: string;
@@ -90,14 +183,14 @@ const FormModal = () => {
     >
       <ProForm.Item
         label={<h2>HardBin</h2>}
-        name="dataSource"
-        initialValue={defaultData}
+        name="hardBin"
+        initialValue={defaultHardBinData}
         trigger="onValuesChange"
       >
-        <EditableProTable<DataSourceType>
+        <EditableProTable<HardBinDataSourceType>
           rowKey="id"
           toolBarRender={false}
-          columns={columns}
+          columns={HardBinColumns}
           recordCreatorProps={{
             newRecordType: 'dataSource',
             position: 'bottom',
@@ -119,14 +212,14 @@ const FormModal = () => {
       </ProForm.Item>
       <ProForm.Item
         label={<h2>SoftBin</h2>}
-        name="dataSource"
-        initialValue={defaultData}
+        name="softBin"
+        initialValue={defaultSoftBinData}
         trigger="onValuesChange"
       >
-        <EditableProTable<DataSourceType>
+        <EditableProTable<HardBinDataSourceType>
           rowKey="id"
           toolBarRender={false}
-          columns={columns}
+          columns={SoftBinColumns}
           recordCreatorProps={{
             newRecordType: 'dataSource',
             position: 'bottom',
@@ -138,8 +231,8 @@ const FormModal = () => {
           }}
           editable={{
             type: 'multiple',
-            editableKeys,
-            onChange: setEditableRowKeys,
+            editableKeys: keys,
+            onChange: setKeys,
             actionRender: (row, _, dom) => {
               return [dom.delete];
             },

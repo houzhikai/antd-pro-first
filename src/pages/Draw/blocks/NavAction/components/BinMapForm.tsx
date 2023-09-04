@@ -13,7 +13,7 @@ const BinMapForm = () => {
   const handleCancel = () => {
     setOpenBinMapForm(false);
   };
-  console.log({ openBinMapForm });
+
   return (
     <Modal
       width={1200}
