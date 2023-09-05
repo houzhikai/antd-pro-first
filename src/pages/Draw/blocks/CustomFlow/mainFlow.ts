@@ -81,7 +81,7 @@ export const mainFlowEdges = [
     markerEnd: {
       type: MarkerType.ArrowClosed,
     },
-    label: 'Pass',
+    label: '0',
   },
   {
     id: 'e3-4',
@@ -93,7 +93,7 @@ export const mainFlowEdges = [
     markerEnd: {
       type: MarkerType.ArrowClosed,
     },
-    label: 'Fail',
+    label: '1',
   },
   {
     id: 'e3-5',

@@ -88,23 +88,24 @@ export const mainFlowEdges = [
     source: '3',
     target: '4',
     type: 'smoothstep',
-    animated: true, // 虚线
+    // animated: true, // 虚线
     sourceHandle: 'b',
     markerEnd: {
       type: MarkerType.ArrowClosed,
     },
-    label: 'Fail',
+    label: '1',
   },
   {
     id: 'e3-5',
     source: '3',
     target: '5',
-    animated: true, // 虚线
+    type: 'smoothstep',
+    // animated: true, // 虚线
     sourceHandle: 'c',
     markerEnd: {
       type: MarkerType.ArrowClosed,
     },
-    label: 'Pass',
+    label: '0',
     labelStyle: { fill: 'red', fillOpacity: 0.7, paddingLeft: 20 },
     labelBgStyle: { fill: 'transparent' },
   },
