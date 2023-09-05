@@ -2,7 +2,8 @@ import React from 'react';
 // import styles from '../index.less';
 import { useModel } from '@umijs/max';
 import { Modal, Divider } from 'antd';
-import FormModal from './FormModal';
+// import FormModal from './FormModal';
+import CustomFormModal from './CustomFormModal';
 
 const BinMapForm = () => {
   const { openBinMapForm, setOpenBinMapForm } = useModel('useDrawModel');
@@ -28,7 +29,8 @@ const BinMapForm = () => {
       centered
     >
       <Divider />
-      <FormModal />
+      {/* <FormModal /> */}
+      <CustomFormModal />
     </Modal>
   );
 };
