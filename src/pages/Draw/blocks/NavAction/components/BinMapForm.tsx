@@ -1,7 +1,7 @@
 import React from 'react';
 // import styles from '../index.less';
 import { useModel } from '@umijs/max';
-import { Modal } from 'antd';
+import { Modal, Divider } from 'antd';
 import FormModal from './FormModal';
 
 const BinMapForm = () => {
@@ -24,7 +24,10 @@ const BinMapForm = () => {
       cancelText="取消"
       onOk={handleOk}
       onCancel={handleCancel}
+      destroyOnClose={true} // 关闭时销毁 Modal 里的子元素，关闭时相当于取消form的更改
+      centered
     >
+      <Divider />
       <FormModal />
     </Modal>
   );

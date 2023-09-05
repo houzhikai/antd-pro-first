@@ -1,6 +1,7 @@
-import type { ProColumns } from '@ant-design/pro-components';
+import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { EditableProTable, ProForm } from '@ant-design/pro-components';
-import React, { useState } from 'react';
+import { Button } from 'antd';
+import React, { useRef, useState } from 'react';
 
 type HardBinDataSourceType = {
   id: React.Key;
@@ -39,18 +40,15 @@ const HardBinColumns: ProColumns<HardBinDataSourceType>[] = [
   {
     title: 'Name',
     dataIndex: 'name',
-    width: '20%',
   },
   {
     title: 'Number',
     dataIndex: 'number',
-    width: '20%',
   },
   {
     title: 'Type',
     dataIndex: 'type',
     valueType: 'select',
-    width: '20%',
     valueEnum: {
       pass: { text: 'Pass', status: 'pass' },
       fail: { text: 'Fail', status: 'fail' },
@@ -59,11 +57,12 @@ const HardBinColumns: ProColumns<HardBinDataSourceType>[] = [
   {
     title: 'Color',
     dataIndex: 'color',
-    width: '20%',
   },
   {
     title: '操作',
     valueType: 'option',
+    align: 'center',
+    width: '12.5%',
   },
 ];
 
@@ -153,21 +152,31 @@ const SoftBinColumns: ProColumns<SoftBinDataSourceType>[] = [
   {
     title: '操作',
     valueType: 'option',
+    align: 'center',
   },
 ];
 
 const FormModal = () => {
+  const softBinRef = useRef<ActionType>();
+
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() => {
     return defaultHardBinData.map((item) => item.id);
   });
   const [keys, setKeys] = useState<React.Key[]>(() => {
     return defaultSoftBinData.map((item) => item.id);
   });
+
+  const handleAddSoftBinRows = () => {
+    softBinRef.current?.addEditRecord({
+      id: Date.now(),
+    });
+  };
   return (
     <ProForm<{
       name: string;
       company: string;
     }>
+      style={{ maxHeight: '70vh', overflowY: 'auto' }}
       submitter={{
         resetButtonProps: {
           style: {
@@ -182,7 +191,7 @@ const FormModal = () => {
       }}
     >
       <ProForm.Item
-        label={<h2>HardBin</h2>}
+        label={<div style={{ fontSize: 16, fontWeight: 600 }}>HardBin</div>}
         name="hardBin"
         initialValue={defaultHardBinData}
         trigger="onValuesChange"
@@ -211,13 +220,27 @@ const FormModal = () => {
         />
       </ProForm.Item>
       <ProForm.Item
-        label={<h2>SoftBin</h2>}
+        label={
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: 'calc(1200px - 60px)',
+            }}
+          >
+            <div style={{ fontSize: 16, fontWeight: 600 }}>SoftBin</div>
+            <Button type="primary" size="middle" onClick={handleAddSoftBinRows}>
+              add row
+            </Button>
+          </div>
+        }
         name="softBin"
         initialValue={defaultSoftBinData}
         trigger="onValuesChange"
       >
         <EditableProTable<HardBinDataSourceType>
           rowKey="id"
+          actionRef={softBinRef}
           toolBarRender={false}
           columns={SoftBinColumns}
           recordCreatorProps={{
@@ -225,8 +248,6 @@ const FormModal = () => {
             position: 'bottom',
             record: () => ({
               id: Date.now(),
-              addonBefore: 'ccccccc',
-              decs: 'testdesc',
             }),
           }}
           editable={{
