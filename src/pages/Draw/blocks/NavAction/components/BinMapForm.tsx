@@ -1,17 +1,59 @@
 import React from 'react';
 // import styles from '../index.less';
 import { useModel } from '@umijs/max';
-import { Modal, Divider } from 'antd';
+import { Modal, Divider, message } from 'antd';
 // import FormModal from './FormModal';
 import CustomFormModal from './CustomFormModal';
 
 const BinMapForm = () => {
-  const { openBinMapForm, setOpenBinMapForm, hardBinData, softBinData } =
-    useModel('useDrawModel');
+  const {
+    openBinMapForm,
+    setOpenBinMapForm,
+    hardBinData,
+    softBinData,
+    hardBinNameList,
+  } = useModel('useDrawModel');
 
   const handleOk = () => {
-    setOpenBinMapForm(false);
-    console.log({ hardBinData, softBinData });
+    // hardBin 所有值不能为空
+    let isShowMessage = false;
+    hardBinData.map((item) => {
+      const keys = Object.values(item);
+      if (keys.includes('') || keys.includes(undefined as any)) {
+        isShowMessage = true;
+      }
+      return isShowMessage;
+    });
+    // softBin 所有值不能为空
+    softBinData.map((item) => {
+      delete item.Comment;
+      const keys = Object.values(item);
+      if (keys.includes('') || keys.includes(undefined as any)) {
+        isShowMessage = true;
+      }
+      return isShowMessage;
+    });
+
+    // 校验HardBin存不存在
+    const hardBinList = Array.from(
+      new Set(hardBinNameList.map((item) => item.label)),
+    );
+    const softBinList = Array.from(
+      new Set(softBinData.map((item) => item.HardBin)),
+    );
+    const includes = (arr1, arr2) => {
+      return arr2.every((val) => arr1.includes(val));
+    };
+    // 最终判断校验
+    if (isShowMessage) {
+      message.error('值不能为空');
+    } else if (!includes(hardBinList, softBinList)) {
+      // message.error('请重新选择HardBin');
+      message.error('保存失败');
+    } else {
+      message.success('保存成功');
+      setOpenBinMapForm(false);
+    }
   };
   const handleCancel = () => {
     setOpenBinMapForm(false);

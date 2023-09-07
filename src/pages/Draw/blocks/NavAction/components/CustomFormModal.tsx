@@ -8,21 +8,19 @@ import {
   InputNumber,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useState } from 'react';
 import { HardBinDataSourceType, SoftBinDataSourceType } from './defaultData';
 import styles from '../../index.less';
 import { useModel } from '@umijs/max';
 
 const CustomFormModal = () => {
-  const { hardBinData, setHardBinData, softBinData, setSoftBinData } =
-    useModel('useDrawModel');
-  const xxx = hardBinData
-    .map((item) => item.Name)
-    .map((item) => ({
-      value: item,
-      label: item,
-    }));
-  const [hardBinNameList, setHardBinNameList] = useState(xxx);
+  const {
+    hardBinData,
+    setHardBinData,
+    softBinData,
+    setSoftBinData,
+    hardBinNameList,
+    setHardBinNameList,
+  } = useModel('useDrawModel');
   // 删除列占的比例
   const optionWidth: string = '12%';
   // hardBin 的列

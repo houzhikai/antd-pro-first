@@ -11,6 +11,16 @@ export default () => {
   const [openBinMapForm, setOpenBinMapForm] = useState(false);
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
 
+  // softBin 中的 HardBin 选择框中的options 列表
+  const [hardBinNameList, setHardBinNameList] = useState(
+    hardBinData
+      .map((item) => item.Name)
+      .map((item) => ({
+        value: item,
+        label: item,
+      })),
+  );
+
   return {
     isHiddenSide,
     setIsHiddenSide,
@@ -27,5 +37,7 @@ export default () => {
     softBinData,
     setSoftBinData,
     options,
+    hardBinNameList,
+    setHardBinNameList,
   };
 };
