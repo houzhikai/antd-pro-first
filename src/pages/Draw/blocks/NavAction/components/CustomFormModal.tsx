@@ -41,7 +41,7 @@ const CustomFormModal = () => {
           });
           setHardBinData(newHardBinData);
           setHardBinNameList(
-            hardBinData
+            newHardBinData
               .map((item) => item.Name)
               .map((item) => ({
                 value: item,
@@ -202,6 +202,7 @@ const CustomFormModal = () => {
         return (
           <Select
             value={text}
+            style={{ width: '100%' }}
             onChange={handleChange}
             options={hardBinNameList}
           />
