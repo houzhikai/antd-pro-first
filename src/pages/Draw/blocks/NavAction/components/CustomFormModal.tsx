@@ -12,61 +12,121 @@ import { useState } from 'react';
 import {
   HardBinDataSourceType,
   SoftBinDataSourceType,
-  defaultHardBinData,
-  defaultSoftBinData,
+  options,
 } from './defaultData';
 import styles from '../../index.less';
 
 const CustomFormModal = () => {
-  const [hardBinData, setHardBinData] = useState(defaultHardBinData);
-  const [softBinData, setSoftBinData] = useState(defaultSoftBinData);
+  const [hardBinData, setHardBinData] = useState(options.HardBin);
+  const [softBinData, setSoftBinData] = useState(options.SoftBin);
+  const xxx = hardBinData
+    .map((item) => item.Name)
+    .map((item) => ({
+      value: item,
+      label: item,
+    }));
+  const [hardBinNameList, setHardBinNameList] = useState(xxx);
   // 删除列占的比例
   const optionWidth: string = '12%';
   // hardBin 的列
   const HardBinColumns: ColumnsType<HardBinDataSourceType> = [
     {
+      key: 'Name',
       title: <div style={{ padding: '5px 0' }}> Name</div>,
-      dataIndex: 'name',
-
-      render: (text) => <Input defaultValue={text} allowClear />,
+      dataIndex: 'Name',
+      render: (_, record, idx) => {
+        const handleChange = (e) => {
+          hardBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.Name = e.target.value);
+            }
+          });
+          setHardBinData(hardBinData);
+          setHardBinNameList(
+            hardBinData
+              .map((item) => item.Name)
+              .map((item) => ({
+                value: item,
+                label: item,
+              })),
+          );
+        };
+        return <Input value={record.Name} onChange={handleChange} allowClear />;
+      },
     },
     {
+      key: 'Number',
       title: 'Number',
-      dataIndex: 'number',
-      render: (text) => (
-        <InputNumber
-          style={{ width: '100%' }}
-          defaultValue={text}
-          controls={false}
-        />
-      ),
+      dataIndex: 'Number',
+      render: (text, _, idx) => {
+        const handleChange = (value) => {
+          hardBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.Number = value);
+            }
+          });
+          setHardBinData(hardBinData);
+        };
+        return (
+          <InputNumber
+            style={{ width: '100%' }}
+            onChange={handleChange}
+            value={text}
+            controls={false}
+          />
+        );
+      },
     },
     {
+      key: 'Type',
       title: 'Type',
-      dataIndex: 'type',
-      render: (text) => (
-        <Select
-          defaultValue={text}
-          style={{ width: '100%' }}
-          options={[
-            { label: 'pass', value: 'pass' },
-            { label: 'fail', value: 'fail' },
-          ]}
-        />
-      ),
+      dataIndex: 'Type',
+      render: (text, _, idx) => {
+        const handleChange = (value) => {
+          hardBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.Type = value);
+            }
+          });
+          setHardBinData(hardBinData);
+        };
+        return (
+          <Select
+            value={text}
+            onChange={handleChange}
+            style={{ width: '100%' }}
+            options={[
+              { label: 'Pass', value: 'Pass' },
+              { label: 'Fail', value: 'Fail' },
+            ]}
+          />
+        );
+      },
     },
     {
+      key: 'Color',
       title: 'Color',
-      dataIndex: 'color',
-      render: (text) => <Input defaultValue={text} allowClear />,
+      dataIndex: 'Color',
+      render: (text, _, idx) => {
+        const handleChange = (e) => {
+          hardBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.Color = e.target.value);
+            }
+          });
+          setHardBinData(hardBinData);
+        };
+        return <Input value={text} onChange={handleChange} allowClear />;
+      },
     },
     {
+      key: 'option',
       title: '操作',
       align: 'center',
       width: optionWidth,
       render: (_, record) => {
         const handleRemoveRow = (record) => {
-          const newData = hardBinData.filter((item) => item.key !== record.key);
+          const newData = hardBinData.filter((item) => item.Key !== record.Key);
           setHardBinData(newData);
         };
         return (
@@ -89,41 +149,81 @@ const CustomFormModal = () => {
     {
       key: 'Name',
       title: <div style={{ padding: '5px 0' }}> Name</div>,
-      dataIndex: 'name',
-      render: (text) => <Input defaultValue={text} allowClear />,
+      dataIndex: 'Name',
+      render: (text, _, idx) => {
+        const handleChange = (e) => {
+          softBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.Name = e.target.value);
+            }
+          });
+          setSoftBinData(softBinData);
+        };
+        return <Input value={text} onChange={handleChange} allowClear />;
+      },
     },
     {
-      key: 'number',
+      key: 'Number',
       title: 'Number',
-      dataIndex: 'number',
-      render: (text) => <InputNumber defaultValue={text} controls={false} />,
+      dataIndex: 'Number',
+      render: (text, _, idx) => {
+        const handleChange = (value) => {
+          softBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.Number = value);
+            }
+          });
+          setSoftBinData(softBinData);
+        };
+        return (
+          <InputNumber value={text} onChange={handleChange} controls={false} />
+        );
+      },
     },
     {
-      key: 'hardBin',
+      key: 'HardBin',
       title: 'HardBin',
-      dataIndex: 'hardBin',
-      render: (text) => (
-        <Select
-          defaultValue={text}
-          allowClear
-          options={[
-            { label: 'HB1', value: 'HB1' },
-            { label: 'HB2', value: 'HB2' },
-            { label: 'HB3', value: 'HB3' },
-          ]}
-        />
-      ),
+      dataIndex: 'HardBin',
+      render: (text, _, idx) => {
+        const handleChange = (value) => {
+          softBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.HardBin = value);
+            }
+          });
+          setSoftBinData(softBinData);
+        };
+        return (
+          <Select
+            value={text}
+            onChange={handleChange}
+            options={hardBinNameList}
+          />
+        );
+      },
     },
     {
-      key: 'maxCount',
+      key: 'MaxCount',
       title: 'MaxCount',
-      dataIndex: 'maxCount',
-      render: (text) => <InputNumber defaultValue={text} controls={false} />,
+      dataIndex: 'MaxCount',
+      render: (text, _, idx) => {
+        const handleChange = (value) => {
+          softBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.MaxCount = value);
+            }
+          });
+          setSoftBinData(softBinData);
+        };
+        return (
+          <InputNumber value={text} onChange={handleChange} controls={false} />
+        );
+      },
     },
     {
-      key: 'checkOverflow',
+      key: 'CheckOverflow',
       title: 'CheckOverflow',
-      dataIndex: 'checkOverflow',
+      dataIndex: 'CheckOverflow',
       align: 'center',
       render: (text) => (
         <Switch
@@ -134,18 +234,43 @@ const CustomFormModal = () => {
       ),
     },
     {
-      key: 'color',
+      key: 'Color',
       title: 'Color',
-      dataIndex: 'color',
-      render: (text) => <Input defaultValue={text} allowClear />,
+      dataIndex: 'Color',
+      render: (text, _, idx) => {
+        const handleChange = (e) => {
+          softBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.Color = e.target.value);
+            }
+          });
+          setSoftBinData(softBinData);
+        };
+        return <Input value={text} onChange={handleChange} allowClear />;
+      },
     },
     {
-      key: 'comment',
+      key: 'Comment',
       title: 'Comment',
-      dataIndex: 'comment',
-      render: (text) => (
-        <Input placeholder="请输入" defaultValue={text} allowClear />
-      ),
+      dataIndex: 'Comment',
+      render: (text, _, idx) => {
+        const handleChange = (e) => {
+          softBinData.forEach((item, index) => {
+            if (idx === index) {
+              return (item.Comment = e.target.value);
+            }
+          });
+          setSoftBinData(softBinData);
+        };
+        return (
+          <Input
+            placeholder="请输入"
+            value={text}
+            onChange={handleChange}
+            allowClear
+          />
+        );
+      },
     },
     {
       key: 'option',
@@ -154,7 +279,7 @@ const CustomFormModal = () => {
       width: optionWidth,
       render: (_, record) => {
         const handleRemoveRow = (record) => {
-          const newData = softBinData.filter((item) => item.key !== record.key);
+          const newData = softBinData.filter((item) => item.Key !== record.Key);
           setSoftBinData(newData);
         };
         return (
@@ -176,11 +301,11 @@ const CustomFormModal = () => {
   const handleAddHardBinRows = () => {
     const hardBinDataLength = hardBinData.length;
     const newData = {
-      key: hardBinDataLength,
-      name: '',
-      number: undefined,
-      type: '',
-      color: '',
+      Key: hardBinDataLength,
+      Name: '',
+      Number: undefined,
+      Type: '',
+      Color: '',
     };
     setHardBinData([...hardBinData, newData]);
   };
@@ -188,7 +313,7 @@ const CustomFormModal = () => {
   const handleAddSoftBinRows = () => {
     const softBinDataLength = softBinData.length;
     const newData = {
-      key: softBinDataLength,
+      Key: softBinDataLength,
       name: '',
       number: undefined,
       hardBin: '',
