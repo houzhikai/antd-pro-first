@@ -49,7 +49,19 @@ const CustomFormModal = () => {
               })),
           );
         };
-        return <Input value={record.Name} onChange={handleChange} allowClear />;
+        return (
+          <>
+            <Input
+              value={record.Name}
+              onChange={handleChange}
+              status={record.Name === '' ? 'error' : ''}
+              allowClear
+            />
+            {record.Name === '' ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : null}
+          </>
+        );
       },
     },
     {
@@ -67,12 +79,18 @@ const CustomFormModal = () => {
           setHardBinData(newBinData);
         };
         return (
-          <InputNumber
-            style={{ width: '100%' }}
-            onChange={handleChange}
-            value={record.Number}
-            controls={false}
-          />
+          <>
+            <InputNumber
+              style={{ width: '100%' }}
+              value={record.Number}
+              onChange={handleChange}
+              status={!record.Number ? 'error' : ''}
+              controls={false}
+            />
+            {!record.Number ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : null}
+          </>
         );
       },
     },
@@ -80,7 +98,7 @@ const CustomFormModal = () => {
       key: 'Type',
       title: 'Type',
       dataIndex: 'Type',
-      render: (text, _, idx) => {
+      render: (text, record, idx) => {
         const handleChange = (value) => {
           const newHardBinData = hardBinData.map((item, index) => {
             if (idx === index) {
@@ -91,15 +109,21 @@ const CustomFormModal = () => {
           setHardBinData(newHardBinData);
         };
         return (
-          <Select
-            defaultValue={text}
-            onChange={handleChange}
-            style={{ width: '100%' }}
-            options={[
-              { label: 'Pass', value: 'Pass' },
-              { label: 'Fail', value: 'Fail' },
-            ]}
-          />
+          <>
+            <Select
+              style={{ width: '100%' }}
+              defaultValue={text}
+              onChange={handleChange}
+              status={record.Type === '' ? 'error' : ''}
+              options={[
+                { label: 'Pass', value: 'Pass' },
+                { label: 'Fail', value: 'Fail' },
+              ]}
+            />
+            {record.Type === '' ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : null}
+          </>
         );
       },
     },
@@ -118,7 +142,17 @@ const CustomFormModal = () => {
           setHardBinData(newHardBinData);
         };
         return (
-          <Input value={record.Color} onChange={handleChange} allowClear />
+          <>
+            <Input
+              value={record.Color}
+              onChange={handleChange}
+              status={record.Color === '' ? 'error' : ''}
+              allowClear
+            />
+            {record.Color === '' ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : null}
+          </>
         );
       },
     },
@@ -131,6 +165,14 @@ const CustomFormModal = () => {
         const handleRemoveRow = (record) => {
           const newData = hardBinData.filter((item) => item.Key !== record.Key);
           setHardBinData(newData);
+          setHardBinNameList(
+            newData
+              .map((item) => item.Name)
+              .map((item) => ({
+                value: item,
+                label: item,
+              })),
+          );
         };
         return (
           <Popconfirm
@@ -151,9 +193,9 @@ const CustomFormModal = () => {
   const SoftBinColumns: ColumnsType<SoftBinDataSourceType> = [
     {
       key: 'Name',
-      title: <div style={{ padding: '5px 0' }}> Name</div>,
+      title: <div style={{ padding: '5px 0' }}>Name</div>,
       dataIndex: 'Name',
-      render: (text, _, idx) => {
+      render: (text, record, idx) => {
         const handleChange = (e) => {
           const newSoftBinData = softBinData.map((item, index) => {
             if (idx === index) {
@@ -163,14 +205,26 @@ const CustomFormModal = () => {
           });
           setSoftBinData(newSoftBinData);
         };
-        return <Input value={text} onChange={handleChange} allowClear />;
+        return (
+          <>
+            <Input
+              value={text}
+              onChange={handleChange}
+              status={record.Name === '' ? 'error' : ''}
+              allowClear
+            />
+            {record.Name === '' ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : null}
+          </>
+        );
       },
     },
     {
       key: 'Number',
       title: 'Number',
       dataIndex: 'Number',
-      render: (text, _, idx) => {
+      render: (text, record, idx) => {
         const handleChange = (value) => {
           const newSoftBinData = softBinData.map((item, index) => {
             if (idx === index) {
@@ -181,7 +235,17 @@ const CustomFormModal = () => {
           setSoftBinData(newSoftBinData);
         };
         return (
-          <InputNumber value={text} onChange={handleChange} controls={false} />
+          <>
+            <InputNumber
+              value={text}
+              onChange={handleChange}
+              status={!record.Number ? 'error' : ''}
+              controls={false}
+            />
+            {!record.Number ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : null}
+          </>
         );
       },
     },
@@ -189,7 +253,8 @@ const CustomFormModal = () => {
       key: 'HardBin',
       title: 'HardBin',
       dataIndex: 'HardBin',
-      render: (text, _, idx) => {
+      width: '12%',
+      render: (text, record, idx) => {
         const handleChange = (value) => {
           const newSoftBinData = softBinData.map((item, index) => {
             if (idx === index) {
@@ -199,13 +264,24 @@ const CustomFormModal = () => {
           });
           setSoftBinData(newSoftBinData);
         };
+        const isHasOptions = hardBinNameList
+          .map((item) => item.label)
+          .includes(text);
         return (
-          <Select
-            value={text}
-            style={{ width: '100%' }}
-            onChange={handleChange}
-            options={hardBinNameList}
-          />
+          <>
+            <Select
+              value={text}
+              style={{ width: '100%' }}
+              onChange={handleChange}
+              status={record.HardBin === '' || !isHasOptions ? 'error' : ''}
+              options={hardBinNameList}
+            />
+            {record.HardBin === '' ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : !isHasOptions ? (
+              <div style={{ color: 'red' }}>* 值已不存在</div>
+            ) : null}
+          </>
         );
       },
     },
@@ -213,7 +289,7 @@ const CustomFormModal = () => {
       key: 'MaxCount',
       title: 'MaxCount',
       dataIndex: 'MaxCount',
-      render: (text, _, idx) => {
+      render: (text, record, idx) => {
         const handleChange = (value) => {
           const newSoftBinData = softBinData.map((item, index) => {
             if (idx === index) {
@@ -224,7 +300,17 @@ const CustomFormModal = () => {
           setSoftBinData(newSoftBinData);
         };
         return (
-          <InputNumber value={text} onChange={handleChange} controls={false} />
+          <>
+            <InputNumber
+              value={text}
+              onChange={handleChange}
+              status={!record.MaxCount ? 'error' : ''}
+              controls={false}
+            />
+            {!record.MaxCount ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : null}
+          </>
         );
       },
     },
@@ -245,7 +331,7 @@ const CustomFormModal = () => {
       key: 'Color',
       title: 'Color',
       dataIndex: 'Color',
-      render: (text, _, idx) => {
+      render: (text, record, idx) => {
         const handleChange = (e) => {
           const newSoftBinData = softBinData.map((item, index) => {
             if (idx === index) {
@@ -255,7 +341,19 @@ const CustomFormModal = () => {
           });
           setSoftBinData(newSoftBinData);
         };
-        return <Input value={text} onChange={handleChange} allowClear />;
+        return (
+          <>
+            <Input
+              value={text}
+              onChange={handleChange}
+              status={record.Name === '' ? 'error' : ''}
+              allowClear
+            />
+            {record.Color === '' ? (
+              <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : null}
+          </>
+        );
       },
     },
     {
@@ -324,13 +422,13 @@ const CustomFormModal = () => {
     const softBinDataLength = softBinData.length;
     const newData = {
       Key: softBinDataLength,
-      name: '',
-      number: undefined,
-      hardBin: '',
-      maxCount: undefined,
-      checkOverflow: false,
-      color: '',
-      comment: '',
+      Name: '',
+      Number: undefined,
+      HardBin: '',
+      MaxCount: undefined,
+      CheckOverflow: false,
+      Color: '',
+      Comment: '',
     };
     setSoftBinData([...softBinData, newData]);
   };
