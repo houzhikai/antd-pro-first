@@ -37,7 +37,7 @@ export default () => {
   useAsyncEffect(async () => {
     try {
       await fetch(
-        `http://192.168.3.216:28700/develop/instrument?broadcast=192.168.3.255`,
+        `http://192.168.3.216:28700/develop/xxx?broadcast=192.168.3.255`,
         {
           method: 'GET',
         },

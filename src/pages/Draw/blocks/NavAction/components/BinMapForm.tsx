@@ -6,13 +6,17 @@ import { Modal, Divider } from 'antd';
 import CustomFormModal from './CustomFormModal';
 
 const BinMapForm = () => {
-  const { openBinMapForm, setOpenBinMapForm } = useModel('useDrawModel');
+  const { openBinMapForm, setOpenBinMapForm, hardBinData, softBinData } =
+    useModel('useDrawModel');
 
   const handleOk = () => {
     setOpenBinMapForm(false);
+    console.log({ hardBinData, softBinData });
   };
   const handleCancel = () => {
     setOpenBinMapForm(false);
+    // setHardBinData(options.HardBin);
+    // setSoftBinData(options.SoftBin);
   };
 
   return (

@@ -1,6 +1,9 @@
+import { options } from '@/pages/Draw/blocks/NavAction/components/defaultData';
 import { useState } from 'react';
 
 export default () => {
+  const [hardBinData, setHardBinData] = useState(options.HardBin);
+  const [softBinData, setSoftBinData] = useState(options.SoftBin);
   const [isHiddenSide, setIsHiddenSide] = useState(true); // true 表示展示在页面上
   const [isHiddenFormat, setIsHiddenFormat] = useState(true); // true 表示展示在页面上
 
@@ -19,5 +22,10 @@ export default () => {
     setOpenBinMapForm,
     openMainFlowModal,
     setOpenMainFlowModal,
+    hardBinData,
+    setHardBinData,
+    softBinData,
+    setSoftBinData,
+    options,
   };
 };

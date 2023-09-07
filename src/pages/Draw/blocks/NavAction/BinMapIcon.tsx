@@ -4,9 +4,11 @@ import styles from '../index.less';
 import { useModel } from '@umijs/max';
 
 const BinMapIcon = () => {
-  const { setOpenBinMapForm } = useModel('useDrawModel');
+  const { setOpenBinMapForm, setSoftBinData, setHardBinData, options } =
+    useModel('useDrawModel');
   const handleSave = () => {
-    console.log(11);
+    setHardBinData(options.HardBin);
+    setSoftBinData(options.SoftBin);
     setOpenBinMapForm(true);
     // message.warning('暂无开发');
   };
