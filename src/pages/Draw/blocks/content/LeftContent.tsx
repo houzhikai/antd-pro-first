@@ -1,5 +1,6 @@
 import { Collapse } from 'antd';
 import { useModel } from '@umijs/max';
+import SoftItemList from './LeftContent/SoftItemList';
 import TestItem from './LeftContent/TestItem';
 import Sidebar from './LeftContent/Sidebar';
 import SubflowList from './LeftContent/SubflowList';
@@ -30,7 +31,7 @@ const LeftContent = () => {
               header={<div className={styles.header}>BinMap</div>}
               key="SoftBin"
             >
-              展示SoftBin信息
+              <SoftItemList />
             </Panel>
             <Panel
               header={<div className={styles.header}>测试项</div>}
