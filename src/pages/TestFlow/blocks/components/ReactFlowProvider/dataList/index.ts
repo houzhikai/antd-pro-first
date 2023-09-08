@@ -12,6 +12,7 @@ export const initHandleList: HandleList[] = [
     className: 'top',
     position: 'Top',
     id: 'a',
+    style: { background: '#fff', border: '1px solid #1a192b' },
   },
   {
     type: 'source',
@@ -24,6 +25,5 @@ export const initHandleList: HandleList[] = [
     className: 'bottom',
     position: 'Bottom',
     id: 'c',
-    style: { background: '#fff', border: '1px solid #1a192b' },
   },
 ];
