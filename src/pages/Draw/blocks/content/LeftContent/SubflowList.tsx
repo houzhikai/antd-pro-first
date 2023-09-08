@@ -11,6 +11,7 @@ const SubflowList = () => {
           <MyTestItemIcon
             size={item?.size}
             src={item.icon}
+            name={item.name}
             onDragStart={(event) => onDragStart(event, item.type)}
           />
         </div>
