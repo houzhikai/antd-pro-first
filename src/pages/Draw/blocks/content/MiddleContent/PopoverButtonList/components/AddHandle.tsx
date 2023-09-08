@@ -12,7 +12,7 @@ const AddHandle = () => {
   const handleAddHandle = (item) => {
     console.log({ item });
     // source为空心，target为实心
-    if (item.type === 'source') {
+    if (item.type === 'target') {
       item.style = { background: '#FFF', border: '1px solid #1a192b' };
     }
     setHandleList((preList) => [...preList, item]);

@@ -16,12 +16,7 @@ const MiddleNode = ({ data }) => {
       trigger="hover"
     >
       <div>
-        {/* <div className={styles.name}>{data.label}</div> */}
-        <InputToolTip
-          defaultValue={data.label}
-          background="#4c85d9"
-          className={styles.name1}
-        />
+        <InputToolTip defaultValue={data.label} className={styles.name1} />
         {handleList.map((item, index) => (
           <Handle
             key={item.id}
@@ -34,30 +29,6 @@ const MiddleNode = ({ data }) => {
             style={item?.style}
           />
         ))}
-        {/* <Handle
-          type="target"
-          className={styles.top}
-          position={Position.Top}
-          id="a"
-        />
-        <Handle
-          type="source"
-          className={styles.bottom}
-          position={Position.Bottom}
-          id="c"
-        /> */}
-        {/* <Handle
-          type="source"
-          className={styles.left}
-          position={Position.Left}
-          id="b"
-        />
-        <Handle
-          type="source"
-          className={styles.right}
-          position={Position.Right}
-          id="d"
-        /> */}
       </div>
     </Popover>
   );
