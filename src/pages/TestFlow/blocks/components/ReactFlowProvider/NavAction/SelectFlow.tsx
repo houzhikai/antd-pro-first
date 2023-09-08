@@ -8,6 +8,7 @@ const SelectFlow = () => {
     { value: 'test1', label: 'test1' },
     { value: 'test2', label: 'test2' },
     { value: 'test3', label: 'test3' },
+    { value: 'test4', label: 'test4' },
   ];
 
   const handleChange = (value: string) => {
