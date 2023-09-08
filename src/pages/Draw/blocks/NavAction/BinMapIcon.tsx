@@ -4,11 +4,22 @@ import styles from '../index.less';
 import { useModel } from '@umijs/max';
 
 const BinMapIcon = () => {
-  const { setOpenBinMapForm, setSoftBinData, setHardBinData, options } =
-    useModel('useDrawModel');
+  const {
+    setOpenBinMapForm,
+    setSoftBinData,
+    setHardBinData,
+    options,
+    setHardBinNameList,
+  } = useModel('useDrawModel');
   const handleSave = () => {
     setHardBinData(options.HardBin);
     setSoftBinData(options.SoftBin);
+    setHardBinNameList(
+      options.HardBin.map((item) => item.Name).map((item) => ({
+        value: item,
+        label: item,
+      })),
+    );
     setOpenBinMapForm(true);
     // message.warning('暂无开发');
   };
