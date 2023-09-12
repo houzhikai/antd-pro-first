@@ -12,6 +12,10 @@ const BinMapForm = () => {
     hardBinData,
     softBinData,
     hardBinNameList,
+    setHardBinData,
+    setSoftBinData,
+    options,
+    setHardBinNameList,
   } = useModel('useDrawModel');
 
   const handleOk = () => {
@@ -19,7 +23,7 @@ const BinMapForm = () => {
     let isShowMessage = false;
     hardBinData.map((item) => {
       const keys = Object.values(item);
-      if (keys.includes('') || keys.includes(undefined as any)) {
+      if (!keys) {
         isShowMessage = true;
       }
       return isShowMessage;
@@ -57,8 +61,14 @@ const BinMapForm = () => {
   };
   const handleCancel = () => {
     setOpenBinMapForm(false);
-    // setHardBinData(options.HardBin);
-    // setSoftBinData(options.SoftBin);
+    setHardBinData(options.HardBin);
+    setSoftBinData(options.SoftBin);
+    setHardBinNameList(
+      options.HardBin.map((item) => item.Name).map((item) => ({
+        value: item,
+        label: item,
+      })),
+    );
   };
 
   return (
