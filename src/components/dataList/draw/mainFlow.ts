@@ -2,7 +2,7 @@ import subflowIcon from '@/icon/draw/subflow/stripe-logo-light.svg';
 import subflowIcon1 from '@/icon/draw/subflow/subflow1.svg';
 import subflowIcon2 from '@/icon/draw/subflow/flowchart.svg';
 import subflowIcon3 from '@/icon/draw/subflow/flow chart 2-fill.svg';
-import mainFlowItem1 from '@/icon/draw/subflow/reactflow.png';
+import mainFlowItem1 from '@/icon/draw/subflow/reactflow2.png';
 
 export const mainFlowIconList = [
   //   { icon: filletCorner, type: 'custom-input', size: 54 },

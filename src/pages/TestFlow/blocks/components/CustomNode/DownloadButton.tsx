@@ -35,7 +35,7 @@ function DownloadButton() {
     );
 
     toPng(document.querySelector('.react-flow__viewport'), {
-      backgroundColor: '#1a365d',
+      backgroundColor: '#fff',
       width: imageWidth,
       height: imageHeight,
       style: {

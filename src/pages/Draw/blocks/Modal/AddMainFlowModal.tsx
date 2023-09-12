@@ -1,7 +1,7 @@
 import { Divider, Modal, Image } from 'antd';
 import { useModel } from '@umijs/max';
-import mainFlowItem1 from '@/icon/draw/subflow/reactflow.png';
 import { PlusOutlined } from '@ant-design/icons';
+import { mainFlowItemList } from '@/components/dataList/draw/mainFlow';
 
 import styles from '../index.less';
 
@@ -16,7 +16,6 @@ const AddMainFlowModal = () => {
     setOpenMainFlowModal(false);
   };
 
-  const mainFlowItemList = [{ id: 1, name: 'mainflow 1', icon: mainFlowItem1 }];
   return (
     <Modal
       title="Main Flow"
