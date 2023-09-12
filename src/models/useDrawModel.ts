@@ -10,6 +10,7 @@ export default () => {
   const [selectedNode, setSelectedNode] = useState<any>({});
   const [openBinMapForm, setOpenBinMapForm] = useState(false);
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
+  const [isOnLine, setIsOnLine] = useState(false); // 判断是否为在线模式，模式false
 
   // softBin 中的 HardBin 选择框中的options 列表
   const [hardBinNameList, setHardBinNameList] = useState(
@@ -39,5 +40,7 @@ export default () => {
     options,
     hardBinNameList,
     setHardBinNameList,
+    isOnLine,
+    setIsOnLine,
   };
 };

@@ -20,6 +20,7 @@ const CustomFormModal = () => {
     setSoftBinData,
     hardBinNameList,
     setHardBinNameList,
+    isOnLine,
   } = useModel('useDrawModel');
   // 删除列占的比例
   const optionWidth: string = '12%';
@@ -54,6 +55,7 @@ const CustomFormModal = () => {
               onChange={handleChange}
               status={record.Name === '' ? 'error' : ''}
               allowClear
+              readOnly={isOnLine}
             />
             {record.Name === '' ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -84,6 +86,7 @@ const CustomFormModal = () => {
               onChange={handleChange}
               status={!record.Number ? 'error' : ''}
               controls={false}
+              readOnly={isOnLine}
             />
             {!record.Number ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -117,6 +120,7 @@ const CustomFormModal = () => {
                 { label: 'Pass', value: 'Pass' },
                 { label: 'Fail', value: 'Fail' },
               ]}
+              disabled={isOnLine}
             />
             {record.Type === '' ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -146,6 +150,7 @@ const CustomFormModal = () => {
               onChange={handleChange}
               status={record.Color === '' ? 'error' : ''}
               allowClear
+              readOnly={isOnLine}
             />
             {record.Color === '' ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -178,8 +183,9 @@ const CustomFormModal = () => {
             onConfirm={() => handleRemoveRow(record)}
             okText="确定"
             cancelText="取消"
+            disabled={isOnLine}
           >
-            <Button style={{ margin: '5px 0' }} type="link">
+            <Button style={{ margin: '5px 0' }} type="link" disabled={isOnLine}>
               删除
             </Button>
           </Popconfirm>
@@ -210,6 +216,7 @@ const CustomFormModal = () => {
               onChange={handleChange}
               status={record.Name === '' ? 'error' : ''}
               allowClear
+              readOnly={isOnLine}
             />
             {record.Name === '' ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -239,6 +246,7 @@ const CustomFormModal = () => {
               onChange={handleChange}
               status={!record.Number ? 'error' : ''}
               controls={false}
+              readOnly={isOnLine}
             />
             {!record.Number ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -273,6 +281,7 @@ const CustomFormModal = () => {
               onChange={handleChange}
               status={record.HardBin === '' || !isHasOptions ? 'error' : ''}
               options={hardBinNameList}
+              disabled={isOnLine}
             />
             {record.HardBin === '' ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -304,6 +313,7 @@ const CustomFormModal = () => {
               onChange={handleChange}
               status={!record.MaxCount ? 'error' : ''}
               controls={false}
+              readOnly={isOnLine}
             />
             {!record.MaxCount ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -322,6 +332,7 @@ const CustomFormModal = () => {
           checkedChildren="true"
           unCheckedChildren="false"
           defaultChecked={text}
+          disabled={isOnLine}
         />
       ),
     },
@@ -346,6 +357,7 @@ const CustomFormModal = () => {
               onChange={handleChange}
               status={record.Name === '' ? 'error' : ''}
               allowClear
+              readOnly={isOnLine}
             />
             {record.Color === '' ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
@@ -374,6 +386,7 @@ const CustomFormModal = () => {
             value={text}
             onChange={handleChange}
             allowClear
+            readOnly={isOnLine}
           />
         );
       },
@@ -394,8 +407,9 @@ const CustomFormModal = () => {
             onConfirm={() => handleRemoveRow(record)}
             okText="确定"
             cancelText="取消"
+            disabled={isOnLine}
           >
-            <Button style={{ margin: '5px 0' }} type="link">
+            <Button style={{ margin: '5px 0' }} type="link" disabled={isOnLine}>
               删除
             </Button>
           </Popconfirm>
@@ -435,7 +449,12 @@ const CustomFormModal = () => {
     <div style={{ maxHeight: '70vh', overflowY: 'auto' }}>
       <div className={styles['binMap-header']}>
         <div style={{ fontSize: 16, fontWeight: 600 }}>HardBin</div>
-        <Button type="primary" size="middle" onClick={handleAddHardBinRows}>
+        <Button
+          type="primary"
+          size="middle"
+          onClick={handleAddHardBinRows}
+          disabled={isOnLine}
+        >
           添加一行
         </Button>
       </div>
@@ -447,7 +466,12 @@ const CustomFormModal = () => {
       />
       <div className={styles['binMap-header']}>
         <div style={{ fontSize: 16, fontWeight: 600 }}>SoftBin</div>
-        <Button type="primary" size="middle" onClick={handleAddSoftBinRows}>
+        <Button
+          type="primary"
+          size="middle"
+          onClick={handleAddSoftBinRows}
+          disabled={isOnLine}
+        >
           添加一行
         </Button>
       </div>

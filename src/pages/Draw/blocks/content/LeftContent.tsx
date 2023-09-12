@@ -1,4 +1,4 @@
-import { Collapse } from 'antd';
+import { Button, Collapse } from 'antd';
 import { useModel } from '@umijs/max';
 import SoftItemList from './LeftContent/SoftItemList';
 import TestItem from './LeftContent/TestItem';
@@ -11,11 +11,14 @@ import styles from '../index.less';
 const { Panel } = Collapse;
 
 const LeftContent = () => {
-  const { isHiddenSide, setOpenMainFlowModal, setOpenBinMapForm } =
+  const { isHiddenSide, setOpenMainFlowModal, setOpenBinMapForm, isOnLine } =
     useModel('useDrawModel');
 
   const softBinIcon = (
-    <PlusOutlined
+    <Button
+      type="text"
+      disabled={isOnLine}
+      icon={<PlusOutlined />}
       onClick={(event) => {
         event.stopPropagation();
         setOpenBinMapForm(true);
@@ -24,7 +27,10 @@ const LeftContent = () => {
   );
 
   const extra = (
-    <PlusOutlined
+    <Button
+      type="text"
+      disabled={isOnLine}
+      icon={<PlusOutlined />}
       onClick={(event) => {
         event.stopPropagation();
         setOpenMainFlowModal(true);
