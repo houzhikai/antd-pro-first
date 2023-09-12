@@ -19,6 +19,7 @@ import { nodeTypes } from '@/pages/TestFlow/blocks/nodeTypes';
 
 import 'reactflow/dist/style.css';
 import './components/ReactFlowProvider/indx.less';
+import DownloadButton from './components/CustomNode/DownloadButton';
 
 let id = 0;
 const getId = () => `custom_${id++}`;
@@ -232,7 +233,7 @@ const DnDFlow = () => {
             <DagreTree />
             <Background color="#ccc" variant={variant} />
             <CustomEdit />
-            {/* <DownloadButton /> */}
+            <DownloadButton />
           </ReactFlow>
         </div>
       </ReactFlowProvider>

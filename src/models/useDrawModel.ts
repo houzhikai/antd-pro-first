@@ -13,6 +13,7 @@ export default () => {
 
   const [selectedNode, setSelectedNode] = useState<any>({});
   const [openBinMapForm, setOpenBinMapForm] = useState(false);
+  const [openSubFlowModal, setOpenSubFlowModal] = useState(false);
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
   const [openTestUnitModal, setOpenTestUnitModal] = useState(false);
 
@@ -50,5 +51,7 @@ export default () => {
     setOpenTestUnitModal,
     testUnitData,
     setTestUnitData,
+    openSubFlowModal,
+    setOpenSubFlowModal,
   };
 };

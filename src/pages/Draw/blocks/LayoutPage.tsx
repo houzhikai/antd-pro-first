@@ -3,9 +3,10 @@ import NavAction from './NavAction';
 import BinMapForm from './Modal/BinMapForm';
 import ToolbarContainer from './ToolbarContainer';
 import LeftContent from './content/LeftContent';
-import AddMainFlowModal from './content/LeftContent/components/AddMainFlowModal';
+import AddMainFlowModal from './Modal/AddMainFlowModal';
 import MiddleContent from './content/MiddleContent';
 import RightContent from './content/RightContent';
+import SubflowModal from './Modal/SubFlowModal';
 import styles from './index.less';
 
 const Layout = () => {
@@ -22,6 +23,7 @@ const Layout = () => {
       <BinMapForm />
       <AddMainFlowModal />
       <TestUnit />
+      <SubflowModal />
     </div>
   );
 };

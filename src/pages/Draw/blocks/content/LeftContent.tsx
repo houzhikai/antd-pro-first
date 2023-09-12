@@ -16,6 +16,7 @@ const LeftContent = () => {
     setOpenMainFlowModal,
     setOpenBinMapForm,
     setOpenTestUnitModal,
+    setOpenSubFlowModal,
     isOnLine,
   } = useModel('useDrawModel');
 
@@ -41,8 +42,19 @@ const LeftContent = () => {
       }}
     />
   );
+  const subflowExtra = (
+    <Button
+      type="text"
+      disabled={isOnLine}
+      icon={<PlusOutlined />}
+      onClick={(event) => {
+        event.stopPropagation();
+        setOpenSubFlowModal(true);
+      }}
+    />
+  );
 
-  const extra = (
+  const mainflowExtra = (
     <Button
       type="text"
       disabled={isOnLine}
@@ -75,15 +87,15 @@ const LeftContent = () => {
             </Panel>
             <Panel
               header={<div className={styles.header}>subflow</div>}
-              key="subflow"
-              extra={extra}
+              key="Subflow"
+              extra={subflowExtra}
             >
               <SubflowList />
             </Panel>
             <Panel
               header={<div className={styles.header}>mainFlow</div>}
-              key="mainFlow"
-              extra={extra}
+              key="MainFlow"
+              extra={mainflowExtra}
             >
               <Sidebar />
             </Panel>

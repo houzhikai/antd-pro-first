@@ -87,34 +87,3 @@
         }
     }
 }
-
-.mainFlow-item-common {
-    width: 120px;
-    height: 120px;
-    margin: 0 10px;
-    border: 2px solid transparent;
-    cursor: pointer;
-
-    &:hover {
-        border: 2px solid skyblue;
-    }
-}
-
-// 创建新的流程图
-.mainFlow {
-    display: flex;
-    flex-wrap: wrap;
-
-    .mainFlow-item-empty {
-        .mainFlow-item-common();
-        background: #ccc;
-        // 空白页加号的位置
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .mainFlow-item {
-        .mainFlow-item-common();
-    }
-}
