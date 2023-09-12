@@ -8,7 +8,10 @@ import {
   InputNumber,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { HardBinDataSourceType, SoftBinDataSourceType } from './defaultData';
+import {
+  HardBinDataSourceType,
+  SoftBinDataSourceType,
+} from '../../NavAction/components/defaultData';
 import styles from '../../index.less';
 import { useModel } from '@umijs/max';
 

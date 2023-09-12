@@ -1,6 +1,6 @@
 import TestUnit from './Modal/TestUnit';
 import NavAction from './NavAction';
-import BinMapForm from './NavAction/components/BinMapForm';
+import BinMapForm from './Modal/BinMapForm';
 import ToolbarContainer from './ToolbarContainer';
 import LeftContent from './content/LeftContent';
 import AddMainFlowModal from './content/LeftContent/components/AddMainFlowModal';

@@ -3,7 +3,7 @@ import React from 'react';
 import { useModel } from '@umijs/max';
 import { Modal, Divider, message } from 'antd';
 // import FormModal from './FormModal';
-import CustomFormModal from './CustomFormModal';
+import CustomFormModal from './components/CustomFormModal';
 
 const BinMapForm = () => {
   const {

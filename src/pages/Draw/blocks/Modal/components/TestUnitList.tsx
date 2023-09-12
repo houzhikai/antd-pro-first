@@ -1,44 +1,75 @@
 import { useModel } from '@umijs/max';
 import { Button, Divider, Input, InputNumber, Popconfirm, Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import { TestUnitDataList } from '@/components/dataList/draw/testUnitDataList';
 import styles from '../../index.less';
 
 const TestUnitList = () => {
   const { isOnLine, testUnitData, setTestUnitData } = useModel('useDrawModel');
 
-  interface ColumnsProps {
-    key: React.Key;
-    Class: string;
-    Name: number;
-    LoopCount: string;
-    children?: ColumnsProps[];
-  }
-  const columns: ColumnsType<ColumnsProps> = [
+  const columns: ColumnsType<TestUnitDataList> = [
     {
       title: <div style={{ margin: '5px 0' }}>Class</div>,
       dataIndex: 'Class',
       key: 'Class',
-      render: (text, record) => {
-        console.log(record);
-        return <Input defaultValue={text} allowClear />;
+      render: (text, record, idx) => {
+        const handleChange = (e) => {
+          const newData = testUnitData.map((item, index) => {
+            if (idx === index) {
+              return { ...item, Class: e.target.value };
+            }
+            return item;
+          });
+          setTestUnitData(newData);
+        };
+        return <Input value={text} onChange={handleChange} allowClear />;
       },
     },
     {
       title: 'Name',
       dataIndex: 'Name',
       key: 'Name',
-      render: (text, record) => {
-        console.log(record);
-        return <InputNumber defaultValue={text} controls={false} />;
+      render: (text, record, idx) => {
+        const handleChange = (e) => {
+          const newData = testUnitData.map((item, index) => {
+            if (idx === index) {
+              return { ...item, Name: e.target.value };
+            }
+            return item;
+          });
+          setTestUnitData(newData);
+        };
+        return (
+          <Input
+            style={{ width: '100%' }}
+            value={text}
+            onChange={handleChange}
+          />
+        );
       },
     },
     {
       title: 'LoopCount',
       dataIndex: 'LoopCount',
       key: 'LoopCount',
-      render: (text, record) => {
-        console.log(record);
-        return <Input defaultValue={text} allowClear />;
+      render: (text, record, idx) => {
+        const handleChange = (value) => {
+          const newData = testUnitData.map((item, index) => {
+            if (idx === index) {
+              return { ...item, LoopCount: value };
+            }
+            return item;
+          });
+          setTestUnitData(newData);
+        };
+        return (
+          <InputNumber
+            value={text}
+            onChange={handleChange}
+            controls={false}
+            min={1}
+          />
+        );
       },
     },
     {
@@ -53,7 +84,6 @@ const TestUnitList = () => {
             (item) => item.key !== record.key,
           );
           setTestUnitData(newData);
-          console.log(record, newData);
         };
         return (
           <Popconfirm
@@ -76,9 +106,9 @@ const TestUnitList = () => {
     // 需要有默认值
     const newData = {
       key: testUnitLength,
-      Class: '胡彦斌',
-      Name: 32,
-      LoopCount: '西湖区湖底公园1号',
+      Class: '默认值',
+      Name: `默认值 ${testUnitLength}`,
+      LoopCount: '1',
     };
     setTestUnitData([...testUnitData, newData]);
   };
@@ -86,7 +116,7 @@ const TestUnitList = () => {
     <div style={{ maxHeight: '70vh', overflowY: 'auto' }}>
       <Divider />
       <div className={styles['binMap-header']}>
-        <div style={{ fontSize: 16, fontWeight: 600 }}></div>
+        <div style={{ fontSize: 16, fontWeight: 600 }}>Test-Unit</div>
         <Button
           type="primary"
           size="middle"
