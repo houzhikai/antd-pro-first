@@ -11,8 +11,13 @@ import styles from '../index.less';
 const { Panel } = Collapse;
 
 const LeftContent = () => {
-  const { isHiddenSide, setOpenMainFlowModal, setOpenBinMapForm, isOnLine } =
-    useModel('useDrawModel');
+  const {
+    isHiddenSide,
+    setOpenMainFlowModal,
+    setOpenBinMapForm,
+    setOpenTestUnitModal,
+    isOnLine,
+  } = useModel('useDrawModel');
 
   const softBinIcon = (
     <Button
@@ -22,6 +27,17 @@ const LeftContent = () => {
       onClick={(event) => {
         event.stopPropagation();
         setOpenBinMapForm(true);
+      }}
+    />
+  );
+  const testUnit = (
+    <Button
+      type="text"
+      disabled={isOnLine}
+      icon={<PlusOutlined />}
+      onClick={(event) => {
+        event.stopPropagation();
+        setOpenTestUnitModal(true);
       }}
     />
   );
@@ -53,6 +69,7 @@ const LeftContent = () => {
             <Panel
               header={<div className={styles.header}>测试项</div>}
               key="test-item"
+              extra={testUnit}
             >
               <TestItem />
             </Panel>

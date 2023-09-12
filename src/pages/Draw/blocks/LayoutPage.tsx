@@ -1,3 +1,4 @@
+import TestUnit from './Modal/TestUnit';
 import NavAction from './NavAction';
 import BinMapForm from './NavAction/components/BinMapForm';
 import ToolbarContainer from './ToolbarContainer';
@@ -20,6 +21,7 @@ const Layout = () => {
       </div>
       <BinMapForm />
       <AddMainFlowModal />
+      <TestUnit />
     </div>
   );
 };
