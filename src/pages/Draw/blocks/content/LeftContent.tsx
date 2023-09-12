@@ -11,7 +11,17 @@ import styles from '../index.less';
 const { Panel } = Collapse;
 
 const LeftContent = () => {
-  const { isHiddenSide, setOpenMainFlowModal } = useModel('useDrawModel');
+  const { isHiddenSide, setOpenMainFlowModal, setOpenBinMapForm } =
+    useModel('useDrawModel');
+
+  const softBinIcon = (
+    <PlusOutlined
+      onClick={(event) => {
+        event.stopPropagation();
+        setOpenBinMapForm(true);
+      }}
+    />
+  );
 
   const extra = (
     <PlusOutlined
@@ -30,6 +40,7 @@ const LeftContent = () => {
             <Panel
               header={<div className={styles.header}>BinMap</div>}
               key="SoftBin"
+              extra={softBinIcon}
             >
               <SoftItemList />
             </Panel>

@@ -1,5 +1,5 @@
 export type HardBinDataSourceType = {
-  Key?: React.Key;
+  key?: React.Key;
   Name?: string;
   Number?: number;
   Type?: string;
@@ -7,7 +7,7 @@ export type HardBinDataSourceType = {
   children?: HardBinDataSourceType[];
 };
 export type SoftBinDataSourceType = {
-  Key?: number | string;
+  key?: number | string;
   Name?: string;
   Number?: number;
   HardBin?: string;
@@ -79,12 +79,12 @@ type OptionsProps = {
 // ];
 export const options: OptionsProps = {
   HardBin: [
-    { Key: 0, Name: 'HB1', Number: 1, Type: 'Pass', Color: '#bfa' },
-    { Key: 1, Name: 'HB2', Number: 2, Type: 'Fail', Color: '#fba' },
+    { key: 0, Name: 'HB1', Number: 1, Type: 'Pass', Color: '#bfa' },
+    { key: 1, Name: 'HB2', Number: 2, Type: 'Fail', Color: '#fba' },
   ],
   SoftBin: [
     {
-      Key: 0,
+      key: 0,
       Name: 'FB1',
       Number: 1001,
       HardBin: 'HB2',
@@ -94,7 +94,7 @@ export const options: OptionsProps = {
       Comment: '',
     },
     {
-      Key: 1,
+      key: 1,
       Name: 'FB2',
       Number: 1002,
       HardBin: 'HB2',
@@ -104,7 +104,7 @@ export const options: OptionsProps = {
       Comment: '',
     },
     {
-      Key: 2,
+      key: 2,
       Name: 'PB1',
       Number: 2001,
       HardBin: 'HB1',

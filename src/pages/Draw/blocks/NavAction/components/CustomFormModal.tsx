@@ -161,7 +161,7 @@ const CustomFormModal = () => {
       width: optionWidth,
       render: (_, record) => {
         const handleRemoveRow = (record) => {
-          const newData = hardBinData.filter((item) => item.Key !== record.Key);
+          const newData = hardBinData.filter((item) => item.key !== record.key);
           setHardBinData(newData);
           setHardBinNameList(
             newData
@@ -385,7 +385,7 @@ const CustomFormModal = () => {
       width: optionWidth,
       render: (_, record) => {
         const handleRemoveRow = (record) => {
-          const newData = softBinData.filter((item) => item.Key !== record.Key);
+          const newData = softBinData.filter((item) => item.key !== record.key);
           setSoftBinData(newData);
         };
         return (
@@ -407,7 +407,7 @@ const CustomFormModal = () => {
   const handleAddHardBinRows = () => {
     const hardBinDataLength = hardBinData.length;
     const newData = {
-      Key: hardBinDataLength,
+      key: hardBinDataLength,
       Name: '',
       Number: undefined,
       Type: '',
@@ -419,7 +419,7 @@ const CustomFormModal = () => {
   const handleAddSoftBinRows = () => {
     const softBinDataLength = softBinData.length;
     const newData = {
-      Key: softBinDataLength,
+      key: softBinDataLength,
       Name: '',
       Number: undefined,
       HardBin: '',
