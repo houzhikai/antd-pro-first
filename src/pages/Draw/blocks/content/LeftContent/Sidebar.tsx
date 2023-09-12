@@ -2,8 +2,10 @@ import { mainFlowIconList } from '@/components/dataList/draw/mainFlow';
 import MyTestItemIcon from './components/MyTestItemIcon';
 import { onDragStart } from './components/onDragStart';
 import styles from './index.less';
+import { useModel } from '@umijs/max';
 
 export default () => {
+  const { isOnLine } = useModel('useDrawModel');
   return (
     <>
       <div className={styles['test-item']}>
@@ -12,7 +14,9 @@ export default () => {
             <MyTestItemIcon
               name={item.name}
               src={item.icon}
-              onDragStart={(event) => onDragStart(event, item.type)}
+              onDragStart={(event) =>
+                !isOnLine ? onDragStart(event, item.type) : null
+              }
             />
           </div>
         ))}

@@ -1,9 +1,11 @@
+import { useModel } from '@umijs/max';
 import MyTestItemIcon from './components/MyTestItemIcon';
 import { onDragStart } from './components/onDragStart';
 import { subflowIconList } from './components/subflowIconList';
 import styles from './index.less';
 
 const SubflowList = () => {
+  const { isOnLine } = useModel('useDrawModel');
   return (
     <div className={styles['test-item']}>
       {subflowIconList.map((item, index) => (
@@ -12,7 +14,9 @@ const SubflowList = () => {
             size={item.size}
             src={item.icon}
             name={item.name}
-            onDragStart={(event) => onDragStart(event, item.type)}
+            onDragStart={(event) =>
+              !isOnLine ? onDragStart(event, item.type) : null
+            }
           />
         </div>
       ))}

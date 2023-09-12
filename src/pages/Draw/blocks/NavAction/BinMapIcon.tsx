@@ -10,23 +10,31 @@ const BinMapIcon = () => {
     setHardBinData,
     options,
     setHardBinNameList,
+    isOnLine,
   } = useModel('useDrawModel');
   const handleSave = () => {
-    setHardBinData(options.HardBin);
-    setSoftBinData(options.SoftBin);
-    setHardBinNameList(
-      options.HardBin.map((item) => item.Name).map((item) => ({
-        value: item,
-        label: item,
-      })),
-    );
-    setOpenBinMapForm(true);
-    // message.warning('暂无开发');
+    if (!isOnLine) {
+      setHardBinData(options.HardBin);
+      setSoftBinData(options.SoftBin);
+      setHardBinNameList(
+        options.HardBin.map((item) => item.Name).map((item) => ({
+          value: item,
+          label: item,
+        })),
+      );
+      setOpenBinMapForm(true);
+      // message.warning('暂无开发');
+    }
   };
   return (
     <Tooltip placement="bottomLeft" title="binMap">
       <div className={styles.gap}>
         <Image
+          style={
+            isOnLine
+              ? { filter: 'opacity(0.3)', cursor: 'not-allowed' }
+              : undefined
+          }
           src={binMap}
           preview={false}
           width={16}

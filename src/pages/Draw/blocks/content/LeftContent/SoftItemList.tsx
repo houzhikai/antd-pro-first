@@ -6,12 +6,16 @@ import styles from './index.less';
 import { onDragStart } from './components/onDragStart';
 
 const SoftItemList = () => {
-  const { softBinData } = useModel('useDrawModel');
+  const { softBinData, isOnLine } = useModel('useDrawModel');
   return (
     <div className={styles['test-item']}>
       {softBinData.map((item) => (
         <div key={item.key} className={styles['softBin-item']}>
-          <div onDragStart={(event) => onDragStart(event, 'custom-output')}>
+          <div
+            onDragStart={(event) =>
+              !isOnLine ? onDragStart(event, 'custom-output') : null
+            }
+          >
             <Image src={softBin} width={24} preview={false} />
             <div>{item.Name}</div>
           </div>
