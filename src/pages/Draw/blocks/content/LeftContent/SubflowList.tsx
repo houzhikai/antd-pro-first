@@ -9,7 +9,7 @@ const SubflowList = () => {
       {subflowIconList.map((item, index) => (
         <div key={index} className={styles.item}>
           <MyTestItemIcon
-            size={item?.size}
+            size={item.size}
             src={item.icon}
             name={item.name}
             onDragStart={(event) => onDragStart(event, item.type)}

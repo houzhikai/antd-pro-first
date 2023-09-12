@@ -1,5 +1,5 @@
 import { useModel } from '@umijs/max';
-import softBin from '@/icon/draw/items/softBin.svg';
+import softBin from '@/icon/draw/items/ashbin.svg';
 import { Image } from 'antd';
 
 import styles from './index.less';

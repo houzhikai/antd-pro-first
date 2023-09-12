@@ -116,7 +116,9 @@ const TestUnitList = () => {
     <div style={{ maxHeight: '70vh', overflowY: 'auto' }}>
       <Divider />
       <div className={styles['binMap-header']}>
-        <div style={{ fontSize: 16, fontWeight: 600 }}>Test-Unit</div>
+        <div style={{ fontSize: 16, fontWeight: 600 }}>
+          Test-Unit(属性需要确认)
+        </div>
         <Button
           type="primary"
           size="middle"

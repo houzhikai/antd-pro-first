@@ -1,19 +1,14 @@
-import demo from '@/icon/draw/subflow/flowchart.png';
 import subflowIcon from '@/icon/draw/subflow/stripe-logo-light.svg';
 import subflowIcon1 from '@/icon/draw/subflow/subflow1.svg';
 import subflowIcon2 from '@/icon/draw/subflow/flowchart.svg';
 import subflowIcon3 from '@/icon/draw/subflow/flow chart 2-fill.svg';
-// import ellipse from '@/icon/draw/items/ellipse.svg';
-// import round from '@/icon/draw/items/round.svg';
-// import filletCorner from '@/icon/draw/items/filletCorner.svg';
 
-export const subflowIconList = [
+export const mainFlowIconList = [
   //   { icon: filletCorner, type: 'custom-input', size: 54 },
   //   { icon: ellipse, type: 'default' },
   //   { icon: round, type: 'output' },
-  { icon: demo, type: 'custom-subflow', name: 'subflow 1' },
-  { icon: subflowIcon, type: 'custom-subflow', size: 32, name: 'subflow 2' },
+  { icon: subflowIcon, type: 'custom-subflow', name: 'subflow 2' },
   { icon: subflowIcon1, type: 'custom-subflow', name: 'subflow 3' },
   { icon: subflowIcon2, type: 'custom-subflow', name: 'subflow 4' },
-  { icon: subflowIcon3, type: 'custom-subflow', name: 'subflow 4' },
+  { icon: subflowIcon3, type: 'custom-subflow', name: 'subflow 5' },
 ];

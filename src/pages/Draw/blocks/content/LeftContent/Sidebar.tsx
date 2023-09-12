@@ -1,16 +1,15 @@
+import { mainFlowIconList } from '@/components/dataList/draw/mainFlow';
 import MyTestItemIcon from './components/MyTestItemIcon';
 import { onDragStart } from './components/onDragStart';
-import { subflowIconList } from './components/subflowIconList';
 import styles from './index.less';
 
 export default () => {
   return (
     <>
       <div className={styles['test-item']}>
-        {subflowIconList.map((item, index) => (
+        {mainFlowIconList.map((item, index) => (
           <div key={index} className={styles.item}>
             <MyTestItemIcon
-              size={item?.size}
               name={item.name}
               src={item.icon}
               onDragStart={(event) => onDragStart(event, item.type)}
