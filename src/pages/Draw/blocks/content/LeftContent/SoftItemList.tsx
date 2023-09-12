@@ -11,7 +11,7 @@ const SoftItemList = () => {
     <div className={styles['test-item']}>
       {softBinData.map((item) => (
         <div key={item.Key} className={styles['softBin-item']}>
-          <div onDragStart={(event) => onDragStart(event, 'output')}>
+          <div onDragStart={(event) => onDragStart(event, 'custom-output')}>
             <Image src={softBin} width={24} preview={false} />
             <div>{item.Name}</div>
           </div>

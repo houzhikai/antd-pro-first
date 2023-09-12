@@ -168,6 +168,7 @@ const MiddleContent = () => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
+      console.log({ type, event });
       const newNode = {
         id: getId(),
         type,

@@ -4,6 +4,7 @@ import LoopNode from './customNodes/LoopNode/LoopNode';
 import MiddleNode from './customNodes/MiddleNode/MiddleNode';
 import BadBin from './customNodes/OutBin/BadBinNode/BadBin';
 import GoodBin from './customNodes/OutBin/GoodBinNode/GoodBin';
+import OutputNode from './customNodes/OutBin/Output/Output';
 import Subflow from './customNodes/subflow/Subflow';
 
 export const nodeTypes: any = {
@@ -13,5 +14,6 @@ export const nodeTypes: any = {
   'custom-middleNode': MiddleNode,
   'custom-subflow': Subflow,
   'custom-loop': LoopNode,
+  'custom-output': OutputNode,
   custom: CustomNode,
 };

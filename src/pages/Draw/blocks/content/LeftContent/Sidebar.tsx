@@ -11,6 +11,7 @@ export default () => {
           <div key={index} className={styles.item}>
             <MyTestItemIcon
               size={item?.size}
+              name={item.name}
               src={item.icon}
               onDragStart={(event) => onDragStart(event, item.type)}
             />
