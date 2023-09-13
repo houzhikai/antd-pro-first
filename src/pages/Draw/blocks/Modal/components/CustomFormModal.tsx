@@ -24,7 +24,10 @@ const CustomFormModal = () => {
     hardBinNameList,
     setHardBinNameList,
     isOnLine,
+    repeatHardBinNameList,
+    setRepeatHardBinNameList,
   } = useModel('useDrawModel');
+
   // 删除列占的比例
   const optionWidth: string = '12%';
   // hardBin 的列
@@ -33,7 +36,7 @@ const CustomFormModal = () => {
       key: 'Name',
       title: <div style={{ padding: '5px 0' }}> Name</div>,
       dataIndex: 'Name',
-      render: (_, record, idx) => {
+      render: (text: any, record, idx) => {
         const handleChange = (e) => {
           const newHardBinData = hardBinData.map((item, index) => {
             if (idx === index) {
@@ -50,18 +53,27 @@ const CustomFormModal = () => {
                 label: item,
               })),
           );
+          const hardBinName = newHardBinData.map((item) => item.Name);
+          const findDuplicates = (arr) =>
+            arr.filter((item, index) => arr.indexOf(item) !== index);
+          const duplicates = findDuplicates(hardBinName);
+          setRepeatHardBinNameList(duplicates);
         };
+        // @ts-expect-error
+        const isHasName = repeatHardBinNameList.includes(text);
         return (
           <>
             <Input
               value={record.Name}
               onChange={handleChange}
-              status={record.Name === '' ? 'error' : ''}
+              status={record.Name === '' || isHasName ? 'error' : ''}
               allowClear
               readOnly={isOnLine}
             />
             {record.Name === '' ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : isHasName ? (
+              <div style={{ color: 'red' }}>* Name不唯一</div>
             ) : null}
           </>
         );

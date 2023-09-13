@@ -11,9 +11,11 @@ const BinMapIcon = () => {
     options,
     setHardBinNameList,
     isOnLine,
+    setRepeatHardBinNameList,
   } = useModel('useDrawModel');
   const handleSave = () => {
     if (!isOnLine) {
+      setRepeatHardBinNameList([]);
       setHardBinData(options.HardBin);
       setSoftBinData(options.SoftBin);
       setHardBinNameList(

@@ -28,6 +28,8 @@ export default () => {
         label: item,
       })),
   );
+  // hardBin name重复值
+  const [repeatHardBinNameList, setRepeatHardBinNameList] = useState([]);
 
   return {
     isHiddenSide,
@@ -57,5 +59,7 @@ export default () => {
     setOpenSubFlowModal,
     selected,
     setSelected,
+    repeatHardBinNameList,
+    setRepeatHardBinNameList,
   };
 };
