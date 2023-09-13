@@ -51,6 +51,7 @@ const LeftContent = () => {
       onClick={(event) => {
         event.stopPropagation();
         setOpenSubFlowModal(true);
+        setSelected('');
       }}
     />
   );

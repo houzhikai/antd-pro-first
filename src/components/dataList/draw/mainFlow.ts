@@ -8,6 +8,7 @@ import {
   mainFlowEdges,
 } from '@/pages/Draw/blocks/CustomFlow/mainFlow';
 
+// 左侧的mainflow 模板
 export const mainFlowIconList = [
   //   { icon: filletCorner, type: 'custom-input', size: 54 },
   //   { icon: ellipse, type: 'default' },
@@ -17,8 +18,7 @@ export const mainFlowIconList = [
   { icon: subflowIcon2, type: 'custom-subflow', name: 'subflow 4' },
   { icon: subflowIcon3, type: 'custom-subflow', name: 'subflow 5' },
 ];
-
-// 左侧的mainflow 模板
+// 添加加号的mainflow模板
 export const mainFlowItemList = [
   {
     id: 1,
