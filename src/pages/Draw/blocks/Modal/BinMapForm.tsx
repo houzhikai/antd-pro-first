@@ -16,6 +16,8 @@ const BinMapForm = () => {
     setSoftBinData,
     options,
     setHardBinNameList,
+    repeatHardBinNameList,
+    repeatSoftBinNameList,
   } = useModel('useDrawModel');
 
   const handleOk = () => {
@@ -23,7 +25,7 @@ const BinMapForm = () => {
     let isShowMessage = false;
     hardBinData.map((item) => {
       const keys = Object.values(item);
-      if (!keys) {
+      if (!keys || keys.includes('') || keys.includes(undefined as any)) {
         isShowMessage = true;
       }
       return isShowMessage;
@@ -54,9 +56,14 @@ const BinMapForm = () => {
     } else if (!includes(hardBinList, softBinList)) {
       // message.error('请重新选择HardBin');
       message.error('保存失败');
+    } else if (
+      repeatHardBinNameList.length > 0 ||
+      repeatSoftBinNameList.length > 0
+    ) {
+      message.error('Name不唯一');
     } else {
       message.success('保存成功');
-      setOpenBinMapForm(false);
+      // setOpenBinMapForm(false);
     }
   };
   const handleCancel = () => {
