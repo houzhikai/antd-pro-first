@@ -1,6 +1,5 @@
 import styles from './index.less';
 import BinMapIcon from './NavAction/BinMapIcon';
-import Nav from './NavAction/Nav';
 import UserVariable from './NavAction/UserVariable';
 
 const NavAction = () => {
@@ -20,7 +19,7 @@ const NavAction = () => {
         </div>
       </div>
 
-      <Nav />
+      {/* <Nav /> */}
     </div>
   );
 };
