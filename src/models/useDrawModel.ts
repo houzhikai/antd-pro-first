@@ -17,6 +17,8 @@ export default () => {
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
   const [openTestUnitModal, setOpenTestUnitModal] = useState(false);
 
+  const [selected, setSelected] = useState(''); // 选中样式
+
   // softBin 中的 HardBin 选择框中的options 列表
   const [hardBinNameList, setHardBinNameList] = useState(
     hardBinData
@@ -53,5 +55,7 @@ export default () => {
     setTestUnitData,
     openSubFlowModal,
     setOpenSubFlowModal,
+    selected,
+    setSelected,
   };
 };

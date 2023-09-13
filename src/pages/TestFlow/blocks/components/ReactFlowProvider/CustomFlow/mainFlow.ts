@@ -34,31 +34,31 @@ export const mainFlowNode: any = [
     position: { x: 100, y: 400 },
     type: 'output',
   },
-  {
-    id: 'A',
-    type: 'group',
-    data: { label: null },
-    position: { x: 400, y: 100 },
-    style: {
-      width: 170,
-      height: 140,
-    },
-  },
-  {
-    id: 'B',
-    type: 'input',
-    data: { label: 'child node 1' },
-    position: { x: 10, y: 10 }, // position 是相对于父级的定位
-    parentNode: 'A',
-    extent: 'parent',
-  },
-  {
-    id: 'C',
-    data: { label: 'child node 2' },
-    position: { x: 10, y: 90 }, // position 是相对于父级的定位
-    parentNode: 'A',
-    extent: 'parent',
-  },
+  // {
+  //   id: 'A',
+  //   type: 'group',
+  //   data: { label: null },
+  //   position: { x: 400, y: 100 },
+  //   style: {
+  //     width: 170,
+  //     height: 140,
+  //   },
+  // },
+  // {
+  //   id: 'B',
+  //   type: 'input',
+  //   data: { label: 'child node 1' },
+  //   position: { x: 10, y: 10 }, // position 是相对于父级的定位
+  //   parentNode: 'A',
+  //   extent: 'parent',
+  // },
+  // {
+  //   id: 'C',
+  //   data: { label: 'child node 2' },
+  //   position: { x: 10, y: 90 }, // position 是相对于父级的定位
+  //   parentNode: 'A',
+  //   extent: 'parent',
+  // },
 ];
 
 export const mainFlowEdges = [
@@ -109,5 +109,5 @@ export const mainFlowEdges = [
     labelStyle: { fill: 'red', fillOpacity: 0.7, paddingLeft: 20 },
     labelBgStyle: { fill: 'transparent' },
   },
-  { id: 'b-c', source: 'B', target: 'C' },
+  // { id: 'b-c', source: 'B', target: 'C' },
 ];

@@ -18,6 +18,7 @@ const LeftContent = () => {
     setOpenTestUnitModal,
     setOpenSubFlowModal,
     isOnLine,
+    setSelected,
   } = useModel('useDrawModel');
 
   const softBinIcon = (
@@ -62,6 +63,7 @@ const LeftContent = () => {
       onClick={(event) => {
         event.stopPropagation();
         setOpenMainFlowModal(true);
+        setSelected('');
       }}
     />
   );
