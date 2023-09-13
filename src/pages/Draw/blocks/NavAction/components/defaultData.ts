@@ -105,7 +105,17 @@ export const options: OptionsProps = {
     },
     {
       key: 2,
-      Name: 'PB1',
+      Name: 'FB3',
+      Number: 2001,
+      HardBin: 'HB1',
+      MaxCount: 65536,
+      CheckOverflow: true,
+      Color: 'Red',
+      Comment: '',
+    },
+    {
+      key: 3,
+      Name: 'FB4',
       Number: 2001,
       HardBin: 'HB1',
       MaxCount: 65536,
