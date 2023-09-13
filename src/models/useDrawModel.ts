@@ -28,8 +28,8 @@ export default () => {
         label: item,
       })),
   );
-  // hardBin name重复值
-  const [repeatHardBinNameList, setRepeatHardBinNameList] = useState([]);
+  const [repeatHardBinNameList, setRepeatHardBinNameList] = useState([]); // hardBin name重复值列表
+  const [repeatSoftBinNameList, setRepeatSoftBinNameList] = useState([]); // softBin name重复值列表
 
   return {
     isHiddenSide,
@@ -61,5 +61,7 @@ export default () => {
     setSelected,
     repeatHardBinNameList,
     setRepeatHardBinNameList,
+    repeatSoftBinNameList,
+    setRepeatSoftBinNameList,
   };
 };

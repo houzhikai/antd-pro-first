@@ -26,6 +26,8 @@ const CustomFormModal = () => {
     isOnLine,
     repeatHardBinNameList,
     setRepeatHardBinNameList,
+    repeatSoftBinNameList,
+    setRepeatSoftBinNameList,
   } = useModel('useDrawModel');
 
   // 删除列占的比例
@@ -53,10 +55,10 @@ const CustomFormModal = () => {
                 label: item,
               })),
           );
-          const hardBinName = newHardBinData.map((item) => item.Name);
+          const hardBinNameList = newHardBinData.map((item) => item.Name);
           const findDuplicates = (arr) =>
             arr.filter((item, index) => arr.indexOf(item) !== index);
-          const duplicates = findDuplicates(hardBinName);
+          const duplicates = findDuplicates(hardBinNameList);
           setRepeatHardBinNameList(duplicates);
         };
         // @ts-expect-error
@@ -223,18 +225,27 @@ const CustomFormModal = () => {
             return item;
           });
           setSoftBinData(newSoftBinData);
+          const softBinNameList = newSoftBinData.map((item) => item.Name);
+          const findDuplicates = (arr) =>
+            arr.filter((item, index) => arr.indexOf(item) !== index);
+          const duplicates = findDuplicates(softBinNameList);
+          setRepeatSoftBinNameList(duplicates);
         };
+        // @ts-expect-error
+        const isHasName = repeatSoftBinNameList.includes(text);
         return (
           <>
             <Input
               value={text}
               onChange={handleChange}
-              status={record.Name === '' ? 'error' : ''}
+              status={record.Name === '' || isHasName ? 'error' : ''}
               allowClear
               readOnly={isOnLine}
             />
             {record.Name === '' ? (
               <div style={{ color: 'red' }}>* 不能为空</div>
+            ) : isHasName ? (
+              <div style={{ color: 'red' }}>* Name 不唯一</div>
             ) : null}
           </>
         );
