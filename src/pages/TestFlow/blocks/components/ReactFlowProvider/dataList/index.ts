@@ -16,14 +16,8 @@ export const initHandleList: HandleList[] = [
   },
   {
     type: 'source',
-    className: 'right',
-    position: 'Right',
-    id: 'b',
-  },
-  {
-    type: 'source',
     className: 'bottom',
     position: 'Bottom',
-    id: 'c',
+    id: 'b',
   },
 ];

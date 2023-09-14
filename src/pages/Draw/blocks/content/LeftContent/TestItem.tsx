@@ -26,7 +26,7 @@ const TestItem = () => {
             src={rectangle}
             name={item.Class}
             onDragStart={(event) =>
-              !isOnLine ? onDragStart(event, 'output') : null
+              !isOnLine ? onDragStart(event, 'custom-middleNode') : null
             }
           />
         </div>

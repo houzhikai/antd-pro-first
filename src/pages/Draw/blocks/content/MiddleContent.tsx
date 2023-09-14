@@ -19,7 +19,7 @@ import 'reactflow/dist/style.css';
 import styles from '../index.less';
 
 let id = 0;
-const getId = () => `dndnode_${id++}`;
+const getId = () => `${id++}`;
 
 const MiddleContent = () => {
   const {
@@ -168,12 +168,11 @@ const MiddleContent = () => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
-      console.log({ type, event });
       const newNode = {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type}${id} node` },
       };
 
       setNodes((nds) => nds.concat(newNode));

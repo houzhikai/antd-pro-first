@@ -16,6 +16,7 @@ const OutputNode = () => {
       <div>
         <div className={styles.wrapper}>FB1</div>
         <Handle
+          style={{ background: '#FFF', border: '1px solid #1a192b' }}
           position={Position[togglePort]}
           className={styles.top}
           type="target"
