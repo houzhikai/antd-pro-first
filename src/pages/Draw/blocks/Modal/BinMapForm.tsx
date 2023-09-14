@@ -63,7 +63,7 @@ const BinMapForm = () => {
       message.error('Name不唯一');
     } else {
       message.success('保存成功');
-      // setOpenBinMapForm(false);
+      setOpenBinMapForm(false);
     }
   };
   const handleCancel = () => {
