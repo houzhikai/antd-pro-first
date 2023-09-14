@@ -19,7 +19,7 @@ export default () => {
 
   const [selected, setSelected] = useState(''); // 选中样式
 
-  const [togglePort, setTogglePort] = useState('');
+  const [togglePort, setTogglePort] = useState('Top');
 
   // softBin 中的 HardBin 选择框中的options 列表
   const [hardBinNameList, setHardBinNameList] = useState(
