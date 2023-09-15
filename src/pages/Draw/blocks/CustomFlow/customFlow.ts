@@ -8,8 +8,8 @@ export const customNode: any = [
     type: 'group',
     position: { x: 0, y: 0 },
     style: {
-      width: 500,
-      height: 500,
+      width: 450,
+      height: 450,
     },
   },
   {

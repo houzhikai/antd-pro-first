@@ -32,6 +32,8 @@ export default () => {
   );
   const [repeatHardBinNameList, setRepeatHardBinNameList] = useState([]); // hardBin name重复值列表
   const [repeatSoftBinNameList, setRepeatSoftBinNameList] = useState([]); // softBin name重复值列表
+  let softBinPortId = 0;
+  const getId = () => `${softBinPortId++}`;
 
   return {
     isHiddenSide,
@@ -67,5 +69,6 @@ export default () => {
     setRepeatSoftBinNameList,
     togglePort,
     setTogglePort,
+    getId,
   };
 };

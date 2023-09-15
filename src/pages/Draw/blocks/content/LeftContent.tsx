@@ -73,7 +73,11 @@ const LeftContent = () => {
     <>
       {isHiddenSide ? (
         <div className={styles.left}>
-          <Collapse defaultActiveKey={['test-item']} size="small" ghost>
+          <Collapse
+            defaultActiveKey={['SoftBin', 'test-item']}
+            size="small"
+            ghost
+          >
             <Panel
               header={<div className={styles.header}>BinMap</div>}
               key="SoftBin"

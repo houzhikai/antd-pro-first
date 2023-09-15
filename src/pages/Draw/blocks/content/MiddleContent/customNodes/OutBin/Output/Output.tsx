@@ -5,7 +5,7 @@ import PopoverButtonList from '../../../PopoverButtonList';
 import { useModel } from '@umijs/max';
 
 const OutputNode = () => {
-  const { togglePort } = useModel('useDrawModel');
+  const { togglePort, getId } = useModel('useDrawModel');
   return (
     <Popover
       placement="right"
@@ -20,7 +20,7 @@ const OutputNode = () => {
           position={Position[togglePort]}
           className={styles.top}
           type="target"
-          id="a"
+          id={getId()}
         />
       </div>
     </Popover>
