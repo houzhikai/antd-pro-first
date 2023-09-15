@@ -1,6 +1,7 @@
 import { useModel } from '@umijs/max';
 import { Input } from 'antd';
-import styles from './CustomNode.less';
+import styles from './index.less';
+import MainFlowEdit from './MainFlowEdit';
 
 const CustomEdit = () => {
   const {
@@ -19,6 +20,7 @@ const CustomEdit = () => {
 
   return (
     <div className={styles.wrapper}>
+      <MainFlowEdit />
       {Object.keys(selectedNode).length > 0 ? (
         <>
           <div className={styles['detail-item']}>
@@ -40,7 +42,6 @@ const CustomEdit = () => {
           </div>
         </>
       ) : null}
-
       {/* <label>label:</label>
       <input
         value={nodeName}
@@ -48,7 +49,6 @@ const CustomEdit = () => {
       /> */}
       {/* <label className="updatenode__bglabel">background:</label>
       <input value={nodeBg} onChange={(evt) => setNodeBg(evt.target.value)} /> */}
-
       {/* <div className="updatenode__checkboxwrapper">
         <label>hidden:</label>
         <input
