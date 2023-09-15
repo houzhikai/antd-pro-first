@@ -67,7 +67,7 @@ export const customEdge = [
     id: 'customNode-2-badBin',
     source: 'customNode-2',
     target: 'badBin',
-    sourceHandle: 'd',
+    sourceHandle: 'b',
     targetHandle: 'a',
     type: 'smoothstep',
   },

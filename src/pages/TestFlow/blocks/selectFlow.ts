@@ -1,4 +1,8 @@
 import {
+  childFlowEdges,
+  childFlowNodes,
+} from '@/pages/Draw/blocks/CustomFlow/childFlow';
+import {
   customNode,
   customEdge,
 } from './components/ReactFlowProvider/CustomFlow/customFlow';
@@ -29,6 +33,9 @@ export const selectFlowNodeEdge = (val: string) => {
       break;
     case 'test4':
       value = { node: customNode, edge: customEdge };
+      break;
+    case 'test5':
+      value = { node: childFlowNodes, edge: childFlowEdges };
       break;
     default:
       value = { node: mainFlowNode, edge: mainFlowEdges };
