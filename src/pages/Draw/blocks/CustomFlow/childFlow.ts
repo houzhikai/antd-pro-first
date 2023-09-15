@@ -1,10 +1,10 @@
 import { MarkerType } from 'reactflow';
 
 export const childFlowNodes = [
-  { id: 'childEdgeA', data: { label: 'node-a' }, position: { x: 100, y: 100 } },
-  { id: 'childEdgeB', data: { label: 'node-b' }, position: { x: 100, y: 200 } },
+  { id: 'childNodeA', data: { label: 'node-a' }, position: { x: 100, y: 100 } },
+  { id: 'childNodeB', data: { label: 'node-b' }, position: { x: 100, y: 200 } },
   {
-    id: 'childEdgeC',
+    id: 'childNodeC',
     type: 'custom-subflow',
     data: { label: 'node-c' },
     position: { x: 100, y: 300 },
@@ -16,25 +16,27 @@ export const childFlowNodes = [
     },
   },
   {
-    id: 'childEdgeD',
+    id: 'childNodeD',
     data: { label: 'node-d' },
     position: { x: 40, y: 40 },
-    parentNode: 'childEdgeC',
+    parentNode: 'childNodeC',
     extent: 'parent',
   },
   {
-    id: 'childEdgeE',
+    id: 'childNodeE',
     data: { label: 'node-e' },
     position: { x: 40, y: 100 },
-    parentNode: 'childEdgeC',
+    parentNode: 'childNodeC',
     extent: 'parent',
   },
 ];
 export const childFlowEdges = [
+  { id: 'childNodeA-B', source: 'childNodeA', target: 'childNodeB' },
+  { id: 'childNodeB-c', source: 'childNodeB', target: 'childNodeC' },
   {
     id: 'childEdgeD-E',
-    source: 'childEdgeD',
-    target: 'childEdgeE',
+    source: 'childNodeD',
+    target: 'childNodeE',
     label: '0',
     markerEnd: { type: MarkerType.ArrowClosed },
   },
