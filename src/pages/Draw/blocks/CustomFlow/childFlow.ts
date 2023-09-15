@@ -11,7 +11,6 @@ export const childFlowNodes = [
     style: {
       width: 200,
       height: 200,
-      border: '1px solid red',
       background: 'transparent',
     },
   },

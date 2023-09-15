@@ -33,7 +33,7 @@ const Subflow = ({ data }) => {
       content={PopoverButtonList}
       trigger="hover"
     >
-      <div style={{ height: '100%' }}>
+      <div style={{ height: '100%', border: '1px solid #dee0e3' }}>
         <InputToolTip defaultValue={data.label} className={styles.name1} />
         {handleList.map((item, index) => (
           <Handle
