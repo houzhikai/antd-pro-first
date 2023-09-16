@@ -5,19 +5,28 @@ import MainFlowEdit from './MainFlowEdit';
 
 const CustomEdit = () => {
   const {
-    nodeName,
-    setNodeName,
     // nodeBg,
     setNodeBg,
     // nodeHidden,
     // setNodeHidden,
   } = useModel('useTestFlowModel');
-  const { selectedNode } = useModel('useDrawModel');
+  const { selectedNode, setSelectedNode } = useModel('useDrawModel');
 
   const handleChangeBg = (e) => {
     setNodeBg(e.target.value);
   };
+  const handleChange = (e) => {
+    selectedNode.data.label = e.target.value;
 
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        data: {
+          label: e.target.value,
+        },
+      };
+    });
+  };
   return (
     <div className={styles.wrapper}>
       <MainFlowEdit />
@@ -28,8 +37,8 @@ const CustomEdit = () => {
               addonBefore="测试流name："
               placeholder="请输入名称"
               defaultValue={selectedNode.data.label}
-              value={nodeName}
-              onChange={(evt) => setNodeName(evt.target.value)}
+              value={selectedNode.data.label}
+              onChange={handleChange}
             />
           </div>
           <div className={styles['detail-item']}>

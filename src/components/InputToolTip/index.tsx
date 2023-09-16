@@ -1,7 +1,7 @@
 import { Tooltip, Input } from 'antd';
-import { useState } from 'react';
 
 import styles from './index.less';
+import { useModel } from '@umijs/max';
 
 interface InputTooltipProps {
   defaultValue: string;
@@ -10,19 +10,18 @@ interface InputTooltipProps {
 }
 
 const InputToolTip = (props: InputTooltipProps) => {
-  const { defaultValue, background, className } = props;
-  const [value, setValue] = useState(defaultValue || '');
+  const { selectedNode, setSelectedNode } = useModel('useDrawModel');
+  const { background, className } = props;
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setSelectedNode(e.target.value);
   };
-
+  const name = selectedNode?.data?.label;
   return (
-    <Tooltip title={value.length > 10 ? value : null}>
+    <Tooltip title={name?.length > 10 ? name : null}>
       <div style={{ background }} className={className}>
         <Input
-          defaultValue="开始标签"
-          value={value}
+          value={selectedNode?.data?.label || 'test'}
           onChange={handleChange}
           bordered={false}
           className={styles['input-label']}

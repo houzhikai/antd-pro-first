@@ -36,6 +36,7 @@ const MiddleContent = () => {
     theme,
   } = useModel('useTestFlowModel');
   const { selectedNode, setSelectedNode } = useModel('useDrawModel');
+
   const deleteKey = useKeyPress('Delete');
 
   const reactFlowWrapper = useRef<any>(null);
@@ -189,7 +190,7 @@ const MiddleContent = () => {
     },
   };
 
-  const handleClick = useCallback(
+  const handleNodeClick = useCallback(
     (_, node) => {
       // 选中node节点，为了展示右边的信息
       setSelectedNode(node);
@@ -218,7 +219,7 @@ const MiddleContent = () => {
               nodes={nodes}
               edges={edges}
               nodeTypes={nodeTypes}
-              onNodeClick={handleClick}
+              onNodeClick={handleNodeClick}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onNodesDelete={onNodesDelete}
