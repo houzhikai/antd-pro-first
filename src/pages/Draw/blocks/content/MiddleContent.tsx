@@ -144,6 +144,7 @@ const MiddleContent = () => {
           return [...remainingEdges, ...createdEdges];
         }, edges),
       );
+      setSelectedNode({}); // 删除时同时隐藏右边的测试项属性
     },
     [nodes, edges],
   );
