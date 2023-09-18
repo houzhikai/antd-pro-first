@@ -4,7 +4,7 @@ import styles from './index.less';
 
 const TestItem = () => {
   const { selectedNode, setSelectedNode } = useModel('useDrawModel');
-
+  console.log({ selectedNode });
   // 修改测试项class
   const handleChange = (e) => {
     setSelectedNode((obj) => {

@@ -108,7 +108,7 @@ const TestUnitList = () => {
       key: testUnitLength,
       Class: '默认值',
       Name: `默认值 ${testUnitLength}`,
-      LoopCount: '1',
+      LoopCount: 1,
     };
     setTestUnitData([...testUnitData, newData]);
   };

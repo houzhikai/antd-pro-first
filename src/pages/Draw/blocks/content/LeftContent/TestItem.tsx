@@ -6,17 +6,19 @@ import { useModel } from '@umijs/max';
 import styles from './index.less';
 
 const TestItem = () => {
-  const { isOnLine, testUnitData } = useModel('useDrawModel');
+  const { isOnLine, testUnitData, setSelectedNode } = useModel('useDrawModel');
   return (
     <div className={styles['test-item']}>
       {testUnitData.map((item) => (
         <div key={item.key} style={{ margin: '0 5px' }}>
           <MyTestItemIcon
+            Class={item.Class}
             src={rectangle}
-            name={item.Class}
-            onDragStart={(event) =>
-              !isOnLine ? onDragStart(event, 'custom-middleNode') : null
-            }
+            name={item.Name}
+            onDragStart={(event) => {
+              setSelectedNode(item); // 拖动时拿到 test-unit item 的信息
+              return !isOnLine ? onDragStart(event, 'custom-middleNode') : null;
+            }}
           />
         </div>
       ))}

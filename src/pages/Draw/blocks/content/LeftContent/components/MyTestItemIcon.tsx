@@ -4,11 +4,12 @@ interface MyTestItemIconProps {
   src: string;
   onDragStart: any;
   size?: number;
-  name: string;
+  name?: string;
+  Class: string;
 }
 
 const MyTestItemIcon = (props: MyTestItemIconProps) => {
-  const { src, onDragStart, size, name } = props;
+  const { src, onDragStart, size, Class } = props;
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -18,7 +19,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
         preview={false}
         onDragStart={(event) => onDragStart(event, 'input')}
       />
-      <div style={{ marginTop: 5 }}>{name}</div>
+      <div style={{ marginTop: 5 }}>{Class}</div>
     </div>
   );
 };
