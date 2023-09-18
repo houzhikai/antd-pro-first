@@ -20,9 +20,9 @@ const TestItem = () => {
 
   return (
     <div>
-      <div className={styles.title}>测试项：</div>
       {Object.keys(selectedNode).length > 0 ? (
         <>
+          <div className={styles.title}>测试项：</div>
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>Class：</label>
             <Input

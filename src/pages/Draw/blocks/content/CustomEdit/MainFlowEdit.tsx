@@ -30,6 +30,15 @@ const MainFlowEdit = () => {
           unCheckedChildren="false"
         />
       </div>
+
+      <div className={styles['flow-item']}>
+        <label className={styles['flow-label']}>开始节点：</label>
+        <Input placeholder="暂无开始节点" defaultValue="" />
+      </div>
+      <div className={styles['flow-item']}>
+        <label className={styles['flow-label']}>结束节点：</label>
+        <Input placeholder="暂无结束节点" defaultValue="" />
+      </div>
     </div>
   );
 };
