@@ -164,7 +164,6 @@ const MiddleContent = () => {
       if (typeof type === 'undefined' || !type) {
         return;
       }
-
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
@@ -190,19 +189,21 @@ const MiddleContent = () => {
     },
   };
 
-  const handleNodeClick = useCallback(
-    (_, node) => {
-      // 选中node节点，为了展示右边的信息
-      setSelectedNode(node);
-      if (node.parentNode) {
-        setDeleteType(null);
-      } else if (node.type === 'group' || node.id.includes('subflow')) {
-        // node.type === 'group' 需要排除非subflow的情况
-        setDeleteType('isDelete');
-      }
-    },
-    [deleteType],
-  );
+  const handleNodeClick = (_, node) => {
+    // 选中node节点，为了展示右边的信息
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        Name: selectedNode.Name || node.data.label,
+      };
+    });
+    if (node.parentNode) {
+      setDeleteType(null);
+    } else if (node.type === 'group' || node.id.includes('subflow')) {
+      // node.type === 'group' 需要排除非subflow的情况
+      setDeleteType('isDelete');
+    }
+  };
 
   return (
     <div className={styles.draw}>

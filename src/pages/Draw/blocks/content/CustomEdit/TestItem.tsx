@@ -5,40 +5,55 @@ import styles from './index.less';
 const TestItem = () => {
   const { selectedNode, setSelectedNode } = useModel('useDrawModel');
 
+  // 修改测试项class
   const handleChange = (e) => {
-    selectedNode.data.label = e.target.value;
-
     setSelectedNode((obj) => {
       return {
         ...obj,
-        data: {
-          label: e.target.value,
-        },
+        Class: e.target.value,
+      };
+    });
+  };
+  // 修改测试项name
+  const handleChangeName = (e) => {
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        Name: e.target.value,
+      };
+    });
+  };
+  // 修改测试项LoopCount
+  const handleChangeLoopCount = (value) => {
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        LoopCount: value,
       };
     });
   };
 
   return (
     <div>
-      {Object.keys(selectedNode).length > 0 ? (
+      {selectedNode.Name ? (
         <>
           <div className={styles.title}>测试项：</div>
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>Class：</label>
             <Input
               placeholder="请输入 Class"
-              defaultValue={selectedNode.data.label}
-              value={selectedNode.data.label}
+              value={selectedNode.Class}
               onChange={handleChange}
+              allowClear
             />
           </div>
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>测试项name：</label>
             <Input
               placeholder="请输入名称"
-              defaultValue={selectedNode.data.label}
-              value={selectedNode.data.label}
-              onChange={handleChange}
+              value={selectedNode.Name}
+              onChange={handleChangeName}
+              allowClear
             />
           </div>
 
@@ -50,8 +65,8 @@ const TestItem = () => {
               defaultValue={1}
               min={1}
               controls={false}
-              //   value={nodeName}
-              //   onChange={(evt) => setNodeName(evt.target.value)}
+              value={selectedNode.LoopCount}
+              onChange={handleChangeLoopCount}
             />
           </div>
           {/* 修改背景颜色，暂无该功能 */}

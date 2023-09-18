@@ -11,7 +11,12 @@ export default () => {
   const [isHiddenFormat, setIsHiddenFormat] = useState(true); // true 表示展示在页面上
   const [isOnLine, setIsOnLine] = useState(false); // 判断是否为在线模式，模式false
 
-  const [selectedNode, setSelectedNode] = useState<any>({});
+  // 选中的测试项节点信息,属性值应与 Test-Unit List 保持一致
+  const [selectedNode, setSelectedNode] = useState<any>({
+    Class: '',
+    Name: '',
+    LoopCount: 1,
+  });
   const [openBinMapForm, setOpenBinMapForm] = useState(false);
   const [openSubFlowModal, setOpenSubFlowModal] = useState(false);
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);

@@ -11,17 +11,24 @@ interface InputTooltipProps {
 
 const InputToolTip = (props: InputTooltipProps) => {
   const { selectedNode, setSelectedNode } = useModel('useDrawModel');
-  const { background, className } = props;
+  const { background, className, defaultValue } = props;
 
   const handleChange = (e) => {
-    setSelectedNode(e.target.value);
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        Name: e.target.value,
+      };
+    });
   };
-  const name = selectedNode?.data?.label;
+
   return (
-    <Tooltip title={name?.length > 10 ? name : null}>
+    <Tooltip
+      title={selectedNode?.Name?.length > 10 ? selectedNode?.Name : null}
+    >
       <div style={{ background }} className={className}>
         <Input
-          value={selectedNode?.data?.label || 'test'}
+          value={selectedNode.Name || defaultValue}
           onChange={handleChange}
           bordered={false}
           className={styles['input-label']}
