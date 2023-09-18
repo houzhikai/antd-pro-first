@@ -6,7 +6,7 @@ export default () => {
   const [hardBinData, setHardBinData] = useState(options.HardBin);
   const [softBinData, setSoftBinData] = useState(options.SoftBin);
 
-  const [testUnitData, setTestUnitData] = useState(testUnitDataList);
+  const [testUnitData, setTestUnitData] = useState(testUnitDataList); // 测试项列表
   const [isHiddenSide, setIsHiddenSide] = useState(true); // true 表示展示在页面上
   const [isHiddenFormat, setIsHiddenFormat] = useState(true); // true 表示展示在页面上
   const [isOnLine, setIsOnLine] = useState(false); // 判断是否为在线模式，模式false

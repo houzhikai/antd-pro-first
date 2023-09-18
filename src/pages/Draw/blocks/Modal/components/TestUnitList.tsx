@@ -1,13 +1,13 @@
 import { useModel } from '@umijs/max';
 import { Button, Divider, Input, InputNumber, Popconfirm, Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { TestUnitDataList } from '@/components/dataList/draw/testUnitDataList';
+import { TestUnitDataListProps } from '@/components/dataList/draw/testUnitDataList';
 import styles from '../../index.less';
 
 const TestUnitList = () => {
   const { isOnLine, testUnitData, setTestUnitData } = useModel('useDrawModel');
 
-  const columns: ColumnsType<TestUnitDataList> = [
+  const columns: ColumnsType<TestUnitDataListProps> = [
     {
       title: <div style={{ margin: '5px 0' }}>Class</div>,
       dataIndex: 'Class',

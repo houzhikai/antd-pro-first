@@ -1,10 +1,10 @@
-export interface TestUnitDataList {
+export interface TestUnitDataListProps {
   key: React.Key;
   Class: string;
   Name: string;
   LoopCount: string;
 }
-export const testUnitDataList: TestUnitDataList[] = [
+export const testUnitDataList: TestUnitDataListProps[] = [
   {
     key: 0,
     Class: 'test',
