@@ -14,6 +14,7 @@ export default () => {
             <MyTestItemIcon
               name={item.name}
               src={item.icon}
+              Class={item.name}
               onDragStart={(event) =>
                 !isOnLine ? onDragStart(event, item.type) : null
               }

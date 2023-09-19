@@ -14,6 +14,7 @@ const SubflowList = () => {
             size={item.size}
             src={item.icon}
             name={item.name}
+            Class={item.name}
             onDragStart={(event) =>
               !isOnLine ? onDragStart(event, item.type) : null
             }
