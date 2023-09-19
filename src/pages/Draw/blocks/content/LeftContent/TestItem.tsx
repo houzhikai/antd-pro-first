@@ -6,7 +6,7 @@ import { useModel } from '@umijs/max';
 import styles from './index.less';
 
 const TestItem = () => {
-  const { isOnLine, testUnitData, setSelectedNode } = useModel('useDrawModel');
+  const { isOnLine, testUnitData, setTestUniItem } = useModel('useDrawModel');
   return (
     <div className={styles['test-item']}>
       {testUnitData.map((item) => (
@@ -16,7 +16,9 @@ const TestItem = () => {
             src={rectangle}
             name={item.Name}
             onDragStart={(event) => {
-              setSelectedNode(item); // 拖动时拿到 test-unit item 的信息
+              // setSelectedNode(item); // 拖动时拿到 test-unit item 的信息
+              setTestUniItem(item);
+              console.log(item);
               return !isOnLine ? onDragStart(event, 'custom-middleNode') : null;
             }}
           />

@@ -35,7 +35,8 @@ const MiddleContent = () => {
     variant,
     theme,
   } = useModel('useTestFlowModel');
-  const { selectedNode, setSelectedNode } = useModel('useDrawModel');
+  const { selectedNode, setSelectedNode, testUnitItem, setTestUniItem } =
+    useModel('useDrawModel');
 
   const deleteKey = useKeyPress('Delete');
 
@@ -173,12 +174,14 @@ const MiddleContent = () => {
         id: getId(),
         type,
         position,
-        data: { label: `${type}${id} node` },
+        // data: { label: `${type}${id} node` },
+        data: { label: testUnitItem.Name },
       };
-
+      console.log(type, id, selectedNode, testUnitItem, newNode);
+      setTestUniItem({ key: 999, Class: '', Name: '', LoopCount: 1 }); // 初始化testUnitItem，为了不影响之前拖动的测试项
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance],
+    [reactFlowInstance, testUnitItem],
   );
 
   const defaultEdgeOptions = {

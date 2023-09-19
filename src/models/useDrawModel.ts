@@ -1,4 +1,7 @@
-import { testUnitDataList } from '@/components/dataList/draw/testUnitDataList';
+import {
+  testUnitDataList,
+  TestUnitDataListProps,
+} from '@/components/dataList/draw/testUnitDataList';
 import { options } from '@/pages/Draw/blocks/NavAction/components/defaultData';
 import { useState } from 'react';
 
@@ -7,6 +10,12 @@ export default () => {
   const [softBinData, setSoftBinData] = useState(options.SoftBin);
 
   const [testUnitData, setTestUnitData] = useState(testUnitDataList); //测试项列表
+  const [testUnitItem, setTestUniItem] = useState<TestUnitDataListProps>({
+    key: 999,
+    Class: '',
+    Name: '',
+    LoopCount: 1,
+  }); //测试项列表
   const [isHiddenSide, setIsHiddenSide] = useState(true); // true 表示展示在页面上
   const [isHiddenFormat, setIsHiddenFormat] = useState(true); // true 表示展示在页面上
   const [isOnLine, setIsOnLine] = useState(false); // 判断是否为在线模式，模式false
@@ -75,5 +84,7 @@ export default () => {
     togglePort,
     setTogglePort,
     getId,
+    testUnitItem,
+    setTestUniItem,
   };
 };
