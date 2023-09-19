@@ -24,7 +24,7 @@ const getId = () => `${id++}`;
 const MiddleContent = () => {
   const {
     nodeName,
-    nodeBg,
+    // nodeBg,
     // nodeHidden,
     nodes,
     setNodes,
@@ -35,8 +35,7 @@ const MiddleContent = () => {
     variant,
     theme,
   } = useModel('useTestFlowModel');
-  const { selectedNode, setSelectedNode, testUnitItem, setTestUniItem } =
-    useModel('useDrawModel');
+  const { testUnitItem, setTestUniItem } = useModel('useDrawModel');
 
   const deleteKey = useKeyPress('Delete');
 
@@ -59,7 +58,8 @@ const MiddleContent = () => {
   useEffect(() => {
     setNodes((nds) =>
       nds.map((node) => {
-        if (node.id === selectedNode.id) {
+        // if (node.id === selectedNode.id) {
+        if (node.selected) {
           node.data = {
             ...node.data,
             label: nodeName,
@@ -71,16 +71,16 @@ const MiddleContent = () => {
     );
   }, [nodeName, setNodes]);
 
-  useEffect(() => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if (node.id === selectedNode.id) {
-          node.style = { backgroundColor: nodeBg };
-        }
-        return node;
-      }),
-    );
-  }, [nodeBg]);
+  // useEffect(() => {
+  //   setNodes((nds) =>
+  //     nds.map((node) => {
+  //       if (node.id === selectedNode.id) {
+  //         node.style = { backgroundColor: nodeBg };
+  //       }
+  //       return node;
+  //     }),
+  //   );
+  // }, [nodeBg]);
 
   // useEffect(() => {
   //   setNodes((nds) =>
@@ -145,7 +145,7 @@ const MiddleContent = () => {
           return [...remainingEdges, ...createdEdges];
         }, edges),
       );
-      setSelectedNode({}); // 删除时同时隐藏右边的测试项属性
+      // setSelectedNode({}); // 删除时同时隐藏右边的测试项属性
     },
     [nodes, edges],
   );
@@ -176,8 +176,9 @@ const MiddleContent = () => {
         position,
         // data: { label: `${type}${id} node` },
         data: { label: testUnitItem.Name },
+        LoopCount: testUnitItem.LoopCount,
+        Class: testUnitItem.Class,
       };
-      console.log(type, id, selectedNode, testUnitItem, newNode);
       setTestUniItem({
         key: 999,
         Class: '',
@@ -188,7 +189,7 @@ const MiddleContent = () => {
     },
     [reactFlowInstance, testUnitItem],
   );
-  console.log({ nodes });
+
   const defaultEdgeOptions = {
     // style: { strokeWidth: 3, stroke: 'black' },
     type: 'simplebezier',
@@ -200,15 +201,14 @@ const MiddleContent = () => {
 
   const handleNodeClick = (_, node) => {
     // 选中node节点，为了展示右边的信息
-    console.log(node, selectedNode, testUnitItem);
-    setSelectedNode((obj) => {
-      return {
-        ...obj,
-        Name: node.data.label,
-        Class: node.data.label,
-        LoopCount: testUnitItem.LoopCount,
-      };
-    });
+    // setSelectedNode((obj) => {
+    //   return {
+    //     ...obj,
+    //     Name: node.data.label,
+    //     Class: node.data.label,
+    //     LoopCount: node.loopCount,
+    //   };
+    // });
     if (node.parentNode) {
       setDeleteType(null);
     } else if (node.type === 'group' || node.id.includes('subflow')) {

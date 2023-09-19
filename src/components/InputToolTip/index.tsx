@@ -10,26 +10,24 @@ interface InputTooltipProps {
 }
 
 const InputToolTip = (props: InputTooltipProps) => {
-  const { selectedNode, testUnitItem, setTestUniItem } =
-    useModel('useDrawModel');
+  const { nodes, setNodes } = useModel('useTestFlowModel');
   const { background, className, defaultValue } = props;
 
   const handleChange = (e) => {
-    setTestUniItem((obj) => {
-      return {
-        ...obj,
-        Name: e.target.value,
-      };
+    const newData = nodes.map((item) => {
+      if (item.selected) {
+        return { ...item, data: { label: e.target.value } };
+      }
+      return item;
     });
+    setNodes(newData);
   };
 
   return (
-    <Tooltip
-      title={selectedNode?.Name?.length > 10 ? selectedNode?.Name : null}
-    >
+    <Tooltip title={defaultValue.length > 10 ? defaultValue : null}>
       <div style={{ background }} className={className}>
         <Input
-          value={testUnitItem.Name || defaultValue}
+          value={defaultValue}
           onChange={handleChange}
           bordered={false}
           className={styles['input-label']}
