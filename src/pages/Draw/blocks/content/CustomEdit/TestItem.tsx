@@ -1,10 +1,11 @@
 import { useModel } from '@umijs/max';
-import { Input, InputNumber } from 'antd';
+import { Input, InputNumber, Image, Tooltip } from 'antd';
+import toolTipSvg from '@/icon/draw/tooltip.svg';
+
 import styles from './index.less';
 
 const TestItem = () => {
   const { selectedNode, setSelectedNode } = useModel('useDrawModel');
-  console.log({ selectedNode });
   // 修改测试项class
   const handleChange = (e) => {
     setSelectedNode((obj) => {
@@ -39,12 +40,18 @@ const TestItem = () => {
         <>
           <div className={styles.title}>测试项：</div>
           <div className={styles['flow-item']}>
-            <label className={styles['flow-label']}>Class：</label>
+            <label className={styles['flow-label']}>
+              <span>Class </span>
+              <Tooltip title="此处不可编辑Class" placement="topLeft">
+                <Image src={toolTipSvg} width={14} preview={false} />：
+              </Tooltip>
+            </label>
             <Input
               placeholder="请输入 Class"
               value={selectedNode.Class}
               onChange={handleChange}
               allowClear
+              disabled
             />
           </div>
           <div className={styles['flow-item']}>

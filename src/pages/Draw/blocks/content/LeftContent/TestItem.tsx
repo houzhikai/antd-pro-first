@@ -18,7 +18,7 @@ const TestItem = () => {
             onDragStart={(event) => {
               // setSelectedNode(item); // 拖动时拿到 test-unit item 的信息
               setTestUniItem(item);
-              console.log(item);
+              console.log({ item });
               return !isOnLine ? onDragStart(event, 'custom-middleNode') : null;
             }}
           />

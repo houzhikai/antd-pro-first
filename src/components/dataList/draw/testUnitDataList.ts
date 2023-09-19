@@ -15,7 +15,7 @@ export const testUnitDataList: TestUnitDataListProps[] = [
     key: 1,
     Class: 'test 1',
     Name: 'test 1',
-    LoopCount: 1,
+    LoopCount: 2,
   },
   {
     key: 2,
@@ -27,6 +27,6 @@ export const testUnitDataList: TestUnitDataListProps[] = [
     key: 3,
     Class: 'test 3',
     Name: 'test 3',
-    LoopCount: 1,
+    LoopCount: 4,
   },
 ];

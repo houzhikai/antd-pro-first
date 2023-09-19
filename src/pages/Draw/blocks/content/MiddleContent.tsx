@@ -178,12 +178,17 @@ const MiddleContent = () => {
         data: { label: testUnitItem.Name },
       };
       console.log(type, id, selectedNode, testUnitItem, newNode);
-      setTestUniItem({ key: 999, Class: '', Name: '', LoopCount: 1 }); // 初始化testUnitItem，为了不影响之前拖动的测试项
+      setTestUniItem({
+        key: 999,
+        Class: '',
+        Name: '',
+        LoopCount: testUnitItem.LoopCount,
+      }); // 初始化testUnitItem，为了不影响之前拖动的测试项
       setNodes((nds) => nds.concat(newNode));
     },
     [reactFlowInstance, testUnitItem],
   );
-
+  console.log({ nodes });
   const defaultEdgeOptions = {
     // style: { strokeWidth: 3, stroke: 'black' },
     type: 'simplebezier',
@@ -195,10 +200,13 @@ const MiddleContent = () => {
 
   const handleNodeClick = (_, node) => {
     // 选中node节点，为了展示右边的信息
+    console.log(node, selectedNode, testUnitItem);
     setSelectedNode((obj) => {
       return {
         ...obj,
-        Name: selectedNode.Name || node.data.label,
+        Name: node.data.label,
+        Class: node.data.label,
+        LoopCount: testUnitItem.LoopCount,
       };
     });
     if (node.parentNode) {
