@@ -35,7 +35,8 @@ const MiddleContent = () => {
     variant,
     theme,
   } = useModel('useTestFlowModel');
-  const { testUnitItem, setTestUniItem } = useModel('useDrawModel');
+  const { testUnitItem, setTestUniItem, softBinItem, setSoftBinItem } =
+    useModel('useDrawModel');
 
   const deleteKey = useKeyPress('Delete');
 
@@ -175,7 +176,7 @@ const MiddleContent = () => {
         type,
         position,
         // data: { label: `${type}${id} node` },
-        data: { label: testUnitItem.Name },
+        data: { label: testUnitItem.Name || softBinItem.Name },
         LoopCount: testUnitItem.LoopCount,
         Class: testUnitItem.Class,
       };
@@ -185,9 +186,19 @@ const MiddleContent = () => {
         Name: '',
         LoopCount: testUnitItem.LoopCount,
       }); // 初始化testUnitItem，为了不影响之前拖动的测试项
+      setSoftBinItem({
+        CheckOverflow: true,
+        Color: 'Green',
+        Comment: '',
+        HardBin: 'HB1',
+        MaxCount: 65536,
+        Name: 'FB4',
+        Number: 2001,
+        key: 3,
+      });
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance, testUnitItem],
+    [reactFlowInstance, testUnitItem, softBinItem],
   );
 
   const defaultEdgeOptions = {

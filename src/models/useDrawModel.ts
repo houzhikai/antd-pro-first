@@ -2,12 +2,25 @@ import {
   testUnitDataList,
   TestUnitDataListProps,
 } from '@/components/dataList/draw/testUnitDataList';
-import { options } from '@/pages/Draw/blocks/NavAction/components/defaultData';
+import {
+  options,
+  SoftBinDataSourceType,
+} from '@/pages/Draw/blocks/NavAction/components/defaultData';
 import { useState } from 'react';
 
 export default () => {
   const [hardBinData, setHardBinData] = useState(options.HardBin);
   const [softBinData, setSoftBinData] = useState(options.SoftBin);
+  const [softBinItem, setSoftBinItem] = useState<SoftBinDataSourceType>({
+    CheckOverflow: true,
+    Color: 'Green',
+    Comment: '',
+    HardBin: 'HB1',
+    MaxCount: 65536,
+    Name: 'FB4',
+    Number: 2001,
+    key: 3,
+  }); // softBin 列表
 
   const [testUnitData, setTestUnitData] = useState(testUnitDataList); //测试项列表
   const [testUnitItem, setTestUniItem] = useState<TestUnitDataListProps>({
@@ -86,5 +99,7 @@ export default () => {
     getId,
     testUnitItem,
     setTestUniItem,
+    softBinItem,
+    setSoftBinItem,
   };
 };

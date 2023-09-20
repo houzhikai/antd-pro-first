@@ -7,15 +7,16 @@ import softBin1 from '@/icon/draw/items/softBin.svg';
 import styles from './index.less';
 
 const SoftItemList = () => {
-  const { softBinData, isOnLine } = useModel('useDrawModel');
+  const { softBinData, isOnLine, setSoftBinItem } = useModel('useDrawModel');
   return (
     <div className={styles['test-item']}>
       {softBinData.map((item, index) => (
         <div key={item.key} className={styles['softBin-item']}>
           <div
-            onDragStart={(event) =>
-              !isOnLine ? onDragStart(event, 'custom-output') : null
-            }
+            onDragStart={(event) => {
+              setSoftBinItem(item);
+              return !isOnLine ? onDragStart(event, 'custom-output') : null;
+            }}
           >
             <Image
               src={index === 0 ? softBin1 : softBin}

@@ -7,7 +7,7 @@ export type HardBinDataSourceType = {
   children?: HardBinDataSourceType[];
 };
 export type SoftBinDataSourceType = {
-  key?: number | string;
+  key?: React.Key;
   Name?: string;
   Number?: number;
   HardBin?: string;
@@ -119,7 +119,7 @@ export const options: OptionsProps = {
       Number: 2001,
       HardBin: 'HB1',
       MaxCount: 65536,
-      CheckOverflow: true,
+      CheckOverflow: false,
       Color: 'Red',
       Comment: '',
     },
