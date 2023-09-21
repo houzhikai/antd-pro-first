@@ -7,6 +7,7 @@ import ReactFlow, {
   getConnectedEdges,
   getIncomers,
   getOutgoers,
+  updateEdge,
   useKeyPress,
 } from 'reactflow';
 
@@ -37,6 +38,8 @@ const MiddleContent = () => {
   } = useModel('useTestFlowModel');
   const { testUnitItem, setTestUniItem, softBinItem, setSoftBinItem } =
     useModel('useDrawModel');
+
+  const edgeUpdateSuccessful = useRef(true);
 
   const deleteKey = useKeyPress('Delete');
 
@@ -228,6 +231,22 @@ const MiddleContent = () => {
     }
   };
 
+  const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
+    edgeUpdateSuccessful.current = true;
+    setEdges((els) => updateEdge(oldEdge, newConnection, els));
+  }, []);
+
+  const onEdgeUpdateStart = useCallback(() => {
+    edgeUpdateSuccessful.current = false;
+  }, []);
+
+  const onEdgeUpdateEnd = useCallback((_, edge) => {
+    if (!edgeUpdateSuccessful.current) {
+      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+    }
+    edgeUpdateSuccessful.current = true;
+  }, []);
+
   return (
     <div className={styles.draw}>
       <div className="dndflow">
@@ -246,6 +265,9 @@ const MiddleContent = () => {
               onNodeClick={handleNodeClick}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
+              onEdgeUpdate={onEdgeUpdate}
+              onEdgeUpdateStart={onEdgeUpdateStart}
+              onEdgeUpdateEnd={onEdgeUpdateEnd}
               onNodesDelete={onNodesDelete}
               onConnect={onConnect}
               onInit={setReactFlowInstance}
