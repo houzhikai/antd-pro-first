@@ -236,16 +236,16 @@ const MiddleContent = () => {
     setEdges((els) => updateEdge(oldEdge, newConnection, els));
   }, []);
 
-  const onEdgeUpdateStart = useCallback(() => {
-    edgeUpdateSuccessful.current = false;
-  }, []);
+  // const onEdgeUpdateStart = useCallback(() => {
+  //   edgeUpdateSuccessful.current = false;
+  // }, []);
 
-  const onEdgeUpdateEnd = useCallback((_, edge) => {
-    if (!edgeUpdateSuccessful.current) {
-      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
-    }
-    edgeUpdateSuccessful.current = true;
-  }, []);
+  // const onEdgeUpdateEnd = useCallback((_, edge) => {
+  //   if (!edgeUpdateSuccessful.current) {
+  //     setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+  //   }
+  //   edgeUpdateSuccessful.current = true;
+  // }, []);
 
   return (
     <div className={styles.draw}>
@@ -266,8 +266,8 @@ const MiddleContent = () => {
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onEdgeUpdate={onEdgeUpdate}
-              onEdgeUpdateStart={onEdgeUpdateStart}
-              onEdgeUpdateEnd={onEdgeUpdateEnd}
+              // onEdgeUpdateStart={onEdgeUpdateStart} // 如果放到node上面将被清除连线，暂不需要该功能
+              // onEdgeUpdateEnd={onEdgeUpdateEnd}  // 如果放到node上面将被清除连线，暂不需要该功能
               onNodesDelete={onNodesDelete}
               onConnect={onConnect}
               onInit={setReactFlowInstance}
