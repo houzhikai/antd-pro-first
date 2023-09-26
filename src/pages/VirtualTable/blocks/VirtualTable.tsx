@@ -1,6 +1,6 @@
 import { Table } from 'rsuite';
 import BaseCell from './components/BaseCell';
-import InputCell from './components/InputCell';
+import InputCell from './components/inputCell';
 import { useCallback, useState } from 'react';
 import '../index.less';
 import { data } from '@/components/dataList/TablePage';
