@@ -211,6 +211,7 @@ const MiddleContent = () => {
       type: MarkerType.ArrowClosed,
       color: 'black',
     },
+    label: '0',
   };
 
   const handleNodeClick = (_, node) => {
