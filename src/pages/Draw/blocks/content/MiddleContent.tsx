@@ -212,6 +212,8 @@ const MiddleContent = () => {
       color: 'black',
     },
     label: '0',
+    // labelStyle: { fill: 'red', fillOpacity: 0.7, paddingLeft: 20 }, // label样式
+    labelBgStyle: { fill: 'transparent' }, // label 背景颜色
   };
 
   const handleNodeClick = (_, node) => {
