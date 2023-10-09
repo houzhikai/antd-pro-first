@@ -66,7 +66,7 @@ const MiddleContent = () => {
         if (node.selected) {
           node.data = {
             ...node.data,
-            label: nodeName,
+            label: testUnitItem.Name || softBinItem.Name,
           };
         }
 
