@@ -8,6 +8,7 @@ import styles from './index.less';
 
 const MiddleNode = ({ data }) => {
   const { handleList } = useModel('useTestFlowModel');
+
   return (
     <Popover
       placement="right"
@@ -23,7 +24,7 @@ const MiddleNode = ({ data }) => {
             type={item.type}
             className={styles[item.className]}
             position={Position[item.position]}
-            id={item.id}
+            id={`${data.id}.${item.id}.${index}`}
             //@ts-ignore
             test={index}
             style={item?.style}

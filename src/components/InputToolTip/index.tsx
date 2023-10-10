@@ -16,7 +16,7 @@ const InputToolTip = (props: InputTooltipProps) => {
   const handleChange = (e) => {
     const newData = nodes.map((item) => {
       if (item.selected) {
-        return { ...item, data: { label: e.target.value } };
+        return { ...item, data: { label: e.target.value, id: item.data.id } };
       }
       return item;
     });

@@ -114,7 +114,9 @@ const MiddleContent = () => {
         if (e.sourceHandle || e.targetHandle) {
           return (
             e.sourceHandle === params.sourceHandle &&
-            e.targetHandle === params.targetHandle
+            e.targetHandle === params.targetHandle &&
+            e.source === params.source &&
+            e.target === params.target
           );
         }
         return e.source === params.source && e.target === params.target;
@@ -124,7 +126,7 @@ const MiddleContent = () => {
       }
       setEdges((eds) => addEdge(params, eds));
     },
-    [edges],
+    [edges, testUnitItem.Name, softBinItem.Name],
   );
 
   const onNodesDelete = useCallback(
@@ -179,7 +181,10 @@ const MiddleContent = () => {
         type,
         position,
         // data: { label: `${type}${id} node` },
-        data: { label: testUnitItem.Name || softBinItem.Name },
+        data: {
+          label: testUnitItem.Name || softBinItem.Name,
+          id: testUnitItem.Class,
+        },
         LoopCount: testUnitItem.LoopCount,
         Class: testUnitItem.Class,
       };
