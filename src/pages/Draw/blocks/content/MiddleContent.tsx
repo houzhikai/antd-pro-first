@@ -134,7 +134,13 @@ const MiddleContent = () => {
         }
         return e.source === params.source && e.target === params.target;
       });
-      if (existingEdge) {
+      // 校验 source 不能是同一个测试项的port
+      const hasEdge = edges.filter(
+        (item) =>
+          item.source === params.source &&
+          item.sourceHandle === params.sourceHandle,
+      );
+      if (existingEdge || hasEdge.length > 0) {
         return message.error('Edge already exists!');
       }
       setEdges((eds) => addEdge(params, eds));

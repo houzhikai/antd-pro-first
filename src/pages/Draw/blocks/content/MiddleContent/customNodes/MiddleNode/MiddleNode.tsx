@@ -14,7 +14,7 @@ const MiddleNode = ({ data }) => {
       placement="right"
       title=""
       content={PopoverButtonList}
-      trigger="hover"
+      trigger="click"
     >
       <div>
         <InputToolTip defaultValue={data.label} className={styles.name1} />
