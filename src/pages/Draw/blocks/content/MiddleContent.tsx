@@ -111,6 +111,19 @@ const MiddleContent = () => {
   const onConnect = useCallback(
     (params) => {
       const existingEdge = edges.find((e) => {
+        // 避免多个node同时进入同一个node的targetHandle
+        if (e.target && e.targetHandle) {
+          return (
+            e.target === params.target && e.targetHandle === params.targetHandle
+          );
+        }
+        if (e.sourceHandle) {
+          return e.sourceHandle === params.sourceHandle;
+        }
+        if (e.targetHandle) {
+          return e.targetHandle === params.targetHandle;
+        }
+        // 避免多个相同class的测试项和相同的方向连线不能连接
         if (e.sourceHandle || e.targetHandle) {
           return (
             e.sourceHandle === params.sourceHandle &&
