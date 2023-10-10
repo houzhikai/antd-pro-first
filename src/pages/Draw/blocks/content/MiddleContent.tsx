@@ -258,10 +258,35 @@ const MiddleContent = () => {
     }
   };
 
-  const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
-    edgeUpdateSuccessful.current = true;
-    setEdges((els) => updateEdge(oldEdge, newConnection, els));
-  }, []);
+  const onEdgeUpdate = useCallback(
+    (oldEdge, newConnection) => {
+      edgeUpdateSuccessful.current = true;
+      // 移动edges时的判断
+      const existingEdge = edges.find((item) => {
+        if (item.source) {
+          return (
+            item.source === newConnection.source &&
+            item.sourceHandle === newConnection.sourceHandle
+          );
+        }
+        if (item.target) {
+          return (
+            item.target === newConnection.target &&
+            item.targetHandle === newConnection.targetHandle
+          );
+        }
+        return (
+          item.target === newConnection.target &&
+          item.targetHandle === newConnection.targetHandle
+        );
+      });
+      if (existingEdge) {
+        return message.error('Edge already exists, can not move!');
+      }
+      setEdges((els) => updateEdge(oldEdge, newConnection, els));
+    },
+    [edges, setEdges],
+  );
 
   // const onEdgeUpdateStart = useCallback(() => {
   //   edgeUpdateSuccessful.current = false;
