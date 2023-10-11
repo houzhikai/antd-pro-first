@@ -261,7 +261,7 @@ const MiddleContent = () => {
   const onEdgeUpdate = useCallback(
     (oldEdge, newConnection) => {
       edgeUpdateSuccessful.current = true;
-      // 移动edges时的判断
+      // 移动edges时的判断是否存在已有的port
       const existingEdge = edges.find((item) => {
         if (item.source) {
           return (
