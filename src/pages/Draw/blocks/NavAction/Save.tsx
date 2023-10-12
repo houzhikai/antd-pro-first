@@ -1,6 +1,6 @@
 import { useModel } from '@umijs/max';
-import { Image, Tooltip } from 'antd';
-import save from '@/icon/draw/save.svg';
+import { Button, Tooltip } from 'antd';
+// import save from '@/icon/draw/save.svg';
 
 import styles from '../index.less';
 
@@ -30,13 +30,16 @@ const Save = () => {
   return (
     <Tooltip placement="bottomLeft" title="保存">
       <div className={styles.gap}>
-        <Image
+        {/* <Image
           src={save}
           preview={false}
           width={16}
           className={styles.save}
           onClick={handleSave}
-        />
+        /> */}
+        <Button type="primary" size="small" onClick={handleSave}>
+          保存
+        </Button>
       </div>
     </Tooltip>
   );
