@@ -79,14 +79,15 @@ const LeftContent = () => {
             ghost
           >
             <Panel
-              header={<div className={styles.header}>BinMap</div>}
-              key="SoftBin"
-              extra={softBinIcon}
+              header={<div className={styles.header}>mainFlow</div>}
+              key="MainFlow"
+              extra={mainflowExtra}
             >
-              <SoftItemList />
+              <Sidebar />
             </Panel>
+
             <Panel
-              header={<div className={styles.header}>测试项</div>}
+              header={<div className={styles.header}>测试方法</div>}
               key="test-item"
               extra={testUnit}
             >
@@ -100,11 +101,11 @@ const LeftContent = () => {
               <SubflowList />
             </Panel>
             <Panel
-              header={<div className={styles.header}>mainFlow</div>}
-              key="MainFlow"
-              extra={mainflowExtra}
+              header={<div className={styles.header}>BinMap</div>}
+              key="SoftBin"
+              extra={softBinIcon}
             >
-              <Sidebar />
+              <SoftItemList />
             </Panel>
           </Collapse>
         </div>
