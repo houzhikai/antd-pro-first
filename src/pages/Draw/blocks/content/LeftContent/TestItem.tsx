@@ -17,7 +17,7 @@ const TestItem = () => {
             name={item.Name}
             onDragStart={(event) => {
               setTestUniItem(item);
-              return !isOnLine ? onDragStart(event, 'custom-middleNode') : null;
+              return !isOnLine ? onDragStart(event, 'test-method') : null;
             }}
           />
         </div>

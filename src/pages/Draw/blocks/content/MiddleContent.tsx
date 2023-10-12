@@ -18,6 +18,8 @@ import { nodeTypes } from './MiddleContent/nodeTypes';
 
 import 'reactflow/dist/style.css';
 import styles from '../index.less';
+import FloatingEdge from './MiddleContent/customNodes/TestItem/FloatingEdge';
+import CustomConnectionLine from './MiddleContent/customNodes/TestItem/CustomConnectionLine';
 
 let id = 0;
 const getId = () => `${id++}`;
@@ -110,42 +112,42 @@ const MiddleContent = () => {
 
   const onConnect = useCallback(
     (params) => {
-      const existingEdge = edges.find((e) => {
-        // 避免多个node同时进入同一个node的targetHandle
-        if (e.target && e.targetHandle) {
-          return (
-            e.target === params.target && e.targetHandle === params.targetHandle
-          );
-        }
-        if (e.sourceHandle) {
-          return e.sourceHandle === params.sourceHandle;
-        }
-        if (e.targetHandle) {
-          return e.targetHandle === params.targetHandle;
-        }
-        // 避免多个相同class的测试项和相同的方向连线不能连接
-        if (e.sourceHandle || e.targetHandle) {
-          return (
-            e.sourceHandle === params.sourceHandle &&
-            e.targetHandle === params.targetHandle &&
-            e.source === params.source &&
-            e.target === params.target
-          );
-        }
-        return e.source === params.source && e.target === params.target;
-      });
-      // 校验 source 不能是同一个测试项的port
-      const hasEdge = edges.filter(
-        (item) =>
-          item.source === params.source &&
-          item.sourceHandle === params.sourceHandle,
-      );
-      if (existingEdge || hasEdge.length > 0) {
-        return message.error('Edge already exists!');
-      }
+      // const existingEdge = edges.find((e) => {
+      //   // 避免多个node同时进入同一个node的targetHandle
+      //   if (e.target && e.targetHandle) {
+      //     return (
+      //       e.target === params.target && e.targetHandle === params.targetHandle
+      //     );
+      //   }
+      //   if (e.sourceHandle) {
+      //     return e.sourceHandle === params.sourceHandle;
+      //   }
+      //   if (e.targetHandle) {
+      //     return e.targetHandle === params.targetHandle;
+      //   }
+      //   // 避免多个相同class的测试项和相同的方向连线不能连接
+      //   if (e.sourceHandle || e.targetHandle) {
+      //     return (
+      //       e.sourceHandle === params.sourceHandle &&
+      //       e.targetHandle === params.targetHandle &&
+      //       e.source === params.source &&
+      //       e.target === params.target
+      //     );
+      //   }
+      //   return e.source === params.source && e.target === params.target;
+      // });
+      // // 校验 source 不能是同一个测试项的port
+      // const hasEdge = edges.filter(
+      //   (item) =>
+      //     item.source === params.source &&
+      //     item.sourceHandle === params.sourceHandle,
+      // );
+      // if (existingEdge || hasEdge.length > 0) {
+      //   return message.error('Edge already exists!');
+      // }
       setEdges((eds) => addEdge(params, eds));
     },
-    [edges, testUnitItem.Name, softBinItem.Name],
+    [setEdges],
   );
 
   const onNodesDelete = useCallback(
@@ -207,6 +209,7 @@ const MiddleContent = () => {
         LoopCount: testUnitItem.LoopCount,
         Class: testUnitItem.Class,
       };
+      console.log(newNode);
       setTestUniItem({
         key: 999,
         Class: '',
@@ -229,15 +232,13 @@ const MiddleContent = () => {
   );
 
   const defaultEdgeOptions = {
-    // style: { strokeWidth: 3, stroke: 'black' },
-    type: 'simplebezier',
+    style: { strokeWidth: 1, stroke: 'black' },
+    type: 'floating',
     markerEnd: {
       type: MarkerType.ArrowClosed,
       color: 'black',
     },
-    label: '0',
-    // labelStyle: { fill: 'red', fillOpacity: 0.7, paddingLeft: 20 }, // label样式
-    labelBgStyle: { fill: 'transparent' }, // label 背景颜色
+    label: '1',
   };
 
   const handleNodeClick = (_, node) => {
@@ -262,27 +263,27 @@ const MiddleContent = () => {
     (oldEdge, newConnection) => {
       edgeUpdateSuccessful.current = true;
       // 移动edges时的判断是否存在已有的port
-      const existingEdge = edges.find((item) => {
-        if (item.source) {
-          return (
-            item.source === newConnection.source &&
-            item.sourceHandle === newConnection.sourceHandle
-          );
-        }
-        if (item.target) {
-          return (
-            item.target === newConnection.target &&
-            item.targetHandle === newConnection.targetHandle
-          );
-        }
-        return (
-          item.target === newConnection.target &&
-          item.targetHandle === newConnection.targetHandle
-        );
-      });
-      if (existingEdge) {
-        return message.error('Edge already exists, can not move!');
-      }
+      // const existingEdge = edges.find((item) => {
+      //   if (item.source) {
+      //     return (
+      //       item.source === newConnection.source &&
+      //       item.sourceHandle === newConnection.sourceHandle
+      //     );
+      //   }
+      //   if (item.target) {
+      //     return (
+      //       item.target === newConnection.target &&
+      //       item.targetHandle === newConnection.targetHandle
+      //     );
+      //   }
+      //   return (
+      //     item.target === newConnection.target &&
+      //     item.targetHandle === newConnection.targetHandle
+      //   );
+      // });
+      // if (existingEdge) {
+      //   return message.error('Edge already exists, can not move!');
+      // }
       setEdges((els) => updateEdge(oldEdge, newConnection, els));
     },
     [edges, setEdges],
@@ -298,7 +299,9 @@ const MiddleContent = () => {
   //   }
   //   edgeUpdateSuccessful.current = true;
   // }, []);
-
+  const edgeTypes: any = {
+    floating: FloatingEdge,
+  };
   return (
     <div className={styles.draw}>
       <div className="dndflow">
@@ -314,6 +317,7 @@ const MiddleContent = () => {
               nodes={nodes}
               edges={edges}
               nodeTypes={nodeTypes}
+              edgeTypes={edgeTypes}
               onNodeClick={handleNodeClick}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
@@ -329,6 +333,12 @@ const MiddleContent = () => {
               defaultEdgeOptions={defaultEdgeOptions}
               deleteKeyCode={deleteType} // 删除键快捷方式，首字母大写
               style={{ backgroundColor: theme }} // 流程图的背景颜色
+              connectionLineComponent={CustomConnectionLine}
+              connectionLineStyle={{
+                // 连接两个node时连线样式
+                strokeWidth: 1,
+                stroke: 'black',
+              }}
             >
               {/* 放在右下角的操作栏 */}
               <DagreTree />
