@@ -6,6 +6,7 @@ import styles from './index.less';
 
 const TestItem = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
+
   const selectedNodeItem: any = nodes.filter((item) => item.selected)[0];
 
   // 修改测试项class
@@ -14,15 +15,15 @@ const TestItem = () => {
     .map((item: any) => item?.Class)[0];
 
   // 修改测试项name
-  const handleChangeName = (e) => {
-    const newData = nodes.map((item) => {
-      if (item.selected) {
-        return { ...item, data: { label: e.target.value } };
-      }
-      return item;
-    });
-    setNodes(newData);
-  };
+  // const handleChangeName = (e) => {
+  //   const newData = nodes.map((item) => {
+  //     if (item.selected) {
+  //       return { ...item, data: { label: e.target.value } };
+  //     }
+  //     return item;
+  //   });
+  //   setNodes(newData);
+  // };
 
   // 修改测试项LoopCount
   const handleChangeLoopCount = (value) => {
@@ -55,15 +56,23 @@ const TestItem = () => {
               disabled
             />
           </div>
-          <div className={styles['flow-item']}>
-            <label className={styles['flow-label']}>测试项name：</label>
+          {/* <div className={styles['flow-item']}>
+            <label className={styles['flow-label']}>
+              Name
+              <Tooltip title="确认/移除光标后修改成功" placement="topLeft">
+                <Image src={toolTipSvg} width={14} preview={false} />：
+              </Tooltip>
+            </label>
             <Input
               placeholder="请输入名称"
-              value={selectedNodeItem.data.label}
-              onChange={handleChangeName}
+              // value={selectedNodeItem.data.label}
+              // onChange={handleChangeName}
+              defaultValue={selectedNodeItem.data.label}
+              onPressEnter={handleChangeName}
+              onBlur={handleChangeName}
               allowClear
             />
-          </div>
+          </div> */}
 
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>LoopCount：</label>

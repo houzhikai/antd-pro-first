@@ -27,8 +27,11 @@ const InputToolTip = (props: InputTooltipProps) => {
     <Tooltip title={defaultValue.length > 10 ? defaultValue : null}>
       <div style={{ background }} className={className}>
         <Input
-          value={defaultValue}
-          onChange={handleChange}
+          // value={defaultValue}
+          // onChange={handleChange}
+          defaultValue={defaultValue}
+          onPressEnter={handleChange}
+          onBlur={handleChange}
           bordered={false}
           className={styles['input-label']}
         />
