@@ -1,7 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, {
-  Background,
+  // Background,
   MarkerType,
+  MiniMap,
   ReactFlowProvider,
   addEdge,
   getConnectedEdges,
@@ -13,7 +14,7 @@ import ReactFlow, {
 
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
-import DagreTree from './MiddleContent/DagreTree/DagreTree';
+// import DagreTree from './MiddleContent/DagreTree/DagreTree';
 import { edgeTypes, nodeTypes } from './MiddleContent/nodeTypes';
 import CustomConnectionLine from './MiddleContent/customNodes/TestItem/CustomConnectionLine';
 
@@ -34,7 +35,7 @@ const MiddleContent = () => {
     edges,
     setEdges,
     onEdgesChange,
-    variant,
+    // variant,
     theme,
   } = useModel('useTestFlowModel');
   const { testUnitItem, setTestUniItem, softBinItem, setSoftBinItem } =
@@ -336,11 +337,12 @@ const MiddleContent = () => {
                 stroke: 'black',
               }}
             >
-              {/* 放在右下角的操作栏 */}
-              <DagreTree />
+              {/* 放在右下角的操作栏,暂时隐藏，位置用来放缩略图 */}
+              <MiniMap nodeStrokeWidth={3} zoomable pannable />
+              {/* <DagreTree />
               {variant !== 'none' ? (
                 <Background color="#ccc" variant={variant} />
-              ) : null}
+              ) : null} */}
               {/* <CustomEdit /> 
               <DownloadButton /> */}
             </ReactFlow>
