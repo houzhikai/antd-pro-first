@@ -9,6 +9,7 @@ import OutputNode from './customNodes/OutBin/Output/Output';
 import Subflow from './customNodes/subflow/Subflow';
 import TestItem from './customNodes/TestItem/TestItem';
 import FenBinNode from './customNodes/OutBin/Output/FenBinNode';
+import SubflowNode from './customNodes/subflow/SubflowNode';
 // custom edge
 import FloatingEdge from './customNodes/TestItem/FloatingEdge';
 
@@ -23,6 +24,7 @@ export const nodeTypes: any = {
   custom: CustomNode,
   'test-method': TestItem,
   'fen-bin': FenBinNode,
+  subflow: SubflowNode,
 };
 
 export const edgeTypes: any = {

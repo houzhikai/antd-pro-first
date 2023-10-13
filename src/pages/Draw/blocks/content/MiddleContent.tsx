@@ -209,6 +209,7 @@ const MiddleContent = () => {
         LoopCount: testUnitItem.LoopCount,
         Class: testUnitItem.Class,
       };
+      console.log(newNode);
       setTestUniItem({
         key: 999,
         Class: '',
