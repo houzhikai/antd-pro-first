@@ -15,7 +15,7 @@ const SoftItemList = () => {
           <div
             onDragStart={(event) => {
               setSoftBinItem(item);
-              return !isOnLine ? onDragStart(event, 'custom-output') : null;
+              return !isOnLine ? onDragStart(event, 'fen-bin') : null;
             }}
           >
             <Image
