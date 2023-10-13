@@ -25,8 +25,18 @@ const InputToolTip = (props: InputTooltipProps) => {
 
   return (
     <Tooltip title={defaultValue.length > 10 ? defaultValue : null}>
-      <div style={{ background }} className={className}>
+      <div
+        style={{
+          background,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        className={className}
+      >
+        <span>Name：</span>
         <Input
+          style={{ textAlign: 'start', padding: '5px 0' }}
           // value={defaultValue}
           // onChange={handleChange}
           defaultValue={defaultValue}

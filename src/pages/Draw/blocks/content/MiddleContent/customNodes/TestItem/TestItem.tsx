@@ -1,19 +1,21 @@
 import { Handle, Position, useStore } from 'reactflow';
+import InputToolTip from '@/components/InputToolTip';
 import './index.less';
 
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
 const sourceStyle = { zIndex: 1 };
 
-export default function CustomNode({ id }) {
+export default function CustomNode({ id, data }) {
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
-  const label = isTarget ? 'Drop here' : 'Drag to connect';
+  //   const label = isTarget ? 'Drop here' : 'Drag to connect';
 
   return (
     <div className="customNode">
+      <InputToolTip defaultValue={data.label} className="name1" />
       <div
         className="customNodeBody"
         style={{
@@ -21,8 +23,6 @@ export default function CustomNode({ id }) {
           backgroundColor: isTarget ? '#ffcce3' : '#ccd9f6',
         }}
       >
-        {/* If handles are conditionally rendered and not present initially, you need to update the node internals https://reactflow.dev/docs/api/hooks/use-update-node-internals/ */}
-        {/* In this case we don't need to use useUpdateNodeInternals, since !isConnecting is true at the beginning and all handles are rendered initially. */}
         {!isConnecting && (
           <Handle
             className="customHandle"
@@ -31,13 +31,12 @@ export default function CustomNode({ id }) {
             style={sourceStyle}
           />
         )}
-
         <Handle
           className="customHandle"
           position={Position.Left}
           type="target"
         />
-        {label}
+        我是测试项关键属性
       </div>
     </div>
   );

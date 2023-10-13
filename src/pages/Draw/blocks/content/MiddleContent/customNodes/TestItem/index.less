@@ -7,9 +7,11 @@
 .common(@padding) {
     text-align: center;
     padding: @padding;
-    border-radius: 6px;
+    border-radius: 6px 6px 0 0;
     cursor: grab;
-    border: 1px solid #dadce0;
+    border: 1px solid black;
+    border-bottom: none;
+    width: 150px;
 }
 
 .name {
@@ -17,7 +19,8 @@
 }
 
 .name1 {
-    .common(5px)
+    // .common(5px)
+    .common(0 5px) // 不需要上下padding填充
 }
 
 .customNodeBody {
@@ -26,7 +29,7 @@
     border: 1px solid black;
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 0 0 6px 6px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,23 +37,23 @@
     background: transparent;
 }
 
-.customNode:before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    height: 20px;
-    width: 40px;
-    transform: translate(-50%, 0);
-    background: #d6d5e6;
-    z-index: 1000;
-    line-height: 1;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 9px;
-    border: 2px solid #222138;
-    background: transparent;
-}
+// .customNode:before {
+//     content: '';
+//     position: absolute;
+//     top: -10px;
+//     left: 50%;
+//     height: 20px;
+//     width: 40px;
+//     transform: translate(-50%, 0);
+//     background: #d6d5e6;
+//     z-index: 1000;
+//     line-height: 1;
+//     border-radius: 4px;
+//     color: #fff;
+//     font-size: 9px;
+//     border: 2px solid #222138;
+//     background: transparent;
+// }
 
 div.customHandle {
     width: 100%;
