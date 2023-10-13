@@ -4,6 +4,7 @@ import styles from './index.less';
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
 const sourceStyle = { zIndex: 1 };
+
 const FenBinNode = ({ id, data }) => {
   const connectionNodeId = useStore(connectionNodeIdSelector);
 

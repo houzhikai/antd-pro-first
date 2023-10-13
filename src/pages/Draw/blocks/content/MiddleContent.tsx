@@ -112,6 +112,17 @@ const MiddleContent = () => {
 
   const onConnect = useCallback(
     (params) => {
+      console.log(params, edges);
+      if (params.source.includes('fen-bin')) {
+        return message.error('不可连接！');
+      }
+      // 如果存在相反的edge，则报错
+      const contraryEdge = edges.find((e) => {
+        return e.target === params.source && e.source === params.target;
+      });
+      if (contraryEdge) {
+        return message.error('已存在相反的连线！');
+      }
       // const existingEdge = edges.find((e) => {
       //   // 避免多个node同时进入同一个node的targetHandle
       //   if (e.target && e.targetHandle) {
@@ -147,7 +158,7 @@ const MiddleContent = () => {
       // }
       setEdges((eds) => addEdge(params, eds));
     },
-    [setEdges],
+    [setEdges, edges],
   );
 
   const onNodesDelete = useCallback(
@@ -198,7 +209,7 @@ const MiddleContent = () => {
         y: event.clientY - reactFlowBounds.top,
       });
       const newNode = {
-        id: getId(),
+        id: `${type}-${getId()}`,
         type,
         position,
         // data: { label: `${type}${id} node` },
