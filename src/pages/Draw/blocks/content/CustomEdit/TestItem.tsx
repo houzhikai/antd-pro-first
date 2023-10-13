@@ -38,8 +38,7 @@ const TestItem = () => {
 
   return (
     <div>
-      {selectedNodeItem?.selected &&
-      selectedNodeItem.type === 'custom-middleNode' ? (
+      {selectedNodeItem?.selected && selectedNodeItem.type === 'test-method' ? (
         <>
           <div className={styles.title}>测试项：</div>
           <div className={styles['flow-item']}>

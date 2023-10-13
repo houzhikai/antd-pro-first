@@ -1,7 +1,7 @@
 import { Tooltip, Input } from 'antd';
+import { useModel } from '@umijs/max';
 
 import styles from './index.less';
-import { useModel } from '@umijs/max';
 
 interface InputTooltipProps {
   defaultValue: string;
@@ -22,7 +22,6 @@ const InputToolTip = (props: InputTooltipProps) => {
     });
     setNodes(newData);
   };
-
   return (
     <Tooltip title={defaultValue.length > 10 ? defaultValue : null}>
       <div

@@ -15,6 +15,7 @@ export default function CustomNode({ id, data }) {
 
   return (
     <div className="customNode">
+      {/* <div className="name1">Name: {data.label}</div> */}
       <InputToolTip defaultValue={data.label} className="name1" />
       <div
         className="customNodeBody"
