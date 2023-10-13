@@ -1,3 +1,4 @@
+// custom node
 import CustomNode from './customNodes/CustomNode';
 import CustomInputNode from './customNodes/CustomInput/CustomInputNode';
 import LoopNode from './customNodes/LoopNode/LoopNode';
@@ -7,6 +8,8 @@ import GoodBin from './customNodes/OutBin/GoodBinNode/GoodBin';
 import OutputNode from './customNodes/OutBin/Output/Output';
 import Subflow from './customNodes/subflow/Subflow';
 import TestItem from './customNodes/TestItem/TestItem';
+// custom edge
+import FloatingEdge from './customNodes/TestItem/FloatingEdge';
 
 export const nodeTypes: any = {
   'custom-input': CustomInputNode,
@@ -18,4 +21,8 @@ export const nodeTypes: any = {
   'custom-output': OutputNode,
   custom: CustomNode,
   'test-method': TestItem,
+};
+
+export const edgeTypes: any = {
+  floating: FloatingEdge,
 };

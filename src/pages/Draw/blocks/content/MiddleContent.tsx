@@ -14,12 +14,11 @@ import ReactFlow, {
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
 import DagreTree from './MiddleContent/DagreTree/DagreTree';
-import { nodeTypes } from './MiddleContent/nodeTypes';
+import { edgeTypes, nodeTypes } from './MiddleContent/nodeTypes';
+import CustomConnectionLine from './MiddleContent/customNodes/TestItem/CustomConnectionLine';
 
 import 'reactflow/dist/style.css';
 import styles from '../index.less';
-import FloatingEdge from './MiddleContent/customNodes/TestItem/FloatingEdge';
-import CustomConnectionLine from './MiddleContent/customNodes/TestItem/CustomConnectionLine';
 
 let id = 0;
 const getId = () => `${id++}`;
@@ -299,9 +298,7 @@ const MiddleContent = () => {
   //   }
   //   edgeUpdateSuccessful.current = true;
   // }, []);
-  const edgeTypes: any = {
-    floating: FloatingEdge,
-  };
+
   return (
     <div className={styles.draw}>
       <div className="dndflow">
