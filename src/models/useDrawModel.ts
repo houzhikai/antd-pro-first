@@ -48,6 +48,7 @@ export default () => {
   const [openSubFlowModal, setOpenSubFlowModal] = useState(false);
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
   const [openTestUnitModal, setOpenTestUnitModal] = useState(false);
+  const [showSubflowItemModal, setShowSubflowItemModal] = useState(false);
 
   const [selected, setSelected] = useState(''); // 选中样式
 
@@ -108,5 +109,7 @@ export default () => {
     setSoftBinItem,
     subflowItem,
     setSubflowItem,
+    showSubflowItemModal,
+    setShowSubflowItemModal,
   };
 };

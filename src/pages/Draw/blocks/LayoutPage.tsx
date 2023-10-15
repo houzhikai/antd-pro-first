@@ -7,6 +7,7 @@ import AddMainFlowModal from './Modal/AddMainFlowModal';
 import MiddleContent from './content/MiddleContent';
 import RightContent from './content/RightContent';
 import SubflowModal from './Modal/SubFlowModal';
+import ShowSubflowModal from './Modal/ShowSubflowModal';
 import styles from './index.less';
 
 const Layout = () => {
@@ -24,6 +25,7 @@ const Layout = () => {
       <AddMainFlowModal />
       <TestUnit />
       <SubflowModal />
+      <ShowSubflowModal />
     </div>
   );
 };
