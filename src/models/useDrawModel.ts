@@ -29,6 +29,11 @@ export default () => {
     Name: '',
     LoopCount: 1,
   }); //测试项列表
+  const [subflowItem, setSubflowItem] = useState<any>({
+    key: 'sibflow-1',
+    type: 'subflow',
+    name: '',
+  }); // subflow 测试项想属性
   const [isHiddenSide, setIsHiddenSide] = useState(true); // true 表示展示在页面上
   const [isHiddenFormat, setIsHiddenFormat] = useState(true); // true 表示展示在页面上
   const [isOnLine, setIsOnLine] = useState(false); // 判断是否为在线模式，模式false
@@ -101,5 +106,7 @@ export default () => {
     setTestUniItem,
     softBinItem,
     setSoftBinItem,
+    subflowItem,
+    setSubflowItem,
   };
 };

@@ -38,8 +38,14 @@ const MiddleContent = () => {
     // variant,
     theme,
   } = useModel('useTestFlowModel');
-  const { testUnitItem, setTestUniItem, softBinItem, setSoftBinItem } =
-    useModel('useDrawModel');
+  const {
+    testUnitItem,
+    setTestUniItem,
+    softBinItem,
+    setSoftBinItem,
+    subflowItem,
+    setSubflowItem,
+  } = useModel('useDrawModel');
 
   const edgeUpdateSuccessful = useRef(true);
 
@@ -214,13 +220,15 @@ const MiddleContent = () => {
         position,
         // data: { label: `${type}${id} node` },
         data: {
-          label: testUnitItem.Name || softBinItem.Name,
+          label:
+            type === 'subflow'
+              ? subflowItem.name
+              : testUnitItem.Name || softBinItem.Name,
           id: testUnitItem.Class,
         },
         LoopCount: testUnitItem.LoopCount,
         Class: testUnitItem.Class,
       };
-      console.log(newNode);
       setTestUniItem({
         key: 999,
         Class: '',
@@ -237,9 +245,14 @@ const MiddleContent = () => {
         Number: 2001,
         key: 3,
       });
+      setSubflowItem({
+        key: 'sibflow-1',
+        type: 'subflow',
+        name: '',
+      });
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance, testUnitItem, softBinItem],
+    [reactFlowInstance, testUnitItem, softBinItem, subflowItem],
   );
 
   const defaultEdgeOptions = {

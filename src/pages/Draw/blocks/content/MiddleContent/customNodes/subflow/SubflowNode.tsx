@@ -13,7 +13,6 @@ const SubflowNode = ({ id, data }) => {
   const isTarget = connectionNodeId && connectionNodeId !== id;
   //   const label = isTarget ? 'Drop here' : 'Drag to connect';
 
-  console.log(data);
   return (
     <div className={styles.wrapper}>
       {/* <div className="name1">Name: {data.label}</div> */}
@@ -22,7 +21,7 @@ const SubflowNode = ({ id, data }) => {
         className={styles.customNodeBody}
         style={{
           borderStyle: isTarget ? 'dashed' : 'solid',
-          backgroundColor: isTarget ? '#ffcce3' : '#ccd9f6',
+          backgroundColor: isTarget ? '#ffcce3' : '#bfa',
         }}
       >
         {!isConnecting && (
@@ -38,7 +37,7 @@ const SubflowNode = ({ id, data }) => {
           position={Position.Left}
           type="target"
         />
-        我是测试项关键属性
+        我是subflow关键属性
       </div>
     </div>
   );
