@@ -13,10 +13,10 @@ export const mainFlowIconList = [
   //   { icon: filletCorner, type: 'custom-input', size: 54 },
   //   { icon: ellipse, type: 'default' },
   //   { icon: round, type: 'output' },
-  { icon: subflowIcon, type: 'custom-subflow', name: 'subflow 2' },
-  { icon: subflowIcon1, type: 'custom-subflow', name: 'subflow 3' },
-  { icon: subflowIcon2, type: 'custom-subflow', name: 'subflow 4' },
-  { icon: subflowIcon3, type: 'custom-subflow', name: 'subflow 5' },
+  { icon: subflowIcon, type: 'subflow', name: 'subflow 2' },
+  { icon: subflowIcon1, type: 'subflow', name: 'subflow 3' },
+  { icon: subflowIcon2, type: 'subflow', name: 'subflow 4' },
+  { icon: subflowIcon3, type: 'subflow', name: 'subflow 5' },
 ];
 // 添加加号的mainflow模板
 export const mainFlowItemList = [

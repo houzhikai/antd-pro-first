@@ -15,5 +15,5 @@ export const subflowIconList = [
   { icon: subflowIcon, type: 'subflow', size: 32, name: 'subflow 2' },
   { icon: subflowIcon1, type: 'subflow', name: 'subflow 3' },
   { icon: subflowIcon2, type: 'subflow', name: 'subflow 4' },
-  { icon: subflowIcon3, type: 'subflow', name: 'subflow 4' },
+  { icon: subflowIcon3, type: 'subflow', name: 'subflow 5' },
 ];

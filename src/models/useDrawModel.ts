@@ -6,6 +6,7 @@ import {
   options,
   SoftBinDataSourceType,
 } from '@/pages/Draw/blocks/NavAction/components/defaultData';
+import { subflowIconList } from '@/pages/Draw/blocks/content/LeftContent/components/subflowIconList';
 import { useState } from 'react';
 
 export default () => {
@@ -22,6 +23,7 @@ export default () => {
     key: 3,
   }); // softBin 列表
 
+  const [subflowList, setSubflowList] = useState(subflowIconList); //测试项列表
   const [testUnitData, setTestUnitData] = useState(testUnitDataList); //测试项列表
   const [testUnitItem, setTestUniItem] = useState<TestUnitDataListProps>({
     key: 999,
@@ -114,5 +116,7 @@ export default () => {
     setShowSubflowItemModal,
     addTestItemModal,
     setAddTestItemModal,
+    subflowList,
+    setSubflowList,
   };
 };

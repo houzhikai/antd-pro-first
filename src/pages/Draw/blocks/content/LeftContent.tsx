@@ -79,27 +79,27 @@ const LeftContent = () => {
             ghost
           >
             <Panel
-              header={<div className={styles.header}>mainFlow</div>}
+              header={<div className={styles.header}>MainFlow</div>}
               key="MainFlow"
               extra={mainflowExtra}
             >
               <Sidebar />
             </Panel>
-
             <Panel
-              header={<div className={styles.header}>测试方法</div>}
-              key="test-item"
-              extra={testUnit}
-            >
-              <TestItem />
-            </Panel>
-            <Panel
-              header={<div className={styles.header}>subflow</div>}
+              header={<div className={styles.header}>Subflow</div>}
               key="Subflow"
               extra={subflowExtra}
             >
               <SubflowList />
             </Panel>
+            <Panel
+              header={<div className={styles.header}>Test Unit</div>}
+              key="test-item"
+              extra={testUnit}
+            >
+              <TestItem />
+            </Panel>
+
             <Panel
               header={<div className={styles.header}>BinMap</div>}
               key="SoftBin"

@@ -13,7 +13,8 @@ export default () => {
           <div key={index} className={styles.item}>
             <MyTestItemIcon
               name={item.name}
-              src={item.icon}
+              color="#fff0f6"
+              type={item.type}
               Class={item.name}
               onDragStart={(event) =>
                 !isOnLine ? onDragStart(event, item.type) : null
