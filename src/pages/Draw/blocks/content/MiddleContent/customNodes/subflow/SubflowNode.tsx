@@ -14,7 +14,7 @@ const SubflowNode = ({ id, data }) => {
   //   const label = isTarget ? 'Drop here' : 'Drag to connect';
 
   return (
-    <div className={styles.wrapper}>
+    <div className="customNode">
       {/* <div className="name1">Name: {data.label}</div> */}
       <InputToolTip defaultValue={data.label} className="name1" />
       <div
