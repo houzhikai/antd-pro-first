@@ -263,7 +263,7 @@ const MiddleContent = () => {
       });
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance, testUnitItem, softBinItem, subflowItem],
+    [reactFlowInstance, testUnitItem, softBinItem, subflowItem, setTestUniItem],
   );
 
   const defaultEdgeOptions = {

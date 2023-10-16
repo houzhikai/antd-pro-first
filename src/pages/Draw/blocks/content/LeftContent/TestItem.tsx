@@ -6,9 +6,30 @@ import { useModel } from '@umijs/max';
 import styles from './index.less';
 
 const TestItem = () => {
-  const { isOnLine, testUnitData, setTestUniItem } = useModel('useDrawModel');
+  const { isOnLine, testUnitData, setTestUniItem, setAddTestItemModal } =
+    useModel('useDrawModel');
+  console.log({ testUnitData });
   return (
     <div className={styles['test-item']}>
+      {/* BaseTestItem */}
+      <div>
+        <MyTestItemIcon
+          Class="BaseTestItem"
+          src={rectangle}
+          name="BaseTestItem"
+          onDragStart={(event) => {
+            setAddTestItemModal(true);
+            setTestUniItem({
+              Class: 'BaseTestItem',
+              LoopCount: 1,
+              Name: 'BaseTestItem',
+              key: 0,
+            });
+            return !isOnLine ? onDragStart(event, 'test-method') : null;
+          }}
+        />
+      </div>
+
       {testUnitData.map((item) => (
         <div key={item.key} style={{ margin: '0 5px' }}>
           <MyTestItemIcon
