@@ -130,6 +130,13 @@ const MiddleContent = () => {
       if (contraryEdge) {
         return message.error('已存在相反的连线！');
       }
+      // edge 存在判断
+      const existingEdge = edges.find((edge) => {
+        return edge.source === params.source && edge.target === params.target;
+      });
+      if (existingEdge) {
+        return message.error('连线已存在！');
+      }
       // const existingEdge = edges.find((e) => {
       //   // 避免多个node同时进入同一个node的targetHandle
       //   if (e.target && e.targetHandle) {
