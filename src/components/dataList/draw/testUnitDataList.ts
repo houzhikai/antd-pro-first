@@ -7,26 +7,26 @@ export interface TestUnitDataListProps {
 export const testUnitDataList: TestUnitDataListProps[] = [
   {
     key: 0,
-    Class: 'test 0',
-    Name: 'test 0',
+    Class: 'Leakage',
+    Name: 'Leakage',
     LoopCount: 1,
   },
   {
     key: 1,
-    Class: 'test 1',
-    Name: 'test 1',
+    Class: 'LoadAllCfgRegFromFile',
+    Name: 'LoadAllCfgRegFromFile',
     LoopCount: 2,
   },
   {
     key: 2,
-    Class: 'test 2',
-    Name: 'test 2',
+    Class: 'MeasActiveCurrent',
+    Name: 'MeasActiveCurrent',
     LoopCount: 3,
   },
   {
     key: 3,
-    Class: 'test 3',
-    Name: 'test 3',
+    Class: 'MeasDeepModeCurrent',
+    Name: 'MeasDeepModeCurrent',
     LoopCount: 4,
   },
 ];

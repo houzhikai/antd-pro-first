@@ -1,4 +1,5 @@
-import { Image } from 'antd';
+import { Image, Tooltip } from 'antd';
+import styles from '../index.less';
 
 interface MyTestItemIconProps {
   src: string;
@@ -19,7 +20,11 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
         preview={false}
         onDragStart={(event) => onDragStart(event, 'input')}
       />
-      <div style={{ marginTop: 5 }}>{Class}</div>
+      <Tooltip title={Class.length > 5 ? Class : null}>
+        <div className={styles.classToolTip} style={{ marginTop: 5 }}>
+          {Class}
+        </div>
+      </Tooltip>
     </div>
   );
 };
