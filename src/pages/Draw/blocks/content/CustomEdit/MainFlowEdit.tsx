@@ -1,7 +1,9 @@
 import { Input, InputNumber, Switch } from 'antd';
 import styles from './index.less';
+import { useModel } from '@umijs/max';
 
 const MainFlowEdit = () => {
+  const { startNodeName } = useModel('useTestFlowModel');
   return (
     <div>
       <div className={styles.title}>MainFlow：</div>
@@ -33,7 +35,7 @@ const MainFlowEdit = () => {
 
       <div className={styles['flow-item']}>
         <label className={styles['flow-label']}>开始节点：</label>
-        <Input placeholder="暂无开始节点" defaultValue="" />
+        <Input disabled placeholder="暂无开始节点" value={startNodeName} />
       </div>
       <div className={styles['flow-item']}>
         <label className={styles['flow-label']}>结束节点：</label>

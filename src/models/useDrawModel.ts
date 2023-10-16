@@ -30,7 +30,7 @@ export default () => {
     LoopCount: 1,
   }); //测试项列表
   const [subflowItem, setSubflowItem] = useState<any>({
-    key: 'sibflow-1',
+    key: 'subflow-1',
     type: 'subflow',
     name: '',
   }); // subflow 测试项想属性

@@ -222,8 +222,8 @@ const MiddleContent = () => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
-      const newNode = {
-        id: `${type}-${getId()}`,
+      const newNode: any = {
+        id: type === 'fen-bin' ? softBinItem.Name : `${type}-${getId()}`,
         type,
         position,
         // data: { label: `${type}${id} node` },
@@ -254,7 +254,7 @@ const MiddleContent = () => {
         key: 3,
       });
       setSubflowItem({
-        key: 'sibflow-1',
+        key: 'subflow-1',
         type: 'subflow',
         name: '',
       });

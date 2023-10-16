@@ -72,6 +72,16 @@ export default () => {
   };
 
   const mergeArrList = mergeArr(newArr);
+
+  // 查看开始节点
+  const nodesIdList = nodes.map((item) => item.id);
+  const edgesTargetList = edges.map((item) => item.target);
+  // 找到没有target的node，暂认为是开始节点
+  const filterStartNodeItem = nodesIdList.filter(
+    (item) => !edgesTargetList.includes(item),
+  )[0];
+  const startNode = nodes.filter((item) => item.id === filterStartNodeItem);
+  const startNodeName = startNode.map((item) => item.data.label)[0];
   return {
     nodeName,
     setNodeName,
@@ -99,5 +109,6 @@ export default () => {
     setBinMap,
     handleList,
     setHandleList,
+    startNodeName,
   };
 };

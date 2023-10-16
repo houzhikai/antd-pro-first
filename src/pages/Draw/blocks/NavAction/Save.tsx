@@ -5,7 +5,7 @@ import { Button, Tooltip } from 'antd';
 import styles from '../index.less';
 
 const Save = () => {
-  const { title, mergeArrList, nodes } = useModel('useTestFlowModel');
+  const { title, mergeArrList, nodes, edges } = useModel('useTestFlowModel');
 
   const handleSave = () => {
     // ` `换行也可以使console表示换行
@@ -23,7 +23,7 @@ const Save = () => {
     );
 
     const outputTestFlowBuilder = startNote.concat(outputTestFlowList).join('');
-    console.log('mergeArrList=======', mergeArrList, nodes);
+    console.log('mergeArrList=======', mergeArrList, nodes, edges);
     console.log('outputTestFlowBuilder=======', outputTestFlowBuilder);
   };
 
