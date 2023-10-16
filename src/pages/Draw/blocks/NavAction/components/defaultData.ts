@@ -105,7 +105,7 @@ export const options: OptionsProps = {
     },
     {
       key: 2,
-      Name: 'FB3',
+      Name: 'PB3',
       Number: 2001,
       HardBin: 'HB1',
       MaxCount: 65536,
@@ -115,7 +115,7 @@ export const options: OptionsProps = {
     },
     {
       key: 3,
-      Name: 'FB4',
+      Name: 'PB4',
       Number: 2001,
       HardBin: 'HB1',
       MaxCount: 65536,

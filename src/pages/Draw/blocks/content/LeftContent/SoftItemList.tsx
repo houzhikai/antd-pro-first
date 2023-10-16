@@ -10,7 +10,7 @@ const SoftItemList = () => {
   const { softBinData, isOnLine, setSoftBinItem } = useModel('useDrawModel');
   return (
     <div className={styles['test-item']}>
-      {softBinData.map((item, index) => (
+      {softBinData.map((item) => (
         <div key={item.key} className={styles['softBin-item']}>
           <div
             onDragStart={(event) => {
@@ -19,7 +19,7 @@ const SoftItemList = () => {
             }}
           >
             <Image
-              src={index === 0 ? softBin1 : softBin}
+              src={item.Name?.includes('PB') ? softBin1 : softBin}
               width={24}
               preview={false}
               // style={{

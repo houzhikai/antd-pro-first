@@ -223,7 +223,10 @@ const MiddleContent = () => {
         y: event.clientY - reactFlowBounds.top,
       });
       const newNode: any = {
-        id: type === 'fen-bin' ? softBinItem.Name : `${type}-${getId()}`,
+        id:
+          type === 'fen-bin'
+            ? `${type}-${softBinItem.Name}`
+            : `${type}-${getId()}`,
         type,
         position,
         // data: { label: `${type}${id} node` },
