@@ -1,5 +1,10 @@
 import { useCallback } from 'react';
-import { useStore, getStraightPath, EdgeLabelRenderer } from 'reactflow';
+import {
+  useStore,
+  getStraightPath,
+  EdgeLabelRenderer,
+  BaseEdge,
+} from 'reactflow';
 
 import { getEdgeParams } from './utils';
 
@@ -26,13 +31,14 @@ function FloatingEdge({ id, source, target, markerEnd, style, label }) {
 
   return (
     <>
-      <path
+      {/* <path
         id={id}
         className="react-flow__edge-path"
         d={edgePath}
         markerEnd={markerEnd}
         style={style}
-      />
+      /> */}
+      <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} style={style} />
       <EdgeLabelRenderer>
         {label && (
           <div

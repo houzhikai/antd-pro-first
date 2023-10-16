@@ -45,7 +45,7 @@ const MiddleContent = () => {
     setSoftBinItem,
     subflowItem,
     setSubflowItem,
-    setShowSubflowItemModal
+    setShowSubflowItemModal,
   } = useModel('useDrawModel');
 
   const edgeUpdateSuccessful = useRef(true);
@@ -317,7 +317,7 @@ const MiddleContent = () => {
   const handleDoubleClick = (e, node) => {
     if (node.type === 'subflow') {
       console.log(e, node);
-       setShowSubflowItemModal(true)
+      setShowSubflowItemModal(true);
     }
   };
 
