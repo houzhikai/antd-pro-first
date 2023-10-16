@@ -1,12 +1,14 @@
 import { Handle, Position, useStore } from 'reactflow';
 import InputToolTip from '@/components/InputToolTip';
 import './index.less';
+import { useModel } from '@umijs/max';
 
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
 const sourceStyle = { zIndex: 1 };
 
 export default function CustomNode({ id, data }) {
+  const { startNodeName } = useModel('useTestFlowModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
@@ -14,7 +16,7 @@ export default function CustomNode({ id, data }) {
   //   const label = isTarget ? 'Drop here' : 'Drag to connect';
 
   return (
-    <div className="customNode">
+    <div className={startNodeName === data.label ? 'customNode' : ''}>
       {/* <div className="name1">Name: {data.label}</div> */}
       <InputToolTip defaultValue={data.label} className="name1" />
       <div
