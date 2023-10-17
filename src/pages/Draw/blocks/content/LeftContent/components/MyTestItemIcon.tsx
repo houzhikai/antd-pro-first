@@ -69,6 +69,11 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
           cancelText="No"
         >
           <Tag
+            style={
+              activeTestOrFlowItem === Class
+                ? { border: '3px solid #f60' }
+                : undefined
+            }
             className={styles.classToolTip}
             // eslint-disable-next-line react/jsx-no-undef
             icon={activeTestOrFlowItem === Class ? <CheckOutlined /> : null}
