@@ -45,7 +45,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
     setOpen(false);
   };
   const handleClick = (item, index) => {
-    setActiveTestOrFlowItem(item.name);
+    setActiveTestOrFlowItem(item?.name);
     if (index === 0) {
       setNodes(SubflowNode1);
       setEdges(SubflowEdge1);
