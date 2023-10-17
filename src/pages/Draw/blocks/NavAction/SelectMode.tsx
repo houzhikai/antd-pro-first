@@ -7,10 +7,10 @@ const SelectMode = () => {
     setIsOnLine(check);
   };
   return (
-    <Tooltip placement="bottomLeft" title="调试按钮">
+    <Tooltip placement="bottomLeft" title="Debug button">
       <Switch
-        checkedChildren="在线"
-        unCheckedChildren="离线"
+        checkedChildren="Online"
+        unCheckedChildren="Offline"
         defaultChecked={isOnLine}
         onChange={handleChange}
       />

@@ -8,7 +8,7 @@ const MainFlowEdit = () => {
     <div>
       <div className={styles.title}>MainFlow：</div>
       <div className={styles['flow-item']}>
-        <label className={styles['flow-label']}>测试流name：</label>
+        <label className={styles['flow-label']}>Name：</label>
         <Input placeholder="请输入名称" defaultValue="test1" />
       </div>
 
@@ -34,12 +34,16 @@ const MainFlowEdit = () => {
       </div>
 
       <div className={styles['flow-item']}>
-        <label className={styles['flow-label']}>开始节点：</label>
-        <Input disabled placeholder="暂无开始节点" value={startNodeName} />
+        <label className={styles['flow-label']}>Start node：</label>
+        <Input
+          disabled
+          placeholder="There is no start node"
+          value={startNodeName}
+        />
       </div>
       <div className={styles['flow-item']}>
-        <label className={styles['flow-label']}>结束节点：</label>
-        <Input placeholder="暂无结束节点" defaultValue="" />
+        <label className={styles['flow-label']}>End node：</label>
+        <Input placeholder="There is no end node" defaultValue="" />
       </div>
     </div>
   );

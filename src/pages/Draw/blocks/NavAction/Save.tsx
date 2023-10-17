@@ -28,7 +28,7 @@ const Save = () => {
   };
 
   return (
-    <Tooltip placement="bottomLeft" title="保存">
+    <Tooltip placement="bottomLeft" title="Save">
       <div className={styles.gap}>
         {/* <Image
           src={save}
@@ -38,7 +38,7 @@ const Save = () => {
           onClick={handleSave}
         /> */}
         <Button type="primary" size="small" onClick={handleSave}>
-          保存
+          Save
         </Button>
       </div>
     </Tooltip>

@@ -7,7 +7,6 @@ import styles from './index.less';
 const TestItem = () => {
   const { isOnLine, testUnitData, setTestUniItem, setAddTestItemModal } =
     useModel('useDrawModel');
-  console.log({ testUnitData });
   const newTestUnitDataList: any = [
     { key: 999999, Class: 'BaseTestItem', LoopCount: 1, Name: 'BaseTestItem' },
     // @ts-expect-error
