@@ -74,7 +74,7 @@ const LeftContent = () => {
       {isHiddenSide ? (
         <div className={styles.left}>
           <Collapse
-            defaultActiveKey={['SoftBin', 'test-item']}
+            defaultActiveKey={['SoftBin', 'test-item', 'Subflow']}
             size="small"
             ghost
           >

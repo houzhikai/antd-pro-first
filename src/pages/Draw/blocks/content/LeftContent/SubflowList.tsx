@@ -5,6 +5,7 @@ import styles from './index.less';
 
 const SubflowList = () => {
   const { isOnLine, setSubflowItem, subflowList } = useModel('useDrawModel');
+
   return (
     <div className={styles['test-item']}>
       {subflowList.map((item, index) => (
@@ -14,6 +15,7 @@ const SubflowList = () => {
             name={item.name}
             color="#87d068"
             index={index}
+            item={item}
             type="subflow"
             Class={item.name}
             onDragStart={(event) => {

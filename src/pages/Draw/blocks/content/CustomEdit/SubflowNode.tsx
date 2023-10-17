@@ -1,6 +1,6 @@
 import { useModel } from '@umijs/max';
 import styles from './index.less';
-import { Input, InputNumber, Select } from 'antd';
+import { Input, InputNumber } from 'antd';
 import { useEffect, useState } from 'react';
 
 const SubflowNode = () => {
@@ -44,7 +44,6 @@ const SubflowNode = () => {
       }),
     );
   };
-  console.log({ selectedNodeItem, selectedNode });
   return (
     <div>
       {selectedNodeItem?.selected && selectedNodeItem.type === 'subflow' ? (
@@ -73,10 +72,10 @@ const SubflowNode = () => {
             />
           </div>
 
-          <div className={styles['flow-item']}>
+          {/* <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>TestNumber：</label>
             <Select style={{ width: '100%' }} />
-          </div>
+          </div> */}
 
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>LoopCount：</label>

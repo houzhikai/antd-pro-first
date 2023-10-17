@@ -52,6 +52,7 @@ export default () => {
   const [openTestUnitModal, setOpenTestUnitModal] = useState(false);
   const [showSubflowItemModal, setShowSubflowItemModal] = useState(false);
   const [addTestItemModal, setAddTestItemModal] = useState(false); // 拖动基础测试项模板时打开弹窗
+  const [activeTestOrFlowItem, setActiveTestOrFlowItem] = useState('');
 
   const [selected, setSelected] = useState(''); // 选中样式
 
@@ -122,5 +123,7 @@ export default () => {
     setSubflowList,
     isEdit,
     setIsEdit,
+    activeTestOrFlowItem,
+    setActiveTestOrFlowItem,
   };
 };
