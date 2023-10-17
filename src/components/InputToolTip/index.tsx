@@ -7,13 +7,14 @@ interface InputTooltipProps {
   defaultValue: string;
   background?: string;
   className: string;
+  setIsEdit?: any;
 }
 
 const InputToolTip = (props: InputTooltipProps) => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
-  const { background, className, defaultValue } = props;
+  const { background, className, defaultValue, setIsEdit } = props;
 
-  const handleChange = (e) => {
+  const handleEnter = (e) => {
     const newData = nodes.map((item) => {
       if (item.selected) {
         return { ...item, data: { label: e.target.value, id: item.data.id } };
@@ -21,6 +22,7 @@ const InputToolTip = (props: InputTooltipProps) => {
       return item;
     });
     setNodes(newData);
+    setIsEdit(false);
   };
   return (
     <Tooltip title={defaultValue.length > 10 ? defaultValue : null}>
@@ -33,14 +35,13 @@ const InputToolTip = (props: InputTooltipProps) => {
         }}
         className={className}
       >
-        <span>Name：</span>
         <Input
-          style={{ textAlign: 'start', padding: '5px 0' }}
+          style={{ textAlign: 'start' }}
           // value={defaultValue}
           // onChange={handleChange}
           defaultValue={defaultValue}
-          onPressEnter={handleChange}
-          onBlur={handleChange}
+          onPressEnter={handleEnter}
+          onBlur={handleEnter}
           bordered={false}
           className={styles['input-label']}
         />

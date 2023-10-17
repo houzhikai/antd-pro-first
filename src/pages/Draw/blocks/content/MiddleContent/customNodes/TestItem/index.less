@@ -16,12 +16,12 @@
 }
 
 .name {
-    .common(10px 20px)
+    .common(0)
 }
 
 .name1 {
     // .common(5px)
-    .common(0 5px) // 不需要上下padding填充
+    .common(5px) // 不需要上下padding填充
 }
 
 .customNodeBody {
@@ -38,23 +38,23 @@
     background: transparent;
 }
 
-.customNode:before {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: -5px;
-    height: 0;
-    width: 0;
-    transform: translate(-50%, 0);
-    background: #d6d5e6;
-    z-index: 1000;
-    color: #fff;
-    font-size: 9px;
-    border-top: 10px solid transparent;
-    border-left: 10px solid green;
-    border-bottom: 10px solid transparent;
-    background: transparent;
-}
+// .customNode:before {
+//     content: '';
+//     position: absolute;
+//     top: -10px;
+//     left: 50%;
+//     height: 20px;
+//     width: 40px;
+//     transform: translate(-50%, 0);
+//     background: #d6d5e6;
+//     z-index: 1000;
+//     line-height: 1;
+//     border-radius: 4px;
+//     color: #fff;
+//     font-size: 9px;
+//     border: 2px solid #222138;
+//     background: transparent;
+// }
 
 div.customHandle {
     width: 100%;

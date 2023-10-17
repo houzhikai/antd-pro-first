@@ -55,6 +55,8 @@ export default () => {
 
   const [selected, setSelected] = useState(''); // 选中样式
 
+  const [isEdit, setIsEdit] = useState(false); // 测试项/subflow Name是否可点击
+
   const [togglePort, setTogglePort] = useState('Top');
 
   // softBin 中的 HardBin 选择框中的options 列表
@@ -118,5 +120,7 @@ export default () => {
     setAddTestItemModal,
     subflowList,
     setSubflowList,
+    isEdit,
+    setIsEdit,
   };
 };

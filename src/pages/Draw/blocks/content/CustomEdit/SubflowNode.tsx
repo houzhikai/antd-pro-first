@@ -1,11 +1,18 @@
 import { useModel } from '@umijs/max';
 import styles from './index.less';
-import { InputNumber } from 'antd';
+import { Input, InputNumber } from 'antd';
+import { useEffect, useState } from 'react';
 
 const SubflowNode = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
 
   const selectedNodeItem: any = nodes.filter((item) => item.selected)[0];
+  const [selectedNode, setSelectedNode] = useState({
+    Name: selectedNodeItem?.data?.label,
+  });
+  useEffect(() => {
+    setSelectedNode({ Name: selectedNodeItem?.data?.label });
+  }, [selectedNodeItem]);
   const handleChangeLoopCount = (value) => {
     const newData = nodes.map((item) => {
       if (item.selected) {
@@ -15,11 +22,40 @@ const SubflowNode = () => {
     });
     setNodes(newData);
   };
+  const handleChangeName = (e) => {
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        Name: e.target.value,
+      };
+    });
+  };
+  const handleEntry = (e) => {
+    setNodes((node) =>
+      node.map((item) => {
+        if (item.selected) {
+          return { ...item, data: { label: e.target.value } };
+        }
+        return item;
+      }),
+    );
+  };
+  console.log({ selectedNodeItem, selectedNode });
   return (
     <div>
       {selectedNodeItem?.selected && selectedNodeItem.type === 'subflow' ? (
         <>
           <div className={styles.title}>Subflow：</div>
+          <div className={styles['flow-item']}>
+            <label className={styles['flow-label']}>Name：</label>
+            <Input
+              style={{ width: '100%' }}
+              placeholder="请输入名称"
+              value={selectedNode.Name}
+              onChange={handleChangeName}
+              onPressEnter={handleEntry}
+            />
+          </div>
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>LoopCount：</label>
             <InputNumber

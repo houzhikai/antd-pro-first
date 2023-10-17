@@ -9,16 +9,28 @@ const sourceStyle = { zIndex: 1 };
 
 const SubflowNode = ({ id, data }) => {
   const { startNodeName } = useModel('useTestFlowModel');
+  const { isEdit, setIsEdit } = useModel('useDrawModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
-
   const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
   //   const label = isTarget ? 'Drop here' : 'Drag to connect';
+  const handleToggle = () => {
+    setIsEdit(true);
+  };
 
   return (
     <div className={startNodeName === data.label ? 'customNode' : ''}>
-      {/* <div className="name1">Name: {data.label}</div> */}
-      <InputToolTip defaultValue={data.label} className="name1" />
+      {isEdit ? (
+        <InputToolTip
+          setIsEdit={setIsEdit}
+          defaultValue={data.label}
+          className={styles.name}
+        />
+      ) : (
+        <div className={styles.name1} onDoubleClick={handleToggle}>
+          {data.label}
+        </div>
+      )}
       <div
         className={styles.customNodeBody}
         style={{

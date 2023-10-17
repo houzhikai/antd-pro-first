@@ -45,7 +45,7 @@ const MiddleContent = () => {
     setSoftBinItem,
     subflowItem,
     setSubflowItem,
-    setShowSubflowItemModal,
+    // setShowSubflowItemModal,
   } = useModel('useDrawModel');
 
   const edgeUpdateSuccessful = useRef(true);
@@ -324,12 +324,12 @@ const MiddleContent = () => {
     [edges, setEdges],
   );
 
-  const handleDoubleClick = (e, node) => {
-    if (node.type === 'subflow') {
-      console.log(e, node);
-      setShowSubflowItemModal(true);
-    }
-  };
+  // const handleDoubleClick = (e, node) => {
+  //   if (node.type === 'subflow') {
+  //     console.log(e, node);
+  //     setShowSubflowItemModal(true);
+  //   }
+  // };
 
   // const onEdgeUpdateStart = useCallback(() => {
   //   edgeUpdateSuccessful.current = false;
@@ -359,7 +359,7 @@ const MiddleContent = () => {
               nodeTypes={nodeTypes}
               edgeTypes={edgeTypes}
               onNodeClick={handleNodeClick}
-              onNodeDoubleClick={handleDoubleClick}
+              // onNodeDoubleClick={handleDoubleClick}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onEdgeUpdate={onEdgeUpdate}

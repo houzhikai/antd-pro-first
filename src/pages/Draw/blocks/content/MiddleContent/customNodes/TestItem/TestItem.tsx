@@ -1,6 +1,6 @@
 import { Handle, Position, useStore } from 'reactflow';
 import InputToolTip from '@/components/InputToolTip';
-import './index.less';
+import styles from './index.less';
 import { useModel } from '@umijs/max';
 
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
@@ -9,18 +9,32 @@ const sourceStyle = { zIndex: 1 };
 
 export default function CustomNode({ id, data }) {
   const { startNodeName } = useModel('useTestFlowModel');
+  const { isEdit, setIsEdit } = useModel('useDrawModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
   //   const label = isTarget ? 'Drop here' : 'Drag to connect';
-
+  const handleToggle = () => {
+    setIsEdit(true);
+  };
   return (
     <div className={startNodeName === data.label ? 'customNode' : ''}>
       {/* <div className="name1">Name: {data.label}</div> */}
-      <InputToolTip defaultValue={data.label} className="name1" />
+      {/* <InputToolTip defaultValue={data.label} className="name1" /> */}
+      {isEdit ? (
+        <InputToolTip
+          setIsEdit={setIsEdit}
+          defaultValue={data.label}
+          className={styles.name}
+        />
+      ) : (
+        <div className={styles.name1} onDoubleClick={handleToggle}>
+          {data.label}
+        </div>
+      )}
       <div
-        className="customNodeBody"
+        className={styles.customNodeBody}
         style={{
           borderStyle: isTarget ? 'dashed' : 'solid',
           backgroundColor: isTarget ? '#ffcce3' : '#ccd9f6',
@@ -28,14 +42,14 @@ export default function CustomNode({ id, data }) {
       >
         {!isConnecting && (
           <Handle
-            className="customHandle"
+            className={styles.customHandle}
             position={Position.Right}
             type="source"
             style={sourceStyle}
           />
         )}
         <Handle
-          className="customHandle"
+          className={styles.customHandle}
           position={Position.Left}
           type="target"
         />
