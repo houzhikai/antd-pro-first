@@ -237,6 +237,7 @@ const MiddleContent = () => {
               : testUnitItem.Name || softBinItem.Name,
           id: testUnitItem.Class,
         },
+        TestNumber: type === 'subflow' ? subflowItem.TestNumber : null,
         LoopCount: testUnitItem.LoopCount,
         Class: testUnitItem.Class,
       };

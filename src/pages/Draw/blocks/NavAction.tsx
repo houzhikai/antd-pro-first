@@ -1,7 +1,7 @@
 import styles from './index.less';
 import BinMapIcon from './NavAction/BinMapIcon';
 // import Nav from './NavAction/Nav';
-import UserVariable from './NavAction/UserVariable';
+// import UserVariable from './NavAction/UserVariable';
 import { Image } from 'antd';
 import Logo from '@/icon/testflowLogo.svg';
 
@@ -27,7 +27,7 @@ const NavAction = () => {
           <div className={styles.title}>TestFlow</div>
           <div style={{ display: 'flex', margin: '0 0 5px' }}>
             <BinMapIcon />
-            <UserVariable />
+            {/* <UserVariable /> */}
           </div>
         </div>
       </div>

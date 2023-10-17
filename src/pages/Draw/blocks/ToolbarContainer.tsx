@@ -1,4 +1,4 @@
-import DefaultArrowStyle from './NavAction/DefaultArrowStyle';
+// import DefaultArrowStyle from './NavAction/DefaultArrowStyle';
 import Save from './NavAction/Save';
 import SelectMode from './NavAction/SelectMode';
 import ViewList from './NavAction/ViewList';
@@ -9,7 +9,7 @@ const ToolbarContainer = () => {
     <div className={styles.toolbar}>
       <div style={{ display: 'flex' }}>
         <ViewList />
-        <DefaultArrowStyle />
+        {/* <DefaultArrowStyle /> */}
       </div>
       {/* 分隔符 */}
       {/* <div className={styles.geSeparator} />
