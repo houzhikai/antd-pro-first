@@ -54,7 +54,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
               setOpen(true);
             }}
           >
-            <span> {Class}</span>
+            <span>{Class}</span>
           </Tag>
         </Popconfirm>
       </div>

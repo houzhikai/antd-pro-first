@@ -1,8 +1,8 @@
 import { useModel } from '@umijs/max';
-import { Image } from 'antd';
+import { Tag } from 'antd';
 import { onDragStart } from './components/onDragStart';
-import softBin from '@/icon/draw/items/ashbin.svg';
-import softBin1 from '@/icon/draw/items/softBin.svg';
+// import softBin from '@/icon/draw/items/ashbin.svg';
+// import softBin1 from '@/icon/draw/items/softBin.svg';
 
 import styles from './index.less';
 
@@ -17,17 +17,11 @@ const SoftItemList = () => {
               setSoftBinItem(item);
               return !isOnLine ? onDragStart(event, 'fen-bin') : null;
             }}
+            draggable
           >
-            <Image
-              src={item.Name?.includes('PB') ? softBin1 : softBin}
-              width={24}
-              preview={false}
-              // style={{
-              //   transform: 'translateX(-200px)',
-              //   filter: `drop-shadow(${item.Color} 200px 0)`,
-              // }}
-            />
-            <div>{item.Name}</div>
+            <Tag className={styles.classToolTip} color={item.Color}>
+              <span>{item.Name}</span>
+            </Tag>
           </div>
         </div>
       ))}
