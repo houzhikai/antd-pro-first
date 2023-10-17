@@ -46,7 +46,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
         >
           <Tag
             className={styles.classToolTip}
-            closeIcon={<CloseCircleOutlined />}
+            closeIcon={<CloseCircleOutlined style={{ color: 'white' }} />}
             closable={type !== 'test-method' || Class !== 'BaseTestItem'}
             color={color}
             onClose={(e) => {
@@ -54,7 +54,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
               setOpen(true);
             }}
           >
-            <span style={{ color: 'black' }}> {Class}</span>
+            <span> {Class}</span>
           </Tag>
         </Popconfirm>
       </div>

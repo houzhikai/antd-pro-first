@@ -13,7 +13,7 @@ export default () => {
           <div key={index} className={styles.item}>
             <MyTestItemIcon
               name={item.name}
-              color="#fff0f6"
+              color="#2db7f5"
               type={item.type}
               Class={item.name}
               onDragStart={(event) =>

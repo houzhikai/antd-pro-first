@@ -12,7 +12,7 @@ const SubflowList = () => {
           <MyTestItemIcon
             size={item.size}
             name={item.name}
-            color="#bbffaa"
+            color="#87d068"
             index={index}
             type="subflow"
             Class={item.name}

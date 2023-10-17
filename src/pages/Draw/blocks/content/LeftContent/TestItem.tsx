@@ -22,7 +22,7 @@ const TestItem = () => {
               Class={item.Class}
               name={item.Name}
               type="test-method"
-              color="#ccd9f6"
+              color="#108ee9"
               onDragStart={(event) => {
                 if (index === 0) {
                   setAddTestItemModal(true);
