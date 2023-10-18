@@ -43,10 +43,9 @@ const TestItem = () => {
     setNodes(newData);
   };
   const options = [
-    { value: '1', label: 'Fen Bin' },
-    { value: '2', label: 'Test Class' },
-    { value: '3', label: 'Subflow' },
-    { value: '4', label: 'MainFLow' },
+    { value: '1', label: 'TestUnit' },
+    { value: '2', label: 'FLow' },
+    { value: '4', label: 'FBin' },
   ];
 
   const variablesColumns = [
