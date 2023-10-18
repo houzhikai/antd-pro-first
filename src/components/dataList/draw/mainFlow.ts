@@ -1,12 +1,14 @@
 import subflowIcon from '@/icon/draw/subflow/stripe-logo-light.svg';
-// import subflowIcon1 from '@/icon/draw/subflow/subflow1.svg';
-// import subflowIcon2 from '@/icon/draw/subflow/flowchart.svg';
-// import subflowIcon3 from '@/icon/draw/subflow/flow chart 2-fill.svg';
-import mainFlowItem1 from '@/icon/draw/subflow/reactflow2.png';
+import mainFlowItem1 from '@/icon/draw/AddFlowPng/mainflow 1.png';
+import mainFlowItem2 from '@/icon/draw/AddFlowPng/mainflow 2.png';
 import {
-  mainFlowNode,
-  mainFlowEdges,
-} from '@/pages/Draw/blocks/CustomFlow/mainFlow';
+  MainflowNode1,
+  MainflowEdge1,
+} from '@/pages/Draw/blocks/Flows/AddFlowTemplate/Mainflow1';
+import {
+  MainflowNode2,
+  MainflowEdge2,
+} from '@/pages/Draw/blocks/Flows/AddFlowTemplate/Mainflow2';
 
 // 左侧的mainflow 模板
 export const mainFlowIconList = [
@@ -25,7 +27,14 @@ export const mainFlowItemList = [
     id: 1,
     name: 'mainflow 1',
     icon: mainFlowItem1,
-    mainFlowNode: mainFlowNode,
-    mainFlowEdges: mainFlowEdges,
+    mainFlowNode: MainflowNode1,
+    mainFlowEdges: MainflowEdge1,
+  },
+  {
+    id: 2,
+    name: 'mainflow 2',
+    icon: mainFlowItem2,
+    mainFlowNode: MainflowNode2,
+    mainFlowEdges: MainflowEdge2,
   },
 ];

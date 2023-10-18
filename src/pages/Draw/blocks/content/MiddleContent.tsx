@@ -17,6 +17,7 @@ import { message } from 'antd';
 // import DagreTree from './MiddleContent/DagreTree/DagreTree';
 import { edgeTypes, nodeTypes } from './MiddleContent/nodeTypes';
 import CustomConnectionLine from './MiddleContent/customNodes/TestItem/CustomConnectionLine';
+// import DownloadButton from '@/pages/TestFlow/blocks/components/CustomNode/DownloadButton';
 
 import 'reactflow/dist/style.css';
 import styles from '../index.less';
@@ -388,8 +389,9 @@ const MiddleContent = () => {
               {variant !== 'none' ? (
                 <Background color="#ccc" variant={variant} />
               ) : null} */}
-              {/* <CustomEdit /> 
-              <DownloadButton /> */}
+              {/* <CustomEdit />  */}
+
+              {/* <DownloadButton /> */}
             </ReactFlow>
           </div>
         </ReactFlowProvider>

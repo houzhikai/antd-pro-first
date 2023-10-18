@@ -44,8 +44,8 @@ const TestItem = () => {
   };
   const options = [
     { value: '1', label: 'TestUnit' },
-    { value: '2', label: 'FLow' },
-    { value: '4', label: 'FBin' },
+    { value: '2', label: 'TestFlow' },
+    { value: '4', label: 'TestBin' },
   ];
 
   const variablesColumns = [
