@@ -64,7 +64,7 @@ const TestItem = () => {
           ) : (
             <DownOutlined style={{ width: 10 }} />
           )}
-          <span> param</span>
+          <span> Param</span>
         </div>
       ),
       render: (text) => {
@@ -83,7 +83,7 @@ const TestItem = () => {
           className={styles.globalVariablesTable}
           onClick={handleVariablesClick}
         >
-          value
+          Value
         </div>
       ),
       render: (text) => {
@@ -103,7 +103,7 @@ const TestItem = () => {
           ) : (
             <DownOutlined style={{ width: 10 }} />
           )}
-          <span> param</span>
+          <span> Param</span>
         </div>
       ),
       render: (text) => {
@@ -127,7 +127,7 @@ const TestItem = () => {
       width: '40%',
       title: (
         <div className={styles.globalVariablesTable} onClick={handlePortsClick}>
-          type
+          Type
         </div>
       ),
       render: (text) => {
@@ -146,7 +146,7 @@ const TestItem = () => {
       dataIndex: 'value',
       title: (
         <div className={styles.globalVariablesTable} onClick={handlePortsClick}>
-          value
+          Value
         </div>
       ),
       render: (text) => {
@@ -186,12 +186,12 @@ const TestItem = () => {
           </div>
 
           <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
-            <label className={styles['flow-label']}>isFlowUnit：</label>
+            <label className={styles['flow-label']}>IsFlowUnit：</label>
             <Switch checkedChildren="true" unCheckedChildren="false" />
           </div>
 
           <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
-            <label className={styles['flow-label']}>isStartUnit：</label>
+            <label className={styles['flow-label']}>IsStartUnit：</label>
             <Switch
               defaultChecked
               checkedChildren="true"

@@ -37,7 +37,7 @@ const MainFlowEdit = () => {
           ) : (
             <DownOutlined style={{ width: 10 }} />
           )}
-          <span> param</span>
+          <span> Param</span>
         </div>
       ),
       render: (text) => {
@@ -53,7 +53,7 @@ const MainFlowEdit = () => {
       width: '50%',
       title: (
         <div className={styles.globalVariablesTable} onClick={handleClick}>
-          value
+          Value
         </div>
       ),
       render: (text) => {
@@ -103,7 +103,7 @@ const MainFlowEdit = () => {
               placeholder="请输入 LoopCount"
               min={1}
               controls={false}
-              value={selectedNodeItem.LoopCount}
+              value={1}
               onChange={handleChangeLoopCount}
             />
           </div>

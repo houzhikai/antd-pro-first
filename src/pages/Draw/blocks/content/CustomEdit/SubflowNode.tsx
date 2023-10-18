@@ -35,7 +35,7 @@ const SubflowNode = () => {
           ) : (
             <DownOutlined style={{ width: 10 }} />
           )}
-          <span> param</span>
+          <span> Param</span>
         </div>
       ),
       render: (text) => {
@@ -51,7 +51,7 @@ const SubflowNode = () => {
       width: '50%',
       title: (
         <div className={styles.globalVariablesTable} onClick={handleClick}>
-          value
+          Value
         </div>
       ),
       render: (text) => {
