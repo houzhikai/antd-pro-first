@@ -1,0 +1,162 @@
+{
+  "testFlows": [
+    {
+      "flowName": "Flow",
+      "isMain": true,
+      "isActive": true,
+      "globalVariables": [
+        { "param": "Vaa", "value": "3" },
+        { "param": "Vhh", "value": "3.5" },
+        { "param": "Load_from_File", "value": "" }
+      ],
+      "units": [
+        {
+          "number": "000",
+          "name": "Continuity",
+          "className": "Test1",
+          "isFlowUnit": false,
+          "targetFlowName": "",
+          "isStartUnit": true,
+          "variables": [
+            { "param": "Vaa", "value": "3" },
+            { "param": "Vhh", "value": "3.5" },
+            { "param": "Load_from_File", "value": "" }
+          ],
+          "ports": [
+            {
+              "param": 0,
+              "type": "4",
+              "value": "FB1"
+            },
+            {
+              "param": 1,
+              "type": "1",
+              "value": "Set_DPS_Vaa"
+            }
+          ]
+        },
+        {
+          "number": "001",
+          "name": "Set_DPS_Vaa",
+          "isFlowUnit": false,
+          "targetFlowName": "",
+          "isStartUnit": false,
+          "variables": [
+            { "param": "Vaa", "value": "3" },
+            { "param": "Vhh", "value": "3.5" },
+            { "param": "Load_from_File", "value": "" }
+          ],
+          "ports": [
+            {
+              "param": 0,
+              "type": "4",
+              "value": "FB1"
+            },
+            {
+              "param": 1,
+              "type": "1",
+              "value": "Set_DPS_Vaa"
+            }
+          ]
+        },
+        {
+          "number": "002",
+          "name": "Set_DPS_Vaa",
+          "className": "Test1",
+          "isFlowUnit": false,
+          "targetFlowName": "",
+          "isStartUnit": false,
+          "variables": [
+            { "param": "Vaa", "value": "3" },
+            { "param": "Vhh", "value": "3.5" },
+            { "param": "Load_from_File", "value": "" }
+          ],
+          "ports": [
+            {
+              "param": 0,
+              "type": "4",
+              "value": "FB1"
+            },
+            {
+              "param": 1,
+              "type": "subflowUnit",
+              "value": "SubFlow1"
+            }
+          ]
+        },
+        {
+          "number": "10000",
+          "name": "SubFlow1",
+          "className": "Test1",
+          "isFlowUnit": true,
+          "targetFlowName": "SubFlow1",
+          "isStartUnit": false,
+          "variables": [
+            { "param": "Vaa", "value": "3" },
+            { "param": "Vhh", "value": "3.5" },
+            { "param": "Load_from_File", "value": "" }
+          ],
+          "ports": [
+            {
+              "param": 0,
+              "type": "4",
+              "value": "FB1"
+            },
+            {
+              "param": 1,
+              "type": "4",
+              "value": "TB1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SubFlow1",
+      "isMain": "false",
+      "isActive": "true",
+      "globalVariables": {},
+      "units": [
+        {
+          "number": "000",
+          "name": "Continuity",
+          "className": "Test1",
+          "isFlowUnit": false,
+          "targetsubflow": "",
+          "isStartUnit": true,
+          "variables": [
+            { "param": "Vaa", "value": "3" },
+            { "param": "Vhh", "value": "3.5" },
+            { "param": "Load_from_File", "value": "" }
+          ],
+          "ports": [
+            {
+              "param": 0,
+              "type": "4",
+              "value": "FB1"
+            },
+            {
+              "param": 1,
+              "type": "1",
+              "value": "Set_DPS_Vaa"
+            }
+          ]
+        },
+        {
+          "number": "001",
+          "name": "Set_DPS_Vaa",
+          "className": "Test1",
+          "isFlowUnit": false,
+          "targetFlowName": "",
+          "isStartUnit": false,
+          "variables": [
+            { "param": "Vaa", "value": "3" },
+            { "param": "Vhh", "value": "3.5" },
+            { "param": "Load_from_File", "value": "" }
+          ],
+          "ports": []
+        }
+      ]
+    }
+  ]
+}

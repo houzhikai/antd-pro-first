@@ -71,7 +71,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
           <Tag
             style={
               activeTestOrFlowItem === Class
-                ? { border: '3px solid #f60' }
+                ? { border: '1px solid #f60' }
                 : undefined
             }
             className={styles.classToolTip}
@@ -79,7 +79,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
             icon={activeTestOrFlowItem === Class ? <CheckOutlined /> : null}
             closeIcon={<CloseCircleOutlined style={{ color: 'white' }} />}
             closable={type !== 'test-method' || Class !== 'BaseTestItem'}
-            color={color}
+            color={activeTestOrFlowItem === Class ? '#87d068' : color}
             onClose={(e) => {
               e.preventDefault();
               setOpen(true);
