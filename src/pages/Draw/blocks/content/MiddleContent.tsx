@@ -225,7 +225,7 @@ const MiddleContent = () => {
       const newNode: any = {
         id:
           type === 'fen-bin'
-            ? `${type}-${softBinItem.Name}`
+            ? `${type}-${softBinItem.Name}-${getId()}`
             : `${type}-${getId()}`,
         type,
         position,
