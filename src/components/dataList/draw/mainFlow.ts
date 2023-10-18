@@ -13,7 +13,7 @@ export const mainFlowIconList = [
   //   { icon: filletCorner, type: 'custom-input', size: 54 },
   //   { icon: ellipse, type: 'default' },
   //   { icon: round, type: 'output' },
-  { icon: subflowIcon, type: 'subflow', name: 'mainflow 1' },
+  { icon: subflowIcon, type: 'mainflow', name: 'mainflow 1' },
   // { icon: subflowIcon, type: 'subflow', name: 'mainflow 2' },
   // { icon: subflowIcon1, type: 'subflow', name: 'mainflow 3' },
   // { icon: subflowIcon2, type: 'subflow', name: 'mainflow 4' },

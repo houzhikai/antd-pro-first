@@ -15,6 +15,8 @@ export default () => {
               name={item.name}
               color="#2db7f5"
               type={item.type}
+              item={item}
+              index={index}
               Class={item.name}
               onDragStart={(event) =>
                 !isOnLine ? onDragStart(event, item.type) : null

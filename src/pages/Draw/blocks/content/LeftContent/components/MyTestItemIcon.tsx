@@ -3,6 +3,10 @@ import styles from '../index.less';
 import { CheckOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { SubflowNode1, SubflowEdge1 } from '@/pages/Draw/blocks/Flows/Subflow1';
 import { SubflowNode2, SubflowEdge2 } from '@/pages/Draw/blocks/Flows/Subflow2';
+import {
+  MainflowNode1,
+  MainflowEdge1,
+} from '@/pages/Draw/blocks/Flows/mainflow1';
 import { useModel } from '@umijs/max';
 import { useState } from 'react';
 
@@ -45,13 +49,24 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
     setOpen(false);
   };
   const handleClick = (item, index) => {
-    setActiveTestOrFlowItem(item?.name);
-    if (index === 0) {
-      setNodes(SubflowNode1);
-      setEdges(SubflowEdge1);
-    } else {
-      setNodes(SubflowNode2);
-      setEdges(SubflowEdge2);
+    console.log({ item });
+    if (item?.type) {
+      if (item.type === 'mainflow') {
+        setActiveTestOrFlowItem(item?.name);
+        if (index === 0) {
+          setNodes(MainflowNode1);
+          setEdges(MainflowEdge1);
+        }
+      } else if (item.type === 'subflow') {
+        setActiveTestOrFlowItem(item?.name);
+        if (index === 0) {
+          setNodes(SubflowNode1);
+          setEdges(SubflowEdge1);
+        } else {
+          setNodes(SubflowNode2);
+          setEdges(SubflowEdge2);
+        }
+      }
     }
   };
   return (

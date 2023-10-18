@@ -9,7 +9,6 @@ const MainFlowEdit = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedNodeItem: any = nodes.filter((item) => item.selected);
-  console.log(selectedNodeItem);
 
   const handleClick = () => {
     setIsOpen((c) => !c);
