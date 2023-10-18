@@ -74,7 +74,7 @@ const LeftContent = () => {
       {isHiddenSide ? (
         <div className={styles.left}>
           <Collapse
-            defaultActiveKey={['SoftBin', 'test-item', 'Subflow']}
+            defaultActiveKey={['SoftBin', 'test-item', 'Subflow', 'MainFlow']}
             size="small"
             ghost
           >
@@ -93,7 +93,7 @@ const LeftContent = () => {
               <SubflowList />
             </Panel>
             <Panel
-              header={<div className={styles.header}>Test Unit</div>}
+              header={<div className={styles.header}>Test Class</div>}
               key="test-item"
               extra={testUnit}
             >

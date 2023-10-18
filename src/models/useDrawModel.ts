@@ -74,7 +74,7 @@ export default () => {
   const [repeatSoftBinNameList, setRepeatSoftBinNameList] = useState([]); // softBin name重复值列表
   let softBinPortId = 0;
   const getId = () => `${softBinPortId++}`;
-
+  console.log('flows', flows);
   return {
     isHiddenSide,
     setIsHiddenSide,
