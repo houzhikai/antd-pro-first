@@ -1,5 +1,13 @@
 import { useModel } from '@umijs/max';
-import { Input, Image, Tooltip, Switch, Table, InputNumber } from 'antd';
+import {
+  Input,
+  Image,
+  Tooltip,
+  Switch,
+  Table,
+  InputNumber,
+  Select,
+} from 'antd';
 import toolTipSvg from '@/icon/draw/tooltip.svg';
 
 import styles from './index.less';
@@ -16,9 +24,13 @@ const TestItem = () => {
     .filter((item) => item.selected)
     .map((item: any) => item?.Class)[0];
 
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClick = () => {
-    setIsOpen((c) => !c);
+  const [isPortsOpen, setIsPortsOpen] = useState(false);
+  const [isVariablesOpen, setIsVariablesOpen] = useState(false);
+  const handleVariablesClick = () => {
+    setIsVariablesOpen((c) => !c);
+  };
+  const handlePortsClick = () => {
+    setIsPortsOpen((c) => !c);
   };
 
   const handleChangeLoopCount = (value) => {
@@ -30,15 +42,24 @@ const TestItem = () => {
     });
     setNodes(newData);
   };
+  const options = [
+    { value: '1', label: 'Fen Bin' },
+    { value: '2', label: 'Test Class' },
+    { value: '3', label: 'Subflow' },
+    { value: '4', label: 'MainFLow' },
+  ];
 
-  const columns = [
+  const variablesColumns = [
     {
       key: 'param',
       dataIndex: 'param',
       width: '50%',
       title: (
-        <div className={styles.globalVariablesTable} onClick={handleClick}>
-          {isOpen ? (
+        <div
+          className={styles.globalVariablesTable}
+          onClick={handleVariablesClick}
+        >
+          {isVariablesOpen ? (
             <RightOutlined style={{ width: 10 }} />
           ) : (
             <DownOutlined style={{ width: 10 }} />
@@ -58,7 +79,10 @@ const TestItem = () => {
       dataIndex: 'value',
       width: '50%',
       title: (
-        <div className={styles.globalVariablesTable} onClick={handleClick}>
+        <div
+          className={styles.globalVariablesTable}
+          onClick={handleVariablesClick}
+        >
           value
         </div>
       ),
@@ -71,9 +95,10 @@ const TestItem = () => {
     {
       key: 'param',
       dataIndex: 'param',
+      width: '30%',
       title: (
-        <div className={styles.globalVariablesTable} onClick={handleClick}>
-          {isOpen ? (
+        <div className={styles.globalVariablesTable} onClick={handlePortsClick}>
+          {isPortsOpen ? (
             <RightOutlined style={{ width: 10 }} />
           ) : (
             <DownOutlined style={{ width: 10 }} />
@@ -85,28 +110,42 @@ const TestItem = () => {
         const handleChange = (e) => {
           console.log(e.target.value);
         };
-        return <Input value={text} onChange={handleChange} bordered={false} />;
+        return (
+          <InputNumber
+            style={{ width: '100%' }}
+            value={text}
+            onChange={handleChange}
+            bordered={false}
+            controls={false}
+          />
+        );
       },
     },
     {
       key: 'type',
       dataIndex: 'type',
-      width: '33%',
+      width: '40%',
       title: (
-        <div className={styles.globalVariablesTable} onClick={handleClick}>
+        <div className={styles.globalVariablesTable} onClick={handlePortsClick}>
           type
         </div>
       ),
       render: (text) => {
-        return <Input value={text} bordered={false} />;
+        return (
+          <Select
+            style={{ width: '100%' }}
+            value={text}
+            options={options}
+            bordered={false}
+          />
+        );
       },
     },
     {
       key: 'value',
       dataIndex: 'value',
-      width: '33%',
       title: (
-        <div className={styles.globalVariablesTable} onClick={handleClick}>
+        <div className={styles.globalVariablesTable} onClick={handlePortsClick}>
           value
         </div>
       ),
@@ -116,7 +155,7 @@ const TestItem = () => {
     },
   ];
 
-  const dataSource = [
+  const variablesDataSource = [
     { key: 0, param: 'Vaa', value: '3' },
     { key: 1, param: 'Vhh', value: '3.5' },
     { key: 2, param: 'Load_from_File', value: '111' },
@@ -207,7 +246,7 @@ const TestItem = () => {
             {/* <label className={styles['flow-label']}>Ports： </label> */}
             <Table
               style={{ width: '100%' }}
-              className={isOpen ? styles['show-dataSource'] : undefined}
+              className={isPortsOpen ? styles['show-dataSource'] : undefined}
               columns={portsColumns}
               dataSource={portsDataSource}
               pagination={false}
@@ -220,9 +259,11 @@ const TestItem = () => {
             {/* <label className={styles['flow-label']}>globalVariables：</label> */}
             <Table
               style={{ width: '100%' }}
-              className={isOpen ? styles['show-dataSource'] : undefined}
-              columns={columns}
-              dataSource={dataSource}
+              className={
+                isVariablesOpen ? styles['show-dataSource'] : undefined
+              }
+              columns={variablesColumns}
+              dataSource={variablesDataSource}
               pagination={false}
               bordered
             />
