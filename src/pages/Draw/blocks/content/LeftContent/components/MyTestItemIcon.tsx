@@ -70,7 +70,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
   return (
     <div
       style={{ textAlign: 'center', margin: '6px 0' }}
-      onClick={() => handleClick(item, index)}
+      onDoubleClick={() => handleClick(item, index)}
     >
       <div onDragStart={(event) => onDragStart(event, 'input')} draggable>
         <Popconfirm
