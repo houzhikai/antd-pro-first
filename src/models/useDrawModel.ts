@@ -8,6 +8,7 @@ import {
 } from '@/pages/Draw/blocks/NavAction/components/defaultData';
 import { subflowIconList } from '@/pages/Draw/blocks/content/LeftContent/components/subflowIconList';
 import { useState } from 'react';
+import flows from '@/components/dataList/draw/flow.json';
 
 export default () => {
   const [hardBinData, setHardBinData] = useState(options.HardBin);
@@ -125,5 +126,6 @@ export default () => {
     setIsEdit,
     activeTestOrFlowItem,
     setActiveTestOrFlowItem,
+    flows,
   };
 };
