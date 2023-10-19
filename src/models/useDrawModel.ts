@@ -76,6 +76,13 @@ export default () => {
   let softBinPortId = 0;
   const getId = () => `${softBinPortId++}`;
   console.log('flows', analyzeFlow(flows));
+  const mainFlowList = analyzeFlow(flows).mainFlowParams.map((item) => {
+    return {
+      icon: '',
+      type: 'mainflow',
+      name: item.flowName,
+    };
+  });
   return {
     isHiddenSide,
     setIsHiddenSide,
@@ -128,5 +135,6 @@ export default () => {
     activeTestOrFlowItem,
     setActiveTestOrFlowItem,
     flows,
+    mainFlowList,
   };
 };

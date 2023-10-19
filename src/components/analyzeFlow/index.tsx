@@ -1,3 +1,4 @@
+// TODO 可以合并函数方法
 const analyzeFlow = (flows) => {
   // 公共方法，提取mainflow中的元素，以 isMain 为筛选器遍历的units属性，目的为了读取node和edge信息
   const mainFlowList = flows.testFlows
@@ -24,9 +25,9 @@ const analyzeFlow = (flows) => {
   const defaultNodes = mainFlowList.map((item) => {
     const type = item.isFlowUnit ? 'subflow' : 'test-method';
     const FBinList = item.ports.filter((item) => item.type === '4');
-    fBinMainNodes = FBinList.map((item, index) => {
+    fBinMainNodes = FBinList.map((item) => {
       return {
-        id: `fen-bin-${item.value}-${index}`,
+        id: `fen-bin-${item.value}`,
         data: { label: item.value },
         type: 'fen-bin',
         width: 82,
@@ -63,20 +64,33 @@ const analyzeFlow = (flows) => {
      ** 3. 整理到一个数组中
      */
   }
+
   const defaultEdges = mainFlowList.map((item) => {
-    const target = item.ports.map((t) => {
+    const sourceType = item.isFlowUnit ? 'subflow' : 'test-method';
+
+    const edgesList = item.ports.map((t) => {
+      let targetType;
+      if (t.type === '1') {
+        targetType = 'test-method';
+      } else if (t.type === '2') {
+        targetType = 'subflow';
+      } else if (t.type === '4') {
+        targetType = 'fen-bin';
+      }
+
       return {
         id: `${item.name}->${t.value}`,
         label: t.param,
-        source: item.name,
-        target: t.value,
+        source: `${sourceType}-${item.name}`,
+        target: `${targetType}-${t.value}`,
         type: 'floating',
         markerEnd: { type: 'arrowclosed', color: 'black' },
         style: { strokeWidth: 1, stroke: 'black' },
       };
     });
-    return target;
+    return edgesList;
   });
+
   const mainFlowEdges = defaultEdges.flat(Infinity);
 
   {

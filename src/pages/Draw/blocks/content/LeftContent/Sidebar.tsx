@@ -7,20 +7,32 @@ import {
   MainflowEdge1,
 } from '@/pages/Draw/blocks/Flows/mainflow1';
 import styles from './index.less';
+import { useEffect, useState } from 'react';
+import analyzeFlow from '@/components/analyzeFlow';
 
 export default () => {
-  const { isOnLine } = useModel('useDrawModel');
+  const { isOnLine, flows, mainFlowList } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
+  const [list, setList] = useState(mainFlowIconList);
+
+  useEffect(() => {
+    setList((oldList) => [...oldList, ...mainFlowList]);
+  }, []);
+
   const handleClick = (index) => {
     if (index === 0) {
       setNodes(MainflowNode1);
       setEdges(MainflowEdge1);
+    } else if (index === 1) {
+      setNodes(analyzeFlow(flows).mainFlowNodes);
+      setEdges(analyzeFlow(flows).mainFlowEdges);
     }
   };
   return (
     <>
       <div className={styles['test-item']}>
-        {mainFlowIconList.map((item, index) => (
+        {/* mainFlowIconList 是原本就有的mainflow */}
+        {list.map((item, index) => (
           <div
             key={index}
             className={styles.item}
