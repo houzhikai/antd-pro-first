@@ -54,7 +54,7 @@ const SelectedEdgeItem = () => {
     <div>
       {selectedEdgeItem?.selected ? (
         <>
-          <div className={styles.title}>连线：</div>
+          <div className={styles.title}>Edge：</div>
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>Label：</label>
             <InputNumber
@@ -67,7 +67,7 @@ const SelectedEdgeItem = () => {
           </div>
 
           <div className={styles['flow-item']}>
-            <label className={styles['flow-label']}>连线方式：</label>
+            <label className={styles['flow-label']}>Type：</label>
             <Select
               style={{ width: '100%' }}
               onChange={handleChangeEdgeType}

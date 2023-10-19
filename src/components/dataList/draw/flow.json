@@ -80,7 +80,7 @@
             },
             {
               "param": 1,
-              "type": "subflowUnit",
+              "type": "1",
               "value": "SubFlow1"
             }
           ]
