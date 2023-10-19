@@ -171,7 +171,7 @@ const TestItem = () => {
           <div className={styles.title}>Member：</div>
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>
-              <span>ClassName </span>
+              <span>TestMethod </span>
               <Tooltip title="此处不可编辑Class" placement="topLeft">
                 <Image src={toolTipSvg} width={14} preview={false} />：
               </Tooltip>
