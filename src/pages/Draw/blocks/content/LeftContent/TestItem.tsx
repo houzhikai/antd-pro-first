@@ -11,15 +11,21 @@ const TestItem = () => {
     { key: 999999, Class: 'BaseTestItem', LoopCount: 1, Name: 'BaseTestItem' },
     // @ts-expect-error
   ].concat(testUnitData);
+
+  const handleClick = (item) => {
+    console.log({ item });
+  };
   return (
     <div className={styles['test-item']}>
       {/* 第一项是 */}
       <div className={styles['test-item']}>
         {newTestUnitDataList.map((item, index) => (
-          <div key={item.key}>
+          <div key={item.key} onDoubleClick={() => handleClick(item)}>
             <MyTestItemIcon
               Class={item.Class}
               name={item.Name}
+              item={item}
+              index={index}
               type="test-method"
               color="#108ee9"
               onDragStart={(event) => {

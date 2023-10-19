@@ -1,16 +1,31 @@
 import { mainFlowIconList } from '@/components/dataList/draw/mainFlow';
 import MyTestItemIcon from './components/MyTestItemIcon';
 import { onDragStart } from './components/onDragStart';
-import styles from './index.less';
 import { useModel } from '@umijs/max';
+import {
+  MainflowNode1,
+  MainflowEdge1,
+} from '@/pages/Draw/blocks/Flows/mainflow1';
+import styles from './index.less';
 
 export default () => {
   const { isOnLine } = useModel('useDrawModel');
+  const { setNodes, setEdges } = useModel('useTestFlowModel');
+  const handleClick = (index) => {
+    if (index === 0) {
+      setNodes(MainflowNode1);
+      setEdges(MainflowEdge1);
+    }
+  };
   return (
     <>
       <div className={styles['test-item']}>
         {mainFlowIconList.map((item, index) => (
-          <div key={index} className={styles.item}>
+          <div
+            key={index}
+            className={styles.item}
+            onDoubleClick={() => handleClick(index)}
+          >
             <MyTestItemIcon
               name={item.name}
               color="#2db7f5"

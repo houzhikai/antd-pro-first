@@ -1,12 +1,6 @@
 import { Popconfirm, Tag } from 'antd';
 import styles from '../index.less';
 import { CheckOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { SubflowNode1, SubflowEdge1 } from '@/pages/Draw/blocks/Flows/Subflow1';
-import { SubflowNode2, SubflowEdge2 } from '@/pages/Draw/blocks/Flows/Subflow2';
-import {
-  MainflowNode1,
-  MainflowEdge1,
-} from '@/pages/Draw/blocks/Flows/mainflow1';
 import { useModel } from '@umijs/max';
 import { useState } from 'react';
 
@@ -33,8 +27,6 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
     setActiveTestOrFlowItem,
   } = useModel('useDrawModel');
 
-  const { setNodes, setEdges } = useModel('useTestFlowModel');
-
   const handleConfirm = (index) => {
     if (type === 'test-method') {
       const newDataList = testUnitData.filter((item) => item.Class !== Class);
@@ -48,29 +40,15 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
   const handleCancel = () => {
     setOpen(false);
   };
-  const handleClick = (item, index) => {
+  const handleClick = (item) => {
     if (item?.type) {
       setActiveTestOrFlowItem(item?.name);
-      if (item.type === 'mainflow') {
-        if (index === 0) {
-          setNodes(MainflowNode1);
-          setEdges(MainflowEdge1);
-        }
-      } else if (item.type === 'subflow') {
-        if (index === 0) {
-          setNodes(SubflowNode1);
-          setEdges(SubflowEdge1);
-        } else {
-          setNodes(SubflowNode2);
-          setEdges(SubflowEdge2);
-        }
-      }
     }
   };
   return (
     <div
       style={{ textAlign: 'center', margin: '6px 0' }}
-      onDoubleClick={() => handleClick(item, index)}
+      onDoubleClick={() => handleClick(item)}
     >
       <div onDragStart={(event) => onDragStart(event, 'input')} draggable>
         <Popconfirm
