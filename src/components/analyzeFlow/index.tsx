@@ -22,17 +22,17 @@ const analyzeFlow = (flows) => {
      */
   }
   let fBinMainNodes = [];
-  const defaultNodes = mainFlowList.map((item) => {
+  const defaultNodes = mainFlowList.map((item, index) => {
     const type = item.isFlowUnit ? 'subflow' : 'test-method';
     const FBinList = item.ports.filter((item) => item.type === '4');
-    fBinMainNodes = FBinList.map((item) => {
+    fBinMainNodes = FBinList.map((item, idx) => {
       return {
         id: `fen-bin-${item.value}`,
         data: { label: item.value },
         type: 'fen-bin',
-        width: 82,
-        height: 82,
-        position: { x: 224, y: 315 },
+        width: 50,
+        height: 50,
+        position: { x: 100 + idx * 200, y: 400 },
         params: {},
       };
     });
@@ -41,9 +41,9 @@ const analyzeFlow = (flows) => {
       id: `${type}-${item.name}`,
       data: { label: item.name },
       type,
-      width: 150,
-      height: 110,
-      position: { x: 100, y: 100 },
+      width: 100,
+      height: 70,
+      position: { x: 100 + index * 200, y: 100 },
       params: {
         isFlowUnit: item.isFlowUnit,
         isStartUnit: item.isStartUnit,
@@ -80,7 +80,7 @@ const analyzeFlow = (flows) => {
 
       return {
         id: `${item.name}->${t.value}`,
-        label: t.param,
+        label: `${t.param}`,
         source: `${sourceType}-${item.name}`,
         target: `${targetType}-${t.value}`,
         type: 'floating',
@@ -106,9 +106,9 @@ const analyzeFlow = (flows) => {
 
     const FBinList = item.ports.filter((item) => item.type === '4');
     if (FBinList.length > 0) {
-      fBinSubNodes = FBinList.map((item, index) => {
+      fBinSubNodes = FBinList.map((item) => {
         return {
-          id: `fen-bin-${item.value}-${index}`,
+          id: `fen-bin-${item.value}`,
           data: { label: item.value },
           type: 'fen-bin',
           width: 82,
@@ -146,12 +146,21 @@ const analyzeFlow = (flows) => {
      */
   }
   const defaultSubEdges = subflowList.map((item) => {
+    const sourceType = item.isFlowUnit ? 'subflow' : 'test-method';
     const target = item.ports.map((t) => {
+      let targetType;
+      if (t.type === '1') {
+        targetType = 'test-method';
+      } else if (t.type === '2') {
+        targetType = 'subflow';
+      } else if (t.type === '4') {
+        targetType = 'fen-bin';
+      }
       return {
         id: `${item.name}->${t.value}`,
-        label: t.param,
-        source: item.name,
-        target: t.value,
+        label: t.param !== undefined ? String(t.param) : undefined,
+        source: `${sourceType}-${item.name}`,
+        target: `${targetType}-${t.value}`,
         type: 'floating',
         markerEnd: { type: 'arrowclosed', color: 'black' },
         style: { strokeWidth: 1, stroke: 'black' },

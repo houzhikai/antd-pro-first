@@ -54,7 +54,7 @@ export default () => {
   const [openTestUnitModal, setOpenTestUnitModal] = useState(false);
   const [showSubflowItemModal, setShowSubflowItemModal] = useState(false);
   const [addTestItemModal, setAddTestItemModal] = useState(false); // 拖动基础测试项模板时打开弹窗
-  const [activeTestOrFlowItem, setActiveTestOrFlowItem] = useState('');
+  const [activeTestOrFlowItem, setActiveTestOrFlowItem] = useState('Flow');
 
   const [selected, setSelected] = useState(''); // 选中样式
 
@@ -83,6 +83,15 @@ export default () => {
       name: item.flowName,
     };
   });
+
+  const subFlowList = analyzeFlow(flows).subFlowParams.map((item) => {
+    return {
+      icon: '',
+      type: 'subflow',
+      name: item.flowName,
+    };
+  });
+
   return {
     isHiddenSide,
     setIsHiddenSide,
@@ -136,5 +145,6 @@ export default () => {
     setActiveTestOrFlowItem,
     flows,
     mainFlowList,
+    subFlowList,
   };
 };

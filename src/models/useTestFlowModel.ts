@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNodesState, useEdgesState } from 'reactflow';
 import { options } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/OutBin/options';
-import { selectFlowNodeEdge } from '@/pages/TestFlow/blocks/selectFlow';
+// import { selectFlowNodeEdge } from '@/pages/TestFlow/blocks/selectFlow';
 import { initHandleList } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/dataList';
+import analyzeFlow from '@/components/analyzeFlow';
+import { useModel } from '@umijs/max';
 
 export default () => {
+  const { flows } = useModel('useDrawModel');
   const [nodeName, setNodeName] = useState('start');
   const [nodeBg, setNodeBg] = useState('#eee');
   const [nodeHidden, setNodeHidden] = useState(false);
@@ -17,8 +20,9 @@ export default () => {
 
   // const initialNodes = selectFlow === 'test1' ? mainFlowNode : subflowNode;
   // const initialEdges = selectFlow === 'test1' ? mainFlowEdges : subflowEdge;
-  const initialNodes = selectFlowNodeEdge(selectFlow).node;
-  const initialEdges = selectFlowNodeEdge(selectFlow).edge;
+  const initialNodes = analyzeFlow(flows).mainFlowNodes;
+  const initialEdges = analyzeFlow(flows).mainFlowEdges;
+
   // 保存时需要用到nodes和edges
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -27,11 +31,11 @@ export default () => {
   const [binMap, setBinMap] = useState(options);
   const [handleList, setHandleList] = useState(initHandleList);
 
-  useEffect(() => {
-    setNodes(initialNodes);
-    setEdges(initialEdges);
-    setTitle(selectFlow);
-  }, [initialEdges, initialNodes, selectFlow, nodeBg, nodeName]);
+  // useEffect(() => {
+  //   setNodes(initialNodes);
+  //   setEdges(initialEdges);
+  //   setTitle(selectFlow);
+  // }, [initialEdges, initialNodes, selectFlow, nodeBg, nodeName]);
 
   const newNodeSource: any = [];
   const newNodeTarget: any = [];
