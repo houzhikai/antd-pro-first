@@ -87,9 +87,11 @@ export default () => {
 
   const subFlowList = analyzeFlow(flows).subFlowParams.map((item) => {
     return {
-      icon: '',
-      type: 'subflow',
       name: item.flowName,
+      type: 'subflow',
+      TestNumber: '111',
+      subFlowNode: analyzeFlow(flows).subFlowNodes,
+      mainFlowEdge: analyzeFlow(flows).subFlowEdges,
     };
   });
 

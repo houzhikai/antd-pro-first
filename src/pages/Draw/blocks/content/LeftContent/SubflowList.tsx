@@ -1,14 +1,11 @@
 import { useModel } from '@umijs/max';
 import MyTestItemIcon from './components/MyTestItemIcon';
 import { onDragStart } from './components/onDragStart';
-import { SubflowNode1, SubflowEdge1 } from '@/pages/Draw/blocks/Flows/Subflow1';
-import { SubflowNode2, SubflowEdge2 } from '@/pages/Draw/blocks/Flows/Subflow2';
 import styles from './index.less';
 import { useEffect, useState } from 'react';
-import analyzeFlow from '@/components/analyzeFlow';
 
 const SubflowList = () => {
-  const { isOnLine, setSubflowItem, subflowList, subFlowList, flows } =
+  const { isOnLine, setSubflowItem, subflowList, subFlowList } =
     useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
   const [list, setList] = useState(subflowList);
@@ -16,17 +13,9 @@ const SubflowList = () => {
   useEffect(() => {
     setList((oldList) => [...oldList, ...subFlowList]);
   }, []);
-  const handleClick = (index) => {
-    if (index === 0) {
-      setNodes(SubflowNode1);
-      setEdges(SubflowEdge1);
-    } else if (index === 1) {
-      setNodes(SubflowNode2);
-      setEdges(SubflowEdge2);
-    } else {
-      setNodes(analyzeFlow(flows).subFlowNodes);
-      setEdges(analyzeFlow(flows).subFlowEdges);
-    }
+  const handleClick = (item) => {
+    setNodes(item.subFlowNode);
+    setEdges(item.mainFlowEdge);
   };
   return (
     <div className={styles['test-item']}>
@@ -34,10 +23,9 @@ const SubflowList = () => {
         <div
           key={index}
           className={styles.item}
-          onDoubleClick={() => handleClick(index)}
+          onDoubleClick={() => handleClick(item)}
         >
           <MyTestItemIcon
-            size={item.size}
             name={item.name}
             color="#55acee"
             index={index}
