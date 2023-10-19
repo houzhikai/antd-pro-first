@@ -2,16 +2,11 @@ import { mainFlowIconList } from '@/components/dataList/draw/mainFlow';
 import MyTestItemIcon from './components/MyTestItemIcon';
 import { onDragStart } from './components/onDragStart';
 import { useModel } from '@umijs/max';
-import {
-  MainflowNode1,
-  MainflowEdge1,
-} from '@/pages/Draw/blocks/Flows/mainflow1';
 import styles from './index.less';
 import { useEffect, useState } from 'react';
-import analyzeFlow from '@/components/analyzeFlow';
 
 export default () => {
-  const { isOnLine, flows, mainFlowList } = useModel('useDrawModel');
+  const { isOnLine, mainFlowList } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
   const [list, setList] = useState(mainFlowIconList);
 
@@ -19,14 +14,9 @@ export default () => {
     setList((oldList) => [...oldList, ...mainFlowList]);
   }, []);
 
-  const handleClick = (index) => {
-    if (index === 0) {
-      setNodes(MainflowNode1);
-      setEdges(MainflowEdge1);
-    } else if (index === 1) {
-      setNodes(analyzeFlow(flows).mainFlowNodes);
-      setEdges(analyzeFlow(flows).mainFlowEdges);
-    }
+  const handleClick = (item) => {
+    setNodes(item.mainFlowNode);
+    setEdges(item.mainFlowEdges);
   };
   return (
     <>
@@ -36,7 +26,7 @@ export default () => {
           <div
             key={index}
             className={styles.item}
-            onDoubleClick={() => handleClick(index)}
+            onDoubleClick={() => handleClick(item)}
           >
             <MyTestItemIcon
               name={item.name}

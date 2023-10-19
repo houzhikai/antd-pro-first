@@ -78,9 +78,10 @@ export default () => {
   console.log('flows', analyzeFlow(flows));
   const mainFlowList = analyzeFlow(flows).mainFlowParams.map((item) => {
     return {
-      icon: '',
       type: 'mainflow',
       name: item.flowName,
+      mainFlowNode: analyzeFlow(flows).mainFlowNodes,
+      mainFlowEdges: analyzeFlow(flows).mainFlowEdges,
     };
   });
 

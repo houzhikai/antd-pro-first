@@ -1,4 +1,4 @@
-export const MainflowNode1: any = [
+export const AddMainflowNode1: any = [
   {
     id: 'test-method-0',
     type: 'test-method',
@@ -172,7 +172,7 @@ export const MainflowNode1: any = [
     height: 82,
   },
 ];
-export const MainflowEdge1: any = [
+export const AddMainflowEdge1: any = [
   {
     style: {
       strokeWidth: 1,
