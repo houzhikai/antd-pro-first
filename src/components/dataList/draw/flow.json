@@ -124,7 +124,7 @@
           "name": "Continuity",
           "testMethod": "Test1",
           "isFlowUnit": false,
-          "targetSubflow": "",
+          "targetFlowName": "",
           "isStartUnit": true,
           "variables": [
             { "param": "Vaa", "value": "3" },
