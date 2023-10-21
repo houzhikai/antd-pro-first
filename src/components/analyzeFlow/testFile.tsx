@@ -6,20 +6,31 @@ export const testFile = (flows) => {
   const getNodes = (nodesList) => {
     let fBinNodes = [];
     const flowNodes = nodesList.map((t) => {
-      const defaultNodeList = t.units.map((item, index) => {
+      const defaultNodeList = t.units.map((item) => {
         const type = item.isFlowUnit ? 'subflow' : 'test-method';
         const FBinList = item.ports.filter((item) => item.type === '4');
         if (FBinList.length > 0) {
-          fBinNodes = FBinList.map((item, idx) => {
-            return {
-              id: `fen-bin-${item.value}`,
-              data: { label: item.value },
-              type: 'fen-bin',
-              width: 82,
-              height: 82,
-              position: { x: 224 + idx * 200, y: 315 },
-              params: {},
-            };
+          fBinNodes = FBinList.map((item) => {
+            if (item.position) {
+              return {
+                id: `fen-bin-${item.value}`,
+                data: { label: item.value },
+                type: 'fen-bin',
+                width: 82,
+                height: 82,
+                position: { x: item.position.x, y: item.position.y },
+                params: {},
+              };
+            } else {
+              return {
+                id: `fen-bin-${item.value}`,
+                data: { label: item.value },
+                type: 'fen-bin',
+                width: 82,
+                height: 82,
+                params: {},
+              };
+            }
           });
         }
 
@@ -29,7 +40,7 @@ export const testFile = (flows) => {
           type,
           width: 100,
           height: 70,
-          position: { x: 100 + index * 200, y: 100 },
+          position: { x: item.position.x, y: item.position.y },
           params: {
             isFlowUnit: item.isFlowUnit,
             isStartUnit: item.isStartUnit,
@@ -119,6 +130,8 @@ export const testFile = (flows) => {
   const mainflowList = getFlows(mainFlowNodes, mainFlowEdges);
   const subflowList = getFlows(subFlowNodes, subFlowEdges);
 
+  const globalSettings = flows.globalSettings;
+
   //   const mainflowList = mainFlowNodes.map((item) => {
   //     let newArr = {};
   //     mainFlowEdges.forEach((t) => {
@@ -134,5 +147,5 @@ export const testFile = (flows) => {
   //     return newArr;
   //   });
 
-  return { flows, mainflowList, subflowList };
+  return { flows, mainflowList, subflowList, globalSettings };
 };

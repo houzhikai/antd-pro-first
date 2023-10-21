@@ -1,19 +1,23 @@
-import { useModel } from '@umijs/max';
+// import { useModel } from '@umijs/max';
 import { Button, Tooltip } from 'antd';
 // import save from '@/icon/draw/save.svg';
 
 import styles from '../index.less';
-import saveFlow from '@/components/saveFlow';
-import analyzeFlow from '@/components/analyzeFlow';
+// import saveFlow from '@/components/saveFlow';
+// import analyzeFlow from '@/components/analyzeFlow';
+import { saveJsonFile } from '@/components/saveFlow/saveJsonFle';
+import { testFile } from '@/components/analyzeFlow/testFile';
+import flow2 from '@/components/dataList/draw/flow2.json';
 
 const Save = () => {
   // const { title, mergeArrList, nodes, edges } = useModel('useTestFlowModel');
-  const { flows } = useModel('useDrawModel');
+  // const { flows } = useModel('useDrawModel');
 
   const handleSave = () => {
     // ` `换行也可以使console表示换行
-    const xxx = saveFlow(analyzeFlow(flows));
-    console.log('给后端的flow.json内容', xxx);
+    // const xxx = saveFlow(analyzeFlow(flows));
+    const xxx = saveJsonFile(testFile(flow2));
+    console.log('输出JSON', xxx);
     // const startNote = [
     //   `et::MainFlow('${title}'), true,
     // `,
