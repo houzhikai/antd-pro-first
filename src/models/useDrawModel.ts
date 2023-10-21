@@ -9,7 +9,9 @@ import {
 import { subflowIconList } from '@/pages/Draw/blocks/content/LeftContent/components/subflowIconList';
 import { useState } from 'react';
 import flows from '@/components/dataList/draw/flow.json';
+import flow2 from '@/components/dataList/draw/flow2.json';
 import analyzeFlow from '@/components/analyzeFlow';
+import { testFile } from '@/components/analyzeFlow/testFile';
 
 export default () => {
   const [hardBinData, setHardBinData] = useState(options.HardBin);
@@ -75,7 +77,8 @@ export default () => {
   const [repeatSoftBinNameList, setRepeatSoftBinNameList] = useState([]); // softBin name重复值列表
   let softBinPortId = 0;
   const getId = () => `${softBinPortId++}`;
-  console.log('flows', analyzeFlow(flows));
+  // console.log('简单的flows', analyzeFlow(flows));
+  console.log('复杂的flows', testFile(flow2));
   const mainFlowList = analyzeFlow(flows).mainFlowParams.map((item) => {
     return {
       type: 'mainflow',
