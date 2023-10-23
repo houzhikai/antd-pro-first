@@ -6,31 +6,34 @@ import {
   Switch,
   Table,
   InputNumber,
-  Select,
+  Button,
 } from 'antd';
 import toolTipSvg from '@/icon/draw/tooltip.svg';
 
 import styles from './index.less';
 import { RightOutlined, DownOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const TestItem = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
 
-  const selectedNodeItem: any = nodes.filter((item) => item.selected)[0];
+  const selectedNodeItem: any = useMemo(
+    () => nodes.filter((item) => item.selected)[0],
+    [nodes],
+  );
+  const [selectedNode, setSelectedNode] = useState(selectedNodeItem);
 
+  useEffect(() => {
+    setSelectedNode(selectedNodeItem);
+  }, [selectedNodeItem, nodes]);
   // 修改测试项class
   const testItemClass = nodes
     .filter((item) => item.selected)
-    .map((item: any) => item?.Class)[0];
+    .map((item: any) => item?.params.testMethod)[0];
 
-  const [isPortsOpen, setIsPortsOpen] = useState(false);
   const [isVariablesOpen, setIsVariablesOpen] = useState(false);
   const handleVariablesClick = () => {
     setIsVariablesOpen((c) => !c);
-  };
-  const handlePortsClick = () => {
-    setIsPortsOpen((c) => !c);
   };
 
   const handleChangeLoopCount = (value) => {
@@ -42,11 +45,6 @@ const TestItem = () => {
     });
     setNodes(newData);
   };
-  const options = [
-    { value: '1', label: 'TestUnit' },
-    { value: '2', label: 'TestFlow' },
-    { value: '4', label: 'TestBin' },
-  ];
 
   const variablesColumns = [
     {
@@ -66,11 +64,38 @@ const TestItem = () => {
           <span> Param</span>
         </div>
       ),
-      render: (text) => {
-        const handleChange = (e) => {
-          console.log(e.target.value);
+      render: (text, record, index) => {
+        const handlePressEnter = (e) => {
+          const newData = nodes.map((item: any) => {
+            if (item.selected) {
+              return {
+                ...item,
+                params: {
+                  ...item.params,
+                  variables: item.params.variables.map((t, idx) => {
+                    if (index === idx) {
+                      return {
+                        param: e.target.value,
+                        value: t.value,
+                      };
+                    }
+                    return t;
+                  }),
+                },
+              };
+            }
+            return item;
+          });
+          setNodes(newData);
         };
-        return <Input value={text} onChange={handleChange} bordered={false} />;
+        return (
+          <Input
+            defaultValue={record.param}
+            onPressEnter={handlePressEnter}
+            onBlur={handlePressEnter}
+            bordered={false}
+          />
+        );
       },
     },
     {
@@ -85,88 +110,174 @@ const TestItem = () => {
           Value
         </div>
       ),
-      render: (text) => {
-        return <Input value={text} bordered={false} />;
-      },
-    },
-  ];
-  const portsColumns = [
-    {
-      key: 'param',
-      dataIndex: 'param',
-      width: '30%',
-      title: (
-        <div className={styles.globalVariablesTable} onClick={handlePortsClick}>
-          {isPortsOpen ? (
-            <RightOutlined style={{ width: 10 }} />
-          ) : (
-            <DownOutlined style={{ width: 10 }} />
-          )}
-          <span> Param</span>
-        </div>
-      ),
-      render: (text) => {
-        const handleChange = (e) => {
-          console.log(e.target.value);
+      render: (text, record, index) => {
+        const handlePressEnter = (e) => {
+          const newData = nodes.map((item: any) => {
+            if (item.selected) {
+              return {
+                ...item,
+                params: {
+                  ...item.params,
+                  variables: item.params.variables.map((t, idx) => {
+                    if (index === idx) {
+                      return {
+                        param: t.param,
+                        value: e.target.value,
+                      };
+                    }
+                    return t;
+                  }),
+                },
+              };
+            }
+            return item;
+          });
+          setNodes(newData);
         };
         return (
-          <InputNumber
-            style={{ width: '100%' }}
-            value={text}
-            onChange={handleChange}
-            bordered={false}
-            controls={false}
-          />
-        );
-      },
-    },
-    {
-      key: 'type',
-      dataIndex: 'type',
-      width: '40%',
-      title: (
-        <div className={styles.globalVariablesTable} onClick={handlePortsClick}>
-          Type
-        </div>
-      ),
-      render: (text) => {
-        return (
-          <Select
-            style={{ width: '100%' }}
-            value={text}
-            options={options}
+          <Input
+            defaultValue={record.value}
+            onPressEnter={handlePressEnter}
+            onBlur={handlePressEnter}
             bordered={false}
           />
         );
       },
     },
-    {
-      key: 'value',
-      dataIndex: 'value',
-      title: (
-        <div className={styles.globalVariablesTable} onClick={handlePortsClick}>
-          Value
-        </div>
-      ),
-      render: (text) => {
-        return <Input value={text} bordered={false} />;
-      },
-    },
   ];
 
-  const variablesDataSource = [
-    { key: 0, param: 'Vaa', value: '3' },
-    { key: 1, param: 'Vhh', value: '3.5' },
-    { key: 2, param: 'Load_from_File', value: '111' },
-  ];
-  const portsDataSource = [
-    { key: 0, param: 0, value: '3', type: '1' },
-    { key: 1, param: 1, value: '3.5', type: '4' },
-  ];
+  const handleChangeIsStartUnit = (checked) => {
+    setNodes((node) =>
+      node.map((item: any) => {
+        if (item.selected) {
+          return {
+            ...item,
+            params: {
+              ...item.params,
+              isStartUnit: checked,
+            },
+          };
+        }
+        return item;
+      }),
+    );
+  };
 
+  const handleChangeIsFlowUnit = (checked) => {
+    setNodes((node) =>
+      node.map((item: any) => {
+        if (item.selected) {
+          return {
+            ...item,
+            params: {
+              ...item.params,
+              isFlowUnit: checked,
+            },
+          };
+        }
+        return item;
+      }),
+    );
+  };
+
+  const handleChangeName = (e) => {
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        params: {
+          ...obj.params,
+          name: e.target.value,
+        },
+      };
+    });
+  };
+
+  const handlePressEnterName = (e) => {
+    const newData = nodes.map((item: any) => {
+      if (item.selected) {
+        return {
+          ...item,
+          data: {
+            ...item.data,
+            label: e.target.value,
+          },
+          params: {
+            ...item.params,
+            name: e.target.value,
+          },
+        };
+      }
+      return item;
+    });
+    setNodes(newData);
+  };
+
+  const handleChangeNumber = (e) => {
+    const value = e.target.value.replace(/[^\-?\d.]/g, '');
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        params: {
+          ...obj.params,
+          number: value,
+        },
+      };
+    });
+  };
+
+  const handlePressEnterNumber = (e) => {
+    const newData = nodes.map((item: any) => {
+      if (item.selected) {
+        return {
+          ...item,
+          params: {
+            ...item.params,
+            number: e.target.value,
+          },
+        };
+      }
+      return item;
+    });
+    setNodes(newData);
+  };
+
+  const handleChangeTargetFlowName = (e) => {
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        params: {
+          ...obj.params,
+          targetFlowName: e.target.value,
+        },
+      };
+    });
+  };
+  const handlePressTargetFlowName = (e) => {
+    const newData = nodes.map((item: any) => {
+      if (item.selected) {
+        return {
+          ...item,
+          params: {
+            ...item.params,
+            targetFlowName: e.target.value,
+          },
+        };
+      }
+      return item;
+    });
+    setNodes(newData);
+  };
+
+  const handleClick = () => {
+    console.log(2);
+  };
+
+  const params = selectedNode?.params;
   return (
     <div>
-      {selectedNodeItem?.selected && selectedNodeItem.type === 'test-method' ? (
+      {selectedNodeItem?.selected &&
+      (selectedNodeItem.type === 'test-method' ||
+        selectedNodeItem.type === 'subflow') ? (
         <>
           <div className={styles.title}>Member：</div>
           <div className={styles['flow-item']}>
@@ -177,7 +288,7 @@ const TestItem = () => {
               </Tooltip>
             </label>
             <Input
-              placeholder="请输入 Class"
+              placeholder="请输入 TestMethod"
               value={testItemClass}
               allowClear
               disabled
@@ -186,15 +297,21 @@ const TestItem = () => {
 
           <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
             <label className={styles['flow-label']}>IsFlowUnit：</label>
-            <Switch checkedChildren="true" unCheckedChildren="false" />
+            <Switch
+              checkedChildren="true"
+              unCheckedChildren="false"
+              checked={params?.isFlowUnit}
+              onChange={handleChangeIsFlowUnit}
+            />
           </div>
 
           <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
             <label className={styles['flow-label']}>IsStartUnit：</label>
             <Switch
-              defaultChecked
               checkedChildren="true"
               unCheckedChildren="false"
+              checked={params?.isStartUnit}
+              onChange={handleChangeIsStartUnit}
             />
           </div>
 
@@ -203,7 +320,10 @@ const TestItem = () => {
             <Input
               placeholder="请输入 Name"
               // value={testItemClass}
-              value="Continuity"
+              value={params?.name}
+              onChange={handleChangeName}
+              onPressEnter={handlePressEnterName}
+              onBlur={handlePressEnterName}
               allowClear
             />
           </div>
@@ -212,8 +332,10 @@ const TestItem = () => {
             <label className={styles['flow-label']}>Number： </label>
             <Input
               placeholder="请输入 Number"
-              // value={testItemClass}
-              value="000"
+              value={params?.number}
+              onChange={handleChangeNumber}
+              onPressEnter={handlePressEnterNumber}
+              onBlur={handlePressEnterNumber}
               allowClear
             />
           </div>
@@ -234,35 +356,30 @@ const TestItem = () => {
             <label className={styles['flow-label']}>TargetFlowName： </label>
             <Input
               placeholder="请输入 TargetFlowName"
-              // value={testItemClass}
-              value=""
               allowClear
+              value={params?.targetFlowName}
+              onChange={handleChangeTargetFlowName}
+              onPressEnter={handlePressTargetFlowName}
+              onBlur={handlePressTargetFlowName}
             />
           </div>
 
-          <div className={styles.title}>Ports：</div>
-          <div className={styles['flow-item']}>
-            {/* <label className={styles['flow-label']}>Ports： </label> */}
-            <Table
-              style={{ width: '100%' }}
-              className={isPortsOpen ? styles['show-dataSource'] : undefined}
-              columns={portsColumns}
-              dataSource={portsDataSource}
-              pagination={false}
-              bordered
-            />
+          <div className={styles.title}>
+            Variables：{' '}
+            <Button type="link" onClick={handleClick}>
+              打开弹窗
+            </Button>
           </div>
-
-          <div className={styles.title}>Variables：</div>
           <div className={styles['flow-item']}>
             {/* <label className={styles['flow-label']}>globalVariables：</label> */}
             <Table
+              key={Math.random() * 100}
               style={{ width: '100%' }}
               className={
                 isVariablesOpen ? styles['show-dataSource'] : undefined
               }
               columns={variablesColumns}
-              dataSource={variablesDataSource}
+              dataSource={params?.variables}
               pagination={false}
               bordered
             />

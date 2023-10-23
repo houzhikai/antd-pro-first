@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 const MainFlowEdit = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
+  const { activeTestOrFlowItemParams, setActiveTestOrFlowItemParams } =
+    useModel('useDrawModel');
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedNodeItem: any = nodes.filter((item) => item.selected);
@@ -39,11 +41,31 @@ const MainFlowEdit = () => {
           <span> Param</span>
         </div>
       ),
-      render: (text) => {
-        const handleChange = (e) => {
-          console.log(e.target.value);
+      render: (text, record, index) => {
+        const handlePressEnter = (e) => {
+          setActiveTestOrFlowItemParams((obj) => {
+            return {
+              ...obj,
+              globalVariables: obj.globalVariables.map((item: any, idx) => {
+                if (index === idx) {
+                  return {
+                    param: e.target.value,
+                    value: item.value,
+                  };
+                }
+                return item;
+              }),
+            };
+          });
         };
-        return <Input value={text} onChange={handleChange} bordered={false} />;
+        return (
+          <Input
+            defaultValue={record.param}
+            onPressEnter={handlePressEnter}
+            onBlur={handlePressEnter}
+            bordered={false}
+          />
+        );
       },
     },
     {
@@ -55,17 +77,61 @@ const MainFlowEdit = () => {
           Value
         </div>
       ),
-      render: (text) => {
-        return <Input value={text} bordered={false} />;
+      render: (text, record, index) => {
+        const handlePressEnter = (e) => {
+          setActiveTestOrFlowItemParams((obj) => {
+            return {
+              ...obj,
+              globalVariables: obj.globalVariables.map((item: any, idx) => {
+                if (index === idx) {
+                  return {
+                    param: item.param,
+                    value: e.target.value,
+                  };
+                }
+                return item;
+              }),
+            };
+          });
+        };
+        return (
+          <Input
+            defaultValue={record.value}
+            onPressEnter={handlePressEnter}
+            onBlur={handlePressEnter}
+            bordered={false}
+          />
+        );
       },
     },
   ];
 
-  const dataSource = [
-    { param: 'Vaa', value: '3', key: 0 },
-    { param: 'Vhh', value: '3.5', key: 1 },
-    { param: 'Load_from_File', value: '111', key: 2 },
-  ];
+  const handleChangeFlowName = (e) => {
+    setActiveTestOrFlowItemParams((obj) => {
+      return {
+        ...obj,
+        flowName: e.target.value,
+      };
+    });
+  };
+
+  const handleChangeIsMain = (checked) => {
+    setActiveTestOrFlowItemParams((obj) => {
+      return {
+        ...obj,
+        isMain: checked,
+      };
+    });
+  };
+
+  const handleChangeIsActive = (checked) => {
+    setActiveTestOrFlowItemParams((obj) => {
+      return {
+        ...obj,
+        isActive: checked,
+      };
+    });
+  };
 
   return (
     <div>
@@ -74,24 +140,30 @@ const MainFlowEdit = () => {
           <div className={styles.title}>MainFlow：</div>
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>FlowName：</label>
-            <Input placeholder="请输入名称" defaultValue="test1" />
+            <Input
+              placeholder="请输入名称"
+              value={activeTestOrFlowItemParams?.flowName}
+              onChange={handleChangeFlowName}
+            />
           </div>
 
           <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
             <label className={styles['flow-label']}>IsMain：</label>
             <Switch
-              defaultChecked
               checkedChildren="true"
               unCheckedChildren="false"
+              defaultChecked={activeTestOrFlowItemParams.isMain}
+              onChange={handleChangeIsMain}
             />
           </div>
 
           <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
             <label className={styles['flow-label']}>IsActive：</label>
             <Switch
-              defaultChecked
               checkedChildren="true"
               unCheckedChildren="false"
+              defaultChecked={activeTestOrFlowItemParams?.isActive}
+              onChange={handleChangeIsActive}
             />
           </div>
 
@@ -114,7 +186,7 @@ const MainFlowEdit = () => {
               style={{ width: '100%' }}
               className={isOpen ? styles['show-dataSource'] : undefined}
               columns={columns}
-              dataSource={dataSource}
+              dataSource={activeTestOrFlowItemParams.globalVariables}
               pagination={false}
               bordered
             />

@@ -7,7 +7,7 @@ import {
   SoftBinDataSourceType,
 } from '@/pages/Draw/blocks/NavAction/components/defaultData';
 import { subflowIconList } from '@/pages/Draw/blocks/content/LeftContent/components/subflowIconList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import flows from '@/components/dataList/draw/flow.json';
 import flow2 from '@/components/dataList/draw/flow2.json';
 // import analyzeFlow from '@/components/analyzeFlow';
@@ -61,6 +61,16 @@ export default () => {
     .flowName;
   const [activeTestOrFlowItem, setActiveTestOrFlowItem] =
     useState(defaultShowFlowItem);
+
+  const mainflowParams = testFile(flow2).mainflowList.filter(
+    (item) => item.flowName === defaultShowFlowItem,
+  )[0].flowParams;
+
+  const [activeTestOrFlowItemParams, setActiveTestOrFlowItemParams] =
+    useState(mainflowParams);
+  useEffect(() => {
+    setActiveTestOrFlowItemParams(mainflowParams);
+  }, [mainflowParams]);
 
   const [selected, setSelected] = useState(''); // 选中样式
 
@@ -158,5 +168,7 @@ export default () => {
     flows,
     mainFlowList,
     subFlowList,
+    activeTestOrFlowItemParams,
+    setActiveTestOrFlowItemParams,
   };
 };

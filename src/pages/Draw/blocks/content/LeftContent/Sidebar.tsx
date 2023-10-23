@@ -6,7 +6,8 @@ import styles from './index.less';
 import { useEffect, useState } from 'react';
 
 export default () => {
-  const { isOnLine, mainFlowList } = useModel('useDrawModel');
+  const { isOnLine, mainFlowList, setActiveTestOrFlowItemParams } =
+    useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
   const [list, setList] = useState(mainFlowIconList);
 
@@ -15,6 +16,7 @@ export default () => {
   }, []);
 
   const handleClick = (item) => {
+    setActiveTestOrFlowItemParams(item.param);
     setNodes(item.mainFlowNode);
     setEdges(item.mainFlowEdges);
   };
