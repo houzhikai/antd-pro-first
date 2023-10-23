@@ -15,7 +15,7 @@ const SubflowList = () => {
   }, []);
   const handleClick = (item) => {
     setNodes(item.subFlowNode);
-    setEdges(item.mainFlowEdge);
+    setEdges(item.subFlowEdge);
   };
   return (
     <div className={styles['test-item']}>

@@ -3,11 +3,13 @@ import { useNodesState, useEdgesState } from 'reactflow';
 import { options } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/customNodes/OutBin/options';
 // import { selectFlowNodeEdge } from '@/pages/TestFlow/blocks/selectFlow';
 import { initHandleList } from '@/pages/TestFlow/blocks/components/ReactFlowProvider/dataList';
-import analyzeFlow from '@/components/analyzeFlow';
-import { useModel } from '@umijs/max';
+// import analyzeFlow from '@/components/analyzeFlow';
+// import { useModel } from '@umijs/max';
+import flow2 from '@/components/dataList/draw/flow2.json';
+import { testFile } from '@/components/analyzeFlow/testFile';
 
 export default () => {
-  const { flows } = useModel('useDrawModel');
+  // const { flows } = useModel('useDrawModel');
   const [nodeName, setNodeName] = useState('start');
   const [nodeBg, setNodeBg] = useState('#eee');
   const [nodeHidden, setNodeHidden] = useState(false);
@@ -20,8 +22,11 @@ export default () => {
 
   // const initialNodes = selectFlow === 'test1' ? mainFlowNode : subflowNode;
   // const initialEdges = selectFlow === 'test1' ? mainFlowEdges : subflowEdge;
-  const initialNodes = analyzeFlow(flows).mainFlowNodes;
-  const initialEdges = analyzeFlow(flows).mainFlowEdges;
+  const defaultShowFlowItem = testFile(flow2).mainflowList.filter(
+    (item) => item.flowParams.isActive,
+  )[0];
+  const initialNodes = defaultShowFlowItem.flowNodes;
+  const initialEdges = defaultShowFlowItem.flowEdges;
 
   // 保存时需要用到nodes和edges
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);

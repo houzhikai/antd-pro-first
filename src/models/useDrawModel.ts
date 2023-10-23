@@ -10,7 +10,7 @@ import { subflowIconList } from '@/pages/Draw/blocks/content/LeftContent/compone
 import { useState } from 'react';
 import flows from '@/components/dataList/draw/flow.json';
 import flow2 from '@/components/dataList/draw/flow2.json';
-import analyzeFlow from '@/components/analyzeFlow';
+// import analyzeFlow from '@/components/analyzeFlow';
 import { testFile } from '@/components/analyzeFlow/testFile';
 
 export default () => {
@@ -56,7 +56,11 @@ export default () => {
   const [openTestUnitModal, setOpenTestUnitModal] = useState(false);
   const [showSubflowItemModal, setShowSubflowItemModal] = useState(false);
   const [addTestItemModal, setAddTestItemModal] = useState(false); // 拖动基础测试项模板时打开弹窗
-  const [activeTestOrFlowItem, setActiveTestOrFlowItem] = useState('Flow');
+
+  const defaultShowFlowItem = flow2.testFlows.filter((item) => item.isActive)[0]
+    .flowName;
+  const [activeTestOrFlowItem, setActiveTestOrFlowItem] =
+    useState(defaultShowFlowItem);
 
   const [selected, setSelected] = useState(''); // 选中样式
 
@@ -79,22 +83,24 @@ export default () => {
   const getId = () => `${softBinPortId++}`;
   // console.log('简单的flows', analyzeFlow(flows));
   console.log('复杂的flows', testFile(flow2));
-  const mainFlowList = analyzeFlow(flows).mainFlowParams.map((item) => {
+
+  const mainFlowList = testFile(flow2).mainflowList.map((item) => {
     return {
       type: 'mainflow',
       name: item.flowName,
-      mainFlowNode: analyzeFlow(flows).mainFlowNodes,
-      mainFlowEdges: analyzeFlow(flows).mainFlowEdges,
+      mainFlowNode: item.flowNodes,
+      mainFlowEdges: item.flowEdges,
+      param: item.flowParams,
     };
   });
 
-  const subFlowList = analyzeFlow(flows).subFlowParams.map((item) => {
+  const subFlowList = testFile(flow2).subflowList.map((item) => {
     return {
-      name: item.flowName,
       type: 'subflow',
-      TestNumber: '111',
-      subFlowNode: analyzeFlow(flows).subFlowNodes,
-      mainFlowEdge: analyzeFlow(flows).subFlowEdges,
+      name: item.flowName,
+      subFlowNode: item.flowNodes,
+      subFlowEdge: item.flowEdges,
+      param: item.flowParams,
     };
   });
 
