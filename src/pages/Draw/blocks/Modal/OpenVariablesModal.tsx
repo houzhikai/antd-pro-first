@@ -7,14 +7,12 @@ const OpenVariablesModal = () => {
   const { openVariablesModal, setOpenVariablesModal } =
     useModel('useDrawModel');
   const [value, setValue] = useState(openVariablesModal.values);
-  console.log({ openVariablesModal, value });
 
   useEffect(() => {
     setValue(openVariablesModal.values);
   }, [openVariablesModal]);
 
   const handleOk = () => {
-    console.log({ value });
     setOpenVariablesModal((obj) => {
       return {
         ...obj,
@@ -48,13 +46,12 @@ const OpenVariablesModal = () => {
             if (index === idx) {
               return {
                 key: item.key,
-                param: item.param,
-                value: e.target.value,
+                param: e.target.value,
+                value: item.value,
               };
             }
             return item;
           });
-          console.log(111, newData);
           setValue(newData);
         };
         return (
@@ -78,13 +75,12 @@ const OpenVariablesModal = () => {
             if (index === idx) {
               return {
                 key: item.key,
-                param: e.target.value,
-                value: item.value,
+                param: item.param,
+                value: e.target.value,
               };
             }
             return item;
           });
-          console.log(111, newData);
           setValue(newData);
         };
         return (

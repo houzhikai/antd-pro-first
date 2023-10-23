@@ -1,4 +1,4 @@
-import { Input, InputNumber, Switch, Table } from 'antd';
+import { Button, Input, InputNumber, Switch, Table } from 'antd';
 import styles from './index.less';
 import { useModel } from '@umijs/max';
 import { RightOutlined, DownOutlined } from '@ant-design/icons';
@@ -6,14 +6,25 @@ import { useState } from 'react';
 
 const MainFlowEdit = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
-  const { activeTestOrFlowItemParams, setActiveTestOrFlowItemParams } =
-    useModel('useDrawModel');
+  const {
+    activeTestOrFlowItemParams,
+    setActiveTestOrFlowItemParams,
+    openVariablesModal,
+    setOpenVariablesModal,
+  } = useModel('useDrawModel');
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedNodeItem: any = nodes.filter((item) => item.selected);
 
-  const handleClick = () => {
-    setIsOpen((c) => !c);
+  const handleClick = (values) => {
+    const dataSource = values.map((item: any, index) => {
+      return {
+        key: index,
+        param: item.param,
+        value: item.value,
+      };
+    });
+    setOpenVariablesModal({ isOpen: true, values: dataSource });
   };
 
   const handleChangeLoopCount = (value) => {
@@ -32,7 +43,10 @@ const MainFlowEdit = () => {
       dataIndex: 'param',
       width: '50%',
       title: (
-        <div className={styles.globalVariablesTable} onClick={handleClick}>
+        <div
+          className={styles.globalVariablesTable}
+          onClick={() => setIsOpen((c) => !c)}
+        >
           {isOpen ? (
             <RightOutlined style={{ width: 10 }} />
           ) : (
@@ -73,7 +87,10 @@ const MainFlowEdit = () => {
       dataIndex: 'value',
       width: '50%',
       title: (
-        <div className={styles.globalVariablesTable} onClick={handleClick}>
+        <div
+          className={styles.globalVariablesTable}
+          onClick={() => setIsOpen((c) => !c)}
+        >
           Value
         </div>
       ),
@@ -179,33 +196,35 @@ const MainFlowEdit = () => {
             />
           </div>
 
-          <div className={styles.title}>GlobalVariables：</div>
+          <div className={styles.title}>
+            GlobalVariables：
+            <Button
+              type="link"
+              onClick={() =>
+                handleClick(activeTestOrFlowItemParams?.globalVariables)
+              }
+            >
+              打开弹窗
+            </Button>
+          </div>
           <div className={styles['flow-item']}>
             {/* <label className={styles['flow-label']}>globalVariables：</label> */}
             <Table
+              key={Math.random() * 100}
               style={{ width: '100%' }}
               className={isOpen ? styles['show-dataSource'] : undefined}
               columns={columns}
-              dataSource={activeTestOrFlowItemParams.globalVariables}
+              dataSource={
+                openVariablesModal.values.length === 0
+                  ? activeTestOrFlowItemParams.globalVariables
+                  : openVariablesModal.values
+              }
               pagination={false}
               bordered
             />
           </div>
         </>
       ) : null}
-
-      {/* <div className={styles['flow-item']}>
-        <label className={styles['flow-label']}>Start node：</label>
-        <Input
-          disabled
-          placeholder="There is no start node"
-          value={startNodeName}
-        />
-      </div>
-      <div className={styles['flow-item']}>
-        <label className={styles['flow-label']}>End node：</label>
-        <Input placeholder="There is no end node" defaultValue="" />
-      </div>*/}
     </div>
   );
 };
