@@ -9,6 +9,7 @@ import RightContent from './content/RightContent';
 import SubflowModal from './Modal/SubFlowModal';
 import ShowSubflowModal from './Modal/ShowSubflowModal';
 import AddTestItemModal from './Modal/AddTestItemModal';
+import OpenVariablesModal from './Modal/OpenVariablesModal';
 import styles from './index.less';
 
 const Layout = () => {
@@ -28,6 +29,7 @@ const Layout = () => {
       <SubflowModal />
       <ShowSubflowModal />
       <AddTestItemModal />
+      <OpenVariablesModal />
     </div>
   );
 };

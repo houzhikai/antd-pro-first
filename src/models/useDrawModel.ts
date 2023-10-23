@@ -56,6 +56,10 @@ export default () => {
   const [openTestUnitModal, setOpenTestUnitModal] = useState(false);
   const [showSubflowItemModal, setShowSubflowItemModal] = useState(false);
   const [addTestItemModal, setAddTestItemModal] = useState(false); // 拖动基础测试项模板时打开弹窗
+  const [openVariablesModal, setOpenVariablesModal] = useState({
+    isOpen: false,
+    values: [],
+  });
 
   const defaultShowFlowItem = flow2.testFlows.filter((item) => item.isActive)[0]
     .flowName;
@@ -170,5 +174,7 @@ export default () => {
     subFlowList,
     activeTestOrFlowItemParams,
     setActiveTestOrFlowItemParams,
+    openVariablesModal,
+    setOpenVariablesModal,
   };
 };

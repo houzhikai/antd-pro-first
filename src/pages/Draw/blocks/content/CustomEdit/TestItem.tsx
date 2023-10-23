@@ -16,6 +16,8 @@ import { useEffect, useMemo, useState } from 'react';
 
 const TestItem = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
+  const { setOpenVariablesModal, openVariablesModal } =
+    useModel('useDrawModel');
 
   const selectedNodeItem: any = useMemo(
     () => nodes.filter((item) => item.selected)[0],
@@ -268,8 +270,16 @@ const TestItem = () => {
     setNodes(newData);
   };
 
-  const handleClick = () => {
-    console.log(2);
+  const handleClick = (values) => {
+    const dataSource = values.map((item: any, index) => {
+      return {
+        key: index,
+        param: item.param,
+        value: item.value,
+      };
+    });
+
+    setOpenVariablesModal({ isOpen: true, values: dataSource });
   };
 
   const params = selectedNode?.params;
@@ -365,8 +375,8 @@ const TestItem = () => {
           </div>
 
           <div className={styles.title}>
-            Variables：{' '}
-            <Button type="link" onClick={handleClick}>
+            Variables：
+            <Button type="link" onClick={() => handleClick(params?.variables)}>
               打开弹窗
             </Button>
           </div>
@@ -379,7 +389,11 @@ const TestItem = () => {
                 isVariablesOpen ? styles['show-dataSource'] : undefined
               }
               columns={variablesColumns}
-              dataSource={params?.variables}
+              dataSource={
+                openVariablesModal.values.length === 0
+                  ? params?.variables
+                  : openVariablesModal.values
+              }
               pagination={false}
               bordered
             />
