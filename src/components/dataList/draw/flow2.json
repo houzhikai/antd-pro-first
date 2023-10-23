@@ -236,7 +236,8 @@
             {
               "param": 1,
               "type": "4",
-              "value": "TB1"
+              "value": "TB1",
+              "position": { "x": 100, "y": 100 }
             }
           ]
         }
@@ -324,7 +325,8 @@
             {
               "param": 1,
               "type": "4",
-              "value": "TB1"
+              "value": "TB1",
+              "position": { "x": 100, "y": 100 }
             }
           ]
         },
@@ -351,7 +353,8 @@
             {
               "param": 1,
               "type": "4",
-              "value": "TB1"
+              "value": "TB1",
+              "position": { "x": 100, "y": 100 }
             }
           ]
         }
