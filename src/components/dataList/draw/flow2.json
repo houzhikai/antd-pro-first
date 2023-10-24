@@ -29,7 +29,7 @@
               "param": 0,
               "type": "4",
               "value": "FB1",
-              "position": { "x": 282, "y": 282 }
+              "position": { "x": 0, "y": 282 }
             },
             {
               "param": 1,
@@ -56,7 +56,7 @@
               "param": 0,
               "type": "4",
               "value": "FB1",
-              "position": { "x": 282, "y": 282 }
+              "position": { "x": 200, "y": 282 }
             },
             {
               "param": 1,
@@ -83,7 +83,7 @@
               "param": 0,
               "type": "4",
               "value": "FB1",
-              "position": { "x": 282, "y": 282 }
+              "position": { "x": 400, "y": 282 }
             },
             {
               "param": 1,
@@ -110,13 +110,13 @@
               "param": 0,
               "type": "4",
               "value": "FB1",
-              "position": { "x": 282, "y": 282 }
+              "position": { "x": 600, "y": 282 }
             },
             {
               "param": 1,
               "type": "4",
               "value": "TB1",
-              "position": { "x": 652, "y": 226 }
+              "position": { "x": 800, "y": 0 }
             }
           ]
         }

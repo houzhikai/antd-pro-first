@@ -4,32 +4,39 @@ export const testFile = (flows) => {
   const isNotMainFlow = flows.testFlows.filter((item) => !item.isMain);
 
   const getNodes = (nodesList) => {
-    let fBinNodes = [];
     const flowNodes = nodesList.map((t) => {
-      const defaultNodeList = t.units.map((item) => {
+      let fBinNodes: object[] = [];
+      const defaultNodeList = t.units.map((item, index) => {
         const type = item.isFlowUnit ? 'subflow' : 'test-method';
         const FBinList = item.ports.filter((item) => item.type === '4');
         if (FBinList.length > 0) {
-          fBinNodes = FBinList.map((item) => {
+          FBinList.forEach((p, idx) => {
             if (item.position) {
-              return {
-                id: `fen-bin-${item.value}`,
-                data: { label: item.value },
+              return fBinNodes.push({
+                id: `fen-bin-${p.value}.${item.name}`,
+                data: { label: p.value },
                 type: 'fen-bin',
                 width: 82,
                 height: 82,
-                position: { x: item.position.x, y: item.position.y },
+                position: {
+                  x: p?.position?.x ?? 100 + (index + idx) * 180,
+                  y: p.param === 1 ? 0 : p?.position?.y ?? 224,
+                },
                 params: {},
-              };
+              });
             } else {
-              return {
-                id: `fen-bin-${item.value}`,
-                data: { label: item.value },
+              return fBinNodes.push({
+                id: `fen-bin-${p.value}.${item.name}`,
+                data: { label: p.value },
                 type: 'fen-bin',
                 width: 82,
                 height: 82,
+                position: {
+                  x: p?.position?.x ?? 100 + index * 180,
+                  y: p.param === 1 ? 0 : p?.position?.y ?? 224,
+                },
                 params: {},
-              };
+              });
             }
           });
         }
@@ -40,7 +47,12 @@ export const testFile = (flows) => {
           type,
           width: 100,
           height: 70,
-          position: { x: item.position.x, y: item.position.y },
+          position: {
+            // item?.position?.x ?? 0 的0是根据开始节点的x轴定的
+            // item?.position?.y ?? 0 的0是根据开始节点的y轴顶的
+            x: item?.position?.x ?? 0 + index * 200,
+            y: item?.position?.y ?? 0,
+          },
           params: {
             isFlowUnit: item.isFlowUnit,
             isStartUnit: item.isStartUnit,
@@ -77,10 +89,16 @@ export const testFile = (flows) => {
           }
 
           return {
-            id: `${item.name}->${t.value}`,
+            id:
+              t.type === '4'
+                ? `${item.name}->${t.value}.${item.name}`
+                : `${item.name}->${t.value}`,
             label: `${t.param}`,
             source: `${sourceType}-${item.name}`,
-            target: `${targetType}-${t.value}`,
+            target:
+              t.type === '4'
+                ? `${targetType}-${t.value}.${item.name}`
+                : `${targetType}-${t.value}`,
             type: 'floating',
             markerEnd: { type: 'arrowclosed', color: 'black' },
             style: { strokeWidth: 1, stroke: 'black' },

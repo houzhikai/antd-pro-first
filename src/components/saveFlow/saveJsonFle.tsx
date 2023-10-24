@@ -12,7 +12,7 @@ export const saveJsonFile = (flows) => {
         filterSameName.map((item) => {
           const fenBinSourceNode = t.data.label;
           const nodeIds = item.id.split('->');
-          const targetNode = nodeIds[1];
+          const targetNode = nodeIds[1].split('.')[0];
           let type;
           if (item.target.includes('test-method')) {
             type = '1';
