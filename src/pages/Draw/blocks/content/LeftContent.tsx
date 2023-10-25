@@ -39,7 +39,20 @@ const LeftContent = () => {
       icon={<PlusOutlined />}
       onClick={(event) => {
         event.stopPropagation();
-        setOpenTestUnitModal(true);
+        setOpenTestUnitModal({
+          param: 'add',
+          isOpen: true,
+          values: {
+            testMethod: 'baseName',
+            isFlowUnit: false,
+            isStartUnit: true,
+            name: 'baseName',
+            number: '0000',
+            loopCount: 3,
+            targetFlowName: 'add test unit',
+            variables: [],
+          },
+        });
       }}
     />
   );

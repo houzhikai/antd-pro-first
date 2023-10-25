@@ -5,15 +5,43 @@ import { useModel } from '@umijs/max';
 import styles from './index.less';
 
 const TestItem = () => {
-  const { isOnLine, testUnitData, setTestUniItem, setAddTestItemModal } =
-    useModel('useDrawModel');
+  const {
+    isOnLine,
+    testUnitData,
+    setTestUniItem,
+    setAddTestItemModal,
+    setOpenTestUnitModal,
+  } = useModel('useDrawModel');
   const newTestUnitDataList: any = [
-    { key: 999999, Class: 'BaseTestItem', LoopCount: 1, Name: 'BaseTestItem' },
+    {
+      key: 999999,
+      testMethod: 'BaseTestItem',
+      isFlowUnit: false,
+      isStartUnit: true,
+      name: 'BaseTestItem',
+      number: '000',
+      loopCount: 1,
+      targetFlowName: '',
+      variables: [],
+    },
     // @ts-expect-error
   ].concat(testUnitData);
 
   const handleClick = (item) => {
-    console.log({ item });
+    const variables = item.variables.map((item, index) => {
+      return {
+        key: `${index}-${item.value}`,
+        param: item.param,
+        value: item.value,
+      };
+    });
+    const values = Object.assign(item, { variables });
+
+    setOpenTestUnitModal({
+      param: 'edit',
+      isOpen: true,
+      values,
+    });
   };
   return (
     <div className={styles['test-item']}>
@@ -22,8 +50,8 @@ const TestItem = () => {
         {newTestUnitDataList.map((item, index) => (
           <div key={item.key} onDoubleClick={() => handleClick(item)}>
             <MyTestItemIcon
-              Class={item.Class}
-              name={item.Name}
+              Class={item.name}
+              name={item.name}
               item={item}
               index={index}
               type="test-method"

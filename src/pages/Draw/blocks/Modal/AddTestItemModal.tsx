@@ -39,7 +39,7 @@ const AddTestItemModal = () => {
       setTestUnitData((tesUnitData) =>
         tesUnitData.concat({
           Class: values.Class,
-          LoopCount: values.LoopCount,
+          loopCount: values.LoopCount,
           Name: values.Name,
           key: `test-method-${values.Name}`,
         }),

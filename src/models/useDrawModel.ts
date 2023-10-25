@@ -31,9 +31,14 @@ export default () => {
   const [testUnitData, setTestUnitData] = useState(testUnitDataList); //测试项列表
   const [testUnitItem, setTestUniItem] = useState<TestUnitDataListProps>({
     key: 999,
-    Class: '',
-    Name: '',
-    LoopCount: 1,
+    testMethod: 'BaseTestItem',
+    isFlowUnit: false,
+    isStartUnit: true,
+    name: 'BaseTestItem',
+    number: '000',
+    loopCount: 1,
+    targetFlowName: '',
+    variables: [],
   }); //测试项列表
   const [subflowItem, setSubflowItem] = useState<any>({
     key: 'subflow-1',
@@ -53,7 +58,17 @@ export default () => {
   const [openBinMapForm, setOpenBinMapForm] = useState(false);
   const [openSubFlowModal, setOpenSubFlowModal] = useState(false);
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
-  const [openTestUnitModal, setOpenTestUnitModal] = useState(false);
+  interface OpenTestUnitModalProps {
+    param: 'add' | 'edit';
+    isOpen: boolean;
+    values: any;
+  }
+  const [openTestUnitModal, setOpenTestUnitModal] =
+    useState<OpenTestUnitModalProps>({
+      param: 'add', // 两个属性，一个是添加新的 test unit，一个是修改 test unit
+      isOpen: false,
+      values: {},
+    });
   const [showSubflowItemModal, setShowSubflowItemModal] = useState(false);
   const [addTestItemModal, setAddTestItemModal] = useState(false); // 拖动基础测试项模板时打开弹窗
   const [openVariablesModal, setOpenVariablesModal] = useState({

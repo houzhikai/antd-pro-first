@@ -239,14 +239,14 @@ const MiddleContent = () => {
           id: testUnitItem.Class,
         },
         TestNumber: type === 'subflow' ? subflowItem.TestNumber : null,
-        LoopCount: testUnitItem.LoopCount,
+        LoopCount: testUnitItem.loopCount,
         Class: testUnitItem.Class,
       };
       setTestUniItem({
         key: 999,
         Class: '',
         Name: '',
-        LoopCount: testUnitItem.LoopCount,
+        loopCount: testUnitItem.loopCount,
       }); // 初始化testUnitItem，为了不影响之前拖动的测试项
       setSoftBinItem({
         CheckOverflow: true,

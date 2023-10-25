@@ -29,7 +29,9 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
 
   const handleConfirm = (index) => {
     if (type === 'test-method') {
-      const newDataList = testUnitData.filter((item) => item.Class !== Class);
+      const newDataList = testUnitData.filter(
+        (item: any) => item.Class !== Class,
+      );
       setTestUnitData(newDataList);
     } else if (type === 'subflow') {
       const newDataList = subflowList.filter((item, idx) => idx !== index);
