@@ -204,7 +204,7 @@ const MainFlowEdit = () => {
                 handleClick(activeTestOrFlowItemParams?.globalVariables)
               }
             >
-              打开弹窗
+              Open Modal
             </Button>
           </div>
           <div className={styles['flow-item']}>

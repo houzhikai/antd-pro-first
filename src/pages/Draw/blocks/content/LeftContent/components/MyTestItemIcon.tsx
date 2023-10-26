@@ -30,7 +30,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
   const handleConfirm = (index) => {
     if (type === 'test-method') {
       const newDataList = testUnitData.filter(
-        (item: any) => item.Class !== Class,
+        (item: any) => item.testMethod !== Class,
       );
       setTestUnitData(newDataList);
     } else if (type === 'subflow') {

@@ -53,7 +53,7 @@ export default function CustomNode({ id, data }) {
           position={Position.Left}
           type="target"
         />
-        我是测试项关键属性
+        {/* 我是测试项关键属性 */}
       </div>
     </div>
   );

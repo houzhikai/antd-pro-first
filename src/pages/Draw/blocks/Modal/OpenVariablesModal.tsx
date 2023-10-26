@@ -112,13 +112,13 @@ const OpenVariablesModal = () => {
         };
         return (
           <Popconfirm
-            title="删除此项?"
+            title="Are you sure to delete item?"
             onConfirm={() => handleRemoveRow(record)}
-            okText="确定"
-            cancelText="取消"
+            okText="OK"
+            cancelText="cancel"
           >
             <Button style={{ margin: '5px 0' }} type="link">
-              删除
+              delete
             </Button>
           </Popconfirm>
         );
@@ -146,8 +146,8 @@ const OpenVariablesModal = () => {
       title="VariablesModal"
       maskClosable={false}
       open={openVariablesModal.isOpen}
-      okText="保存"
-      cancelText="取消"
+      okText="save"
+      cancelText="cancel"
       onOk={handleOk}
       onCancel={handleCancel}
       destroyOnClose={true} // 关闭时销毁 Modal 里的子元素，关闭时相当于取消form的更改
@@ -158,7 +158,7 @@ const OpenVariablesModal = () => {
         <div className={styles['variablesModal-header']}>
           <div style={{ fontSize: 16, fontWeight: 600 }}>Variables</div>
           <Button type="primary" size="middle" onClick={handleAddRows}>
-            添加一行
+            Add a Row
           </Button>
         </div>
         <Table

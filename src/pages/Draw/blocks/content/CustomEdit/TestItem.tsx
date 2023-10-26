@@ -377,7 +377,7 @@ const TestItem = () => {
           <div className={styles.title}>
             Variables：
             <Button type="link" onClick={() => handleClick(params?.variables)}>
-              打开弹窗
+              Open Modal
             </Button>
           </div>
           <div className={styles['flow-item']}>

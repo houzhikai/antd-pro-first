@@ -51,7 +51,7 @@ const SubflowNode = ({ id, data }) => {
           position={Position.Left}
           type="target"
         />
-        我是subflow关键属性
+        {/* 我是subflow关键属性 */}
       </div>
     </div>
   );

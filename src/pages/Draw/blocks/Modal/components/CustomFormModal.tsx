@@ -178,7 +178,7 @@ const CustomFormModal = () => {
     },
     {
       key: 'option',
-      title: '操作',
+      title: 'options',
       align: 'center',
       width: optionWidth,
       render: (_, record) => {
@@ -196,14 +196,14 @@ const CustomFormModal = () => {
         };
         return (
           <Popconfirm
-            title="删除此项?"
+            title="Are you sure to delete item??"
             onConfirm={() => handleRemoveRow(record)}
-            okText="确定"
-            cancelText="取消"
+            okText="OK"
+            cancelText="cancel"
             disabled={isOnLine}
           >
             <Button style={{ margin: '5px 0' }} type="link" disabled={isOnLine}>
-              删除
+              delete
             </Button>
           </Popconfirm>
         );
@@ -481,7 +481,7 @@ const CustomFormModal = () => {
           onClick={handleAddHardBinRows}
           disabled={isOnLine}
         >
-          添加一行
+          Add a row
         </Button>
       </div>
       <Table
@@ -498,7 +498,7 @@ const CustomFormModal = () => {
           onClick={handleAddSoftBinRows}
           disabled={isOnLine}
         >
-          添加一行
+          Add a row
         </Button>
       </div>
       <Table
