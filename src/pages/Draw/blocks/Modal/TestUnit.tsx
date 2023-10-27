@@ -33,16 +33,6 @@ const TestUnit = () => {
     variables: openTestUnitModal.values.variables,
   });
 
-  const dataSource = openTestUnitModal?.values?.variables?.map(
-    (item, index) => {
-      return {
-        key: index,
-        param: item.param,
-        value: item.value,
-      };
-    },
-  );
-
   const handleCancel = () => {
     setOpenTestUnitModal((obj) => {
       return {
@@ -81,7 +71,7 @@ const TestUnit = () => {
             (item, idx) => {
               if (index === idx) {
                 return {
-                  key: index,
+                  key: `${e.target.value}.${index}`,
                   param: e.target.value,
                   value: item.value,
                 };
@@ -150,7 +140,7 @@ const TestUnit = () => {
     },
     {
       key: 'option',
-      title: '操作',
+      title: 'Options',
       align: 'center',
       width: '12%',
       render: (_, record) => {
@@ -171,13 +161,13 @@ const TestUnit = () => {
         };
         return (
           <Popconfirm
-            title="删除此项?"
+            title="Are you sure to delete this item??"
             onConfirm={() => handleRemoveRow(record)}
-            okText="确定"
-            cancelText="取消"
+            okText="yes"
+            cancelText="cancel"
           >
             <Button style={{ margin: '5px 0' }} type="link">
-              删除
+              delete
             </Button>
           </Popconfirm>
         );
@@ -202,7 +192,6 @@ const TestUnit = () => {
       };
     });
   };
-  console.log('values', openTestUnitModal.values, dataSource);
   const values = openTestUnitModal.values;
 
   return (
@@ -217,8 +206,8 @@ const TestUnit = () => {
         open={openTestUnitModal.isOpen}
         onOk={handleOK}
         onCancel={handleCancel}
-        okText="保存"
-        cancelText="取消"
+        okText="save"
+        cancelText="cancel"
         maskClosable={false}
         centered
       >
@@ -315,7 +304,7 @@ const TestUnit = () => {
               <Table
                 columns={columns}
                 rowKey="key"
-                dataSource={dataSource}
+                dataSource={values.variables}
                 pagination={false}
                 bordered
               />
