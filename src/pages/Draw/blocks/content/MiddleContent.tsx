@@ -225,31 +225,40 @@ const MiddleContent = () => {
       });
       const number = getId();
       const newNode = (type) => {
-        // if (type === 'test-method') {
-        return {
-          id: `${type}-${testUnitItem.name}-${number}`,
-          type,
-          position,
-          data: { label: `${testUnitItem.name}-${number}` },
-          width: 150,
-          height: 100,
-          params: {
-            testMethod: testUnitItem.testMethod,
-            isFlowUnit: testUnitItem.isFlowUnit,
-            isStartUnit: testUnitItem.isStartUnit,
-            name: `${testUnitItem.name}-${number}`,
-            number: testUnitItem.number,
-            // loopCount: testUnitItem.loopCount, // 暂时不用
-            targetFlowName: testUnitItem.targetFlowName,
-            variables: testUnitItem.variables,
-          },
-        };
-        // }
-        // else if (type === 'subflow') {
-        //   return {
-        //     id: `${type}-${subflowItem.name}`
-        //   };
-        // }
+        if (type === 'test-method') {
+          return {
+            id: `${type}-${testUnitItem.name}-${number}`,
+            type,
+            position,
+            data: { label: `${testUnitItem.name}-${number}` },
+            width: 150,
+            height: 100,
+            params: {
+              testMethod: testUnitItem.testMethod,
+              isFlowUnit: testUnitItem.isFlowUnit,
+              isStartUnit: testUnitItem.isStartUnit,
+              name: `${testUnitItem.name}-${number}`,
+              number: testUnitItem.number,
+              // loopCount: testUnitItem.loopCount, // 暂时不用
+              targetFlowName: testUnitItem.targetFlowName,
+              variables: testUnitItem.variables,
+            },
+          };
+          // }
+          // else if (type === 'subflow') {
+          //   return {
+          //     id: `${type}-${subflowItem.name}`
+          //   };
+          // }
+        } else {
+          return {
+            id: `${type}-${softBinItem.Name}-${number}`,
+            type,
+            position,
+            data: { label: softBinItem.Name },
+            params: {},
+          };
+        }
       };
       console.log('drop', newNode(type));
       setNodes((nds) => nds.concat(newNode(type)));
