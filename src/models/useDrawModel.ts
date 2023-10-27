@@ -84,12 +84,19 @@ export default () => {
   const mainflowParams = testFile(flow2).mainflowList.filter(
     (item) => item.flowName === defaultShowFlowItem,
   )[0].flowParams;
-
+  const globalVariables = mainflowParams.globalVariables.map((item, index) => {
+    return {
+      key: index,
+      param: item.param,
+      value: item.value,
+    };
+  });
+  const mainParams = Object.assign(mainflowParams, { globalVariables });
   const [activeTestOrFlowItemParams, setActiveTestOrFlowItemParams] =
-    useState(mainflowParams);
+    useState(mainParams);
   useEffect(() => {
-    setActiveTestOrFlowItemParams(mainflowParams);
-  }, [mainflowParams]);
+    setActiveTestOrFlowItemParams(mainParams);
+  }, [mainParams]);
 
   const [selected, setSelected] = useState(''); // 选中样式
 
