@@ -9,7 +9,6 @@ const MainFlowEdit = () => {
   const {
     activeTestOrFlowItemParams,
     setActiveTestOrFlowItemParams,
-    openVariablesModal,
     setOpenVariablesModal,
   } = useModel('useDrawModel');
   const [isOpen, setIsOpen] = useState(false);
@@ -17,13 +16,15 @@ const MainFlowEdit = () => {
   const selectedNodeItem: any = nodes.filter((item) => item.selected);
 
   const handleClick = (values) => {
-    const dataSource = values.map((item: any, index) => {
+    const dataSource = values.globalVariables.map((item: any, index) => {
       return {
         key: index,
         param: item.param,
         value: item.value,
       };
     });
+    const params = Object.assign(values, { globalVariables: dataSource });
+    setActiveTestOrFlowItemParams(params);
     setOpenVariablesModal({ isOpen: true, values: dataSource });
   };
 
@@ -57,18 +58,22 @@ const MainFlowEdit = () => {
       ),
       render: (text, record, index) => {
         const handlePressEnter = (e) => {
-          setActiveTestOrFlowItemParams((obj) => {
+          const newData: any = activeTestOrFlowItemParams.globalVariables.map(
+            (item: any, idx) => {
+              if (index === idx) {
+                return {
+                  key: `${e.target.value}.${index}`,
+                  param: e.target.value,
+                  value: item.value,
+                };
+              }
+              return item;
+            },
+          );
+          setActiveTestOrFlowItemParams((obj: any) => {
             return {
               ...obj,
-              globalVariables: obj.globalVariables.map((item: any, idx) => {
-                if (index === idx) {
-                  return {
-                    param: e.target.value,
-                    value: item.value,
-                  };
-                }
-                return item;
-              }),
+              globalVariables: newData,
             };
           });
         };
@@ -96,18 +101,23 @@ const MainFlowEdit = () => {
       ),
       render: (text, record, index) => {
         const handlePressEnter = (e) => {
-          setActiveTestOrFlowItemParams((obj) => {
+          const newData: any = activeTestOrFlowItemParams.globalVariables.map(
+            (item: any, idx) => {
+              if (index === idx) {
+                return {
+                  key: item.key,
+                  param: item.param,
+                  value: e.target.value,
+                };
+              }
+              return item;
+            },
+          );
+
+          setActiveTestOrFlowItemParams((obj: any) => {
             return {
               ...obj,
-              globalVariables: obj.globalVariables.map((item: any, idx) => {
-                if (index === idx) {
-                  return {
-                    param: item.param,
-                    value: e.target.value,
-                  };
-                }
-                return item;
-              }),
+              globalVariables: newData,
             };
           });
         };
@@ -200,9 +210,7 @@ const MainFlowEdit = () => {
             GlobalVariables：
             <Button
               type="link"
-              onClick={() =>
-                handleClick(activeTestOrFlowItemParams?.globalVariables)
-              }
+              onClick={() => handleClick(activeTestOrFlowItemParams)}
             >
               Open Modal
             </Button>
@@ -210,15 +218,10 @@ const MainFlowEdit = () => {
           <div className={styles['flow-item']}>
             {/* <label className={styles['flow-label']}>globalVariables：</label> */}
             <Table
-              key={Math.random() * 100}
               style={{ width: '100%' }}
               className={isOpen ? styles['show-dataSource'] : undefined}
               columns={columns}
-              dataSource={
-                openVariablesModal.values.length === 0
-                  ? activeTestOrFlowItemParams.globalVariables
-                  : openVariablesModal.values
-              }
+              dataSource={activeTestOrFlowItemParams.globalVariables}
               pagination={false}
               bordered
             />

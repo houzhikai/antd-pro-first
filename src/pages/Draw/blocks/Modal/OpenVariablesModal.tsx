@@ -4,8 +4,12 @@ import styles from '../index.less';
 import { useEffect, useState } from 'react';
 
 const OpenVariablesModal = () => {
-  const { openVariablesModal, setOpenVariablesModal } =
-    useModel('useDrawModel');
+  const {
+    openVariablesModal,
+    setOpenVariablesModal,
+    activeTestOrFlowItemParams,
+    setActiveTestOrFlowItemParams,
+  } = useModel('useDrawModel');
   const [value, setValue] = useState(openVariablesModal.values);
 
   useEffect(() => {
@@ -34,7 +38,6 @@ const OpenVariablesModal = () => {
     {
       key: 'param',
       dataIndex: 'param',
-      width: '50%',
       title: (
         <div className={styles.globalVariablesTable}>
           <span> Param</span>
@@ -42,17 +45,24 @@ const OpenVariablesModal = () => {
       ),
       render: (text, record, index) => {
         const handlePressEnter = (e) => {
-          const newData: any = value.map((item: any, idx) => {
-            if (index === idx) {
-              return {
-                key: item.key,
-                param: e.target.value,
-                value: item.value,
-              };
-            }
-            return item;
+          const newData: any = activeTestOrFlowItemParams.globalVariables.map(
+            (item: any, idx) => {
+              if (index === idx) {
+                return {
+                  key: `${e.target.value}.${index}`,
+                  param: e.target.value,
+                  value: item.value,
+                };
+              }
+              return item;
+            },
+          );
+          setActiveTestOrFlowItemParams((obj: any) => {
+            return {
+              ...obj,
+              globalVariables: newData,
+            };
           });
-          setValue(newData);
         };
         return (
           <Input
@@ -67,21 +77,28 @@ const OpenVariablesModal = () => {
     {
       key: 'value',
       dataIndex: 'value',
-      width: '50%',
       title: <div className={styles.globalVariablesTable}>Value</div>,
       render: (text, record, index) => {
         const handlePressEnter = (e) => {
-          const newData: any = value.map((item: any, idx) => {
-            if (index === idx) {
-              return {
-                key: item.key,
-                param: item.param,
-                value: e.target.value,
-              };
-            }
-            return item;
+          const newData: any = activeTestOrFlowItemParams.globalVariables.map(
+            (item: any, idx) => {
+              if (index === idx) {
+                return {
+                  key: item.key,
+                  param: item.param,
+                  value: e.target.value,
+                };
+              }
+              return item;
+            },
+          );
+
+          setActiveTestOrFlowItemParams((obj: any) => {
+            return {
+              ...obj,
+              globalVariables: newData,
+            };
           });
-          setValue(newData);
         };
         return (
           <Input
@@ -95,18 +112,18 @@ const OpenVariablesModal = () => {
     },
     {
       key: 'option',
-      title: '操作',
+      title: 'Options',
       align: 'center',
       width: '12%',
       render: (_, record) => {
         const handleRemoveRow = (record) => {
-          const newData = openVariablesModal.values.filter(
+          const newData = activeTestOrFlowItemParams.globalVariables.filter(
             (item: { key: number }) => item.key !== record.key,
           );
-          setOpenVariablesModal((obj) => {
+          setActiveTestOrFlowItemParams((obj: any) => {
             return {
               ...obj,
-              values: newData,
+              globalVariables: newData,
             };
           });
         };
@@ -127,16 +144,16 @@ const OpenVariablesModal = () => {
   ];
 
   const handleAddRows = () => {
-    const valuesLength = openVariablesModal.values.length;
+    const valuesLength = activeTestOrFlowItemParams.globalVariables.length;
     const newData = {
       key: valuesLength,
       param: '',
       value: '',
     };
-    setOpenVariablesModal((obj: any) => {
+    setActiveTestOrFlowItemParams((obj: any) => {
       return {
         ...obj,
-        values: [...openVariablesModal.values, newData],
+        globalVariables: [...obj.globalVariables, newData],
       };
     });
   };
@@ -164,7 +181,7 @@ const OpenVariablesModal = () => {
         <Table
           className={styles['table']}
           columns={columns}
-          dataSource={openVariablesModal.values}
+          dataSource={activeTestOrFlowItemParams.globalVariables}
           pagination={false}
           bordered
         />

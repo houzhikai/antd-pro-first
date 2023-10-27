@@ -148,7 +148,6 @@ const TestUnit = () => {
           const newData = openTestUnitModal.values.variables.filter(
             (item: any) => item.key !== record.key,
           );
-          console.log({ newData });
           setOpenTestUnitModal((obj) => {
             return {
               ...obj,
@@ -284,11 +283,7 @@ const TestUnit = () => {
             />
           </Form.Item>
 
-          <Form.Item
-            name="targetFlowName"
-            label="TargetFlowName"
-            rules={[{ required: true, message: '不能为空！' }]}
-          >
+          <Form.Item name="targetFlowName" label="TargetFlowName">
             <Input
               placeholder="请输入TargetFlowName"
               allowClear
