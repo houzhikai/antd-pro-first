@@ -30,7 +30,7 @@ const TestItem = () => {
   const handleClick = (item) => {
     const variables = item.variables.map((item, index) => {
       return {
-        key: `${index}-${item.value}`,
+        key: index,
         param: item.param,
         value: item.value,
       };

@@ -33,6 +33,7 @@ const SubflowList = () => {
             type="subflow"
             Class={item.name}
             onDragStart={(event) => {
+              console.log({ item });
               setSubflowItem(item);
               return !isOnLine ? onDragStart(event, 'subflow') : null;
             }}

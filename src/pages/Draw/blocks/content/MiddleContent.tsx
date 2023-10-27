@@ -27,7 +27,7 @@ const getId = () => `${id++}`;
 
 const MiddleContent = () => {
   const {
-    nodeName,
+    // nodeName,
     // nodeBg,
     // nodeHidden,
     nodes,
@@ -69,21 +69,21 @@ const MiddleContent = () => {
     }
   }, [deleteKey]);
 
-  useEffect(() => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        // if (node.id === selectedNode.id) {
-        if (node.selected) {
-          node.data = {
-            ...node.data,
-            label: testUnitItem.Name || softBinItem.Name,
-          };
-        }
+  // useEffect(() => {
+  //   setNodes((nds) =>
+  //     nds.map((node) => {
+  //       // if (node.id === selectedNode.id) {
+  //       if (node.selected) {
+  //         node.data = {
+  //           ...node.data,
+  //           label: testUnitItem.Name || softBinItem.Name,
+  //         };
+  //       }
 
-        return node;
-      }),
-    );
-  }, [nodeName, setNodes]);
+  //       return node;
+  //     }),
+  //   );
+  // }, [nodeName, setNodes]);
 
   // useEffect(() => {
   //   setNodes((nds) =>
@@ -223,30 +223,46 @@ const MiddleContent = () => {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
-      const newNode: any = {
-        id:
-          type === 'fen-bin'
-            ? `${type}-${softBinItem.Name}-${getId()}`
-            : `${type}-${getId()}`,
-        type,
-        position,
-        // data: { label: `${type}${id} node` },
-        data: {
-          label:
-            type === 'subflow'
-              ? subflowItem.name
-              : testUnitItem.Name || softBinItem.Name,
-          id: testUnitItem.Class,
-        },
-        TestNumber: type === 'subflow' ? subflowItem.TestNumber : null,
-        LoopCount: testUnitItem.loopCount,
-        Class: testUnitItem.Class,
+      const number = getId();
+      const newNode = (type) => {
+        // if (type === 'test-method') {
+        return {
+          id: `${type}-${testUnitItem.name}-${number}`,
+          type,
+          position,
+          data: { label: `${testUnitItem.name}-${number}` },
+          width: 150,
+          height: 100,
+          params: {
+            testMethod: testUnitItem.testMethod,
+            isFlowUnit: testUnitItem.isFlowUnit,
+            isStartUnit: testUnitItem.isStartUnit,
+            name: `${testUnitItem.name}-${number}`,
+            number: testUnitItem.number,
+            // loopCount: testUnitItem.loopCount, // 暂时不用
+            targetFlowName: testUnitItem.targetFlowName,
+            variables: testUnitItem.variables,
+          },
+        };
+        // }
+        // else if (type === 'subflow') {
+        //   return {
+        //     id: `${type}-${subflowItem.name}`
+        //   };
+        // }
       };
+      console.log('drop', newNode(type));
+      setNodes((nds) => nds.concat(newNode(type)));
       setTestUniItem({
         key: 999,
-        Class: '',
-        Name: '',
-        loopCount: testUnitItem.loopCount,
+        testMethod: 'BaseTestItem',
+        isFlowUnit: false,
+        isStartUnit: true,
+        name: 'BaseTestItem',
+        number: '000',
+        loopCount: 1,
+        targetFlowName: '',
+        variables: [],
       }); // 初始化testUnitItem，为了不影响之前拖动的测试项
       setSoftBinItem({
         CheckOverflow: true,
@@ -263,7 +279,6 @@ const MiddleContent = () => {
         type: 'subflow',
         name: '',
       });
-      setNodes((nds) => nds.concat(newNode));
     },
     [reactFlowInstance, testUnitItem, softBinItem, subflowItem, setTestUniItem],
   );
