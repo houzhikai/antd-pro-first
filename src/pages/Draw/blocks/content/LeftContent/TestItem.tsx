@@ -5,13 +5,8 @@ import { useModel } from '@umijs/max';
 import styles from './index.less';
 
 const TestItem = () => {
-  const {
-    isOnLine,
-    testUnitData,
-    setTestUniItem,
-    setAddTestItemModal,
-    setOpenTestUnitModal,
-  } = useModel('useDrawModel');
+  const { isOnLine, testUnitData, setTestUniItem, setOpenTestUnitModal } =
+    useModel('useDrawModel');
   const newTestUnitDataList: any = [
     {
       key: 999999,
@@ -58,7 +53,11 @@ const TestItem = () => {
               color="#108ee9"
               onDragStart={(event) => {
                 if (index === 0) {
-                  setAddTestItemModal(true);
+                  setOpenTestUnitModal({
+                    param: 'add',
+                    isOpen: true,
+                    values: item,
+                  });
                 }
                 setTestUniItem(item);
                 return !isOnLine ? onDragStart(event, 'test-method') : null;
