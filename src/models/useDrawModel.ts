@@ -138,6 +138,7 @@ export default () => {
       subFlowNode: item.flowNodes,
       subFlowEdge: item.flowEdges,
       param: item.flowParams,
+      testUnitParams: item.testUnitParams,
     };
   });
 

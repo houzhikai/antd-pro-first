@@ -68,6 +68,9 @@ export const testFile = (flows) => {
         flowNodes: defaultNodeList.concat(fBinNodes),
         flowName: t.flowName,
         flowParams: t,
+        existedSubNodes: defaultNodeList.filter(
+          (item) => item.type === 'subflow',
+        ),
       };
     });
     return flowNodes;
@@ -126,6 +129,32 @@ export const testFile = (flows) => {
   const mainFlowEdges = getEdges(isMainflow);
   const subFlowNodes = getNodes(isNotMainFlow);
   const subFlowEdges = getEdges(isNotMainFlow);
+  const flowNodes = [...mainFlowNodes, ...subFlowNodes]
+    .map((item) => item.existedSubNodes)
+    .flat(Infinity);
+  // add subflow test-unit-params
+  const getSubFlows = (nodes, edges) => {
+    const flowList = nodes.map((item) => {
+      let newArr = {};
+      flowNodes.forEach((p) =>
+        edges.forEach((t) => {
+          if (item.flowName === t.flowName) {
+            if (item.flowName === p.data.label) {
+              newArr = {
+                flowName: item.flowName,
+                flowNodes: item.flowNodes,
+                flowEdges: t.flowEdges,
+                flowParams: item.flowParams,
+                testUnitParams: p?.params,
+              };
+            }
+          }
+        }),
+      );
+      return newArr;
+    });
+    return flowList;
+  };
 
   const getFlows = (nodes, edges) => {
     const flowList = nodes.map((item) => {
@@ -146,8 +175,7 @@ export const testFile = (flows) => {
   };
 
   const mainflowList = getFlows(mainFlowNodes, mainFlowEdges);
-  const subflowList = getFlows(subFlowNodes, subFlowEdges);
-
+  const subflowList = getSubFlows(subFlowNodes, subFlowEdges);
   const globalSettings = flows.globalSettings;
 
   //   const mainflowList = mainFlowNodes.map((item) => {

@@ -244,12 +244,25 @@ const MiddleContent = () => {
               variables: testUnitItem.variables,
             },
           };
-          // }
-          // else if (type === 'subflow') {
-          //   return {
-          //     id: `${type}-${subflowItem.name}`
-          //   };
-          // }
+        } else if (type === 'subflow') {
+          return {
+            id: `${type}-${subflowItem.name}-${number}`,
+            type,
+            position,
+            data: { label: `${subflowItem.name}-${number}` },
+            width: 150,
+            height: 100,
+            params: {
+              testMethod: subflowItem.testUnitParams.testMethod,
+              isFlowUnit: subflowItem.testUnitParams.isFlowUnit,
+              isStartUnit: subflowItem.testUnitParams.isStartUnit,
+              name: `${subflowItem.name}-${number}`,
+              number: subflowItem.testUnitParams.number,
+              // loopCount: testUnitItem.loopCount, // 暂时不用
+              targetFlowName: subflowItem.testUnitParams.targetFlowName,
+              variables: subflowItem.testUnitParams.variables,
+            },
+          };
         } else {
           return {
             id: `${type}-${softBinItem.Name}-${number}`,
@@ -260,7 +273,6 @@ const MiddleContent = () => {
           };
         }
       };
-      console.log('drop', newNode(type));
       setNodes((nds) => nds.concat(newNode(type)));
       setTestUniItem({
         key: 999,
