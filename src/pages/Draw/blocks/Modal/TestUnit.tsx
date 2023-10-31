@@ -193,6 +193,29 @@ const TestUnit = () => {
   };
   const values = openTestUnitModal.values;
 
+  const handleChangeIsStartUnit = (checked) => {
+    setOpenTestUnitModal((obj) => {
+      return {
+        ...obj,
+        values: {
+          ...obj.values,
+          isStartUnit: checked,
+        },
+      };
+    });
+  };
+  const handleChangeIsFlowUnit = (checked) => {
+    setOpenTestUnitModal((obj) => {
+      return {
+        ...obj,
+        values: {
+          ...obj.values,
+          isFlowUnit: checked,
+        },
+      };
+    });
+  };
+
   return (
     <div>
       <Modal
@@ -240,14 +263,20 @@ const TestUnit = () => {
               checkedChildren="true"
               unCheckedChildren="false"
               checked={values.isFlowUnit}
+              onChange={handleChangeIsFlowUnit}
             />
           </Form.Item>
 
-          <Form.Item name="isStartUnit" label="IsStartUnit">
+          <Form.Item
+            name="isStartUnit"
+            label="IsStartUnit"
+            // valuePropName={values.isStartUnit === false ? 'checked' : undefined}
+          >
             <Switch
               checkedChildren="true"
               unCheckedChildren="false"
               checked={values.isStartUnit}
+              onChange={handleChangeIsStartUnit}
             />
           </Form.Item>
 

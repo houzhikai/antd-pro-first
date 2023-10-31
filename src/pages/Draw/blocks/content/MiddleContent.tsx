@@ -62,10 +62,10 @@ const MiddleContent = () => {
   // 监听 delete 键盘事件，按下为 true，抬起为false， deleteType为null时，表示不可删除
   useEffect(() => {
     if (deleteKey && !deleteType) {
-      message.error('subflow中的节点不可在流程图中删除', 6);
+      message.error('Subflow cannot be deleted from the flow chart', 6);
     } else if (deleteKey && deleteType === 'isDelete') {
       setDeleteType('Delete');
-      message.warning('请再次输入Delete键删除该subflow', 6);
+      message.warning('Enter the Delete key again to delete the subflow', 6);
     }
   }, [deleteKey]);
 
@@ -122,21 +122,21 @@ const MiddleContent = () => {
     (params) => {
       console.log(params, edges);
       if (params.source.includes('fen-bin')) {
-        return message.error('不可连接！');
+        return message.error('unConnectable!');
       }
-      // 如果存在相反的edge，则报错
+      // existed contrary edge
       const contraryEdge = edges.find((e) => {
         return e.target === params.source && e.source === params.target;
       });
       if (contraryEdge) {
-        return message.error('已存在相反的连线！');
+        return message.error('The opposite link already exists!');
       }
-      // edge 存在判断
+      // existed edge
       const existingEdge = edges.find((edge) => {
         return edge.source === params.source && edge.target === params.target;
       });
       if (existingEdge) {
-        return message.error('连线已存在！');
+        return message.error('Connection exists!');
       }
       // const existingEdge = edges.find((e) => {
       //   // 避免多个node同时进入同一个node的targetHandle
