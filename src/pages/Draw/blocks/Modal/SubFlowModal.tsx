@@ -6,22 +6,41 @@ import styles from '../index.less';
 import { useState } from 'react';
 
 const SubflowModal = () => {
-  const { openSubFlowModal, setOpenSubFlowModal, selected, setSelected } =
-    useModel('useDrawModel');
-  const { setNodes, setEdges } = useModel('useTestFlowModel');
+  const {
+    openSubFlowModal,
+    setOpenSubFlowModal,
+    selected,
+    setSelected,
+    setOpenSubFlowAttributeModal,
+  } = useModel('useDrawModel');
+  // const { setNodes, setEdges } = useModel('useTestFlowModel');
   const [newFlow, setNewFlow] = useState({ nodes: [], edges: [] });
   const handleCancel = () => {
     setOpenSubFlowModal(false);
   };
   const handleOK = () => {
-    if (selected === 'empty') {
-      setNodes([]);
-      setEdges([]);
-    } else {
-      setNodes(newFlow.nodes);
-      setEdges(newFlow.edges);
-    }
+    // if (selected === 'empty') {
+    //   setNodes([]);
+    //   setEdges([]);
+    // } else {
+    //   setNodes(newFlow.nodes);
+    //   setEdges(newFlow.edges);
+    // }
     setOpenSubFlowModal(false);
+    setOpenSubFlowAttributeModal((obj) => {
+      return {
+        ...obj,
+        isOpen: true,
+        type: 'subflow',
+        name: selected,
+        param: {
+          ...obj.param,
+          flowName: selected,
+        },
+        mainFlowNode: selected === 'empty' ? [] : newFlow.nodes,
+        mainFlowEdges: selected === 'empty' ? [] : newFlow.edges,
+      };
+    });
   };
 
   const handleSelectedSubflowItem = (nodes, edges, name) => {

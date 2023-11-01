@@ -11,54 +11,54 @@ import {
 } from 'antd';
 import { useRef } from 'react';
 
-const AddMainFlowAttribute = () => {
+const AddSubFlowAttribute = () => {
   const {
-    openMainFlowAttributeModal,
-    setOpenMainFlowAttributeModal,
+    openSubFlowAttributeModal,
+    setOpenSubFlowAttributeModal,
     setActiveTestOrFlowItemParams,
-    setAddMainFlowList,
+    setAddSubFlowList,
     setActiveTestOrFlowItem,
   } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
 
   const formRef = useRef<any>(null);
   const [form] = Form.useForm();
-  console.log({ openMainFlowAttributeModal });
+  console.log({ openSubFlowAttributeModal });
   // 每次关闭form表单时清除表单数据
   form.setFieldsValue({
-    flowName: openMainFlowAttributeModal.param.flowName,
-    isMain: openMainFlowAttributeModal.param.isMain,
-    isActive: openMainFlowAttributeModal.param.isActive,
-    globalVariables: openMainFlowAttributeModal.param.globalVariables,
+    flowName: openSubFlowAttributeModal.param.flowName,
+    isMain: openSubFlowAttributeModal.param.isMain,
+    isActive: openSubFlowAttributeModal.param.isActive,
+    globalVariables: openSubFlowAttributeModal.param.globalVariables,
   });
 
   const handleOK = async () => {
     setActiveTestOrFlowItemParams(formRef.current.getFieldsValue());
-    setNodes(openMainFlowAttributeModal.mainFlowNode);
-    setEdges(openMainFlowAttributeModal.mainFlowEdges);
+    setNodes(openSubFlowAttributeModal.mainFlowNode);
+    setEdges(openSubFlowAttributeModal.mainFlowEdges);
     const xxx = {
-      type: 'mainflow',
+      type: 'subflow',
       name: formRef.current.getFieldsValue().flowName,
       param: {
         flowName: formRef.current.getFieldsValue().flowName,
-        isMain: openMainFlowAttributeModal.param.isMain,
-        isActive: openMainFlowAttributeModal.param.isActive,
-        globalVariables: openMainFlowAttributeModal.param.globalVariables,
+        isMain: openSubFlowAttributeModal.param.isMain,
+        isActive: openSubFlowAttributeModal.param.isActive,
+        globalVariables: openSubFlowAttributeModal.param.globalVariables,
       },
-      mainFlowNode: openMainFlowAttributeModal.mainFlowNode,
-      mainFlowEdges: openMainFlowAttributeModal.mainFlowEdges,
+      mainFlowNode: openSubFlowAttributeModal.mainFlowNode,
+      mainFlowEdges: openSubFlowAttributeModal.mainFlowEdges,
     };
 
     console.log(
       'ok:',
       formRef.current.getFieldsValue(),
-      openMainFlowAttributeModal,
+      openSubFlowAttributeModal,
       xxx,
     );
-    setAddMainFlowList((list) => [...list, xxx]);
+    setAddSubFlowList((list) => [...list, xxx]);
     setActiveTestOrFlowItem(formRef.current.getFieldsValue().flowName);
 
-    setOpenMainFlowAttributeModal((obj) => {
+    setOpenSubFlowAttributeModal((obj) => {
       return {
         ...obj,
         isOpen: false,
@@ -66,8 +66,9 @@ const AddMainFlowAttribute = () => {
     });
     await form.validateFields();
   };
+
   const handleCancel = () => {
-    setOpenMainFlowAttributeModal((obj) => {
+    setOpenSubFlowAttributeModal((obj) => {
       return {
         ...obj,
         isOpen: false,
@@ -76,7 +77,7 @@ const AddMainFlowAttribute = () => {
   };
 
   const handleChangeIsMain = (checked) => {
-    setOpenMainFlowAttributeModal((obj) => {
+    setOpenSubFlowAttributeModal((obj) => {
       return {
         ...obj,
         param: {
@@ -87,7 +88,7 @@ const AddMainFlowAttribute = () => {
     });
   };
   const handleChangeIsActive = (checked) => {
-    setOpenMainFlowAttributeModal((obj) => {
+    setOpenSubFlowAttributeModal((obj) => {
       return {
         ...obj,
         param: {
@@ -106,7 +107,7 @@ const AddMainFlowAttribute = () => {
       title: 'Param',
       render: (text, record, index) => {
         const handlePressEnter = (e) => {
-          const newData = openMainFlowAttributeModal.param.globalVariables.map(
+          const newData = openSubFlowAttributeModal.param.globalVariables.map(
             (item: { param: string; value: string }, idx) => {
               if (index === idx) {
                 return {
@@ -118,7 +119,7 @@ const AddMainFlowAttribute = () => {
               return item;
             },
           );
-          setOpenMainFlowAttributeModal((obj: any) => {
+          setOpenSubFlowAttributeModal((obj: any) => {
             return {
               ...obj,
               param: {
@@ -145,7 +146,7 @@ const AddMainFlowAttribute = () => {
       title: 'Value',
       render: (text, record, index) => {
         const handlePressEnter = (e) => {
-          const newData = openMainFlowAttributeModal.param.globalVariables.map(
+          const newData = openSubFlowAttributeModal.param.globalVariables.map(
             (item: { param: string; value: string }, idx) => {
               if (index === idx) {
                 return {
@@ -157,7 +158,7 @@ const AddMainFlowAttribute = () => {
               return item;
             },
           );
-          setOpenMainFlowAttributeModal((obj: any) => {
+          setOpenSubFlowAttributeModal((obj: any) => {
             return {
               ...obj,
               param: {
@@ -185,10 +186,10 @@ const AddMainFlowAttribute = () => {
       render: (_, record) => {
         const handleRemoveRow = (record) => {
           const newData =
-            openMainFlowAttributeModal.param.globalVariables.filter(
+            openSubFlowAttributeModal.param.globalVariables.filter(
               (item: any) => item.key !== record.key,
             );
-          setOpenMainFlowAttributeModal((obj) => {
+          setOpenSubFlowAttributeModal((obj) => {
             return {
               ...obj,
               param: {
@@ -215,13 +216,13 @@ const AddMainFlowAttribute = () => {
   ];
 
   const handleAddRows = () => {
-    const length = openMainFlowAttributeModal.param.globalVariables.length;
+    const length = openSubFlowAttributeModal.param.globalVariables.length;
     const newData = {
       key: length,
       param: '',
       value: '',
     };
-    setOpenMainFlowAttributeModal((obj: any) => {
+    setOpenSubFlowAttributeModal((obj: any) => {
       return {
         ...obj,
         param: {
@@ -231,11 +232,11 @@ const AddMainFlowAttribute = () => {
       };
     });
   };
-  const values = openMainFlowAttributeModal.param;
+  const values = openSubFlowAttributeModal.param;
   return (
     <Modal
       title="Basic Modal"
-      open={openMainFlowAttributeModal.isOpen}
+      open={openSubFlowAttributeModal.isOpen}
       onOk={handleOK}
       width={700}
       onCancel={handleCancel}
@@ -249,7 +250,7 @@ const AddMainFlowAttribute = () => {
         ref={formRef}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
-        initialValues={openMainFlowAttributeModal.values}
+        initialValues={openSubFlowAttributeModal.values}
         name="test-unit-form"
         style={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: 50 }}
       >
@@ -287,7 +288,7 @@ const AddMainFlowAttribute = () => {
             <Table
               columns={columns}
               rowKey="key"
-              dataSource={openMainFlowAttributeModal.param.globalVariables}
+              dataSource={openSubFlowAttributeModal.param.globalVariables}
               pagination={false}
               bordered
             />
@@ -299,4 +300,4 @@ const AddMainFlowAttribute = () => {
   );
 };
 
-export default AddMainFlowAttribute;
+export default AddSubFlowAttribute;

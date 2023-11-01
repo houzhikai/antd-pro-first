@@ -12,6 +12,7 @@ import AddTestItemModal from './Modal/AddTestItemModal';
 import OpenVariablesModal from './Modal/OpenVariablesModal';
 import styles from './index.less';
 import AddMainFlowAttribute from './Modal/AddMainFlowAttribute';
+import AddSubFlowAttribute from './Modal/AddSubFlowAttribute';
 
 const Layout = () => {
   return (
@@ -32,6 +33,7 @@ const Layout = () => {
       <AddTestItemModal />
       <OpenVariablesModal />
       <AddMainFlowAttribute />
+      <AddSubFlowAttribute />
     </div>
   );
 };

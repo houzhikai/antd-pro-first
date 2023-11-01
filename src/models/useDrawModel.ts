@@ -72,7 +72,23 @@ export default () => {
       mainFlowNode: [],
       mainFlowEdges: [],
     });
+  const [openSubFlowAttributeModal, setOpenSubFlowAttributeModal] =
+    useState<any>({
+      isOpen: false,
+      type: 'subflow',
+      name: '',
+      param: {
+        flowName: '',
+        isMain: true,
+        isActive: false,
+        globalVariables: [],
+      },
+      mainFlowNode: [],
+      mainFlowEdges: [],
+    });
+
   const [addMainFlowList, setAddMainFlowList] = useState<any>([]);
+  const [addSubFlowList, setAddSubFlowList] = useState<any>([]);
   interface OpenTestUnitModalProps {
     param: 'add' | 'edit';
     isOpen: boolean;
@@ -219,5 +235,9 @@ export default () => {
     setOpenMainFlowAttributeModal,
     addMainFlowList,
     setAddMainFlowList,
+    addSubFlowList,
+    setAddSubFlowList,
+    openSubFlowAttributeModal,
+    setOpenSubFlowAttributeModal,
   };
 };
