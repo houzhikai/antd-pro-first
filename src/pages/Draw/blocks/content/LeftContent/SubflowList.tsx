@@ -5,7 +5,13 @@ import styles from './index.less';
 import { useEffect, useState } from 'react';
 
 const SubflowList = () => {
-  const { isOnLine, setSubflowItem, subFlowList } = useModel('useDrawModel');
+  const {
+    isOnLine,
+    setSubflowItem,
+    subFlowList,
+    setActiveTestOrFlowItemParams,
+    activeTestOrFlowItem,
+  } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
   const [list, setList] = useState<any>([]);
 
@@ -13,6 +19,7 @@ const SubflowList = () => {
     setList(subFlowList);
   }, []);
   const handleClick = (item) => {
+    setActiveTestOrFlowItemParams(item.param);
     setNodes(item.subFlowNode);
     setEdges(item.subFlowEdge);
   };
@@ -33,7 +40,9 @@ const SubflowList = () => {
             Class={item.name}
             onDragStart={(event) => {
               setSubflowItem(item);
-              return !isOnLine ? onDragStart(event, 'subflow') : null;
+              return !isOnLine && activeTestOrFlowItem !== item.name
+                ? onDragStart(event, 'subflow')
+                : null;
             }}
           />
         </div>

@@ -179,7 +179,7 @@ const MainFlowEdit = () => {
             <Switch
               checkedChildren="true"
               unCheckedChildren="false"
-              defaultChecked={activeTestOrFlowItemParams.isMain}
+              checked={activeTestOrFlowItemParams.isMain}
               onChange={handleChangeIsMain}
             />
           </div>
@@ -189,7 +189,7 @@ const MainFlowEdit = () => {
             <Switch
               checkedChildren="true"
               unCheckedChildren="false"
-              defaultChecked={activeTestOrFlowItemParams?.isActive}
+              checked={activeTestOrFlowItemParams?.isActive}
               onChange={handleChangeIsActive}
             />
           </div>
