@@ -160,7 +160,7 @@ const TestUnit = () => {
         };
         return (
           <Popconfirm
-            title="Are you sure to delete this item??"
+            title="Are you sure to delete this item?"
             onConfirm={() => handleRemoveRow(record)}
             okText="yes"
             cancelText="cancel"

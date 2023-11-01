@@ -4,14 +4,18 @@ import styles from './index.less';
 import { useEffect, useState } from 'react';
 
 export default () => {
-  const { mainFlowList, setActiveTestOrFlowItemParams } =
-    useModel('useDrawModel');
+  const {
+    mainFlowList,
+    setActiveTestOrFlowItemParams,
+    openMainFlowAttributeModal,
+    addMainFlowList,
+  } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
   const [list, setList] = useState<any>([]);
 
   useEffect(() => {
-    setList(mainFlowList);
-  }, []);
+    setList([...mainFlowList, addMainFlowList].flat(Infinity));
+  }, [openMainFlowAttributeModal]);
 
   const handleClick = (item) => {
     setActiveTestOrFlowItemParams(item.param);

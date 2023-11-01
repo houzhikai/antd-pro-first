@@ -7,20 +7,38 @@ import styles from '../index.less';
 import { useState } from 'react';
 
 const AddMainFlowModal = () => {
-  const { openMainFlowModal, setOpenMainFlowModal, selected, setSelected } =
-    useModel('useDrawModel');
-  const { setNodes, setEdges } = useModel('useTestFlowModel');
+  const {
+    openMainFlowModal,
+    setOpenMainFlowModal,
+    selected,
+    setSelected,
+    setOpenMainFlowAttributeModal,
+  } = useModel('useDrawModel');
+  // const { setNodes, setEdges } = useModel('useTestFlowModel');
   const [newFlow, setNewFlow] = useState({ nodes: [], edges: [] });
 
   const handleOk = () => {
-    if (selected === 'empty') {
-      setNodes([]);
-      setEdges([]);
-    } else {
-      setNodes(newFlow.nodes);
-      setEdges(newFlow.edges);
-    }
+    // if (selected === 'empty') {
+    //   setNodes([]);
+    //   setEdges([]);
+    // } else {
+    //   setNodes(newFlow.nodes);
+    //   setEdges(newFlow.edges);
+    // }
     setOpenMainFlowModal(false);
+    setOpenMainFlowAttributeModal((obj) => {
+      return {
+        ...obj,
+        isOpen: true,
+        name: selected,
+        param: {
+          ...obj.param,
+          flowName: selected,
+        },
+        mainFlowNode: selected === 'empty' ? [] : newFlow.nodes,
+        mainFlowEdges: selected === 'empty' ? [] : newFlow.edges,
+      };
+    });
   };
 
   const handleCancel = () => {

@@ -11,6 +11,7 @@ import ShowSubflowModal from './Modal/ShowSubflowModal';
 import AddTestItemModal from './Modal/AddTestItemModal';
 import OpenVariablesModal from './Modal/OpenVariablesModal';
 import styles from './index.less';
+import AddMainFlowAttribute from './Modal/AddMainFlowAttribute';
 
 const Layout = () => {
   return (
@@ -30,6 +31,7 @@ const Layout = () => {
       <ShowSubflowModal />
       <AddTestItemModal />
       <OpenVariablesModal />
+      <AddMainFlowAttribute />
     </div>
   );
 };

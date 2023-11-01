@@ -58,6 +58,21 @@ export default () => {
   const [openBinMapForm, setOpenBinMapForm] = useState(false);
   const [openSubFlowModal, setOpenSubFlowModal] = useState(false);
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
+  const [openMainFlowAttributeModal, setOpenMainFlowAttributeModal] =
+    useState<any>({
+      isOpen: false,
+      type: 'mainflow',
+      name: '',
+      param: {
+        flowName: '',
+        isMain: true,
+        isActive: false,
+        globalVariables: [],
+      },
+      mainFlowNode: [],
+      mainFlowEdges: [],
+    });
+  const [addMainFlowList, setAddMainFlowList] = useState<any>([]);
   interface OpenTestUnitModalProps {
     param: 'add' | 'edit';
     isOpen: boolean;
@@ -200,5 +215,9 @@ export default () => {
     setActiveTestOrFlowItemParams,
     openVariablesModal,
     setOpenVariablesModal,
+    openMainFlowAttributeModal,
+    setOpenMainFlowAttributeModal,
+    addMainFlowList,
+    setAddMainFlowList,
   };
 };
