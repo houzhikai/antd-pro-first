@@ -5,7 +5,7 @@ import { useModel } from '@umijs/max';
 import { useState } from 'react';
 
 interface MyTestItemIconProps {
-  onDragStart: any;
+  onDragStart?: any;
   size?: number;
   name?: string;
   Class: string;
@@ -26,7 +26,6 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
     activeTestOrFlowItem,
     setActiveTestOrFlowItem,
   } = useModel('useDrawModel');
-
   const handleConfirm = (index) => {
     if (type === 'test-method') {
       const newDataList = testUnitData.filter(
@@ -52,7 +51,12 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
       style={{ textAlign: 'center', margin: '6px 0' }}
       onDoubleClick={() => handleClick(item)}
     >
-      <div onDragStart={(event) => onDragStart(event, 'input')} draggable>
+      <div
+        onDragStart={(event) =>
+          onDragStart ? onDragStart(event, 'input') : null
+        }
+        draggable
+      >
         <Popconfirm
           title="Are you sure to delete this item?"
           open={open}

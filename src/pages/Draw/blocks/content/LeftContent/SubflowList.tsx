@@ -5,13 +5,12 @@ import styles from './index.less';
 import { useEffect, useState } from 'react';
 
 const SubflowList = () => {
-  const { isOnLine, setSubflowItem, subflowList, subFlowList } =
-    useModel('useDrawModel');
+  const { isOnLine, setSubflowItem, subFlowList } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
-  const [list, setList] = useState(subflowList);
+  const [list, setList] = useState<any>([]);
 
   useEffect(() => {
-    setList((oldList) => [...oldList, ...subFlowList]);
+    setList(subFlowList);
   }, []);
   const handleClick = (item) => {
     setNodes(item.subFlowNode);

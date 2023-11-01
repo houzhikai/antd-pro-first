@@ -1,18 +1,16 @@
-import { mainFlowIconList } from '@/components/dataList/draw/mainFlow';
 import MyTestItemIcon from './components/MyTestItemIcon';
-import { onDragStart } from './components/onDragStart';
 import { useModel } from '@umijs/max';
 import styles from './index.less';
 import { useEffect, useState } from 'react';
 
 export default () => {
-  const { isOnLine, mainFlowList, setActiveTestOrFlowItemParams } =
+  const { mainFlowList, setActiveTestOrFlowItemParams } =
     useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
-  const [list, setList] = useState(mainFlowIconList);
+  const [list, setList] = useState<any>([]);
 
   useEffect(() => {
-    setList((oldList) => [...oldList, ...mainFlowList]);
+    setList(mainFlowList);
   }, []);
 
   const handleClick = (item) => {
@@ -37,9 +35,7 @@ export default () => {
               item={item}
               index={index}
               Class={item.name}
-              onDragStart={(event) =>
-                !isOnLine ? onDragStart(event, item.type) : null
-              }
+              onDragStart={null}
             />
           </div>
         ))}
