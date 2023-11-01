@@ -76,7 +76,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
             icon={activeTestOrFlowItem === Class ? <CheckOutlined /> : null}
             closeIcon={<CloseCircleOutlined style={{ color: 'white' }} />}
             closable={type !== 'test-method' || Class !== 'BaseTestItem'}
-            color={activeTestOrFlowItem === Class ? '#87d068' : color}
+            color={activeTestOrFlowItem === Class ? '#f60' : color}
             onClose={(e) => {
               e.preventDefault();
               setOpen(true);
