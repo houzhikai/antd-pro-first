@@ -120,7 +120,6 @@ const MiddleContent = () => {
 
   const onConnect = useCallback(
     (params) => {
-      console.log(params, edges);
       if (params.source.includes('fen-bin')) {
         return message.error('unConnectable!');
       }

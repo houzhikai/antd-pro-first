@@ -79,7 +79,7 @@ export default () => {
       name: '',
       param: {
         flowName: '',
-        isMain: true,
+        isMain: false,
         isActive: false,
         globalVariables: [],
       },
@@ -89,6 +89,7 @@ export default () => {
 
   const [addMainFlowList, setAddMainFlowList] = useState<any>([]);
   const [addSubFlowList, setAddSubFlowList] = useState<any>([]);
+  const [addTestUnitList, setAddTestUnitList] = useState<any>([]);
   interface OpenTestUnitModalProps {
     param: 'add' | 'edit';
     isOpen: boolean;
@@ -239,5 +240,7 @@ export default () => {
     setAddSubFlowList,
     openSubFlowAttributeModal,
     setOpenSubFlowAttributeModal,
+    addTestUnitList,
+    setAddTestUnitList,
   };
 };

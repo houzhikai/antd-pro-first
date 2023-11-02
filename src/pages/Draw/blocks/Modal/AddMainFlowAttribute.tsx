@@ -23,7 +23,6 @@ const AddMainFlowAttribute = () => {
 
   const formRef = useRef<any>(null);
   const [form] = Form.useForm();
-  console.log({ openMainFlowAttributeModal });
   // 每次关闭form表单时清除表单数据
   form.setFieldsValue({
     flowName: openMainFlowAttributeModal.param.flowName,
@@ -71,29 +70,6 @@ const AddMainFlowAttribute = () => {
       return {
         ...obj,
         isOpen: false,
-      };
-    });
-  };
-
-  const handleChangeIsMain = (checked) => {
-    setOpenMainFlowAttributeModal((obj) => {
-      return {
-        ...obj,
-        param: {
-          ...obj.param,
-          isMain: checked,
-        },
-      };
-    });
-  };
-  const handleChangeIsActive = (checked) => {
-    setOpenMainFlowAttributeModal((obj) => {
-      return {
-        ...obj,
-        param: {
-          ...obj.param,
-          isActive: checked,
-        },
       };
     });
   };
@@ -149,7 +125,7 @@ const AddMainFlowAttribute = () => {
             (item: { param: string; value: string }, idx) => {
               if (index === idx) {
                 return {
-                  key: index,
+                  key: `${item.param}.${index}`,
                   param: item.param,
                   value: e.target.value,
                 };
@@ -183,16 +159,21 @@ const AddMainFlowAttribute = () => {
       align: 'center',
       width: '12%',
       render: (_, record) => {
-        const handleRemoveRow = (record) => {
+        const handleRemoveRow = async (record) => {
           const newData =
             openMainFlowAttributeModal.param.globalVariables.filter(
               (item: any) => item.key !== record.key,
             );
+          let formValues = await form.validateFields();
           setOpenMainFlowAttributeModal((obj) => {
             return {
               ...obj,
+              name: formValues.flowName,
               param: {
                 ...obj.param,
+                flowName: formValues.flowName,
+                isMain: formValues.isMain,
+                isActive: formValues.isActive,
                 globalVariables: newData,
               },
             };
@@ -214,18 +195,23 @@ const AddMainFlowAttribute = () => {
     },
   ];
 
-  const handleAddRows = () => {
+  const handleAddRows = async () => {
     const length = openMainFlowAttributeModal.param.globalVariables.length;
     const newData = {
       key: length,
       param: '',
       value: '',
     };
+    let formValues = await form.validateFields();
     setOpenMainFlowAttributeModal((obj: any) => {
       return {
         ...obj,
+        name: formValues.flowName,
         param: {
           ...obj.param,
+          flowName: formValues.flowName,
+          isMain: formValues.isMain,
+          isActive: formValues.isActive,
           globalVariables: [...obj.param.globalVariables, newData],
         },
       };
@@ -234,13 +220,14 @@ const AddMainFlowAttribute = () => {
   const values = openMainFlowAttributeModal.param;
   return (
     <Modal
-      title="Basic Modal"
+      title="Mainflow Attribute"
       open={openMainFlowAttributeModal.isOpen}
       onOk={handleOK}
       width={700}
       onCancel={handleCancel}
       maskClosable={false}
       centered
+      destroyOnClose={true}
     >
       <Divider />
       <Form
@@ -249,7 +236,7 @@ const AddMainFlowAttribute = () => {
         ref={formRef}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
-        initialValues={openMainFlowAttributeModal.values}
+        initialValues={values}
         name="test-unit-form"
         style={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: 50 }}
       >
@@ -265,8 +252,7 @@ const AddMainFlowAttribute = () => {
           <Switch
             checkedChildren="true"
             unCheckedChildren="false"
-            checked={values.isMain}
-            onChange={handleChangeIsMain}
+            defaultChecked={values.isMain}
           />
         </Form.Item>
 
@@ -274,8 +260,7 @@ const AddMainFlowAttribute = () => {
           <Switch
             checkedChildren="true"
             unCheckedChildren="false"
-            checked={values.isActive}
-            onChange={handleChangeIsActive}
+            defaultChecked={values.isActive}
           />
         </Form.Item>
 

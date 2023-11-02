@@ -29,6 +29,8 @@ export default () => {
             onDoubleClick={() => handleClick(item)}
           >
             <MyTestItemIcon
+              list={list}
+              setList={setList}
               name={item.name}
               color="#2db7f5"
               type={item.type}

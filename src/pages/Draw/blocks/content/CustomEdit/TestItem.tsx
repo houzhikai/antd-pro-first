@@ -1,13 +1,5 @@
 import { useModel } from '@umijs/max';
-import {
-  Input,
-  Image,
-  Tooltip,
-  Switch,
-  Table,
-  InputNumber,
-  Button,
-} from 'antd';
+import { Input, Image, Tooltip, Switch, Table, Button } from 'antd';
 import toolTipSvg from '@/icon/draw/tooltip.svg';
 
 import styles from './index.less';
@@ -38,15 +30,15 @@ const TestItem = () => {
     setIsVariablesOpen((c) => !c);
   };
 
-  const handleChangeLoopCount = (value) => {
-    const newData = nodes.map((item) => {
-      if (item.selected) {
-        return { ...item, LoopCount: value };
-      }
-      return item;
-    });
-    setNodes(newData);
-  };
+  // const handleChangeLoopCount = (value) => {
+  //   const newData = nodes.map((item) => {
+  //     if (item.selected) {
+  //       return { ...item, LoopCount: value };
+  //     }
+  //     return item;
+  //   });
+  //   setNodes(newData);
+  // };
 
   const variablesColumns = [
     {
@@ -350,17 +342,17 @@ const TestItem = () => {
             />
           </div>
 
-          <div className={styles['flow-item']}>
+          {/* <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>LoopCount：</label>
             <InputNumber
               style={{ width: '100%' }}
               placeholder="请输入 LoopCount"
               min={1}
               controls={false}
-              value={selectedNodeItem.LoopCount}
+              value={selectedNodeItem.loopCount}
               onChange={handleChangeLoopCount}
             />
-          </div>
+          </div> */}
 
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>TargetFlowName： </label>

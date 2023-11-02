@@ -23,7 +23,6 @@ const AddSubFlowAttribute = () => {
 
   const formRef = useRef<any>(null);
   const [form] = Form.useForm();
-  console.log({ openSubFlowAttributeModal });
   // 每次关闭form表单时清除表单数据
   form.setFieldsValue({
     flowName: openSubFlowAttributeModal.param.flowName,
@@ -72,29 +71,6 @@ const AddSubFlowAttribute = () => {
       return {
         ...obj,
         isOpen: false,
-      };
-    });
-  };
-
-  const handleChangeIsMain = (checked) => {
-    setOpenSubFlowAttributeModal((obj) => {
-      return {
-        ...obj,
-        param: {
-          ...obj.param,
-          isMain: checked,
-        },
-      };
-    });
-  };
-  const handleChangeIsActive = (checked) => {
-    setOpenSubFlowAttributeModal((obj) => {
-      return {
-        ...obj,
-        param: {
-          ...obj.param,
-          isActive: checked,
-        },
       };
     });
   };
@@ -150,7 +126,7 @@ const AddSubFlowAttribute = () => {
             (item: { param: string; value: string }, idx) => {
               if (index === idx) {
                 return {
-                  key: index,
+                  key: `${item.param}.${index}`,
                   param: item.param,
                   value: e.target.value,
                 };
@@ -184,16 +160,22 @@ const AddSubFlowAttribute = () => {
       align: 'center',
       width: '12%',
       render: (_, record) => {
-        const handleRemoveRow = (record) => {
+        const handleRemoveRow = async (record) => {
           const newData =
             openSubFlowAttributeModal.param.globalVariables.filter(
               (item: any) => item.key !== record.key,
             );
+          let formValues = await form.validateFields();
+
           setOpenSubFlowAttributeModal((obj) => {
             return {
               ...obj,
+              name: formValues.flowName,
               param: {
                 ...obj.param,
+                flowName: formValues.flowName,
+                isMain: formValues.isMain,
+                isActive: formValues.isActive,
                 globalVariables: newData,
               },
             };
@@ -215,18 +197,23 @@ const AddSubFlowAttribute = () => {
     },
   ];
 
-  const handleAddRows = () => {
+  const handleAddRows = async () => {
     const length = openSubFlowAttributeModal.param.globalVariables.length;
     const newData = {
       key: length,
       param: '',
       value: '',
     };
+    let formValues = await form.validateFields();
     setOpenSubFlowAttributeModal((obj: any) => {
       return {
         ...obj,
+        name: formValues.flowName,
         param: {
           ...obj.param,
+          flowName: formValues.flowName,
+          isMain: formValues.isMain,
+          isActive: formValues.isActive,
           globalVariables: [...obj.param.globalVariables, newData],
         },
       };
@@ -235,13 +222,14 @@ const AddSubFlowAttribute = () => {
   const values = openSubFlowAttributeModal.param;
   return (
     <Modal
-      title="Basic Modal"
+      title="Subflow Attribute"
       open={openSubFlowAttributeModal.isOpen}
       onOk={handleOK}
       width={700}
       onCancel={handleCancel}
       maskClosable={false}
       centered
+      destroyOnClose={true}
     >
       <Divider />
       <Form
@@ -266,8 +254,7 @@ const AddSubFlowAttribute = () => {
           <Switch
             checkedChildren="true"
             unCheckedChildren="false"
-            checked={values.isMain}
-            onChange={handleChangeIsMain}
+            defaultChecked={values.isMain}
           />
         </Form.Item>
 
@@ -275,8 +262,7 @@ const AddSubFlowAttribute = () => {
           <Switch
             checkedChildren="true"
             unCheckedChildren="false"
-            checked={values.isActive}
-            onChange={handleChangeIsActive}
+            defaultChecked={values.isActive}
           />
         </Form.Item>
 

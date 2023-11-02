@@ -34,14 +34,14 @@ export const mainFlowIconList = [
 export const mainFlowItemList = [
   {
     id: 1,
-    name: 'mainflow 1',
+    name: 'Mainflow 1',
     icon: mainFlowItem1,
     mainFlowNode: AddMainflowNode1,
     mainFlowEdges: AddMainflowEdge1,
   },
   {
     id: 2,
-    name: 'mainflow 2',
+    name: 'Mainflow 2',
     icon: mainFlowItem2,
     mainFlowNode: AddMainflowNode2,
     mainFlowEdges: AddMainflowEdge2,

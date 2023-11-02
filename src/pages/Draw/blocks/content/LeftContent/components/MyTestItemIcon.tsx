@@ -13,29 +13,19 @@ interface MyTestItemIconProps {
   type: string;
   index?: number;
   item?: any;
+  list: any;
+  setList: any;
 }
 
 const MyTestItemIcon = (props: MyTestItemIconProps) => {
-  const { onDragStart, Class, color, type, index, item } = props;
+  const { onDragStart, Class, color, type, item, list, setList } = props;
   const [open, setOpen] = useState(false);
-  const {
-    testUnitData,
-    setTestUnitData,
-    subflowList,
-    setSubflowList,
-    activeTestOrFlowItem,
-    setActiveTestOrFlowItem,
-  } = useModel('useDrawModel');
-  const handleConfirm = (index) => {
-    if (type === 'test-method') {
-      const newDataList = testUnitData.filter(
-        (item: any) => item.testMethod !== Class,
-      );
-      setTestUnitData(newDataList);
-    } else if (type === 'subflow') {
-      const newDataList = subflowList.filter((item, idx) => idx !== index);
-      setSubflowList(newDataList);
-    }
+  const { activeTestOrFlowItem, setActiveTestOrFlowItem } =
+    useModel('useDrawModel');
+
+  const handleConfirm = () => {
+    const newDataList = list.filter((item) => item.name !== Class);
+    setList(newDataList);
     setOpen(false);
   };
   const handleCancel = () => {
@@ -60,7 +50,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
         <Popconfirm
           title="Are you sure to delete this item?"
           open={open}
-          onConfirm={() => handleConfirm(index)}
+          onConfirm={handleConfirm}
           onCancel={handleCancel}
           okText="Yes"
           cancelText="No"

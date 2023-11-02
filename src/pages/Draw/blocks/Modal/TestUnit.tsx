@@ -4,7 +4,6 @@ import {
   Divider,
   Form,
   Input,
-  InputNumber,
   Modal,
   Popconfirm,
   Switch,
@@ -15,8 +14,11 @@ import { useRef } from 'react';
 // import TestUnitList from './components/TestUnitList';
 // import TestUnitForm from './TestUnitForm';
 
+let id = 999;
+const getId = () => `${id++}`;
 const TestUnit = () => {
-  const { openTestUnitModal, setOpenTestUnitModal } = useModel('useDrawModel');
+  const { openTestUnitModal, setOpenTestUnitModal, setAddTestUnitList } =
+    useModel('useDrawModel');
 
   const formRef = useRef<any>(null);
   const [form] = Form.useForm();
@@ -51,10 +53,13 @@ const TestUnit = () => {
           isOpen: false,
         };
       });
-      console.log('ok:', formRef.current.getFieldsValue(), openTestUnitModal);
+      const values = formRef.current.getFieldsValue();
+      const number = getId();
+      const testUnitList = Object.assign({}, values, { key: Number(number) });
+
+      setAddTestUnitList((list) => [...list, testUnitList]);
       message.success('保存成功！');
     } catch (error) {
-      // console.log(1, error);
       message.error('保存失败！');
     }
   };
@@ -110,7 +115,7 @@ const TestUnit = () => {
             (item, idx) => {
               if (index === idx) {
                 return {
-                  key: index,
+                  key: `${item.param}.${index}`,
                   param: item.param,
                   value: e.target.value,
                 };
@@ -174,47 +179,33 @@ const TestUnit = () => {
     },
   ];
 
-  const handleAddRows = () => {
+  const handleAddRows = async () => {
     const length = openTestUnitModal.values.variables.length;
     const newData = {
       key: length,
       param: '',
       value: '',
     };
+    const testUnit = await form.validateFields();
     setOpenTestUnitModal((obj) => {
       return {
         ...obj,
         values: {
           ...obj.values,
+          testMethod: testUnit.testMethod,
+          isFlowUnit: testUnit.isFlowUnit,
+          isStartUnit: testUnit.isStartUnit,
+          loopCount: String(testUnit.loopCount),
+          name: testUnit.name,
+          number: testUnit.number,
+          targetFlowName: testUnit.targetFlowName,
           variables: [...obj.values.variables, newData],
         },
       };
     });
   };
-  const values = openTestUnitModal.values;
 
-  const handleChangeIsStartUnit = (checked) => {
-    setOpenTestUnitModal((obj) => {
-      return {
-        ...obj,
-        values: {
-          ...obj.values,
-          isStartUnit: checked,
-        },
-      };
-    });
-  };
-  const handleChangeIsFlowUnit = (checked) => {
-    setOpenTestUnitModal((obj) => {
-      return {
-        ...obj,
-        values: {
-          ...obj.values,
-          isFlowUnit: checked,
-        },
-      };
-    });
-  };
+  const values = openTestUnitModal.values;
 
   return (
     <div>
@@ -232,6 +223,7 @@ const TestUnit = () => {
         cancelText="cancel"
         maskClosable={false}
         centered
+        destroyOnClose
       >
         <Divider />
         {/* <TestUnitList /> */}
@@ -262,8 +254,7 @@ const TestUnit = () => {
             <Switch
               checkedChildren="true"
               unCheckedChildren="false"
-              checked={values.isFlowUnit}
-              onChange={handleChangeIsFlowUnit}
+              defaultChecked={values.isFlowUnit}
             />
           </Form.Item>
 
@@ -275,8 +266,7 @@ const TestUnit = () => {
             <Switch
               checkedChildren="true"
               unCheckedChildren="false"
-              checked={values.isStartUnit}
-              onChange={handleChangeIsStartUnit}
+              defaultChecked={values.isStartUnit}
             />
           </Form.Item>
 
@@ -296,7 +286,7 @@ const TestUnit = () => {
             <Input placeholder="请输入Name" allowClear value={values.number} />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             name="loopCount"
             label="LoopCount"
             rules={[
@@ -310,7 +300,7 @@ const TestUnit = () => {
               placeholder="请输入LoopCount"
               value={values.loopCount}
             />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item name="targetFlowName" label="TargetFlowName">
             <Input

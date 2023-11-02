@@ -20,8 +20,6 @@ const SubflowList = () => {
     setList([...subFlowList, addSubFlowList].flat(Infinity));
   }, [addSubFlowList]);
 
-  console.log({ list, addSubFlowList });
-
   const handleClick = (item) => {
     setActiveTestOrFlowItemParams(item.param);
     setNodes(item.subFlowNode);
@@ -36,6 +34,8 @@ const SubflowList = () => {
           onDoubleClick={() => handleClick(item)}
         >
           <MyTestItemIcon
+            list={list}
+            setList={setList}
             name={item.name}
             color="#87d068"
             index={index}

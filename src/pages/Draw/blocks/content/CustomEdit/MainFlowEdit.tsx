@@ -1,11 +1,11 @@
-import { Button, Input, InputNumber, Switch, Table } from 'antd';
+import { Button, Input, Switch, Table } from 'antd';
 import styles from './index.less';
 import { useModel } from '@umijs/max';
 import { RightOutlined, DownOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
 const MainFlowEdit = () => {
-  const { nodes, setNodes } = useModel('useTestFlowModel');
+  const { nodes } = useModel('useTestFlowModel');
   const {
     activeTestOrFlowItemParams,
     setActiveTestOrFlowItemParams,
@@ -28,15 +28,15 @@ const MainFlowEdit = () => {
     setOpenVariablesModal({ isOpen: true, values: dataSource });
   };
 
-  const handleChangeLoopCount = (value) => {
-    const newData = nodes.map((item) => {
-      if (item.selected) {
-        return { ...item, LoopCount: value };
-      }
-      return item;
-    });
-    setNodes(newData);
-  };
+  // const handleChangeLoopCount = (value) => {
+  //   const newData = nodes.map((item) => {
+  //     if (item.selected) {
+  //       return { ...item, LoopCount: value };
+  //     }
+  //     return item;
+  //   });
+  //   setNodes(newData);
+  // };
 
   const columns = [
     {
@@ -194,7 +194,7 @@ const MainFlowEdit = () => {
             />
           </div>
 
-          <div className={styles['flow-item']}>
+          {/* <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>LoopCount：</label>
             <InputNumber
               style={{ width: '100%' }}
@@ -204,7 +204,7 @@ const MainFlowEdit = () => {
               value={1}
               onChange={handleChangeLoopCount}
             />
-          </div>
+          </div> */}
 
           <div className={styles.title}>
             GlobalVariables：
