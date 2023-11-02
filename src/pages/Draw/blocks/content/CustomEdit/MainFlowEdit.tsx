@@ -9,7 +9,7 @@ const MainFlowEdit = () => {
   const {
     activeTestOrFlowItemParams,
     setActiveTestOrFlowItemParams,
-    setOpenVariablesModal,
+    setOpenGlobalVariablesModal,
   } = useModel('useDrawModel');
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,14 +18,14 @@ const MainFlowEdit = () => {
   const handleClick = (values) => {
     const dataSource = values.globalVariables.map((item: any, index) => {
       return {
-        key: index,
+        key: `${item.param}-${item.value}.${index}`,
         param: item.param,
         value: item.value,
       };
     });
     const params = Object.assign(values, { globalVariables: dataSource });
     setActiveTestOrFlowItemParams(params);
-    setOpenVariablesModal({ isOpen: true, values: dataSource });
+    setOpenGlobalVariablesModal({ isOpen: true, values: dataSource });
   };
 
   // const handleChangeLoopCount = (value) => {
@@ -62,7 +62,7 @@ const MainFlowEdit = () => {
             (item: any, idx) => {
               if (index === idx) {
                 return {
-                  key: `${e.target.value}.${index}`,
+                  key: `${e.target.value}-${item.value}.${index}`,
                   param: e.target.value,
                   value: item.value,
                 };
@@ -105,7 +105,7 @@ const MainFlowEdit = () => {
             (item: any, idx) => {
               if (index === idx) {
                 return {
-                  key: item.key,
+                  key: `${item.param}-${e.target.value}.${index}`,
                   param: item.param,
                   value: e.target.value,
                 };

@@ -4,12 +4,9 @@ import styles from '../index.less';
 import { useEffect, useState } from 'react';
 
 const OpenVariablesModal = () => {
-  const {
-    openVariablesModal,
-    setOpenVariablesModal,
-    activeTestOrFlowItemParams,
-    setActiveTestOrFlowItemParams,
-  } = useModel('useDrawModel');
+  const { openVariablesModal, setOpenVariablesModal } =
+    useModel('useDrawModel');
+  const { nodes, setNodes } = useModel('useTestFlowModel');
   const [value, setValue] = useState(openVariablesModal.values);
 
   useEffect(() => {
@@ -45,22 +42,41 @@ const OpenVariablesModal = () => {
       ),
       render: (text, record, index) => {
         const handlePressEnter = (e) => {
-          const newData: any = activeTestOrFlowItemParams.globalVariables.map(
-            (item: any, idx) => {
-              if (index === idx) {
-                return {
-                  key: `${e.target.value}.${index}`,
-                  param: e.target.value,
-                  value: item.value,
-                };
-              }
-              return item;
-            },
-          );
-          setActiveTestOrFlowItemParams((obj: any) => {
+          const newData = nodes.map((item: any) => {
+            if (item.selected) {
+              return {
+                ...item,
+                params: {
+                  ...item.params,
+                  variables: item.params.variables.map((t, idx) => {
+                    if (index === idx) {
+                      return {
+                        key: `${e.target.value}-${t.value}.${index}`,
+                        param: e.target.value,
+                        value: t.value,
+                      };
+                    }
+                    return t;
+                  }),
+                },
+              };
+            }
+            return item;
+          });
+          setNodes(newData);
+          setOpenVariablesModal((obj: any) => {
             return {
               ...obj,
-              globalVariables: newData,
+              values: obj.values.map((item, idx) => {
+                if (index === idx) {
+                  return {
+                    key: `${e.target.value}-${item.value}.${index}`,
+                    param: e.target.value,
+                    value: item.value,
+                  };
+                }
+                return item;
+              }),
             };
           });
         };
@@ -80,23 +96,41 @@ const OpenVariablesModal = () => {
       title: <div className={styles.globalVariablesTable}>Value</div>,
       render: (text, record, index) => {
         const handlePressEnter = (e) => {
-          const newData: any = activeTestOrFlowItemParams.globalVariables.map(
-            (item: any, idx) => {
-              if (index === idx) {
-                return {
-                  key: item.key,
-                  param: item.param,
-                  value: e.target.value,
-                };
-              }
-              return item;
-            },
-          );
-
-          setActiveTestOrFlowItemParams((obj: any) => {
+          const newData = nodes.map((item: any) => {
+            if (item.selected) {
+              return {
+                ...item,
+                params: {
+                  ...item.params,
+                  variables: item.params.variables.map((t, idx) => {
+                    if (index === idx) {
+                      return {
+                        key: `${t.param}-${e.target.value}.${index}`,
+                        param: t.param,
+                        value: e.target.value,
+                      };
+                    }
+                    return t;
+                  }),
+                },
+              };
+            }
+            return item;
+          });
+          setNodes(newData);
+          setOpenVariablesModal((obj: any) => {
             return {
               ...obj,
-              globalVariables: newData,
+              values: obj.values.map((item, idx) => {
+                if (index === idx) {
+                  return {
+                    key: `${item.param}-${e.target.value}.${index}`,
+                    param: item.param,
+                    value: e.target.value,
+                  };
+                }
+                return item;
+              }),
             };
           });
         };
@@ -117,15 +151,29 @@ const OpenVariablesModal = () => {
       width: '12%',
       render: (_, record) => {
         const handleRemoveRow = (record) => {
-          const newData = activeTestOrFlowItemParams.globalVariables.filter(
+          const newData = openVariablesModal.values.filter(
             (item: { key: number }) => item.key !== record.key,
           );
-          setActiveTestOrFlowItemParams((obj: any) => {
+          setOpenVariablesModal((obj: any) => {
             return {
               ...obj,
-              globalVariables: newData,
+              values: newData,
             };
           });
+
+          const newNodes = nodes.map((item: any) => {
+            if (item.selected) {
+              return {
+                ...item,
+                params: {
+                  ...item.params,
+                  variables: newData,
+                },
+              };
+            }
+            return item;
+          });
+          setNodes(newNodes);
         };
         return (
           <Popconfirm
@@ -144,16 +192,30 @@ const OpenVariablesModal = () => {
   ];
 
   const handleAddRows = () => {
-    const valuesLength = activeTestOrFlowItemParams.globalVariables.length;
-    const newData = {
+    const valuesLength = openVariablesModal.values.length;
+    const newVariablesItem = {
       key: valuesLength,
       param: '',
       value: '',
     };
-    setActiveTestOrFlowItemParams((obj: any) => {
+    const newData = nodes.map((item: any) => {
+      if (item.selected) {
+        return {
+          ...item,
+          params: {
+            ...item.params,
+            variables: [...item.params.variables, newVariablesItem],
+          },
+        };
+      }
+      return item;
+    });
+    setNodes(newData);
+
+    setOpenVariablesModal((obj: any) => {
       return {
         ...obj,
-        globalVariables: [...obj.globalVariables, newData],
+        values: [...obj.values, newVariablesItem],
       };
     });
   };
@@ -181,7 +243,7 @@ const OpenVariablesModal = () => {
         <Table
           className={styles['table']}
           columns={columns}
-          dataSource={activeTestOrFlowItemParams.globalVariables}
+          dataSource={openVariablesModal.values}
           pagination={false}
           bordered
         />

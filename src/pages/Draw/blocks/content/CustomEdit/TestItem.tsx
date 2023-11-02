@@ -8,8 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 const TestItem = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
-  const { setOpenVariablesModal, openVariablesModal } =
-    useModel('useDrawModel');
+  const { setOpenVariablesModal } = useModel('useDrawModel');
 
   const selectedNodeItem: any = useMemo(
     () => nodes.filter((item) => item.selected)[0],
@@ -69,6 +68,7 @@ const TestItem = () => {
                   variables: item.params.variables.map((t, idx) => {
                     if (index === idx) {
                       return {
+                        key: `${e.target.value}-${item.value}.${index}`,
                         param: e.target.value,
                         value: t.value,
                       };
@@ -115,6 +115,7 @@ const TestItem = () => {
                   variables: item.params.variables.map((t, idx) => {
                     if (index === idx) {
                       return {
+                        key: `${item.param}-${e.target.value}.${index}`,
                         param: t.param,
                         value: e.target.value,
                       };
@@ -265,7 +266,7 @@ const TestItem = () => {
   const handleClick = (values) => {
     const dataSource = values.map((item: any, index) => {
       return {
-        key: `${item.param}.${index}`,
+        key: `${item.param}-${item.value}.${index}`,
         param: item.param,
         value: item.value,
       };
@@ -375,17 +376,12 @@ const TestItem = () => {
           <div className={styles['flow-item']}>
             {/* <label className={styles['flow-label']}>globalVariables：</label> */}
             <Table
-              key={Math.random() * 100}
               style={{ width: '100%' }}
               className={
                 isVariablesOpen ? styles['show-dataSource'] : undefined
               }
               columns={variablesColumns}
-              dataSource={
-                openVariablesModal.values.length === 0
-                  ? params?.variables
-                  : openVariablesModal.values
-              }
+              dataSource={params?.variables}
               pagination={false}
               bordered
             />

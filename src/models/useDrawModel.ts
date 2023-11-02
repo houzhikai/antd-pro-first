@@ -108,6 +108,10 @@ export default () => {
     isOpen: false,
     values: [],
   });
+  const [openGlobalVariablesModal, setOpenGlobalVariablesModal] = useState({
+    isOpen: false,
+    values: [],
+  });
 
   const defaultShowFlowItem = flow2.testFlows.filter((item) => item.isActive)[0]
     .flowName;
@@ -119,7 +123,7 @@ export default () => {
   )[0].flowParams;
   const globalVariables = mainflowParams.globalVariables.map((item, index) => {
     return {
-      key: index,
+      key: `${item.param}.${index}`,
       param: item.param,
       value: item.value,
     };
@@ -242,5 +246,7 @@ export default () => {
     setOpenSubFlowAttributeModal,
     addTestUnitList,
     setAddTestUnitList,
+    openGlobalVariablesModal,
+    setOpenGlobalVariablesModal,
   };
 };
