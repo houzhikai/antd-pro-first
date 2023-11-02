@@ -1,5 +1,6 @@
 import MainFlowEdit from './MainFlowEdit';
 import SelectedEdgeItem from './SelectedEdgeItem';
+import SoftBin from './SoftBin';
 // import SubflowNode from './SubflowNode';
 import TestItem from './TestItem';
 
@@ -11,6 +12,7 @@ const CustomEdit = () => {
       <MainFlowEdit />
       <TestItem />
       <SelectedEdgeItem />
+      <SoftBin />
       {/* <SubflowNode /> */}
     </div>
   );

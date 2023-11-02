@@ -265,7 +265,7 @@ const TestItem = () => {
   const handleClick = (values) => {
     const dataSource = values.map((item: any, index) => {
       return {
-        key: index,
+        key: `${item.param}.${index}`,
         param: item.param,
         value: item.value,
       };

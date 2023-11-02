@@ -20,13 +20,22 @@ interface MyTestItemIconProps {
 const MyTestItemIcon = (props: MyTestItemIconProps) => {
   const { onDragStart, Class, color, type, item, list, setList } = props;
   const [open, setOpen] = useState(false);
-  const { activeTestOrFlowItem, setActiveTestOrFlowItem } =
-    useModel('useDrawModel');
+  const {
+    activeTestOrFlowItem,
+    setActiveTestOrFlowItem,
+    setActiveTestOrFlowItemParams,
+  } = useModel('useDrawModel');
+  const { setNodes, setEdges } = useModel('useTestFlowModel');
 
-  const handleConfirm = () => {
+  const handleConfirm = (Class) => {
     const newDataList = list.filter((item) => item.name !== Class);
     setList(newDataList);
     setOpen(false);
+    if (activeTestOrFlowItem === Class) {
+      setNodes([]);
+      setEdges([]);
+      setActiveTestOrFlowItemParams({});
+    }
   };
   const handleCancel = () => {
     setOpen(false);
@@ -50,7 +59,7 @@ const MyTestItemIcon = (props: MyTestItemIconProps) => {
         <Popconfirm
           title="Are you sure to delete this item?"
           open={open}
-          onConfirm={handleConfirm}
+          onConfirm={() => handleConfirm(Class)}
           onCancel={handleCancel}
           okText="Yes"
           cancelText="No"
