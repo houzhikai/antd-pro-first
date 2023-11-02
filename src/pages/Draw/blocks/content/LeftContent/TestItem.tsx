@@ -31,7 +31,7 @@ const TestItem = () => {
 
   useEffect(() => {
     setList([...newTestUnitDataList, addTestUnitList].flat(Infinity));
-  }, [addTestUnitList]);
+  }, [addTestUnitList, testUnitData]);
 
   const handleClick = (item) => {
     const variables = item.variables.map((item, index) => {

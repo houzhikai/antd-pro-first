@@ -17,8 +17,13 @@ import { useRef } from 'react';
 let id = 999;
 const getId = () => `${id++}`;
 const TestUnit = () => {
-  const { openTestUnitModal, setOpenTestUnitModal, setAddTestUnitList } =
-    useModel('useDrawModel');
+  const {
+    openTestUnitModal,
+    setOpenTestUnitModal,
+    setAddTestUnitList,
+    testUnitData,
+    setTestUnitData,
+  } = useModel('useDrawModel');
 
   const formRef = useRef<any>(null);
   const [form] = Form.useForm();
@@ -47,17 +52,36 @@ const TestUnit = () => {
     try {
       // form校验验证
       await form.validateFields();
+      if (openTestUnitModal.param === 'add') {
+        const values = formRef.current.getFieldsValue();
+        const number = getId();
+        const testUnitList = Object.assign({}, values, { key: Number(number) });
+
+        setAddTestUnitList((list) => [...list, testUnitList]);
+      } else {
+        const values = formRef.current.getFieldsValue();
+        const newTestUnitDataList: any = testUnitData.map((item) => {
+          if (item.testMethod === openTestUnitModal.values.testMethod) {
+            return {
+              testMethod: values.testMethod,
+              isFlowUnit: values.isFlowUnit,
+              isStartUnit: values.isStartUnit,
+              name: values.name,
+              number: values.number,
+              targetFlowName: values.targetFlowName,
+              variables: values.variables,
+            };
+          }
+          return item;
+        });
+        setTestUnitData(newTestUnitDataList);
+      }
       setOpenTestUnitModal((obj) => {
         return {
           ...obj,
           isOpen: false,
         };
       });
-      const values = formRef.current.getFieldsValue();
-      const number = getId();
-      const testUnitList = Object.assign({}, values, { key: Number(number) });
-
-      setAddTestUnitList((list) => [...list, testUnitList]);
       message.success('保存成功！');
     } catch (error) {
       message.error('保存失败！');
