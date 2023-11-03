@@ -61,7 +61,7 @@ const TestUnit = () => {
       } else {
         const values = formRef.current.getFieldsValue();
         const newTestUnitDataList: any = testUnitData.map((item) => {
-          if (item.testMethod === openTestUnitModal.values.testMethod) {
+          if (item.key === openTestUnitModal.values.key) {
             return {
               testMethod: values.testMethod,
               isFlowUnit: values.isFlowUnit,
