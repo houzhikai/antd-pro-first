@@ -21,6 +21,7 @@ import CustomConnectionLine from './MiddleContent/customNodes/TestItem/CustomCon
 
 import 'reactflow/dist/style.css';
 import styles from '../index.less';
+import { verifyCloseLoopEdges } from '@/components/verifyClosedLoopEdges';
 
 let id = 0;
 const getId = () => `${id++}`;
@@ -137,6 +138,20 @@ const MiddleContent = () => {
       if (existingEdge) {
         return message.error('Connection exists!');
       }
+      const edgeLabel = edges.filter(
+        (item) => item.source === params.source,
+      ).length;
+      // add new edge
+      const newEdge = Object.assign(params, {
+        id: `${params.source}->${params.target}`,
+        label: String(edgeLabel),
+      });
+      // 校验闭环，添加连线只能用 addEdge，push会报错
+      if (!verifyCloseLoopEdges(addEdge(newEdge, edges))) {
+        setEdges((eds) => addEdge(newEdge, eds));
+      } else {
+        message.error('Flowchart closed loop');
+      }
       // const existingEdge = edges.find((e) => {
       //   // 避免多个node同时进入同一个node的targetHandle
       //   if (e.target && e.targetHandle) {
@@ -170,11 +185,9 @@ const MiddleContent = () => {
       // if (existingEdge || hasEdge.length > 0) {
       //   return message.error('Edge already exists!');
       // }
-      setEdges((eds) => addEdge(params, eds));
     },
     [setEdges, edges],
   );
-
   const onNodesDelete = useCallback(
     (deleted) => {
       setEdges(
@@ -304,6 +317,7 @@ const MiddleContent = () => {
   );
 
   const defaultEdgeOptions = {
+    id: '1',
     style: { strokeWidth: 1, stroke: 'black' },
     type: 'floating',
     markerEnd: {

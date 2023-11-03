@@ -239,6 +239,8 @@ const AddMainFlowAttribute = () => {
       onCancel={handleCancel}
       maskClosable={false}
       centered
+      okText="ok"
+      cancelText="cancel"
       destroyOnClose={true}
     >
       <Divider />

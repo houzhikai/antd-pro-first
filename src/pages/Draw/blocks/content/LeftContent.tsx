@@ -106,7 +106,7 @@ const LeftContent = () => {
               <SubflowList />
             </Panel>
             <Panel
-              header={<div className={styles.header}>Test Class</div>}
+              header={<div className={styles.header}>Test Method</div>}
               key="test-item"
               extra={testUnit}
             >

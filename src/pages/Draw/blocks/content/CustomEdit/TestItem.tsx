@@ -176,6 +176,10 @@ const TestItem = () => {
   };
 
   const handleChangeName = (e) => {
+    const filterList = nodes
+      .filter((item) => item.type !== 'fen-bin')
+      .map((item) => item.data.label);
+    console.log({ filterList }, e.target.value);
     setSelectedNode((obj) => {
       return {
         ...obj,

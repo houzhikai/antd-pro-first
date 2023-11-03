@@ -54,12 +54,13 @@ const AddMainFlowModal = () => {
 
   return (
     <Modal
-      title="新建Main Flow"
+      title="Add MainFlow"
       open={openMainFlowModal}
       onOk={handleOk}
       onCancel={handleCancel}
       width={700}
-      okText="创建"
+      okText="ok"
+      cancelText="cancel"
       okButtonProps={{ disabled: selected === '' ? true : false }}
     >
       <Divider />
@@ -77,7 +78,7 @@ const AddMainFlowModal = () => {
             >
               <PlusOutlined style={{ fontSize: 46 }} />
             </div>
-            <div>空白页面</div>
+            <div>Empty</div>
           </div>
         </div>
         {mainFlowItemList.map((item) => (

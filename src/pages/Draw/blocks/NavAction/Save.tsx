@@ -3,11 +3,12 @@ import { Button, Tooltip } from 'antd';
 // import save from '@/icon/draw/save.svg';
 
 import styles from '../index.less';
+import { verifyCloseLoopEdges } from '@/components/verifyClosedLoopEdges';
 // import saveFlow from '@/components/saveFlow';
 // import analyzeFlow from '@/components/analyzeFlow';
-import { saveJsonFile } from '@/components/saveFlow/saveJsonFle';
-import { testFile } from '@/components/analyzeFlow/testFile';
-import flow2 from '@/components/dataList/draw/flow2.json';
+// import { saveJsonFile } from '@/components/saveFlow/saveJsonFle';
+// import { testFile } from '@/components/analyzeFlow/testFile';
+// import flow2 from '@/components/dataList/draw/flow2.json';
 
 const Save = () => {
   const { nodes, edges } = useModel('useTestFlowModel');
@@ -16,9 +17,11 @@ const Save = () => {
   const handleSave = () => {
     // ` `换行也可以使console表示换行
     // const xxx = saveFlow(analyzeFlow(flows));
-    const xxx = saveJsonFile(testFile(flow2));
+    // const xxx = saveJsonFile(testFile(flow2));
+    const verifyCloseLoopEdge = verifyCloseLoopEdges(edges);
     console.log({ nodes, edges });
-    console.log('输出JSON', xxx);
+    // console.log('输出JSON', xxx);
+    console.log('校验闭环', verifyCloseLoopEdge);
     // const startNote = [
     //   `et::MainFlow('${title}'), true,
     // `,
@@ -40,13 +43,6 @@ const Save = () => {
   return (
     <Tooltip placement="bottomLeft" title="Save">
       <div className={styles.gap}>
-        {/* <Image
-          src={save}
-          preview={false}
-          width={16}
-          className={styles.save}
-          onClick={handleSave}
-        /> */}
         <Button type="primary" size="small" onClick={handleSave}>
           Save
         </Button>
