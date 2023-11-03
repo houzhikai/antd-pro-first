@@ -6,7 +6,7 @@ import {
   options,
   SoftBinDataSourceType,
 } from '@/pages/Draw/blocks/NavAction/components/defaultData';
-import { subflowIconList } from '@/pages/Draw/blocks/content/LeftContent/components/subflowIconList';
+// import { subflowIconList } from '@/pages/Draw/blocks/content/LeftContent/components/subflowIconList';
 import { useEffect, useState } from 'react';
 import flows from '@/components/dataList/draw/flow.json';
 import flow2 from '@/components/dataList/draw/flow2.json';
@@ -27,7 +27,7 @@ export default () => {
     key: 3,
   }); // softBin 列表
 
-  const [subflowList, setSubflowList] = useState(subflowIconList); //测试项列表
+  // const [subflowList, setSubflowList] = useState(subflowIconList); //测试项列表
   const [testUnitData, setTestUnitData] = useState(testUnitDataList); //测试项列表
   const [testUnitItem, setTestUniItem] = useState<TestUnitDataListProps>({
     key: 999,
@@ -178,6 +178,10 @@ export default () => {
     };
   });
 
+  const [mainflowList, setMainflowList] = useState<any>([]); // 左侧mainflow列表
+  const [subflowList, setSubflowList] = useState<any>([]); // 左侧subflow列表
+  const [testClassList, setTestClassList] = useState<any>([]); // 左侧测试项列表
+
   return {
     isHiddenSide,
     setIsHiddenSide,
@@ -248,5 +252,9 @@ export default () => {
     setAddTestUnitList,
     openGlobalVariablesModal,
     setOpenGlobalVariablesModal,
+    mainflowList,
+    setMainflowList,
+    testClassList,
+    setTestClassList,
   };
 };

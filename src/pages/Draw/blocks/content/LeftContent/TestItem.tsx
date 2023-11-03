@@ -3,7 +3,7 @@ import MyTestItemIcon from './components/MyTestItemIcon';
 import { useModel } from '@umijs/max';
 
 import styles from './index.less';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const TestItem = () => {
   const {
@@ -12,6 +12,8 @@ const TestItem = () => {
     setTestUniItem,
     setOpenTestUnitModal,
     addTestUnitList,
+    testClassList,
+    setTestClassList,
   } = useModel('useDrawModel');
   const newTestUnitDataList: any = [
     {
@@ -27,10 +29,10 @@ const TestItem = () => {
     },
     // @ts-expect-error
   ].concat(testUnitData);
-  const [list, setList] = useState<any>([]);
+  // const [list, setList] = useState<any>([]);
 
   useEffect(() => {
-    setList([...newTestUnitDataList, addTestUnitList].flat(Infinity));
+    setTestClassList([...newTestUnitDataList, addTestUnitList].flat(Infinity));
   }, [addTestUnitList, testUnitData]);
 
   const handleClick = (item) => {
@@ -53,12 +55,12 @@ const TestItem = () => {
     <div className={styles['test-item']}>
       {/* 第一项是 */}
       <div className={styles['test-item']}>
-        {list.map((item, index) => (
+        {testClassList.map((item, index) => (
           <div key={item.key} onDoubleClick={() => handleClick(item)}>
             <MyTestItemIcon
-              list={list}
-              setList={setList}
-              Class={item.name}
+              list={testClassList}
+              setList={setTestClassList}
+              Class={item.testMethod}
               name={item.name}
               item={item}
               index={index}

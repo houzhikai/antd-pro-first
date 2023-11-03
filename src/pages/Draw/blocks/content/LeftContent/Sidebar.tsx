@@ -1,16 +1,20 @@
 import MyTestItemIcon from './components/MyTestItemIcon';
 import { useModel } from '@umijs/max';
 import styles from './index.less';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default () => {
-  const { mainFlowList, setActiveTestOrFlowItemParams, addMainFlowList } =
-    useModel('useDrawModel');
+  const {
+    mainFlowList,
+    setActiveTestOrFlowItemParams,
+    addMainFlowList,
+    mainflowList,
+    setMainflowList,
+  } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
-  const [list, setList] = useState<any>([]);
 
   useEffect(() => {
-    setList([...mainFlowList, addMainFlowList].flat(Infinity));
+    setMainflowList([...mainFlowList, addMainFlowList].flat(Infinity));
   }, [addMainFlowList]);
 
   const handleClick = (item) => {
@@ -22,15 +26,15 @@ export default () => {
     <>
       <div className={styles['test-item']}>
         {/* mainFlowIconList 是原本就有的mainflow */}
-        {list.map((item, index) => (
+        {mainflowList.map((item, index) => (
           <div
             key={index}
             className={styles.item}
             onDoubleClick={() => handleClick(item)}
           >
             <MyTestItemIcon
-              list={list}
-              setList={setList}
+              list={mainflowList}
+              setList={setMainflowList}
               name={item.name}
               color="#2db7f5"
               type={item.type}

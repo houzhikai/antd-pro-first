@@ -18,6 +18,7 @@ const AddSubFlowAttribute = () => {
     setActiveTestOrFlowItemParams,
     setAddSubFlowList,
     setActiveTestOrFlowItem,
+    subflowList,
   } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
 
@@ -32,6 +33,7 @@ const AddSubFlowAttribute = () => {
   });
 
   const handleOK = async () => {
+    await form.validateFields();
     setActiveTestOrFlowItemParams(formRef.current.getFieldsValue());
     setNodes(openSubFlowAttributeModal.mainFlowNode);
     setEdges(openSubFlowAttributeModal.mainFlowEdges);
@@ -63,7 +65,6 @@ const AddSubFlowAttribute = () => {
         isOpen: false,
       };
     });
-    await form.validateFields();
   };
 
   const handleCancel = () => {
@@ -219,6 +220,17 @@ const AddSubFlowAttribute = () => {
       };
     });
   };
+  const validatorFlowName = (rule, value) => {
+    const flowNameList = subflowList.map((item) => item.name);
+    return new Promise((resolve, reject) => {
+      if (flowNameList.includes(value)) {
+        reject(new Error('FlowName repeat'));
+      } else {
+        resolve(value);
+      }
+    });
+  };
+
   const values = openSubFlowAttributeModal.param;
   return (
     <Modal
@@ -245,7 +257,10 @@ const AddSubFlowAttribute = () => {
         <Form.Item
           name="flowName"
           label="FlowName"
-          rules={[{ required: true, message: '不能为空！' }]}
+          rules={[
+            { required: true, message: '不能为空！' },
+            { validator: validatorFlowName },
+          ]}
         >
           <Input placeholder="请输入FlowName" allowClear />
         </Form.Item>

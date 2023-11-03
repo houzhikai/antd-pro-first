@@ -8,7 +8,6 @@ import {
   Popconfirm,
   Switch,
   Table,
-  message,
 } from 'antd';
 import { useRef } from 'react';
 // import TestUnitList from './components/TestUnitList';
@@ -23,6 +22,7 @@ const TestUnit = () => {
     setAddTestUnitList,
     testUnitData,
     setTestUnitData,
+    testClassList,
   } = useModel('useDrawModel');
 
   const formRef = useRef<any>(null);
@@ -49,43 +49,38 @@ const TestUnit = () => {
     });
   };
   const handleOK = async () => {
-    try {
-      // form校验验证
-      await form.validateFields();
-      if (openTestUnitModal.param === 'add') {
-        const values = formRef.current.getFieldsValue();
-        const number = getId();
-        const testUnitList = Object.assign({}, values, { key: Number(number) });
+    // form校验验证
+    await form.validateFields();
+    if (openTestUnitModal.param === 'add') {
+      const values = formRef.current.getFieldsValue();
+      const number = getId();
+      const testUnitList = Object.assign({}, values, { key: Number(number) });
 
-        setAddTestUnitList((list) => [...list, testUnitList]);
-      } else {
-        const values = formRef.current.getFieldsValue();
-        const newTestUnitDataList: any = testUnitData.map((item) => {
-          if (item.key === openTestUnitModal.values.key) {
-            return {
-              testMethod: values.testMethod,
-              isFlowUnit: values.isFlowUnit,
-              isStartUnit: values.isStartUnit,
-              name: values.name,
-              number: values.number,
-              targetFlowName: values.targetFlowName,
-              variables: values.variables,
-            };
-          }
-          return item;
-        });
-        setTestUnitData(newTestUnitDataList);
-      }
-      setOpenTestUnitModal((obj) => {
-        return {
-          ...obj,
-          isOpen: false,
-        };
+      setAddTestUnitList((list) => [...list, testUnitList]);
+    } else {
+      const values = formRef.current.getFieldsValue();
+      const newTestUnitDataList: any = testUnitData.map((item) => {
+        if (item.key === openTestUnitModal.values.key) {
+          return {
+            testMethod: values.testMethod,
+            isFlowUnit: values.isFlowUnit,
+            isStartUnit: values.isStartUnit,
+            name: values.name,
+            number: values.number,
+            targetFlowName: values.targetFlowName,
+            variables: values.variables,
+          };
+        }
+        return item;
       });
-      message.success('保存成功！');
-    } catch (error) {
-      message.error('保存失败！');
+      setTestUnitData(newTestUnitDataList);
     }
+    setOpenTestUnitModal((obj) => {
+      return {
+        ...obj,
+        isOpen: false,
+      };
+    });
   };
 
   const columns = [
@@ -228,7 +223,16 @@ const TestUnit = () => {
       };
     });
   };
-
+  const validatorFlowName = (rule, value) => {
+    const flowNameList = testClassList.map((item) => item.testMethod);
+    return new Promise((resolve, reject) => {
+      if (flowNameList.includes(value)) {
+        reject(new Error('FlowName repeat'));
+      } else {
+        resolve(value);
+      }
+    });
+  };
   const values = openTestUnitModal.values;
 
   return (
@@ -265,7 +269,10 @@ const TestUnit = () => {
           <Form.Item
             name="testMethod"
             label="TestMethod"
-            rules={[{ required: true, message: '不能为空！' }]}
+            rules={[
+              { required: true, message: '不能为空！' },
+              { validator: validatorFlowName },
+            ]}
           >
             <Input
               placeholder="请输入TestMethod"
@@ -294,19 +301,11 @@ const TestUnit = () => {
             />
           </Form.Item>
 
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: '不能为空！' }]}
-          >
+          <Form.Item name="name" label="Name">
             <Input placeholder="请输入Name" allowClear value={values.name} />
           </Form.Item>
 
-          <Form.Item
-            name="number"
-            label="Number"
-            rules={[{ required: true, message: '不能为空！' }]}
-          >
+          <Form.Item name="number" label="Number">
             <Input placeholder="请输入Name" allowClear value={values.number} />
           </Form.Item>
 

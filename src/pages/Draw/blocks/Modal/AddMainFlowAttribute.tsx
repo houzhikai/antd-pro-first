@@ -18,6 +18,7 @@ const AddMainFlowAttribute = () => {
     setActiveTestOrFlowItemParams,
     setAddMainFlowList,
     setActiveTestOrFlowItem,
+    mainflowList, // 左侧测试项列表，支持增删改查的修改
   } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
 
@@ -32,6 +33,7 @@ const AddMainFlowAttribute = () => {
   });
 
   const handleOK = async () => {
+    await form.validateFields();
     setActiveTestOrFlowItemParams(formRef.current.getFieldsValue());
     setNodes(openMainFlowAttributeModal.mainFlowNode);
     setEdges(openMainFlowAttributeModal.mainFlowEdges);
@@ -54,6 +56,7 @@ const AddMainFlowAttribute = () => {
       openMainFlowAttributeModal,
       xxx,
     );
+
     setAddMainFlowList((list) => [...list, xxx]);
     setActiveTestOrFlowItem(formRef.current.getFieldsValue().flowName);
 
@@ -63,7 +66,6 @@ const AddMainFlowAttribute = () => {
         isOpen: false,
       };
     });
-    await form.validateFields();
   };
   const handleCancel = () => {
     setOpenMainFlowAttributeModal((obj) => {
@@ -217,6 +219,16 @@ const AddMainFlowAttribute = () => {
       };
     });
   };
+  const validatorFlowName = (rule, value) => {
+    const mainflowNameList = mainflowList.map((item) => item.name);
+    return new Promise((resolve, reject) => {
+      if (mainflowNameList.includes(value)) {
+        reject(new Error('FlowName repeat'));
+      } else {
+        resolve(value);
+      }
+    });
+  };
   const values = openMainFlowAttributeModal.param;
   return (
     <Modal
@@ -243,7 +255,10 @@ const AddMainFlowAttribute = () => {
         <Form.Item
           name="flowName"
           label="FlowName"
-          rules={[{ required: true, message: '不能为空！' }]}
+          rules={[
+            { required: true, message: '不能为空！' },
+            { validator: validatorFlowName },
+          ]}
         >
           <Input placeholder="请输入FlowName" allowClear />
         </Form.Item>

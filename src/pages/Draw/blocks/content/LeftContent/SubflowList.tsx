@@ -2,7 +2,7 @@ import { useModel } from '@umijs/max';
 import MyTestItemIcon from './components/MyTestItemIcon';
 import { onDragStart } from './components/onDragStart';
 import styles from './index.less';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const SubflowList = () => {
   const {
@@ -12,12 +12,14 @@ const SubflowList = () => {
     setActiveTestOrFlowItemParams,
     activeTestOrFlowItem,
     addSubFlowList,
+    subflowList,
+    setSubflowList,
   } = useModel('useDrawModel');
   const { setNodes, setEdges } = useModel('useTestFlowModel');
-  const [list, setList] = useState<any>([]);
+  // const [list, setList] = useState<any>([]);
 
   useEffect(() => {
-    setList([...subFlowList, addSubFlowList].flat(Infinity));
+    setSubflowList([...subFlowList, addSubFlowList].flat(Infinity));
   }, [addSubFlowList]);
 
   const handleClick = (item) => {
@@ -27,15 +29,15 @@ const SubflowList = () => {
   };
   return (
     <div className={styles['test-item']}>
-      {list.map((item, index) => (
+      {subflowList.map((item, index) => (
         <div
           key={index}
           className={styles.item}
           onDoubleClick={() => handleClick(item)}
         >
           <MyTestItemIcon
-            list={list}
-            setList={setList}
+            list={subflowList}
+            setList={setSubflowList}
             name={item.name}
             color="#87d068"
             index={index}
