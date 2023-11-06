@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, createContext } from 'react';
 import ReactFlow, {
   // Background,
   MarkerType,
@@ -26,7 +26,10 @@ import { verifyCloseLoopEdges } from '@/components/verifyClosedLoopEdges';
 let id = 0;
 const getId = () => `${id++}`;
 
+// 创建上下文对象
+export const NodesContext = createContext([]);
 const MiddleContent = () => {
+  const [filterList, setFilterList] = useState<any>([]);
   const {
     // nodeName,
     // nodeBg,
@@ -69,7 +72,28 @@ const MiddleContent = () => {
       message.warning('Enter the Delete key again to delete the subflow', 6);
     }
   }, [deleteKey]);
+  useEffect(() => {
+    function findDuplicates(arr) {
+      const array = arr.filter((item) => item.type !== 'fen-bin');
+      let duplicates: string[] = [];
+      let tempObj = {};
 
+      for (let i = 0; i < array.length; i++) {
+        let name = array[i].data.label;
+        if (tempObj[name]) {
+          if (tempObj[name] === 1) {
+            duplicates.push(name);
+          }
+          tempObj[name]++;
+        } else {
+          tempObj[name] = 1;
+        }
+      }
+
+      return duplicates;
+    }
+    setFilterList(findDuplicates(nodes));
+  }, [nodes]);
   // useEffect(() => {
   //   setNodes((nds) =>
   //     nds.map((node) => {
@@ -327,7 +351,7 @@ const MiddleContent = () => {
     label: '0',
   };
 
-  const handleNodeClick = (_, node) => {
+  const handleNodeClick = (e, node) => {
     // 选中node节点，为了展示右边的信息
     // setSelectedNode((obj) => {
     //   return {
@@ -392,60 +416,62 @@ const MiddleContent = () => {
   //   }
   //   edgeUpdateSuccessful.current = true;
   // }, []);
-
   return (
-    <div className={styles.draw}>
-      <div className="dndflow">
-        <ReactFlowProvider>
-          {/* 必须要加height属性，不然看不到react flow */}
-          <div
-            style={{ height: 'calc(100vh - 145px)' }}
-            className="reactflow-wrapper"
-            ref={reactFlowWrapper}
-          >
-            <ReactFlow
-              // key={Math.round(Math.random())}
-              nodes={nodes}
-              edges={edges}
-              nodeTypes={nodeTypes}
-              edgeTypes={edgeTypes}
-              onNodeClick={handleNodeClick}
-              // onNodeDoubleClick={handleDoubleClick}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onEdgeUpdate={onEdgeUpdate}
-              // onEdgeUpdateStart={onEdgeUpdateStart} // 如果放到node上面将被清除连线，暂不需要该功能
-              // onEdgeUpdateEnd={onEdgeUpdateEnd}  // 如果放到node上面将被清除连线，暂不需要该功能
-              onNodesDelete={onNodesDelete}
-              onConnect={onConnect}
-              onInit={setReactFlowInstance}
-              onDrop={onDrop}
-              onDragOver={onDragOver}
-              fitView
-              defaultEdgeOptions={defaultEdgeOptions}
-              deleteKeyCode={deleteType} // 删除键快捷方式，首字母大写
-              style={{ backgroundColor: theme }} // 流程图的背景颜色
-              connectionLineComponent={CustomConnectionLine}
-              connectionLineStyle={{
-                // 连接两个node时连线样式
-                strokeWidth: 1,
-                stroke: 'black',
-              }}
+    // @ts-ignore
+    <NodesContext.Provider value={filterList}>
+      <div className={styles.draw}>
+        <div className="dndflow">
+          <ReactFlowProvider>
+            {/* 必须要加height属性，不然看不到react flow */}
+            <div
+              style={{ height: 'calc(100vh - 145px)' }}
+              className="reactflow-wrapper"
+              ref={reactFlowWrapper}
             >
-              {/* 放在右下角的操作栏,暂时隐藏，位置用来放缩略图 */}
-              <MiniMap nodeStrokeWidth={3} zoomable pannable />
-              {/* <DagreTree />
+              <ReactFlow
+                // key={Math.round(Math.random())}
+                nodes={nodes}
+                edges={edges}
+                nodeTypes={nodeTypes}
+                edgeTypes={edgeTypes}
+                onNodeClick={handleNodeClick}
+                // onNodeDoubleClick={handleDoubleClick}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onEdgeUpdate={onEdgeUpdate}
+                // onEdgeUpdateStart={onEdgeUpdateStart} // 如果放到node上面将被清除连线，暂不需要该功能
+                // onEdgeUpdateEnd={onEdgeUpdateEnd}  // 如果放到node上面将被清除连线，暂不需要该功能
+                onNodesDelete={onNodesDelete}
+                onConnect={onConnect}
+                onInit={setReactFlowInstance}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+                fitView
+                defaultEdgeOptions={defaultEdgeOptions}
+                deleteKeyCode={deleteType} // 删除键快捷方式，首字母大写
+                style={{ backgroundColor: theme }} // 流程图的背景颜色
+                connectionLineComponent={CustomConnectionLine}
+                connectionLineStyle={{
+                  // 连接两个node时连线样式
+                  strokeWidth: 1,
+                  stroke: 'black',
+                }}
+              >
+                {/* 放在右下角的操作栏,暂时隐藏，位置用来放缩略图 */}
+                <MiniMap nodeStrokeWidth={3} zoomable pannable />
+                {/* <DagreTree />
               {variant !== 'none' ? (
                 <Background color="#ccc" variant={variant} />
               ) : null} */}
-              {/* <CustomEdit />  */}
+                {/* <CustomEdit />  */}
 
-              {/* <DownloadButton /> */}
-            </ReactFlow>
-          </div>
-        </ReactFlowProvider>
+                {/* <DownloadButton /> */}
+              </ReactFlow>
+            </div>
+          </ReactFlowProvider>
+        </div>
       </div>
-    </div>
+    </NodesContext.Provider>
   );
 };
 

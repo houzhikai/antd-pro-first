@@ -4,21 +4,35 @@ import toolTipSvg from '@/icon/draw/tooltip.svg';
 
 import styles from './index.less';
 import { RightOutlined, DownOutlined } from '@ant-design/icons';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const TestItem = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
   const { setOpenVariablesModal } = useModel('useDrawModel');
+  const inputRef = useRef<any>(null);
 
   const selectedNodeItem: any = useMemo(
     () => nodes.filter((item) => item.selected)[0],
     [nodes],
   );
   const [selectedNode, setSelectedNode] = useState(selectedNodeItem);
-
+  const [verifyTestUnit, setVerifyTestUnit] = useState({
+    name: selectedNode?.params?.name,
+  });
+  // useEffect(() => {
+  // }, [selectedNodeItem]);
   useEffect(() => {
+    setVerifyTestUnit({ name: selectedNodeItem?.data?.label });
     setSelectedNode(selectedNodeItem);
-  }, [selectedNodeItem, nodes]);
+  }, [selectedNodeItem, nodes, setVerifyTestUnit]);
+
+  const filterList = useMemo(
+    () =>
+      nodes
+        .filter((item) => item.type !== 'fen-bin')
+        .map((item) => item.data.label),
+    [nodes],
+  );
   // 修改测试项class
   const testItemClass = nodes
     .filter((item) => item.selected)
@@ -175,23 +189,28 @@ const TestItem = () => {
     );
   };
 
-  const handleChangeName = (e) => {
-    const filterList = nodes
-      .filter((item) => item.type !== 'fen-bin')
-      .map((item) => item.data.label);
-    console.log({ filterList }, e.target.value);
-    setSelectedNode((obj) => {
-      return {
-        ...obj,
-        params: {
-          ...obj.params,
-          name: e.target.value,
-        },
-      };
-    });
-  };
+  const handleChangeName = useCallback(
+    (e) => {
+      setVerifyTestUnit({ name: e.target.value });
+      setSelectedNode((obj) => {
+        return {
+          ...obj,
+          params: {
+            ...obj.params,
+            name: e.target.value,
+          },
+        };
+      });
+    },
+    [nodes],
+  );
 
   const handlePressEnterName = (e) => {
+    if (e.key === 'Enter') {
+      // 从输入框中移除光标
+      inputRef.current.blur();
+    }
+    setVerifyTestUnit({ name: e.target.value });
     const newData = nodes.map((item: any) => {
       if (item.selected) {
         return {
@@ -209,6 +228,15 @@ const TestItem = () => {
       return item;
     });
     setNodes(newData);
+    setSelectedNode((obj) => {
+      return {
+        ...obj,
+        params: {
+          ...obj.params,
+          name: e.target.value,
+        },
+      };
+    });
   };
 
   const handleChangeNumber = (e) => {
@@ -279,6 +307,12 @@ const TestItem = () => {
     setOpenVariablesModal({ isOpen: true, values: dataSource });
   };
 
+  console.log(
+    111,
+    filterList,
+    verifyTestUnit,
+    filterList.filter((item) => item === verifyTestUnit.name).length,
+  );
   const params = selectedNode?.params;
   return (
     <div>
@@ -322,18 +356,36 @@ const TestItem = () => {
             />
           </div>
 
-          <div className={styles['flow-item']}>
-            <label className={styles['flow-label']}>Name： </label>
-            <Input
-              placeholder="请输入 Name"
-              // value={testItemClass}
-              value={params?.name}
-              onChange={handleChangeName}
-              onPressEnter={handlePressEnterName}
-              onBlur={handlePressEnterName}
-              allowClear
-            />
-          </div>
+          <>
+            <div className={styles['flow-item']}>
+              <label className={styles['flow-label']}>Name： </label>
+              <div>
+                <Input
+                  ref={inputRef}
+                  placeholder="请输入 Name"
+                  // value={testItemClass}
+                  value={params?.name}
+                  onChange={handleChangeName}
+                  onPressEnter={handlePressEnterName}
+                  onBlur={handlePressEnterName}
+                  allowClear
+                  status={
+                    filterList.filter((item) => item === verifyTestUnit.name)
+                      .length > 1 || verifyTestUnit.name === ''
+                      ? 'error'
+                      : undefined
+                  }
+                />
+              </div>
+            </div>
+            {filterList.filter((item) => item === verifyTestUnit.name).length >
+            1 ? (
+              <div style={{ color: 'red' }}>* 不可重复</div>
+            ) : null}
+            {verifyTestUnit?.name === '' ? (
+              <div style={{ color: 'red' }}>* 不可为空</div>
+            ) : null}
+          </>
 
           <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>Number： </label>

@@ -55,6 +55,7 @@ export default () => {
   //   Name: '',
   //   LoopCount: 1,
   // });
+
   const [openBinMapForm, setOpenBinMapForm] = useState(false);
   const [openSubFlowModal, setOpenSubFlowModal] = useState(false);
   const [openMainFlowModal, setOpenMainFlowModal] = useState(false);
@@ -155,7 +156,7 @@ export default () => {
   let softBinPortId = 0;
   const getId = () => `${softBinPortId++}`;
   // console.log('简单的flows', analyzeFlow(flows));
-  console.log('复杂的flows', testFile(flow2));
+  // console.log('复杂的flows', testFile(flow2));
 
   const mainFlowList = testFile(flow2).mainflowList.map((item) => {
     return {

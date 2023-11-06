@@ -2,24 +2,32 @@ import { Handle, Position, useStore } from 'reactflow';
 import InputToolTip from '@/components/InputToolTip';
 import styles from './index.less';
 import { useModel } from '@umijs/max';
+import { useContext } from 'react';
+import { NodesContext } from '../../../MiddleContent';
 
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
 const sourceStyle = { zIndex: 1 };
 
-export default function CustomNode({ id, data }) {
-  const { startNodeName } = useModel('useTestFlowModel');
+export default function CustomNode({ id, data, selected }) {
+  const xxx: any = useContext(NodesContext);
+  // const a = xxx.map((item) => item.data.label)[0];
+  const isRepeat = xxx.includes(data.label);
+  // const { startNodeName } = useModel('useTestFlowModel');
   const { isEdit, setIsEdit } = useModel('useDrawModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
-
   const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
   //   const label = isTarget ? 'Drop here' : 'Drag to connect';
   const handleToggle = () => {
     setIsEdit(true);
   };
+
   return (
-    <div className={startNodeName === data.label ? 'customNode' : ''}>
+    <div
+      className={selected ? styles.selected : styles.default}
+      //  className={startNodeName === data.label ? 'customNode' : ''}
+    >
       {/* <div className="name1">Name: {data.label}</div> */}
       {/* <InputToolTip defaultValue={data.label} className="name1" /> */}
       {isEdit ? (
@@ -29,7 +37,11 @@ export default function CustomNode({ id, data }) {
           className={styles.name}
         />
       ) : (
-        <div className={styles.name1} onDoubleClick={handleToggle}>
+        <div
+          style={isRepeat ? { border: '1px solid red' } : undefined}
+          className={styles.name1}
+          onDoubleClick={handleToggle}
+        >
           {data.label}
         </div>
       )}

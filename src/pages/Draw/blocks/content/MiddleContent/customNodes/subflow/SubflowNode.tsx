@@ -7,8 +7,8 @@ const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
 const sourceStyle = { zIndex: 1 };
 
-const SubflowNode = ({ id, data }) => {
-  const { startNodeName } = useModel('useTestFlowModel');
+const SubflowNode = ({ id, data, selected }) => {
+  // const { startNodeName } = useModel('useTestFlowModel');
   const { isEdit, setIsEdit } = useModel('useDrawModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
   const isConnecting = !!connectionNodeId;
@@ -19,7 +19,10 @@ const SubflowNode = ({ id, data }) => {
   };
 
   return (
-    <div className={startNodeName === data.label ? 'customNode' : ''}>
+    <div
+      className={selected ? styles.selected : styles.default}
+      //  className={startNodeName === data.label ? 'customNode' : ''}
+    >
       {isEdit ? (
         <InputToolTip
           setIsEdit={setIsEdit}
