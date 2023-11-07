@@ -2,12 +2,15 @@ import { Handle, Position, useStore } from 'reactflow';
 import InputToolTip from '@/components/InputToolTip';
 import styles from './index.less';
 import { useModel } from '@umijs/max';
+import { useContext } from 'react';
+import { NodesContext } from '../../../MiddleContent';
 
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
 const sourceStyle = { zIndex: 1 };
 
 const SubflowNode = ({ id, data, selected }) => {
+  const testUnitParamsList: any = useContext(NodesContext);
   // const { startNodeName } = useModel('useTestFlowModel');
   const { isEdit, setIsEdit } = useModel('useDrawModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
@@ -18,6 +21,9 @@ const SubflowNode = ({ id, data, selected }) => {
     setIsEdit(true);
   };
 
+  const params = testUnitParamsList?.selectedNode?.filter(
+    (item) => item.name === data.label,
+  )[0];
   return (
     <div
       className={selected ? styles.selected : styles.default}
@@ -38,7 +44,7 @@ const SubflowNode = ({ id, data, selected }) => {
         className={styles.customNodeBody}
         style={{
           borderStyle: isTarget ? 'dashed' : 'solid',
-          backgroundColor: isTarget ? '#ffcce3' : '#bfa',
+          backgroundColor: isTarget ? '#ffcce3' : '#9be47d',
         }}
       >
         {!isConnecting && (
@@ -54,7 +60,10 @@ const SubflowNode = ({ id, data, selected }) => {
           position={Position.Left}
           type="target"
         />
-        {/* 我是subflow关键属性 */}
+        <div style={{ color: '#f6f7fa' }}>
+          <div className={styles.keyProperty}>{params?.number}</div>
+          <div className={styles.keyProperty}>{params?.testMethod}</div>
+        </div>
       </div>
     </div>
   );

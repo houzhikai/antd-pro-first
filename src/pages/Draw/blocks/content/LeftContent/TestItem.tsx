@@ -65,7 +65,7 @@ const TestItem = () => {
               item={item}
               index={index}
               type="test-method"
-              color="#108ee9"
+              color="#428feb"
               onDragStart={(event) => {
                 if (index === 0) {
                   setOpenTestUnitModal({

@@ -307,12 +307,6 @@ const TestItem = () => {
     setOpenVariablesModal({ isOpen: true, values: dataSource });
   };
 
-  console.log(
-    111,
-    filterList,
-    verifyTestUnit,
-    filterList.filter((item) => item === verifyTestUnit.name).length,
-  );
   const params = selectedNode?.params;
   return (
     <div>

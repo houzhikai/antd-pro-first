@@ -260,9 +260,13 @@ const AddMainFlowAttribute = () => {
           rules={[
             { required: true, message: '不能为空！' },
             { validator: validatorFlowName },
+            {
+              pattern: /^[a-zA-Z0-9_\s]{1,10}$/,
+              message: '请输入数字、字母、空格、下划线的最多十位数名称',
+            },
           ]}
         >
-          <Input placeholder="请输入FlowName" allowClear />
+          <Input placeholder="请输入FlowName" allowClear showCount />
         </Form.Item>
 
         <Form.Item name="isMain" label="IsMain">

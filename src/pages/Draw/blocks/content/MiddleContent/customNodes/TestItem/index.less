@@ -1,5 +1,7 @@
 @import url('../mixin.less');
 
+@testUnitKeyCountHeight: 80px;
+
 .wrapper {
     margin: 10px 0;
 }
@@ -21,6 +23,17 @@
     word-wrap: break-word;
     // 强制英文单词断行:
     word-break: break-all;
+    // 超出三行显示省略号
+    display: -webkit-box;
+    /* 使用弹性盒子布局 */
+    -webkit-line-clamp: 3;
+    /* 最多显示三行文本 */
+    -webkit-box-orient: vertical;
+    /* 垂直方向排列 */
+    overflow: hidden;
+    /* 隐藏溢出的文本 */
+    text-overflow: ellipsis;
+    /* 显示省略号 */
 }
 
 .name {
@@ -34,15 +47,16 @@
 
 .customNodeBody {
     width: 150px;
-    height: 80px;
+    height: @testUnitKeyCountHeight;
     border: 1px solid black;
+    padding-left: 5px;
     position: relative;
     overflow: hidden;
     border-radius: 0 0 6px 6px;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
-    font-weight: bold;
+    // font-weight: bold;
     background: transparent;
 }
 
@@ -53,6 +67,10 @@
 
 .default {
     border: 2px solid transparent;
+}
+
+.keyProperty {
+    height: (@testUnitKeyCountHeight/2- 10);
 }
 
 // .customNode:before {

@@ -60,6 +60,7 @@ const MiddleContent = () => {
   const reactFlowWrapper = useRef<any>(null);
   type DeleteTypeProps = string | string[] | null;
   const [deleteType, setDeleteType] = useState<DeleteTypeProps>('Delete');
+  const [nodesParamsList, setNodesParamsList] = useState([]);
 
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
@@ -93,6 +94,11 @@ const MiddleContent = () => {
       return duplicates;
     }
     setFilterList(findDuplicates(nodes));
+    const testUnitParamsList: any = nodes
+      .filter((item) => item.type !== 'fen-bin')
+      // @ts-ignore
+      .map((item) => item.params);
+    setNodesParamsList(testUnitParamsList);
   }, [nodes]);
   // useEffect(() => {
   //   setNodes((nds) =>
@@ -416,9 +422,13 @@ const MiddleContent = () => {
   //   }
   //   edgeUpdateSuccessful.current = true;
   // }, []);
+  const values = {
+    filterList: filterList,
+    selectedNode: nodesParamsList,
+  };
   return (
     // @ts-ignore
-    <NodesContext.Provider value={filterList}>
+    <NodesContext.Provider value={values}>
       <div className={styles.draw}>
         <div className="dndflow">
           <ReactFlowProvider>

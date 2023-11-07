@@ -10,9 +10,9 @@ const connectionNodeIdSelector = (state) => state.connectionNodeId;
 const sourceStyle = { zIndex: 1 };
 
 export default function CustomNode({ id, data, selected }) {
-  const xxx: any = useContext(NodesContext);
+  const testUnitParamsList: any = useContext(NodesContext);
   // const a = xxx.map((item) => item.data.label)[0];
-  const isRepeat = xxx.includes(data.label);
+  const isRepeat = testUnitParamsList.filterList.includes(data.label);
   // const { startNodeName } = useModel('useTestFlowModel');
   const { isEdit, setIsEdit } = useModel('useDrawModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
@@ -22,6 +22,9 @@ export default function CustomNode({ id, data, selected }) {
   const handleToggle = () => {
     setIsEdit(true);
   };
+  const params = testUnitParamsList?.selectedNode?.filter(
+    (item) => item.name === data.label,
+  )[0];
 
   return (
     <div
@@ -49,7 +52,7 @@ export default function CustomNode({ id, data, selected }) {
         className={styles.customNodeBody}
         style={{
           borderStyle: isTarget ? 'dashed' : 'solid',
-          backgroundColor: isTarget ? '#ffcce3' : '#ccd9f6',
+          backgroundColor: isTarget ? '#ffcce3' : '#428feb',
         }}
       >
         {!isConnecting && (
@@ -65,7 +68,10 @@ export default function CustomNode({ id, data, selected }) {
           position={Position.Left}
           type="target"
         />
-        {/* 我是测试项关键属性 */}
+        <div style={{ color: '#f6f7fa' }}>
+          <div className={styles.keyProperty}>{params?.number}</div>
+          <div className={styles.keyProperty}>{params?.testMethod}</div>
+        </div>
       </div>
     </div>
   );
