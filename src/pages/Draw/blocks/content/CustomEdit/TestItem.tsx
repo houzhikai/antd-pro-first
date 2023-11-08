@@ -1,6 +1,5 @@
 import { useModel } from '@umijs/max';
-import { Input, Image, Tooltip, Switch, Table, Button } from 'antd';
-import toolTipSvg from '@/icon/draw/tooltip.svg';
+import { Input, Table, Button, Select } from 'antd';
 
 import styles from './index.less';
 import { RightOutlined, DownOutlined } from '@ant-design/icons';
@@ -8,9 +7,23 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const TestItem = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
-  const { setOpenVariablesModal } = useModel('useDrawModel');
+  const { setOpenVariablesModal, testClassList, subflowList } =
+    useModel('useDrawModel');
   const inputRef = useRef<any>(null);
-
+  const testMethodOptions = testClassList
+    .filter((item) => item.testMethod !== 'BaseTestItem')
+    .map((item) => {
+      return {
+        value: item.testMethod,
+        label: item.testMethod,
+      };
+    });
+  const subflowOptions = subflowList.map((item) => {
+    return {
+      value: item.name,
+      label: item.name,
+    };
+  });
   const selectedNodeItem: any = useMemo(
     () => nodes.filter((item) => item.selected)[0],
     [nodes],
@@ -33,8 +46,9 @@ const TestItem = () => {
         .map((item) => item.data.label),
     [nodes],
   );
+
   // 修改测试项class
-  const testItemClass = nodes
+  const defaultTestMethod = nodes
     .filter((item) => item.selected)
     .map((item: any) => item?.params.testMethod)[0];
 
@@ -155,39 +169,39 @@ const TestItem = () => {
     },
   ];
 
-  const handleChangeIsStartUnit = (checked) => {
-    setNodes((node) =>
-      node.map((item: any) => {
-        if (item.selected) {
-          return {
-            ...item,
-            params: {
-              ...item.params,
-              isStartUnit: checked,
-            },
-          };
-        }
-        return item;
-      }),
-    );
-  };
+  // const handleChangeIsStartUnit = (checked) => {
+  //   setNodes((node) =>
+  //     node.map((item: any) => {
+  //       if (item.selected) {
+  //         return {
+  //           ...item,
+  //           params: {
+  //             ...item.params,
+  //             isStartUnit: checked,
+  //           },
+  //         };
+  //       }
+  //       return item;
+  //     }),
+  //   );
+  // };
 
-  const handleChangeIsFlowUnit = (checked) => {
-    setNodes((node) =>
-      node.map((item: any) => {
-        if (item.selected) {
-          return {
-            ...item,
-            params: {
-              ...item.params,
-              isFlowUnit: checked,
-            },
-          };
-        }
-        return item;
-      }),
-    );
-  };
+  // const handleChangeIsFlowUnit = (checked) => {
+  //   setNodes((node) =>
+  //     node.map((item: any) => {
+  //       if (item.selected) {
+  //         return {
+  //           ...item,
+  //           params: {
+  //             ...item.params,
+  //             isFlowUnit: checked,
+  //           },
+  //         };
+  //       }
+  //       return item;
+  //     }),
+  //   );
+  // };
 
   const handleChangeName = useCallback(
     (e) => {
@@ -267,26 +281,14 @@ const TestItem = () => {
     });
     setNodes(newData);
   };
-
-  const handleChangeTargetFlowName = (e) => {
-    setSelectedNode((obj) => {
-      return {
-        ...obj,
-        params: {
-          ...obj.params,
-          targetFlowName: e.target.value,
-        },
-      };
-    });
-  };
-  const handlePressTargetFlowName = (e) => {
+  const handleChangeTestMethod = (value) => {
     const newData = nodes.map((item: any) => {
       if (item.selected) {
         return {
           ...item,
           params: {
             ...item.params,
-            targetFlowName: e.target.value,
+            testMethod: value,
           },
         };
       }
@@ -294,6 +296,33 @@ const TestItem = () => {
     });
     setNodes(newData);
   };
+
+  // const handleChangeTargetFlowName = (e) => {
+  //   setSelectedNode((obj) => {
+  //     return {
+  //       ...obj,
+  //       params: {
+  //         ...obj.params,
+  //         targetFlowName: e.target.value,
+  //       },
+  //     };
+  //   });
+  // };
+  // const handlePressTargetFlowName = (e) => {
+  //   const newData = nodes.map((item: any) => {
+  //     if (item.selected) {
+  //       return {
+  //         ...item,
+  //         params: {
+  //           ...item.params,
+  //           targetFlowName: e.target.value,
+  //         },
+  //       };
+  //     }
+  //     return item;
+  //   });
+  //   setNodes(newData);
+  // };
 
   const handleClick = (values) => {
     const dataSource = values.map((item: any, index) => {
@@ -314,39 +343,17 @@ const TestItem = () => {
       (selectedNodeItem.type === 'test-method' ||
         selectedNodeItem.type === 'subflow') ? (
         <>
-          <div className={styles.title}>Member：</div>
+          <div className={styles.title}>Property：</div>
+
           <div className={styles['flow-item']}>
-            <label className={styles['flow-label']}>
-              <span>TestMethod </span>
-              <Tooltip title="此处不可编辑Class" placement="topLeft">
-                <Image src={toolTipSvg} width={14} preview={false} />：
-              </Tooltip>
-            </label>
+            <label className={styles['flow-label']}>Number： </label>
             <Input
-              placeholder="请输入 TestMethod"
-              value={testItemClass}
+              placeholder="请输入 Number"
+              value={params?.number}
+              onChange={handleChangeNumber}
+              onPressEnter={handlePressEnterNumber}
+              onBlur={handlePressEnterNumber}
               allowClear
-              disabled
-            />
-          </div>
-
-          <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
-            <label className={styles['flow-label']}>IsFlowUnit：</label>
-            <Switch
-              checkedChildren="true"
-              unCheckedChildren="false"
-              checked={params?.isFlowUnit}
-              onChange={handleChangeIsFlowUnit}
-            />
-          </div>
-
-          <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
-            <label className={styles['flow-label']}>IsStartUnit：</label>
-            <Switch
-              checkedChildren="true"
-              unCheckedChildren="false"
-              checked={params?.isStartUnit}
-              onChange={handleChangeIsStartUnit}
             />
           </div>
 
@@ -381,17 +388,64 @@ const TestItem = () => {
             ) : null}
           </>
 
-          <div className={styles['flow-item']}>
-            <label className={styles['flow-label']}>Number： </label>
-            <Input
-              placeholder="请输入 Number"
-              value={params?.number}
-              onChange={handleChangeNumber}
-              onPressEnter={handlePressEnterNumber}
-              onBlur={handlePressEnterNumber}
-              allowClear
+          {selectedNodeItem.type === 'test-method' && (
+            <div className={styles['flow-item']}>
+              <label className={styles['flow-label']}>TestMethod：</label>
+              {/* <Input
+                placeholder="请输入 TestMethod"
+                value={testItemClass}
+                allowClear
+              /> */}
+
+              <Select
+                style={{ width: '100%' }}
+                defaultValue={defaultTestMethod}
+                options={testMethodOptions}
+                value={params?.testMethod}
+                onChange={handleChangeTestMethod}
+              />
+            </div>
+          )}
+          {selectedNodeItem.type === 'subflow' && (
+            <div className={styles['flow-item']}>
+              <label className={styles['flow-label']}>SubFlowName： </label>
+              <Select
+                style={{ width: '100%' }}
+                defaultValue={defaultTestMethod}
+                options={subflowOptions}
+                value={params?.testMethod}
+                onChange={handleChangeTestMethod}
+              />
+              {/* <Input
+                placeholder="请输入 TargetFlowName"
+                allowClear
+                value={params?.targetFlowName}
+                onChange={handleChangeTargetFlowName}
+                onPressEnter={handlePressTargetFlowName}
+                onBlur={handlePressTargetFlowName}
+              /> */}
+            </div>
+          )}
+
+          {/* <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
+            <label className={styles['flow-label']}>IsFlowUnit：</label>
+            <Switch
+              checkedChildren="true"
+              unCheckedChildren="false"
+              checked={params?.isFlowUnit}
+              onChange={handleChangeIsFlowUnit}
             />
           </div>
+
+          <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
+            <label className={styles['flow-label']}>IsStartUnit：</label>
+            <Switch
+              checkedChildren="true"
+              unCheckedChildren="false"
+              checked={params?.isStartUnit}
+              onChange={handleChangeIsStartUnit}
+            />
+          </div> */}
 
           {/* <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>LoopCount：</label>
@@ -404,18 +458,6 @@ const TestItem = () => {
               onChange={handleChangeLoopCount}
             />
           </div> */}
-
-          <div className={styles['flow-item']}>
-            <label className={styles['flow-label']}>TargetFlowName： </label>
-            <Input
-              placeholder="请输入 TargetFlowName"
-              allowClear
-              value={params?.targetFlowName}
-              onChange={handleChangeTargetFlowName}
-              onPressEnter={handlePressTargetFlowName}
-              onBlur={handlePressTargetFlowName}
-            />
-          </div>
 
           <div className={styles.title}>
             Variables：

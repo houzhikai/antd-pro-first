@@ -44,9 +44,9 @@ const SoftBin = () => {
     <div>
       {selectedNodeItem?.selected && selectedNodeItem.type === 'fen-bin' ? (
         <>
-          <div className={styles.title}>Member：</div>
+          <div className={styles.title}>Property：</div>
           <div className={styles['flow-item']}>
-            <label className={styles['flow-label']}>FenBin： </label>
+            <label className={styles['flow-label']}>SoftBin： </label>
             <Select
               style={{ width: '100%' }}
               options={options}

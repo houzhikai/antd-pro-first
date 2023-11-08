@@ -1,4 +1,4 @@
-import { Button, Input, Switch, Table } from 'antd';
+import { Button, Input, Table } from 'antd';
 import styles from './index.less';
 import { useModel } from '@umijs/max';
 import { RightOutlined, DownOutlined } from '@ant-design/icons';
@@ -142,23 +142,23 @@ const MainFlowEdit = () => {
     });
   };
 
-  const handleChangeIsMain = (checked) => {
-    setActiveTestOrFlowItemParams((obj) => {
-      return {
-        ...obj,
-        isMain: checked,
-      };
-    });
-  };
+  // const handleChangeIsMain = (checked) => {
+  //   setActiveTestOrFlowItemParams((obj) => {
+  //     return {
+  //       ...obj,
+  //       isMain: checked,
+  //     };
+  //   });
+  // };
 
-  const handleChangeIsActive = (checked) => {
-    setActiveTestOrFlowItemParams((obj) => {
-      return {
-        ...obj,
-        isActive: checked,
-      };
-    });
-  };
+  // const handleChangeIsActive = (checked) => {
+  //   setActiveTestOrFlowItemParams((obj) => {
+  //     return {
+  //       ...obj,
+  //       isActive: checked,
+  //     };
+  //   });
+  // };
 
   return (
     <div>
@@ -173,7 +173,7 @@ const MainFlowEdit = () => {
               onChange={handleChangeFlowName}
             />
           </div>
-
+          {/* 
           <div style={{ alignItems: 'center' }} className={styles['flow-item']}>
             <label className={styles['flow-label']}>IsMain：</label>
             <Switch
@@ -192,7 +192,7 @@ const MainFlowEdit = () => {
               checked={activeTestOrFlowItemParams?.isActive}
               onChange={handleChangeIsActive}
             />
-          </div>
+          </div> */}
 
           {/* <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>LoopCount：</label>
