@@ -1,14 +1,13 @@
 import { useModel } from '@umijs/max';
-import { Input, Table, Button, Select } from 'antd';
+import { Input, Table, Button, Select, Popconfirm } from 'antd';
 
 import styles from './index.less';
-import { RightOutlined, DownOutlined } from '@ant-design/icons';
+import { RightOutlined, DownOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const TestItem = () => {
   const { nodes, setNodes } = useModel('useTestFlowModel');
-  const { setOpenVariablesModal, testClassList, subflowList } =
-    useModel('useDrawModel');
+  const { testClassList, subflowList } = useModel('useDrawModel');
   const inputRef = useRef<any>(null);
   const testMethodOptions = testClassList
     .filter((item) => item.testMethod !== 'BaseTestItem')
@@ -28,7 +27,20 @@ const TestItem = () => {
     () => nodes.filter((item) => item.selected)[0],
     [nodes],
   );
-  const [selectedNode, setSelectedNode] = useState(selectedNodeItem);
+  const newVariables = selectedNodeItem?.params?.variables?.map((item) => {
+    return {
+      key: `${Math.floor(Math.random() * 10000)}`,
+      param: item.param,
+      value: item.value,
+    };
+  });
+
+  const selectedParams = selectedNodeItem
+    ? Object.assign(selectedNodeItem, {
+        params: { ...selectedNodeItem.params, variables: newVariables },
+      })
+    : {};
+  const [selectedNode, setSelectedNode] = useState(selectedParams);
   const [verifyTestUnit, setVerifyTestUnit] = useState({
     name: selectedNode?.params?.name,
   });
@@ -96,7 +108,7 @@ const TestItem = () => {
                   variables: item.params.variables.map((t, idx) => {
                     if (index === idx) {
                       return {
-                        key: `${e.target.value}-${item.value}.${index}`,
+                        key: t.key,
                         param: e.target.value,
                         value: t.value,
                       };
@@ -108,6 +120,7 @@ const TestItem = () => {
             }
             return item;
           });
+          console.log({ newData });
           setNodes(newData);
         };
         return (
@@ -143,7 +156,7 @@ const TestItem = () => {
                   variables: item.params.variables.map((t, idx) => {
                     if (index === idx) {
                       return {
-                        key: `${item.param}-${e.target.value}.${index}`,
+                        key: t.key,
                         param: t.param,
                         value: e.target.value,
                       };
@@ -164,6 +177,69 @@ const TestItem = () => {
             onBlur={handlePressEnter}
             bordered={false}
           />
+        );
+      },
+    },
+    {
+      key: 'option',
+      dataIndex: 'option',
+      width: '10%',
+      align: 'center',
+      title: (
+        <div
+          className={styles.globalVariablesTable}
+          onClick={handleVariablesClick}
+        >
+          Option
+        </div>
+      ),
+      render: (_, record) => {
+        const handleRemoveRow = (record) => {
+          const newData = selectedNode.params.variables.filter(
+            (item) => item.key !== record.key,
+          );
+          const newNodes = nodes.map((item: any) => {
+            if (item.selected) {
+              return {
+                ...item,
+                params: {
+                  ...item.params,
+                  variables: newData,
+                },
+              };
+            }
+            return item;
+          });
+          setNodes(newNodes);
+          // setSelectedNode((obj) => {
+          //   return {
+          //     ...obj,
+          //     params: {
+          //       ...obj.params,
+          //       variables: newData,
+          //     },
+          //   };
+          // });
+          // setSelectedNode();
+          // const newData = activeTestOrFlowItemParams.globalVariables.filter(
+          //   (item) => item.key !== record.key,
+          // );
+          // setActiveTestOrFlowItemParams((obj) => {
+          //   return {
+          //     ...obj,
+          //     globalVariables: newData,
+          //   };
+          // });
+        };
+        return (
+          <Popconfirm
+            title="Are you sure to delete this item?"
+            onConfirm={() => handleRemoveRow(record)}
+            okText="yes"
+            cancelText="cancel"
+          >
+            <Button danger type="link" icon={<DeleteOutlined />} />
+          </Popconfirm>
         );
       },
     },
@@ -324,18 +400,36 @@ const TestItem = () => {
   //   setNodes(newData);
   // };
 
-  const handleClick = (values) => {
-    const dataSource = values.map((item: any, index) => {
-      return {
-        key: `${item.param}-${item.value}.${index}`,
-        param: item.param,
-        value: item.value,
-      };
+  const handleAddRows = () => {
+    const newData = {
+      key: (Math.random() * 10000).toFixed(0), // 要保证id唯一，且添加/删除时id不能唯一
+      param: '',
+      value: '',
+    };
+    const newNodes = nodes.map((item: any) => {
+      if (item.selected) {
+        return {
+          ...item,
+          params: {
+            ...item.params,
+            variables: [...item.params.variables, newData],
+          },
+        };
+      }
+      return item;
     });
+    setNodes(newNodes);
 
-    setOpenVariablesModal({ isOpen: true, values: dataSource });
+    // const dataSource = values.map((item: any, index) => {
+    //   return {
+    //     key: `${item.param}-${item.value}.${index}`,
+    //     param: item.param,
+    //     value: item.value,
+    //   };
+    // });
+
+    // setOpenVariablesModal({ isOpen: true, values: dataSource });
   };
-
   const params = selectedNode?.params;
   return (
     <div>
@@ -461,8 +555,11 @@ const TestItem = () => {
 
           <div className={styles.title}>
             Variables：
-            <Button type="link" onClick={() => handleClick(params?.variables)}>
+            {/* <Button type="link" onClick={() => handleClick(params?.variables)}>
               Open Modal
+            </Button> */}
+            <Button type="link" onClick={handleAddRows}>
+              Add a row
             </Button>
           </div>
           <div className={styles['flow-item']}>

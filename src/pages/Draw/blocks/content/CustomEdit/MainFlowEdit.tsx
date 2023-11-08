@@ -1,7 +1,7 @@
-import { Button, Input, Table } from 'antd';
+import { Button, Input, Popconfirm, Table } from 'antd';
 import styles from './index.less';
 import { useModel } from '@umijs/max';
-import { RightOutlined, DownOutlined } from '@ant-design/icons';
+import { RightOutlined, DownOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
 const MainFlowEdit = () => {
@@ -9,23 +9,35 @@ const MainFlowEdit = () => {
   const {
     activeTestOrFlowItemParams,
     setActiveTestOrFlowItemParams,
-    setOpenGlobalVariablesModal,
+    // setOpenGlobalVariablesModal,
   } = useModel('useDrawModel');
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedNodeItem: any = nodes.filter((item) => item.selected);
 
-  const handleClick = (values) => {
-    const dataSource = values.globalVariables.map((item: any, index) => {
+  const handleAddRows = () => {
+    const newData = {
+      key: (Math.random() * 10000).toFixed(0), // 要保证id唯一，且添加/删除时id不能唯一
+      param: '',
+      value: '',
+    };
+    setActiveTestOrFlowItemParams((obj) => {
       return {
-        key: `${item.param}-${item.value}.${index}`,
-        param: item.param,
-        value: item.value,
+        ...obj,
+        globalVariables: [...obj.globalVariables, newData],
       };
     });
-    const params = Object.assign(values, { globalVariables: dataSource });
-    setActiveTestOrFlowItemParams(params);
-    setOpenGlobalVariablesModal({ isOpen: true, values: dataSource });
+
+    // const dataSource = values.globalVariables.map((item: any, index) => {
+    //   return {
+    //     key: `${item.param}-${item.value}.${index}`,
+    //     param: item.param,
+    //     value: item.value,
+    //   };
+    // });
+    // const params = Object.assign(values, { globalVariables: dataSource });
+    // setActiveTestOrFlowItemParams(params);
+    // setOpenGlobalVariablesModal({ isOpen: true, values: dataSource });
   };
 
   // const handleChangeLoopCount = (value) => {
@@ -42,7 +54,7 @@ const MainFlowEdit = () => {
     {
       key: 'param',
       dataIndex: 'param',
-      width: '50%',
+      width: '45%',
       title: (
         <div
           className={styles.globalVariablesTable}
@@ -62,7 +74,7 @@ const MainFlowEdit = () => {
             (item: any, idx) => {
               if (index === idx) {
                 return {
-                  key: `${e.target.value}-${item.value}.${index}`,
+                  key: item.key,
                   param: e.target.value,
                   value: item.value,
                 };
@@ -90,7 +102,7 @@ const MainFlowEdit = () => {
     {
       key: 'value',
       dataIndex: 'value',
-      width: '50%',
+      width: '45%',
       title: (
         <div
           className={styles.globalVariablesTable}
@@ -105,7 +117,7 @@ const MainFlowEdit = () => {
             (item: any, idx) => {
               if (index === idx) {
                 return {
-                  key: `${item.param}-${e.target.value}.${index}`,
+                  key: item.key,
                   param: item.param,
                   value: e.target.value,
                 };
@@ -128,6 +140,43 @@ const MainFlowEdit = () => {
             onBlur={handlePressEnter}
             bordered={false}
           />
+        );
+      },
+    },
+    {
+      key: 'option',
+      dataIndex: 'option',
+      width: '10%',
+      align: 'center',
+      title: (
+        <div
+          className={styles.globalVariablesTable}
+          onClick={() => setIsOpen((c) => !c)}
+        >
+          Option
+        </div>
+      ),
+      render: (_, record) => {
+        const handleRemoveRow = (record) => {
+          const newData = activeTestOrFlowItemParams.globalVariables.filter(
+            (item) => item.key !== record.key,
+          );
+          setActiveTestOrFlowItemParams((obj) => {
+            return {
+              ...obj,
+              globalVariables: newData,
+            };
+          });
+        };
+        return (
+          <Popconfirm
+            title="Are you sure to delete this item?"
+            onConfirm={() => handleRemoveRow(record)}
+            okText="yes"
+            cancelText="cancel"
+          >
+            <Button danger type="link" icon={<DeleteOutlined />} />
+          </Popconfirm>
         );
       },
     },
@@ -208,11 +257,14 @@ const MainFlowEdit = () => {
 
           <div className={styles.title}>
             GlobalVariables：
-            <Button
+            {/* <Button
               type="link"
               onClick={() => handleClick(activeTestOrFlowItemParams)}
             >
               Open Modal
+            </Button> */}
+            <Button type="link" onClick={handleAddRows}>
+              Add a row
             </Button>
           </div>
           <div className={styles['flow-item']}>
