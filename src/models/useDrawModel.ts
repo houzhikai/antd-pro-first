@@ -182,6 +182,59 @@ export default () => {
   const [mainflowList, setMainflowList] = useState<any>([]); // 左侧mainflow列表
   const [subflowList, setSubflowList] = useState<any>([]); // 左侧subflow列表
   const [testClassList, setTestClassList] = useState<any>([]); // 左侧测试项列表
+  const initAddMainflowItem = {
+    status: false,
+    show: false,
+    params: {
+      type: 'mainflow',
+      name: '',
+      mainFlowNode: [],
+      mainFlowEdges: [],
+      param: {
+        flowName: '',
+        isMain: true,
+        isActive: false,
+        globalVariables: [],
+        units: [],
+      },
+    },
+  };
+  const [addMainFlowItem, setAddMainFlowItem] = useState(initAddMainflowItem);
+  const initAddSubflowItem = {
+    status: false,
+    show: false,
+    params: {
+      type: 'subflow',
+      name: '',
+      mainFlowNode: [],
+      mainFlowEdges: [],
+      param: {
+        flowName: '',
+        isMain: false,
+        isActive: false,
+        variables: [],
+        units: [],
+      },
+    },
+  };
+  const [addSubFlowItem, setAddSubFlowItem] = useState(initAddSubflowItem);
+  const initTestMethodItem = {
+    status: false,
+    show: false,
+    params: {
+      key: 1000000,
+      testMethod: '',
+      isFlowUnit: false,
+      isStartUnit: false,
+      name: '',
+      number: '',
+      loopCount: 1,
+      targetFlowName: '',
+      variables: [],
+    },
+  };
+  const [addTestMethodItem, setAddTestMethodItem] =
+    useState(initTestMethodItem);
 
   return {
     isHiddenSide,
@@ -257,5 +310,14 @@ export default () => {
     setMainflowList,
     testClassList,
     setTestClassList,
+    addMainFlowItem,
+    setAddMainFlowItem,
+    initAddMainflowItem,
+    addSubFlowItem,
+    setAddSubFlowItem,
+    initAddSubflowItem,
+    addTestMethodItem,
+    setAddTestMethodItem,
+    initTestMethodItem,
   };
 };

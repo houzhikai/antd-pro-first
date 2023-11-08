@@ -13,12 +13,15 @@ const { Panel } = Collapse;
 const LeftContent = () => {
   const {
     isHiddenSide,
-    setOpenMainFlowModal,
+    // setOpenMainFlowModal,
     setOpenBinMapForm,
-    setOpenTestUnitModal,
-    setOpenSubFlowModal,
+    // setOpenTestUnitModal,
+    // setOpenSubFlowModal,
     isOnLine,
-    setSelected,
+    // setSelected,
+    setAddMainFlowItem,
+    setAddSubFlowItem,
+    setAddTestMethodItem,
   } = useModel('useDrawModel');
 
   const softBinIcon = (
@@ -39,20 +42,26 @@ const LeftContent = () => {
       icon={<PlusOutlined />}
       onClick={(event) => {
         event.stopPropagation();
-        setOpenTestUnitModal({
-          param: 'add',
-          isOpen: true,
-          values: {
-            testMethod: 'baseName',
-            isFlowUnit: false,
-            isStartUnit: true,
-            name: 'baseName',
-            number: '0000',
-            loopCount: 3,
-            targetFlowName: 'add test unit',
-            variables: [],
-          },
+        setAddTestMethodItem((obj) => {
+          return {
+            ...obj,
+            show: true,
+          };
         });
+        // setOpenTestUnitModal({
+        //   param: 'add',
+        //   isOpen: true,
+        //   values: {
+        //     testMethod: 'baseName',
+        //     isFlowUnit: false,
+        //     isStartUnit: true,
+        //     name: 'baseName',
+        //     number: '0000',
+        //     loopCount: 3,
+        //     targetFlowName: 'add test unit',
+        //     variables: [],
+        //   },
+        // });
       }}
     />
   );
@@ -63,8 +72,14 @@ const LeftContent = () => {
       icon={<PlusOutlined />}
       onClick={(event) => {
         event.stopPropagation();
-        setOpenSubFlowModal(true);
-        setSelected('');
+        // setOpenSubFlowModal(true);
+        // setSelected('');
+        setAddSubFlowItem((obj) => {
+          return {
+            ...obj,
+            show: true,
+          };
+        });
       }}
     />
   );
@@ -76,8 +91,14 @@ const LeftContent = () => {
       icon={<PlusOutlined />}
       onClick={(event) => {
         event.stopPropagation();
-        setOpenMainFlowModal(true);
-        setSelected('');
+        // setOpenMainFlowModal(true);
+        // setSelected('');
+        setAddMainFlowItem((obj) => {
+          return {
+            ...obj,
+            show: true,
+          };
+        });
       }}
     />
   );
