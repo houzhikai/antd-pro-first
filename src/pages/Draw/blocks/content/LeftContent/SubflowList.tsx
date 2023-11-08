@@ -58,7 +58,7 @@ const SubflowList = () => {
   const handlePressEnter = useCallback(
     (e) => {
       const inputValue = e.target.value;
-      if (!addSubFlowItem.status) {
+      if (!addSubFlowItem.status && inputValue !== '') {
         setSubflowList((oldList) => [...oldList, addSubFlowItem.params]);
         setActiveTestOrFlowItem(inputValue);
         setActiveTestOrFlowItemParams({
@@ -69,6 +69,9 @@ const SubflowList = () => {
         });
         setNodes([]);
         setEdges([]);
+        setAddSubFlowItem(initAddSubflowItem);
+      }
+      if (inputValue === '') {
         setAddSubFlowItem(initAddSubflowItem);
       }
     },
@@ -83,8 +86,13 @@ const SubflowList = () => {
           onPressEnter={handlePressEnter}
           onBlur={handlePressEnter}
           allowClear
-          status={addSubFlowItem.status ? 'error' : undefined}
+          status={
+            addSubFlowItem.status || addSubFlowItem.params.name === ''
+              ? 'error'
+              : undefined
+          }
           showCount
+          autoFocus
         />
       )}
       {subflowList.map((item, index) => (

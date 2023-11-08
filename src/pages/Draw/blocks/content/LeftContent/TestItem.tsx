@@ -80,13 +80,19 @@ const TestItem = () => {
       };
     });
   };
-  const handlePressEnter = useCallback(() => {
-    if (!addTestMethodItem.status) {
-      setAddTestUnitList((list) => [...list, addTestMethodItem.params]);
-      setAddTestMethodItem(initTestMethodItem);
-      setTestClassList((list) => [...list, addTestMethodItem.params]);
-    }
-  }, [addTestMethodItem.params]);
+  const handlePressEnter = useCallback(
+    (e) => {
+      if (!addTestMethodItem.status && e.target.value !== '') {
+        setAddTestUnitList((list) => [...list, addTestMethodItem.params]);
+        setAddTestMethodItem(initTestMethodItem);
+        setTestClassList((list) => [...list, addTestMethodItem.params]);
+      }
+      if (e.target.value === '') {
+        setAddTestMethodItem(initTestMethodItem);
+      }
+    },
+    [addTestMethodItem.params],
+  );
   const handleChange = (e, testMethod) => {
     const inputValue = e.target.value;
     const xxx = testClassList
@@ -109,7 +115,7 @@ const TestItem = () => {
   const handleUpdateTestMethodPressEnter = useCallback(
     (e, testMethod) => {
       const inputValue = e.target.value;
-      if (!addTestMethodItem.status) {
+      if (!addTestMethodItem.status && inputValue !== '') {
         const newTestUnitDataList: any = testClassList.map((item) => {
           if (item.key === testMethod.key) {
             return {
@@ -118,6 +124,27 @@ const TestItem = () => {
               isFlowUnit: testMethod.isFlowUnit,
               isStartUnit: testMethod.isStartUnit,
               name: inputValue,
+              number: testMethod.number,
+              targetFlowName: testMethod.targetFlowName,
+              variables: testMethod.variables,
+            };
+          }
+          return item;
+        });
+        setTestClassList(newTestUnitDataList);
+        setAddTestMethodItem(initTestMethodItem);
+      }
+
+      if (inputValue === '') {
+        console.log({ addTestMethodItem, testMethod });
+        const newTestUnitDataList: any = testClassList.map((item) => {
+          if (item.key === testMethod.key) {
+            return {
+              key: testMethod.key,
+              testMethod: testMethod.testMethod,
+              isFlowUnit: testMethod.isFlowUnit,
+              isStartUnit: testMethod.isStartUnit,
+              name: testMethod.name,
               number: testMethod.number,
               targetFlowName: testMethod.targetFlowName,
               variables: testMethod.variables,
@@ -141,8 +168,13 @@ const TestItem = () => {
           onPressEnter={handlePressEnter}
           onBlur={handlePressEnter}
           allowClear
-          status={addTestMethodItem.status ? 'error' : undefined}
+          status={
+            addTestMethodItem.status || addTestMethodItem.params.name === ''
+              ? 'error'
+              : undefined
+          }
           showCount
+          autoFocus
         />
       )}
       {/* 第一项是 */}
@@ -156,8 +188,14 @@ const TestItem = () => {
                 onChange={(e) => handleChange(e, item.testMethod)}
                 onPressEnter={(e) => handleUpdateTestMethodPressEnter(e, item)}
                 onBlur={(e) => handleUpdateTestMethodPressEnter(e, item)}
-                status={addTestMethodItem.status ? 'error' : undefined}
+                status={
+                  addTestMethodItem.status ||
+                  addTestMethodItem.params.testMethod === ''
+                    ? 'error'
+                    : undefined
+                }
                 allowClear
+                autoFocus
                 showCount
               />
             ) : (

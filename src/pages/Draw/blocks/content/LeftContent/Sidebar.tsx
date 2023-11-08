@@ -50,7 +50,7 @@ export default () => {
   const handlePressEnter = useCallback(
     (e) => {
       const inputValue = e.target.value;
-      if (!addMainFlowItem.status) {
+      if (!addMainFlowItem.status && inputValue !== '') {
         setMainflowList((oldList) => [...oldList, addMainFlowItem.params]);
         setActiveTestOrFlowItem(inputValue);
         setActiveTestOrFlowItemParams({
@@ -61,6 +61,9 @@ export default () => {
         });
         setNodes([]);
         setEdges([]);
+        setAddMainFlowItem(initAddMainflowItem);
+      }
+      if (inputValue === '') {
         setAddMainFlowItem(initAddMainflowItem);
       }
     },
@@ -76,8 +79,13 @@ export default () => {
             onPressEnter={handlePressEnter}
             onBlur={handlePressEnter}
             allowClear
-            status={addMainFlowItem.status ? 'error' : undefined}
+            status={
+              addMainFlowItem.status || addMainFlowItem.params.name === ''
+                ? 'error'
+                : undefined
+            }
             showCount
+            autoFocus
           />
         )}
         {/* mainFlowIconList 是原本就有的mainflow */}
