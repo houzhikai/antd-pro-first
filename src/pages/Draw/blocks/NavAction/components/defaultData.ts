@@ -90,7 +90,7 @@ export const options: OptionsProps = {
       HardBin: 'HB2',
       MaxCount: 65536,
       CheckOverflow: true,
-      Color: 'Red',
+      Color: '#f48382',
       Comment: '',
     },
     {
@@ -100,7 +100,7 @@ export const options: OptionsProps = {
       HardBin: 'HB2',
       MaxCount: 65536,
       CheckOverflow: true,
-      Color: 'Red',
+      Color: '#cd201f',
       Comment: '',
     },
     {
@@ -110,7 +110,7 @@ export const options: OptionsProps = {
       HardBin: 'HB1',
       MaxCount: 65536,
       CheckOverflow: true,
-      Color: 'Green',
+      Color: '#87d068',
       Comment: '',
     },
     {
@@ -120,7 +120,7 @@ export const options: OptionsProps = {
       HardBin: 'HB1',
       MaxCount: 65536,
       CheckOverflow: false,
-      Color: 'Green',
+      Color: '#87d068',
       Comment: '',
     },
   ],

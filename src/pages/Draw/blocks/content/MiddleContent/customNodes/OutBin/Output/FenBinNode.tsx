@@ -1,17 +1,31 @@
 import { useStore, Handle, Position } from 'reactflow';
 import styles from './index.less';
+import { useContext } from 'react';
+import { NodesContext } from '../../../../MiddleContent';
 
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
 const sourceStyle = { zIndex: 1 };
 
-const FenBinNode = ({ id, data }) => {
+const FenBinNode = ({ id, data, selected }) => {
+  const testUnitParamsList: any = useContext(NodesContext);
+  const params = testUnitParamsList?.softBinNameColorList?.filter(
+    (item) => item.value === data.label,
+  )[0];
+
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
   return (
-    <div className={styles.wrapper}>
+    <div
+      style={
+        params?.value === data.label ? { background: params?.label } : undefined
+      }
+      className={
+        selected ? `${styles.wrapper} ${styles.selected}` : styles.wrapper
+      }
+    >
       <div
         className={styles.customNodeBody}
         style={{
@@ -32,7 +46,9 @@ const FenBinNode = ({ id, data }) => {
           position={Position.Left}
           type="target"
         />
-        {data.label}
+        <div style={params?.label ? { color: 'white' } : { color: '#000' }}>
+          {data.label}
+        </div>
       </div>
     </div>
   );

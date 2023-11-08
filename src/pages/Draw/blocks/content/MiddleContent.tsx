@@ -50,6 +50,7 @@ const MiddleContent = () => {
     setSoftBinItem,
     subflowItem,
     setSubflowItem,
+    softBinData,
     // setShowSubflowItemModal,
   } = useModel('useDrawModel');
 
@@ -61,6 +62,7 @@ const MiddleContent = () => {
   type DeleteTypeProps = string | string[] | null;
   const [deleteType, setDeleteType] = useState<DeleteTypeProps>('Delete');
   const [nodesParamsList, setNodesParamsList] = useState([]);
+  const [softBinNameColorList, setSoftBinNameColorList] = useState<any>([]);
 
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
 
@@ -94,11 +96,20 @@ const MiddleContent = () => {
       return duplicates;
     }
     setFilterList(findDuplicates(nodes));
+
     const testUnitParamsList: any = nodes
       .filter((item) => item.type !== 'fen-bin')
       // @ts-ignore
       .map((item) => item.params);
     setNodesParamsList(testUnitParamsList);
+
+    const xxx = softBinData.map((item) => {
+      return {
+        value: item.Name,
+        label: item.Color,
+      };
+    });
+    setSoftBinNameColorList(xxx);
   }, [nodes]);
   // useEffect(() => {
   //   setNodes((nds) =>
@@ -425,6 +436,7 @@ const MiddleContent = () => {
   const values = {
     filterList: filterList,
     selectedNode: nodesParamsList,
+    softBinNameColorList,
   };
   return (
     // @ts-ignore
