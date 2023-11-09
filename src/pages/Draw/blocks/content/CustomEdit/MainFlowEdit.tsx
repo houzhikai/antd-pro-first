@@ -1,4 +1,4 @@
-import { Button, Input, Popconfirm, Table } from 'antd';
+import { Button, Input, Popconfirm, Table, Tooltip } from 'antd';
 import styles from './index.less';
 import { useModel } from '@umijs/max';
 import { RightOutlined, DownOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -90,12 +90,19 @@ const MainFlowEdit = () => {
           });
         };
         return (
-          <Input
-            defaultValue={record.param}
-            onPressEnter={handlePressEnter}
-            onBlur={handlePressEnter}
-            bordered={false}
-          />
+          <Tooltip
+            trigger={['hover']}
+            title={record.param.length > 11 ? record.param : undefined}
+            placement="topLeft"
+            overlayClassName="numeric-input"
+          >
+            <Input
+              defaultValue={record.param}
+              onPressEnter={handlePressEnter}
+              onBlur={handlePressEnter}
+              bordered={false}
+            />
+          </Tooltip>
         );
       },
     },
@@ -134,12 +141,19 @@ const MainFlowEdit = () => {
           });
         };
         return (
-          <Input
-            defaultValue={record.value}
-            onPressEnter={handlePressEnter}
-            onBlur={handlePressEnter}
-            bordered={false}
-          />
+          <Tooltip
+            trigger={['hover']}
+            title={record.value.length > 11 ? record.value : undefined}
+            placement="topLeft"
+            overlayClassName="numeric-input"
+          >
+            <Input
+              defaultValue={record.value}
+              onPressEnter={handlePressEnter}
+              onBlur={handlePressEnter}
+              bordered={false}
+            />
+          </Tooltip>
         );
       },
     },
@@ -172,7 +186,7 @@ const MainFlowEdit = () => {
           <Popconfirm
             title="Are you sure to delete this item?"
             onConfirm={() => handleRemoveRow(record)}
-            okText="yes"
+            okText="ok"
             cancelText="cancel"
           >
             <Button danger type="link" icon={<DeleteOutlined />} />

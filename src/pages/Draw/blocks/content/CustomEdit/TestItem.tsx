@@ -1,5 +1,5 @@
 import { useModel } from '@umijs/max';
-import { Input, Table, Button, Select, Popconfirm } from 'antd';
+import { Input, Table, Button, Select, Popconfirm, Tooltip } from 'antd';
 
 import styles from './index.less';
 import { RightOutlined, DownOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -27,13 +27,15 @@ const TestItem = () => {
     () => nodes.filter((item) => item.selected)[0],
     [nodes],
   );
-  const newVariables = selectedNodeItem?.params?.variables?.map((item) => {
-    return {
-      key: `${Math.floor(Math.random() * 10000)}`,
-      param: item.param,
-      value: item.value,
-    };
-  });
+  const newVariables = selectedNodeItem?.params?.variables?.map(
+    (item, index) => {
+      return {
+        key: `${item.param}.${index}`,
+        param: item.param,
+        value: item.value,
+      };
+    },
+  );
 
   const selectedParams = selectedNodeItem
     ? Object.assign(selectedNodeItem, {
@@ -83,7 +85,7 @@ const TestItem = () => {
     {
       key: 'param',
       dataIndex: 'param',
-      width: '50%',
+      width: '45%',
       title: (
         <div
           className={styles.globalVariablesTable}
@@ -120,23 +122,29 @@ const TestItem = () => {
             }
             return item;
           });
-          console.log({ newData });
           setNodes(newData);
         };
         return (
-          <Input
-            defaultValue={record.param}
-            onPressEnter={handlePressEnter}
-            onBlur={handlePressEnter}
-            bordered={false}
-          />
+          <Tooltip
+            trigger={['hover']}
+            title={record.param.length > 11 ? record.param : undefined}
+            placement="topLeft"
+            overlayClassName="numeric-input"
+          >
+            <Input
+              defaultValue={record.param}
+              onPressEnter={handlePressEnter}
+              onBlur={handlePressEnter}
+              bordered={false}
+            />
+          </Tooltip>
         );
       },
     },
     {
       key: 'value',
       dataIndex: 'value',
-      width: '50%',
+      width: '45%',
       title: (
         <div
           className={styles.globalVariablesTable}
@@ -171,12 +179,19 @@ const TestItem = () => {
           setNodes(newData);
         };
         return (
-          <Input
-            defaultValue={record.value}
-            onPressEnter={handlePressEnter}
-            onBlur={handlePressEnter}
-            bordered={false}
-          />
+          <Tooltip
+            trigger={['hover']}
+            title={record.value.length > 11 ? record.value : undefined}
+            placement="topLeft"
+            overlayClassName="numeric-input"
+          >
+            <Input
+              defaultValue={record.value}
+              onPressEnter={handlePressEnter}
+              onBlur={handlePressEnter}
+              bordered={false}
+            />
+          </Tooltip>
         );
       },
     },
@@ -235,7 +250,7 @@ const TestItem = () => {
           <Popconfirm
             title="Are you sure to delete this item?"
             onConfirm={() => handleRemoveRow(record)}
-            okText="yes"
+            okText="ok"
             cancelText="cancel"
           >
             <Button danger type="link" icon={<DeleteOutlined />} />
