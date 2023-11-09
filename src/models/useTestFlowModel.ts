@@ -92,6 +92,8 @@ export default () => {
   )[0];
   const startNode = nodes.filter((item) => item.id === filterStartNodeItem);
   const startNodeName = startNode.map((item) => item.data.label)[0];
+
+  const [key, setKey] = useState(1);
   return {
     nodeName,
     setNodeName,
@@ -120,5 +122,7 @@ export default () => {
     handleList,
     setHandleList,
     startNodeName,
+    key,
+    setKey,
   };
 };

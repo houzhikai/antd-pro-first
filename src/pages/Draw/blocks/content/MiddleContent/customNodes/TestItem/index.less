@@ -71,7 +71,24 @@
 }
 
 .keyProperty {
-    height: (@testUnitKeyCountHeight/2- 10);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    color: #f6f7fa;
+    font-size: 12px;
+
+    .keyProperty-item {
+        height: (@testUnitKeyCountHeight/2- 5);
+        text-align: start;
+        word-wrap: break-word;
+        word-break: break-all;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 // .customNode:before {

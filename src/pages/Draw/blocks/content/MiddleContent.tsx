@@ -42,6 +42,7 @@ const MiddleContent = () => {
     onEdgesChange,
     // variant,
     theme,
+    key,
   } = useModel('useTestFlowModel');
   const {
     testUnitItem,
@@ -451,7 +452,7 @@ const MiddleContent = () => {
               ref={reactFlowWrapper}
             >
               <ReactFlow
-                // key={Math.round(Math.random())}
+                key={key}
                 nodes={nodes}
                 edges={edges}
                 nodeTypes={nodeTypes}
@@ -478,6 +479,8 @@ const MiddleContent = () => {
                   strokeWidth: 1,
                   stroke: 'black',
                 }}
+                snapToGrid={true}
+                snapGrid={[15, 15]}
               >
                 {/* 放在右下角的操作栏,暂时隐藏，位置用来放缩略图 */}
                 <MiniMap nodeStrokeWidth={3} zoomable pannable />

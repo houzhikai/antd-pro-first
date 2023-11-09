@@ -46,7 +46,13 @@ const FenBinNode = ({ id, data, selected }) => {
           position={Position.Left}
           type="target"
         />
-        <div style={params?.label ? { color: 'white' } : { color: '#000' }}>
+        <div
+          style={
+            params?.label
+              ? { color: 'white', fontSize: 18, fontWeight: 400 }
+              : { color: '#000' }
+          }
+        >
           {data.label}
         </div>
       </div>

@@ -60,9 +60,11 @@ const SubflowNode = ({ id, data, selected }) => {
           position={Position.Left}
           type="target"
         />
-        <div style={{ color: '#f6f7fa' }}>
-          <div className={styles.keyProperty}>{params?.number}</div>
-          <div className={styles.keyProperty}>{params?.testMethod}</div>
+        <div className={styles.keyProperty}>
+          <div className={styles['keyProperty-item']}>{params?.number}</div>
+          <div style={{ marginTop: 7 }} className={styles['keyProperty-item']}>
+            {params?.testMethod}
+          </div>
         </div>
       </div>
     </div>

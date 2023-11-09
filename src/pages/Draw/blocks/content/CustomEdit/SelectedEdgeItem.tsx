@@ -1,4 +1,4 @@
-import { InputNumber, Select } from 'antd';
+import { InputNumber } from 'antd';
 import { useModel } from '@umijs/max';
 import styles from './index.less';
 
@@ -7,28 +7,28 @@ const SelectedEdgeItem = () => {
 
   const selectedEdgeItem: any = edges.filter((item) => item.selected)[0]; // 选中的edge样式
 
-  const options = [
-    {
-      value: 'simplebezier',
-      label: 'simplebezier',
-    },
-    {
-      value: 'smoothstep',
-      label: 'Smoothstep',
-    },
-    {
-      value: 'step',
-      label: 'Step',
-    },
-    {
-      value: 'default',
-      label: 'Bezier',
-    },
-    {
-      value: 'straight',
-      label: 'Straight',
-    },
-  ];
+  // const options = [
+  //   {
+  //     value: 'simplebezier',
+  //     label: 'simplebezier',
+  //   },
+  //   {
+  //     value: 'smoothstep',
+  //     label: 'Smoothstep',
+  //   },
+  //   {
+  //     value: 'step',
+  //     label: 'Step',
+  //   },
+  //   {
+  //     value: 'default',
+  //     label: 'Bezier',
+  //   },
+  //   {
+  //     value: 'straight',
+  //     label: 'Straight',
+  //   },
+  // ];
 
   const handleChangeLabel = (value) => {
     const newEdge = edges.map((item) => {
@@ -40,15 +40,15 @@ const SelectedEdgeItem = () => {
     setEdges(newEdge);
   };
 
-  const handleChangeEdgeType = (value) => {
-    const newEdge = edges.map((item) => {
-      if (item.selected) {
-        return { ...item, type: value };
-      }
-      return item;
-    });
-    setEdges(newEdge);
-  };
+  // const handleChangeEdgeType = (value) => {
+  //   const newEdge = edges.map((item) => {
+  //     if (item.selected) {
+  //       return { ...item, type: value };
+  //     }
+  //     return item;
+  //   });
+  //   setEdges(newEdge);
+  // };
 
   return (
     <div>
@@ -66,7 +66,7 @@ const SelectedEdgeItem = () => {
             />
           </div>
 
-          <div className={styles['flow-item']}>
+          {/* <div className={styles['flow-item']}>
             <label className={styles['flow-label']}>Type：</label>
             <Select
               style={{ width: '100%' }}
@@ -74,7 +74,7 @@ const SelectedEdgeItem = () => {
               defaultValue="simplebezier"
               options={options}
             />
-          </div>
+          </div> */}
         </>
       ) : null}
     </div>
