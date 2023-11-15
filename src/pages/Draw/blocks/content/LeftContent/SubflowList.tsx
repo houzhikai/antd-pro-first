@@ -21,7 +21,7 @@ const SubflowList = () => {
     initAddSubflowItem,
     setActiveTestOrFlowItem,
   } = useModel('useDrawModel');
-  const { setNodes, setEdges } = useModel('useTestFlowModel');
+  const { setNodes, setEdges, setKey } = useModel('useTestFlowModel');
   // const [list, setList] = useState<any>([]);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const SubflowList = () => {
   }, [addSubFlowList]);
 
   const handleClick = (item) => {
+    setKey((c) => c + 1);
     setActiveTestOrFlowItemParams(item.param);
     setNodes(item.subFlowNode);
     setEdges(item.subFlowEdge);

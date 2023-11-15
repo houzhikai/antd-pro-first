@@ -16,13 +16,14 @@ export default () => {
     setAddMainFlowItem,
     initAddMainflowItem,
   } = useModel('useDrawModel');
-  const { setNodes, setEdges } = useModel('useTestFlowModel');
+  const { setNodes, setEdges, setKey } = useModel('useTestFlowModel');
 
   useEffect(() => {
     setMainflowList([...mainFlowList, addMainFlowList].flat(Infinity));
   }, [addMainFlowList]);
 
   const handleClick = (item) => {
+    setKey((c) => c + 1);
     setActiveTestOrFlowItemParams(item.param);
     setNodes(item.mainFlowNode);
     setEdges(item.mainFlowEdges);

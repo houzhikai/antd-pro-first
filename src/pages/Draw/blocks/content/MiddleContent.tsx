@@ -469,7 +469,7 @@ const MiddleContent = () => {
                 onInit={setReactFlowInstance}
                 onDrop={onDrop}
                 onDragOver={onDragOver}
-                fitView
+                // fitView
                 defaultEdgeOptions={defaultEdgeOptions}
                 deleteKeyCode={deleteType} // 删除键快捷方式，首字母大写
                 style={{ backgroundColor: theme }} // 流程图的背景颜色
@@ -481,6 +481,7 @@ const MiddleContent = () => {
                 }}
                 snapToGrid={true}
                 snapGrid={[15, 15]}
+                defaultViewport={{ x: 100, y: 100, zoom: 1 }}
               >
                 {/* 放在右下角的操作栏,暂时隐藏，位置用来放缩略图 */}
                 <MiniMap nodeStrokeWidth={3} zoomable pannable />
