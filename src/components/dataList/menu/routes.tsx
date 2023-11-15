@@ -60,6 +60,11 @@ export const routes = {
       path: `/draw`,
       component: './Draw',
     },
+    {
+      name: '详情页',
+      path: `/detail`,
+      component: './Detail',
+    },
   ],
   access: {
     canSeeAdmin: false,

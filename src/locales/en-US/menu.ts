@@ -12,6 +12,7 @@ export default {
   'menu.summary': 'summary',
   'menu.testFlow': 'Test Flow',
   'menu.draw': 'Draw IO',
+  'menu.detail': 'Details',
   // https://blog.csdn.net/huai42717/article/details/128467502
   // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': 'home',
@@ -27,4 +28,5 @@ export default {
   'menu.汇总': 'summary',
   'menu.流程图': 'Test Flow',
   'menu.画图工具': 'Draw IO',
+  'menu.详情页': 'Details',
 };

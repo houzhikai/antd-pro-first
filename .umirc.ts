@@ -92,6 +92,11 @@ export default defineConfig({
       component: './Draw',
     },
     {
+      name: '详情页',
+      path: `/detail`,
+      component: './Detail',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',
