@@ -13,6 +13,7 @@ export default {
   'menu.testFlow': '流程图',
   'menu.draw': '画图工具',
   'menu.detail': '详情页',
+  'menu.redux': 'Redux',
   // https://blog.csdn.net/huai42717/article/details/128467502
   // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': '首页',
@@ -29,4 +30,5 @@ export default {
   'menu.流程图': '流程图',
   'menu.画图工具': '画图工具',
   'menu.详情页': '详情页',
+  'menu.Redux': 'Redux',
 };

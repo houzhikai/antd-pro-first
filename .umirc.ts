@@ -98,6 +98,11 @@ export default defineConfig({
       component: './Detail',
     },
     {
+      name: 'redux',
+      path: `/redux`,
+      component: './Redux',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',

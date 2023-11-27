@@ -65,6 +65,11 @@ export const routes = {
       path: `/detail`,
       component: './Detail',
     },
+    {
+      name: 'redux',
+      path: `/redux`,
+      component: './Redux',
+    },
   ],
   access: {
     canSeeAdmin: false,
