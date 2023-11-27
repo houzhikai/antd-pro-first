@@ -3,7 +3,8 @@ import React from 'react';
 import { useModel } from '@umijs/max';
 import { Modal, Divider, message } from 'antd';
 // import FormModal from './FormModal';
-import CustomFormModal from './components/CustomFormModal';
+// import CustomFormModal from './components/CustomFormModal';
+import BinMapFormUpdate from './components/BinMapFormUpdate';
 
 const BinMapForm = () => {
   const {
@@ -84,8 +85,8 @@ const BinMapForm = () => {
       title="BinMap"
       maskClosable={false}
       open={openBinMapForm}
-      okText="保存"
-      cancelText="取消"
+      okText="Save"
+      cancelText="Cancel"
       onOk={handleOk}
       onCancel={handleCancel}
       destroyOnClose={true} // 关闭时销毁 Modal 里的子元素，关闭时相当于取消form的更改
@@ -93,7 +94,8 @@ const BinMapForm = () => {
     >
       <Divider />
       {/* <FormModal /> */}
-      <CustomFormModal />
+      {/* <CustomFormModal /> */}
+      <BinMapFormUpdate />
     </Modal>
   );
 };

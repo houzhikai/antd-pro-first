@@ -11,9 +11,10 @@ import ReactFlow, {
   updateEdge,
   useKeyPress,
 } from 'reactflow';
+import type { MenuProps } from 'antd';
 
 import { useModel } from '@umijs/max';
-import { message } from 'antd';
+import { Dropdown, message } from 'antd';
 // import DagreTree from './MiddleContent/DagreTree/DagreTree';
 import { edgeTypes, nodeTypes } from './MiddleContent/nodeTypes';
 import CustomConnectionLine from './MiddleContent/customNodes/TestItem/CustomConnectionLine';
@@ -439,6 +440,31 @@ const MiddleContent = () => {
     selectedNode: nodesParamsList,
     softBinNameColorList,
   };
+
+  const items: MenuProps['items'] = [
+    {
+      label: '1st menu item',
+      key: '1',
+      onClick: () => {
+        message.warning('功能暂无开发1');
+      },
+    },
+    {
+      label: '2nd menu item',
+      key: '2',
+      onClick: () => {
+        message.warning('功能暂无开发2');
+      },
+    },
+    {
+      label: '3rd menu item',
+      key: '3',
+      onClick: () => {
+        message.warning('功能暂无开发3');
+      },
+    },
+  ];
+
   return (
     // @ts-ignore
     <NodesContext.Provider value={values}>
@@ -451,48 +477,50 @@ const MiddleContent = () => {
               className="reactflow-wrapper"
               ref={reactFlowWrapper}
             >
-              <ReactFlow
-                key={key}
-                nodes={nodes}
-                edges={edges}
-                nodeTypes={nodeTypes}
-                edgeTypes={edgeTypes}
-                onNodeClick={handleNodeClick}
-                // onNodeDoubleClick={handleDoubleClick}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onEdgeUpdate={onEdgeUpdate}
-                // onEdgeUpdateStart={onEdgeUpdateStart} // 如果放到node上面将被清除连线，暂不需要该功能
-                // onEdgeUpdateEnd={onEdgeUpdateEnd}  // 如果放到node上面将被清除连线，暂不需要该功能
-                onNodesDelete={onNodesDelete}
-                onConnect={onConnect}
-                onInit={setReactFlowInstance}
-                onDrop={onDrop}
-                onDragOver={onDragOver}
-                // fitView
-                defaultEdgeOptions={defaultEdgeOptions}
-                deleteKeyCode={deleteType} // 删除键快捷方式，首字母大写
-                style={{ backgroundColor: theme }} // 流程图的背景颜色
-                connectionLineComponent={CustomConnectionLine}
-                connectionLineStyle={{
-                  // 连接两个node时连线样式
-                  strokeWidth: 1,
-                  stroke: 'black',
-                }}
-                snapToGrid={true}
-                snapGrid={[15, 15]}
-                defaultViewport={{ x: 100, y: 100, zoom: 1 }}
-              >
-                {/* 放在右下角的操作栏,暂时隐藏，位置用来放缩略图 */}
-                <MiniMap nodeStrokeWidth={3} zoomable pannable />
-                {/* <DagreTree />
+              <Dropdown menu={{ items }} trigger={['contextMenu']}>
+                <ReactFlow
+                  key={key}
+                  nodes={nodes}
+                  edges={edges}
+                  nodeTypes={nodeTypes}
+                  edgeTypes={edgeTypes}
+                  onNodeClick={handleNodeClick}
+                  // onNodeDoubleClick={handleDoubleClick}
+                  onNodesChange={onNodesChange}
+                  onEdgesChange={onEdgesChange}
+                  onEdgeUpdate={onEdgeUpdate}
+                  // onEdgeUpdateStart={onEdgeUpdateStart} // 如果放到node上面将被清除连线，暂不需要该功能
+                  // onEdgeUpdateEnd={onEdgeUpdateEnd}  // 如果放到node上面将被清除连线，暂不需要该功能
+                  onNodesDelete={onNodesDelete}
+                  onConnect={onConnect}
+                  onInit={setReactFlowInstance}
+                  onDrop={onDrop}
+                  onDragOver={onDragOver}
+                  // fitView
+                  defaultEdgeOptions={defaultEdgeOptions}
+                  deleteKeyCode={deleteType} // 删除键快捷方式，首字母大写
+                  style={{ backgroundColor: theme }} // 流程图的背景颜色
+                  connectionLineComponent={CustomConnectionLine}
+                  connectionLineStyle={{
+                    // 连接两个node时连线样式
+                    strokeWidth: 1,
+                    stroke: 'black',
+                  }}
+                  snapToGrid={true}
+                  snapGrid={[15, 15]}
+                  defaultViewport={{ x: 100, y: 100, zoom: 1 }}
+                >
+                  {/* 放在右下角的操作栏,暂时隐藏，位置用来放缩略图 */}
+                  <MiniMap nodeStrokeWidth={3} zoomable pannable />
+                  {/* <DagreTree />
               {variant !== 'none' ? (
                 <Background color="#ccc" variant={variant} />
               ) : null} */}
-                {/* <CustomEdit />  */}
+                  {/* <CustomEdit />  */}
 
-                {/* <DownloadButton /> */}
-              </ReactFlow>
+                  {/* <DownloadButton /> */}
+                </ReactFlow>
+              </Dropdown>
             </div>
           </ReactFlowProvider>
         </div>
