@@ -33,3 +33,13 @@ https://developer.mozilla.org/zh-CN/docs/Web/CSS/attr
     content: attr(自定义)
  }
 ```
+# yarn outdated
+网站地址：https://juejin.cn/s/yarn%20outdated%20packages
+
+您可以在终端中运行以下命令来检查当前项目中哪些包需要更新：`yarn outdated `  
+
+如果您想仅列出特定的包，请在命令中指定包名称，例如：`yarn outdated <package-name> ` 
+
+如果您想更新特定的包，可以运行以下命令：`yarn upgrade <package-name> ` 
+
+如果您想更新所有过时的包，可以运行以下命令：`yarn upgrade ` 

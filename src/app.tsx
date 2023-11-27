@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 // 运行时配置
-import { setLocale } from '@umijs/max';
+import { history, setLocale } from '@umijs/max';
 import { Button, ConfigProvider, Switch } from 'antd';
 import useUrlState from '@ahooksjs/use-url-state';
 
@@ -103,7 +103,7 @@ export const layout = ({ initialState }) => {
             defaultChecked={obj.theme === 'dark' ? true : false}
             onChange={(checked) => {
               setState({ theme: checked ? 'dark' : 'light' });
-              location.reload();
+              // location.reload();
             }}
           />
         </div>
@@ -123,7 +123,8 @@ export const layout = ({ initialState }) => {
     token: obj.theme === 'dark' ? custom_dark_page : null,
     menuProps: {
       onClick: (item: { key: string }) => {
-        console.log(item.key);
+        setState({ theme: state.theme });
+        history.push(`${item.key}?${filterParams}`);
       },
     },
   };
