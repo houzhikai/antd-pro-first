@@ -20,7 +20,7 @@ export const newData = {
   Type: 'Pass',
   MaxCount: undefined,
   CheckOverFlow: false,
-  Color: '',
+  Color: '#87d068',
   Comment: '',
 };
 

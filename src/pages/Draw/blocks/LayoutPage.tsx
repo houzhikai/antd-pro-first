@@ -1,6 +1,6 @@
 import TestUnit from './Modal/TestUnit';
 import NavAction from './NavAction';
-import BinMapForm from './Modal/BinMapForm';
+// import BinMapForm from './Modal/BinMapForm';
 import ToolbarContainer from './ToolbarContainer';
 import LeftContent from './content/LeftContent';
 import AddMainFlowModal from './Modal/AddMainFlowModal';
@@ -14,6 +14,7 @@ import styles from './index.less';
 import AddMainFlowAttribute from './Modal/AddMainFlowAttribute';
 import AddSubFlowAttribute from './Modal/AddSubFlowAttribute';
 import OpenGlobalVariablesModal from './Modal/OpenGlobalVariablesModal';
+import BinMapFormModal from './Modal/BinMapFormModal';
 
 const Layout = () => {
   return (
@@ -26,7 +27,8 @@ const Layout = () => {
         <MiddleContent />
         <RightContent />
       </div>
-      <BinMapForm />
+      {/* <BinMapForm /> */}
+      <BinMapFormModal />
       <AddMainFlowModal />
       <TestUnit />
       <SubflowModal />

@@ -4,101 +4,127 @@ import {
   Table,
   Input,
   InputNumber,
-  Select,
   Popconfirm,
   ColorPicker,
-  Divider,
-  Dropdown,
-  Space,
-  theme,
+  message,
 } from 'antd';
 import styles from '../../index.less';
 import { useModel } from '@umijs/max';
-import { mergeDataSource } from './BinMapFunc';
-import { useState } from 'react';
 import type { ColumnsType } from 'antd/es/table';
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { newData, colorList, DataType } from './BinMapFunc/binMapDataList';
-import React from 'react';
+import { useEffect } from 'react';
 
-const { useToken } = theme;
 const BinMapFormUpdate = () => {
-  const { token } = useToken();
-  const { hardBinData, softBinData, setHardBinData } = useModel('useDrawModel');
+  const { dataSource, setDataSource, setVerifyBinMapObj } =
+    useModel('useDrawModel');
 
-  const [dataSource, setDataSource] = useState(
-    mergeDataSource(hardBinData, softBinData),
-  );
+  useEffect(() => {
+    const verifyDataSourceFunc = (value: 'SoftBinNum' | 'SoftBin') => {
+      // 数据是否重复
+      const res = new Map();
+      const uniqueProperty = dataSource.filter(
+        (item) => !res.has(item[value]) && res.set(item[value], 1),
+      );
+      // 数据是否为空
+      const emptyProperty = dataSource
+        .map((item) => item[value])
+        .filter((item) => item);
+      return (
+        uniqueProperty.length < dataSource.length ||
+        emptyProperty.length < dataSource.length
+      );
+    };
+
+    setVerifyBinMapObj((obj) => {
+      return {
+        ...obj,
+        SoftBinNum: verifyDataSourceFunc('SoftBinNum'),
+        SoftBin: verifyDataSourceFunc('SoftBin'),
+      };
+    });
+  }, [dataSource]);
 
   const columns: ColumnsType<DataType> = [
+    {
+      key: 'SoftBinNum',
+      title: <div style={{ padding: '5px 0' }}> SoftBinNum</div>,
+      dataIndex: 'SoftBinNum',
+      render: (text, record, idx) => {
+        const isRepeat =
+          dataSource.filter((item) => item.SoftBinNum === text).length > 1;
+        // setVerifyBinMapList((obj) => {
+        //   return {
+        //     ...obj,
+        //     SoftBinNum: isRepeat,
+        //   };
+        // });
+        const handleChange = (value) => {
+          const newHardBinData = dataSource.map((item, index) => {
+            if (idx === index) {
+              return { ...item, SoftBinNum: value };
+            }
+            return item;
+          });
+          setDataSource(newHardBinData);
+        };
+        const handleClick = (e) => {
+          const inputVal = e.target.value;
+          if (inputVal < 0 || inputVal > 32767) {
+            message.error(`SoftBinNum must in 0~32767 in Dec "${inputVal}"`);
+          }
+        };
+
+        return (
+          <>
+            <InputNumber
+              className="custom-input-number"
+              value={text}
+              onChange={handleChange}
+              min={0}
+              max={32767}
+              precision={0} // 保留整数
+              controls={false}
+              bordered={false}
+              onPressEnter={handleClick}
+              onBlur={handleClick}
+            />
+            {!record.SoftBinNum && (
+              <div style={{ color: 'red' }}>* Data can&apos;t empty</div>
+            )}
+            {isRepeat && record.SoftBinNum && (
+              <div style={{ color: 'red' }}>*Data repeat</div>
+            )}
+          </>
+        );
+      },
+    },
     {
       key: 'SoftBin',
       title: <div style={{ padding: '5px 0' }}> SoftBin</div>,
       dataIndex: 'SoftBin',
       render: (text, record, idx) => {
+        const isRepeat =
+          dataSource.filter((item) => item.SoftBin === text).length > 1;
         const handleChange = (e) => {
-          const newHardBinData = hardBinData.map((item, index) => {
+          const newHardBinData = dataSource.map((item, index) => {
             if (idx === index) {
-              return { ...item, Name: e.target.value };
+              return { ...item, SoftBin: e.target.value };
             }
             return item;
           });
-          setHardBinData(newHardBinData);
+          setDataSource(newHardBinData);
         };
-        return <Input value={text} onChange={handleChange} allowClear />;
-      },
-    },
-    {
-      key: 'SoftBinNum',
-      title: <div style={{ padding: '5px 0' }}> SoftBinNum</div>,
-      dataIndex: 'SoftBinNum',
-      render: (text) => {
-        return <InputNumber value={text} controls={false} />;
-      },
-    },
-    {
-      key: 'HardBin',
-      title: <div style={{ padding: '5px 0' }}> HardBin</div>,
-      dataIndex: 'HardBin',
-      render: (text) => {
-        const items = [
-          { key: 'HB1', label: 'HB1' },
-          { key: 'HB2', label: 'HB2' },
-        ];
-        const contentStyle: React.CSSProperties = {
-          backgroundColor: token.colorBgElevated,
-          borderRadius: token.borderRadiusLG,
-          boxShadow: token.boxShadowSecondary,
-        };
-
-        const menuStyle: React.CSSProperties = {
-          boxShadow: 'none',
-        };
-
         return (
-          //   <Select style={{ width: '100%' }} options={options} value={text} />
-          <Dropdown
-            menu={{ items }}
-            dropdownRender={(menu) => (
-              <div style={contentStyle}>
-                {React.cloneElement(menu as React.ReactElement, {
-                  style: menuStyle,
-                })}
-                <Divider style={{ margin: 0 }} />
-                <Space style={{ padding: 8 }}>
-                  <Button type="primary">
-                    <PlusOutlined />
-                    add
-                  </Button>
-                </Space>
-              </div>
+          <>
+            <Input value={text} onChange={handleChange} bordered={false} />
+            {text === '' && (
+              <div style={{ color: 'red' }}>* Data can&apos;t empty</div>
             )}
-          >
-            <Space>
-              {text}
-              <DownOutlined />
-            </Space>
-          </Dropdown>
+            {isRepeat && text && (
+              <div style={{ color: 'red' }}>*Data repeat</div>
+            )}
+          </>
         );
       },
     },
@@ -106,21 +132,132 @@ const BinMapFormUpdate = () => {
       key: 'HardBinNum',
       title: <div style={{ padding: '5px 0' }}> HardBinNum</div>,
       dataIndex: 'HardBinNum',
-      render: (text) => {
-        return <InputNumber value={text} controls={false} />;
+      render: (text, record, idx) => {
+        // onChange 变更数据
+        const handleChange = (value) => {
+          const newHardBinData = dataSource.map((item, index) => {
+            if (idx === index) {
+              return {
+                ...item,
+                HardBinNum: value,
+              };
+            }
+            return item;
+          });
+          setDataSource(newHardBinData);
+        };
+
+        const handleClick = (e) => {
+          const inputVal = e.target.value;
+          if (inputVal < 0 || inputVal > 999) {
+            message.error(`SoftBinNum must in 0~999 in Dec "${inputVal}"`);
+          } else {
+            // 拿到其他相同number的 hardBin 属性
+            const updateHardBinAttribute = dataSource
+              .filter(
+                (item) =>
+                  item.HardBinNum === Number(inputVal) &&
+                  item.SoftBinNum !== record.SoftBinNum,
+              )
+              .map((item) => {
+                return {
+                  HardBin: item.HardBin,
+                  Type: item.Type,
+                };
+              })[0] || {
+              HardBin: '',
+              Type: 'Pass',
+            };
+            const newHardBinData = dataSource.map((item, index) => {
+              if (idx === index) {
+                return {
+                  ...item,
+                  HardBinNum: Number(inputVal),
+                  HardBin: updateHardBinAttribute.HardBin,
+                  Type: updateHardBinAttribute.Type,
+                };
+              }
+              return item;
+            });
+            setDataSource(newHardBinData);
+          }
+        };
+        return (
+          <>
+            <InputNumber
+              value={text}
+              onChange={handleChange}
+              min={0}
+              max={999}
+              precision={0} // 保留整数
+              controls={false}
+              bordered={false}
+              onPressEnter={handleClick}
+              onBlur={handleClick}
+            />
+            {!text && (
+              <div style={{ color: 'red' }}>* Data can&apos;t empty</div>
+            )}
+          </>
+        );
       },
     },
+    {
+      key: 'HardBin',
+      title: <div style={{ padding: '5px 0' }}> HardBin</div>,
+      dataIndex: 'HardBin',
+      render: (text, record) => {
+        const isRepeat =
+          dataSource.filter(
+            (item) =>
+              item.HardBin === text && item.HardBinNum !== record.HardBinNum,
+          ).length > 0;
+        const handleChange = (e) => {
+          const newHardBinData = dataSource.map((item) => {
+            if (item.HardBinNum === record.HardBinNum) {
+              return { ...item, HardBin: e.target.value };
+            }
+            return item;
+          });
+          setDataSource(newHardBinData);
+        };
+        return (
+          <>
+            <Input
+              style={{ width: '100%' }}
+              value={text}
+              onChange={handleChange}
+              bordered={false}
+            />
+            {!text && (
+              <div style={{ color: 'red' }}>* Data can&apos;t empty</div>
+            )}
+            {isRepeat && text && (
+              <div style={{ color: 'red' }}>*Data repeat</div>
+            )}
+          </>
+        );
+      },
+    },
+
     {
       key: 'Type',
       title: <div style={{ padding: '5px 0' }}> Type</div>,
       dataIndex: 'Type',
-      render: (text) => {
-        const options = [
-          { value: 'Pass', label: 'Pass' },
-          { value: 'Fail', label: 'Fail' },
-        ];
+      render: (text, record) => {
+        const handleDoubleClick = () => {
+          const newHardBinData = dataSource.map((item) => {
+            if (item.HardBinNum === record.HardBinNum) {
+              return { ...item, Type: text === 'Pass' ? 'Fail' : 'Pass' };
+            }
+            return item;
+          });
+          setDataSource(newHardBinData);
+        };
         return (
-          <Select style={{ width: '100%' }} options={options} value={text} />
+          <div className={styles.binMapItem} onDoubleClick={handleDoubleClick}>
+            {text}
+          </div>
         );
       },
     },
@@ -128,8 +265,25 @@ const BinMapFormUpdate = () => {
       key: 'MaxCount',
       title: <div style={{ padding: '5px 0' }}> MaxCount</div>,
       dataIndex: 'MaxCount',
-      render: (text) => {
-        return <InputNumber value={text} controls={false} />;
+      render: (text, _, idx) => {
+        const handleClick = (e) => {
+          const newHardBinData = dataSource.map((item, index) => {
+            if (idx === index) {
+              return { ...item, MaxCount: e.target.value };
+            }
+            return item;
+          });
+          setDataSource(newHardBinData);
+        };
+        return (
+          <InputNumber
+            value={text}
+            controls={false}
+            bordered={false}
+            onPressEnter={handleClick}
+            onBlur={handleClick}
+          />
+        );
       },
     },
     {
@@ -137,8 +291,17 @@ const BinMapFormUpdate = () => {
       title: <div style={{ padding: '5px 0' }}> CheckOverflow</div>,
       dataIndex: 'CheckOverflow',
       align: 'center',
-      render: (text) => {
-        return <Switch defaultChecked={text} />;
+      render: (text, _, idx) => {
+        const handleChange = (check) => {
+          const newHardBinData = dataSource.map((item, index) => {
+            if (idx === index) {
+              return { ...item, CheckOverflow: check };
+            }
+            return item;
+          });
+          setDataSource(newHardBinData);
+        };
+        return <Switch defaultChecked={text} onChange={handleChange} />;
       },
     },
     {
@@ -174,8 +337,24 @@ const BinMapFormUpdate = () => {
       key: 'Comment',
       title: <div style={{ padding: '5px 0' }}> Comment</div>,
       dataIndex: 'Comment',
-      render: (text) => {
-        return <Input style={{ width: '100%' }} value={text} allowClear />;
+      render: (text, _, idx) => {
+        const handleChange = (e) => {
+          const newHardBinData = dataSource.map((item, index) => {
+            if (idx === index) {
+              return { ...item, Comment: e.target.value };
+            }
+            return item;
+          });
+          setDataSource(newHardBinData);
+        };
+        return (
+          <Input
+            style={{ width: '100%' }}
+            value={text}
+            bordered={false}
+            onChange={handleChange}
+          />
+        );
       },
     },
     {
@@ -183,6 +362,7 @@ const BinMapFormUpdate = () => {
       title: <div style={{ padding: '5px 0' }}> Options</div>,
       dataIndex: 'Options',
       width: '6%',
+      align: 'center',
       render: (_, record) => {
         const handleRemoveRow = (record) => {
           const newData = dataSource.filter((item) => item.key !== record.key);
@@ -215,6 +395,7 @@ const BinMapFormUpdate = () => {
           dataSource={dataSource}
           pagination={false}
           sticky
+          bordered
         />
       </div>
       <Button

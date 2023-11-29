@@ -12,6 +12,7 @@ import flows from '@/components/dataList/draw/flow.json';
 import flow2 from '@/components/dataList/draw/flow2.json';
 // import analyzeFlow from '@/components/analyzeFlow';
 import { testFile } from '@/components/analyzeFlow/testFile';
+import { mergeDataSource } from '@/pages/Draw/blocks/Modal/components/BinMapFunc';
 
 export default () => {
   const [hardBinData, setHardBinData] = useState(options.HardBin);
@@ -236,6 +237,15 @@ export default () => {
   const [addTestMethodItem, setAddTestMethodItem] =
     useState(initTestMethodItem);
 
+  const [dataSource, setDataSource] = useState(
+    mergeDataSource(hardBinData, softBinData),
+  );
+
+  const [verifyBinMapObj, setVerifyBinMapObj] = useState({
+    SoftBinNum: false,
+    SoftBin: false,
+  });
+
   return {
     isHiddenSide,
     setIsHiddenSide,
@@ -319,5 +329,9 @@ export default () => {
     addTestMethodItem,
     setAddTestMethodItem,
     initTestMethodItem,
+    dataSource,
+    setDataSource,
+    verifyBinMapObj,
+    setVerifyBinMapObj,
   };
 };
