@@ -244,6 +244,8 @@ export default () => {
   const [verifyBinMapObj, setVerifyBinMapObj] = useState({
     SoftBinNum: false,
     SoftBin: false,
+    HardBinNum: false,
+    HardBin: false,
   });
 
   return {

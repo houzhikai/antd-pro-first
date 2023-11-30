@@ -21,12 +21,19 @@ const BinMapFormModal = () => {
 
   const handleOk = () => {
     // const xxx = dataSource.fil
-    if (verifyBinMapObj.SoftBinNum || verifyBinMapObj.SoftBin) {
+    if (
+      verifyBinMapObj.SoftBinNum ||
+      verifyBinMapObj.SoftBin ||
+      verifyBinMapObj.HardBinNum ||
+      verifyBinMapObj.HardBin
+    ) {
+      console.log('saveError', verifyBinMapObj);
       message.error('Data save failure', 5);
     } else {
       const binMapList = splitDataSource(dataSource);
       message.success('Data save success', 5);
-      console.log('save', dataSource, binMapList, verifyBinMapObj.SoftBinNum);
+      console.log('save', dataSource, binMapList, verifyBinMapObj);
+      // setOpenBinMapForm(false);
     }
   };
   const handleCancel = () => {

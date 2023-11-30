@@ -6,7 +6,6 @@ import {
   InputNumber,
   Popconfirm,
   ColorPicker,
-  message,
 } from 'antd';
 import styles from '../../index.less';
 import { useModel } from '@umijs/max';
@@ -20,19 +19,32 @@ const BinMapFormUpdate = () => {
     useModel('useDrawModel');
 
   useEffect(() => {
-    const verifyDataSourceFunc = (value: 'SoftBinNum' | 'SoftBin') => {
+    const verifyDataSourceFunc = (
+      value: 'SoftBinNum' | 'SoftBin' | 'HardBinNum' | 'HardBin',
+    ) => {
       // 数据是否重复
       const res = new Map();
-      const uniqueProperty = dataSource.filter(
-        (item) => !res.has(item[value]) && res.set(item[value], 1),
-      );
+      const uniqueProperty =
+        value === 'SoftBinNum' || value === 'SoftBin'
+          ? dataSource.filter(
+              (item) => !res.has(item[value]) && res.set(item[value], 1),
+            )
+          : dataSource;
       // 数据是否为空
       const emptyProperty = dataSource
         .map((item) => item[value])
         .filter((item) => item);
+      //  SoftBinNum 是否超出范围
+      const propertyValue = value === 'SoftBinNum' ? 32767 : 999;
+      const outRange =
+        dataSource.filter(
+          (item) => item[value] < 0 || item[value] > propertyValue,
+        ).length > 0;
+      // HardBinNum 是否超出范围
       return (
         uniqueProperty.length < dataSource.length ||
-        emptyProperty.length < dataSource.length
+        emptyProperty.length < dataSource.length ||
+        outRange
       );
     };
 
@@ -41,6 +53,8 @@ const BinMapFormUpdate = () => {
         ...obj,
         SoftBinNum: verifyDataSourceFunc('SoftBinNum'),
         SoftBin: verifyDataSourceFunc('SoftBin'),
+        HardBinNum: verifyDataSourceFunc('HardBinNum'),
+        HardBin: verifyDataSourceFunc('HardBin'),
       };
     });
   }, [dataSource]);
@@ -53,12 +67,7 @@ const BinMapFormUpdate = () => {
       render: (text, record, idx) => {
         const isRepeat =
           dataSource.filter((item) => item.SoftBinNum === text).length > 1;
-        // setVerifyBinMapList((obj) => {
-        //   return {
-        //     ...obj,
-        //     SoftBinNum: isRepeat,
-        //   };
-        // });
+        const outRange = text < 0 || text > 32767;
         const handleChange = (value) => {
           const newHardBinData = dataSource.map((item, index) => {
             if (idx === index) {
@@ -68,12 +77,6 @@ const BinMapFormUpdate = () => {
           });
           setDataSource(newHardBinData);
         };
-        const handleClick = (e) => {
-          const inputVal = e.target.value;
-          if (inputVal < 0 || inputVal > 32767) {
-            message.error(`SoftBinNum must in 0~32767 in Dec "${inputVal}"`);
-          }
-        };
 
         return (
           <>
@@ -81,19 +84,20 @@ const BinMapFormUpdate = () => {
               className="custom-input-number"
               value={text}
               onChange={handleChange}
-              min={0}
-              max={32767}
+              // min={0}
+              // max={32767}
               precision={0} // 保留整数
               controls={false}
               bordered={false}
-              onPressEnter={handleClick}
-              onBlur={handleClick}
             />
             {!record.SoftBinNum && (
               <div style={{ color: 'red' }}>* Data can&apos;t empty</div>
             )}
             {isRepeat && record.SoftBinNum && (
               <div style={{ color: 'red' }}>*Data repeat</div>
+            )}
+            {outRange && record.SoftBinNum && (
+              <div style={{ color: 'red' }}>*Data outRange</div>
             )}
           </>
         );
@@ -133,6 +137,7 @@ const BinMapFormUpdate = () => {
       title: <div style={{ padding: '5px 0' }}> HardBinNum</div>,
       dataIndex: 'HardBinNum',
       render: (text, record, idx) => {
+        const outRange = text < 0 || text > 999;
         // onChange 变更数据
         const handleChange = (value) => {
           const newHardBinData = dataSource.map((item, index) => {
@@ -149,46 +154,43 @@ const BinMapFormUpdate = () => {
 
         const handleClick = (e) => {
           const inputVal = e.target.value;
-          if (inputVal < 0 || inputVal > 999) {
-            message.error(`SoftBinNum must in 0~999 in Dec "${inputVal}"`);
-          } else {
-            // 拿到其他相同number的 hardBin 属性
-            const updateHardBinAttribute = dataSource
-              .filter(
-                (item) =>
-                  item.HardBinNum === Number(inputVal) &&
-                  item.SoftBinNum !== record.SoftBinNum,
-              )
-              .map((item) => {
-                return {
-                  HardBin: item.HardBin,
-                  Type: item.Type,
-                };
-              })[0] || {
-              HardBin: '',
-              Type: 'Pass',
-            };
-            const newHardBinData = dataSource.map((item, index) => {
-              if (idx === index) {
-                return {
-                  ...item,
-                  HardBinNum: Number(inputVal),
-                  HardBin: updateHardBinAttribute.HardBin,
-                  Type: updateHardBinAttribute.Type,
-                };
-              }
-              return item;
-            });
-            setDataSource(newHardBinData);
-          }
+
+          // 拿到其他相同number的 hardBin 属性
+          const updateHardBinAttribute = dataSource
+            .filter(
+              (item) =>
+                item.HardBinNum === Number(inputVal) &&
+                item.SoftBinNum !== record.SoftBinNum,
+            )
+            .map((item) => {
+              return {
+                HardBin: item.HardBin,
+                Type: item.Type,
+              };
+            })[0] || {
+            HardBin: '',
+            Type: 'Pass',
+          };
+          const newHardBinData = dataSource.map((item, index) => {
+            if (idx === index) {
+              return {
+                ...item,
+                HardBinNum: Number(inputVal),
+                HardBin: updateHardBinAttribute.HardBin,
+                Type: updateHardBinAttribute.Type,
+              };
+            }
+            return item;
+          });
+          setDataSource(newHardBinData);
         };
         return (
           <>
             <InputNumber
               value={text}
               onChange={handleChange}
-              min={0}
-              max={999}
+              // min={0}
+              // max={999}
               precision={0} // 保留整数
               controls={false}
               bordered={false}
@@ -197,6 +199,9 @@ const BinMapFormUpdate = () => {
             />
             {!text && (
               <div style={{ color: 'red' }}>* Data can&apos;t empty</div>
+            )}
+            {outRange && record.HardBinNum && (
+              <div style={{ color: 'red' }}>*Data outRange</div>
             )}
           </>
         );
