@@ -37,7 +37,8 @@ export const saveJsonFile = (flows) => {
           }
         }),
       );
-      return result[0];
+
+      return result[0] || [];
     };
     const nodesList = (node, edge) => {
       const filterFBin = node.filter((item) => !item.id.includes('fen-bin'));
@@ -59,16 +60,17 @@ export const saveJsonFile = (flows) => {
       return result;
     };
     //   flowList 是指向 flows.mainflowList / subflowList
-    const mainflowList = flowList.map((item) => {
-      const params = item.flowParams;
-      return {
-        flowName: item.flowName,
-        globalVariables: params.globalVariables,
-        isActive: params.isActive,
-        isMain: params.isMain,
-        units: nodesList(item.flowNodes, item.flowEdges),
-      };
-    });
+    const mainflowList =
+      flowList?.map((item) => {
+        const params = item.flowParams;
+        return {
+          flowName: item.flowName,
+          globalVariables: params.globalVariables,
+          isActive: params.isActive,
+          isMain: params.isMain,
+          units: nodesList(item.flowNodes, item.flowEdges),
+        };
+      }) || [];
     return mainflowList;
   };
 

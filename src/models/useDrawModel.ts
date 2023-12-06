@@ -335,5 +335,6 @@ export default () => {
     setDataSource,
     verifyBinMapObj,
     setVerifyBinMapObj,
+    flow2,
   };
 };

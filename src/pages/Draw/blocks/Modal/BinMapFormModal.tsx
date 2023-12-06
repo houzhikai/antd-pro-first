@@ -24,8 +24,8 @@ const BinMapFormModal = () => {
     if (
       verifyBinMapObj.SoftBinNum ||
       verifyBinMapObj.SoftBin ||
-      verifyBinMapObj.HardBinNum ||
-      verifyBinMapObj.HardBin
+      verifyBinMapObj.HardBinNum
+      // verifyBinMapObj.HardBin
     ) {
       console.log('saveError', verifyBinMapObj);
       message.error('Data save failure', 5);

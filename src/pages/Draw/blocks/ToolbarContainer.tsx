@@ -1,4 +1,5 @@
 // import DefaultArrowStyle from './NavAction/DefaultArrowStyle';
+import ActiveMainflow from './NavAction/ActiveMainflow';
 import AutoArrange from './NavAction/AutoArrange';
 import Save from './NavAction/Save';
 import SelectMode from './NavAction/SelectMode';
@@ -17,6 +18,7 @@ const ToolbarContainer = () => {
       {/* <div className={styles.geSeparator} />
       <div className={styles.geSeparator} /> */}
       <div style={{ display: 'flex' }}>
+        <ActiveMainflow />
         <SelectMode />
         <Save />
       </div>

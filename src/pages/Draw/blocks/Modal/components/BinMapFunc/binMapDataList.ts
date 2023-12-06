@@ -19,7 +19,7 @@ export const newData = {
   HardBinNum: undefined,
   Type: 'Pass',
   MaxCount: undefined,
-  CheckOverFlow: false,
+  CheckOverflow: false,
   Color: '#87d068',
   Comment: '',
 };

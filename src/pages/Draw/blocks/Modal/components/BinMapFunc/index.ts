@@ -49,6 +49,7 @@ export const splitDataSource = (dataSource) => {
     (item) => !res.has(item.Number) && res.set(item.Number, 1),
   );
 
+  console.log({ dataSource });
   // 得到SoftBin的值
   const SoftBin = dataSource.map((item) => {
     return {

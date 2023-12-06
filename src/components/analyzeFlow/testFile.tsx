@@ -8,7 +8,7 @@ export const testFile = (flows) => {
       let fBinNodes: object[] = [];
       const defaultNodeList = t.units.map((item, index) => {
         const type = item.isFlowUnit ? 'subflow' : 'test-method';
-        const FBinList = item.ports.filter((item) => item.type === '4');
+        const FBinList = item.ports.filter((item) => item.type === '4') || [];
         if (FBinList.length > 0) {
           FBinList.forEach((p, idx) => {
             if (item.position) {

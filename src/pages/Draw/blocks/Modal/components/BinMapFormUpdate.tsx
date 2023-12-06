@@ -81,7 +81,6 @@ const BinMapFormUpdate = () => {
         return (
           <>
             <InputNumber
-              className="custom-input-number"
               value={text}
               onChange={handleChange}
               // min={0}
@@ -97,7 +96,7 @@ const BinMapFormUpdate = () => {
               <div style={{ color: 'red' }}>*Data repeat</div>
             )}
             {outRange && record.SoftBinNum && (
-              <div style={{ color: 'red' }}>*Data outRange</div>
+              <div style={{ color: 'red' }}>*Input 0~32767</div>
             )}
           </>
         );
@@ -201,7 +200,7 @@ const BinMapFormUpdate = () => {
               <div style={{ color: 'red' }}>* Data can&apos;t empty</div>
             )}
             {outRange && record.HardBinNum && (
-              <div style={{ color: 'red' }}>*Data outRange</div>
+              <div style={{ color: 'red' }}>*Input 0~999</div>
             )}
           </>
         );
@@ -274,7 +273,7 @@ const BinMapFormUpdate = () => {
         const handleClick = (e) => {
           const newHardBinData = dataSource.map((item, index) => {
             if (idx === index) {
-              return { ...item, MaxCount: e.target.value };
+              return { ...item, MaxCount: Number(e.target.value) };
             }
             return item;
           });
@@ -389,6 +388,7 @@ const BinMapFormUpdate = () => {
     },
   ];
   const handleAddSoftBinRows = () => {
+    console.log({ newData });
     setDataSource([...dataSource, newData]);
   };
   return (
