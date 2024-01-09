@@ -6,6 +6,7 @@ export const saveJsonFile = (flows) => {
         const sourceNode = nodeIds[0];
         return sourceNode === name;
       });
+      console.log({ filterSameName, name });
       //  "param": 0, "type": "4",  "value": "FB1"
 
       const result = fenBinNodes.map((t) =>

@@ -9,11 +9,11 @@ const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
 const sourceStyle = { zIndex: 1 };
 
-export default function CustomNode({ id, data, selected }) {
+export default function CustomNode({ id, data }) {
   const testUnitParamsList: any = useContext(NodesContext);
   // const a = xxx.map((item) => item.data.label)[0];
   const isRepeat = testUnitParamsList.filterList.includes(data.label);
-  // const { startNodeName } = useModel('useTestFlowModel');
+  const { startNodeName } = useModel('useTestFlowModel');
   const { isEdit, setIsEdit } = useModel('useDrawModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
   const isConnecting = !!connectionNodeId;
@@ -25,11 +25,12 @@ export default function CustomNode({ id, data, selected }) {
   const params = testUnitParamsList?.selectedNode?.filter(
     (item) => item.name === data.label,
   )[0];
-
+  console.log({ startNodeName }, data.label);
   return (
     <div
-      className={selected ? styles.selected : styles.default}
-      //  className={startNodeName === data.label ? 'customNode' : ''}
+      // className={selected ? styles.selected : styles.default}
+      // className={startNodeName === data.label ? 'customNode' : ''}
+      className={'customNode'}
     >
       {/* <div className="name1">Name: {data.label}</div> */}
       {/* <InputToolTip defaultValue={data.label} className="name1" /> */}

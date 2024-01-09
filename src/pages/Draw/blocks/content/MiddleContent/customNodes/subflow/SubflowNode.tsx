@@ -11,7 +11,7 @@ const sourceStyle = { zIndex: 1 };
 
 const SubflowNode = ({ id, data, selected }) => {
   const testUnitParamsList: any = useContext(NodesContext);
-  // const { startNodeName } = useModel('useTestFlowModel');
+  const { startNodeName } = useModel('useTestFlowModel');
   const { isEdit, setIsEdit } = useModel('useDrawModel');
   const connectionNodeId = useStore(connectionNodeIdSelector);
   const isConnecting = !!connectionNodeId;
@@ -24,10 +24,11 @@ const SubflowNode = ({ id, data, selected }) => {
   const params = testUnitParamsList?.selectedNode?.filter(
     (item) => item.name === data.label,
   )[0];
+  console.log({ startNodeName }, data.label);
   return (
     <div
       className={selected ? styles.selected : styles.default}
-      //  className={startNodeName === data.label ? 'customNode' : ''}
+      // className={startNodeName === data.label ? 'customNode' : ''}
     >
       {isEdit ? (
         <InputToolTip

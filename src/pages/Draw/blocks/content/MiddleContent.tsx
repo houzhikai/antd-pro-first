@@ -511,11 +511,16 @@ const MiddleContent = () => {
                   defaultViewport={{ x: 100, y: 100, zoom: 1 }}
                 >
                   {/* 放在右下角的操作栏,暂时隐藏，位置用来放缩略图 */}
-                  <MiniMap nodeStrokeWidth={3} zoomable pannable />
-                  {/* <DagreTree />
-              {variant !== 'none' ? (
-                <Background color="#ccc" variant={variant} />
-              ) : null} */}
+                  <MiniMap
+                    style={{ background: '#1e1e1e' }}
+                    nodeStrokeWidth={3}
+                    zoomable
+                    pannable
+                  />
+                  {/* <DagreTree /> */}
+                  {/* {variant !== 'none' ? (
+                    <Background color="#ccc" variant={variant} />
+                  ) : null} */}
                   {/* <CustomEdit />  */}
 
                   {/* <DownloadButton /> */}

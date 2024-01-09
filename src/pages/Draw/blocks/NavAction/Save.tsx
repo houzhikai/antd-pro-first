@@ -19,6 +19,18 @@ const Save = () => {
     useModel('useDrawModel');
 
   const handleSave = () => {
+    const verifySameLabel = (array) => {
+      let idLabelMap = {};
+      for (let i = 0; i < array.length; i++) {
+        const { source, label } = array[i];
+        if (idLabelMap[source] === label) {
+          console.log(`error${source}`);
+        } else {
+          idLabelMap[source] = label;
+        }
+      }
+    };
+    console.log(verifySameLabel(edges));
     const verifyCloseLoopEdge = verifyCloseLoopEdges(edges);
     if (verifyCloseLoopEdge) {
       message.error('Save flow fail');
@@ -36,6 +48,8 @@ const Save = () => {
       };
       console.log(
         11,
+        nodes,
+        edges,
         saveMainFlow(flows),
         'saveJsonFile',
         saveJsonFile(testFile(flow2)),

@@ -12,7 +12,6 @@ export interface DataType {
 }
 // 添加一行新的softBin数据
 export const newData = {
-  key: Math.floor(Math.random() * 10000),
   SoftBin: '',
   SoftBinNum: undefined,
   HardBin: '',

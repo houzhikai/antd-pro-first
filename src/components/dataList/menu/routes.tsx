@@ -70,6 +70,11 @@ export const routes = {
       path: `/redux`,
       component: './Redux',
     },
+    {
+      name: 'components',
+      path: `/components`,
+      component: './Components',
+    },
   ],
   access: {
     canSeeAdmin: false,

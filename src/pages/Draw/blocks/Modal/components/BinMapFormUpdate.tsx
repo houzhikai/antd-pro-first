@@ -388,9 +388,20 @@ const BinMapFormUpdate = () => {
     },
   ];
   const handleAddSoftBinRows = () => {
-    console.log({ newData });
+    const length = dataSource.length * 10;
+    const newData = {
+      key: length,
+      Name: '',
+      Number: undefined,
+      HardBin: '',
+      MaxCount: undefined,
+      CheckOverflow: false,
+      Color: '',
+      Comment: '',
+    };
     setDataSource([...dataSource, newData]);
   };
+  console.log({ dataSource });
   return (
     <>
       <div>

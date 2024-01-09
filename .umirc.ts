@@ -103,6 +103,11 @@ export default defineConfig({
       component: './Redux',
     },
     {
+      name: 'components',
+      path: `/components`,
+      component: './Components',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',

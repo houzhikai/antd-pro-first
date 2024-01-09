@@ -7,7 +7,6 @@ const ActiveMainflow = () => {
   const oldName =
     mainflowList.map((item) => item.param).filter((item) => item.isActive)[0]
       ?.flowName || '';
-  console.log({ mainflowList });
   const options = mainflowList.map((item) => {
     return {
       value: item.name,
