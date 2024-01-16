@@ -2,7 +2,7 @@ Arguments:
   D:\Nvm\nvm\nodejs\node.exe D:\Nvm\nvm\nodejs\node_modules\yarn\bin\yarn.js
 
 PATH: 
-  C:\Users\User\bin;D:\gitbash\Git\mingw64\bin;D:\gitbash\Git\usr\local\bin;D:\gitbash\Git\usr\bin;D:\gitbash\Git\usr\bin;D:\gitbash\Git\mingw64\bin;D:\gitbash\Git\usr\bin;C:\Users\User\bin;D:\VMware\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;D:\Nvm\nvm;D:\Nvm\nvm\nodejs;D:\gitbash\Git\cmd;C:\Users\User\AppData\Local\Microsoft\WindowsApps;C:\Users\User\AppData\Roaming\npm;D:\Nvm\nvm;D:\Nvm\nvm\nodejs;D:\vscode\Microsoft VS Code\bin;D:\gitbash\Git\usr\bin\vendor_perl;D:\gitbash\Git\usr\bin\core_perl
+  D:\gitbash\Git\mingw64\bin;D:\gitbash\Git\usr\bin;C:\Users\User\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;D:\Nvm\nvm;D:\Nvm\nvm\nodejs;D:\gitbash\Git\cmd;C:\Users\User\AppData\Local\Microsoft\WindowsApps;C:\Users\User\AppData\Roaming\npm;D:\Nvm\nvm;D:\Nvm\nvm\nodejs;D:\vscode\Microsoft VS Code\bin
 
 Yarn version: 
   1.22.19

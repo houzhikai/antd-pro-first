@@ -58,11 +58,11 @@ const MiddleContent = () => {
 
   const edgeUpdateSuccessful = useRef(true);
 
-  const deleteKey = useKeyPress('Delete');
+  const deleteKey = useKeyPress('LCtrl');
 
   const reactFlowWrapper = useRef<any>(null);
   type DeleteTypeProps = string | string[] | null;
-  const [deleteType, setDeleteType] = useState<DeleteTypeProps>('Delete');
+  const [deleteType, setDeleteType] = useState<DeleteTypeProps>('LCtrl');
   const [nodesParamsList, setNodesParamsList] = useState([]);
   const [softBinNameColorList, setSoftBinNameColorList] = useState<any>([]);
 
@@ -73,7 +73,7 @@ const MiddleContent = () => {
     if (deleteKey && !deleteType) {
       message.error('Subflow cannot be deleted from the flow chart', 6);
     } else if (deleteKey && deleteType === 'isDelete') {
-      setDeleteType('Delete');
+      setDeleteType('LCtrl');
       message.warning('Enter the Delete key again to delete the subflow', 6);
     }
   }, [deleteKey]);
