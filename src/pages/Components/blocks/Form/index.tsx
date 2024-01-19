@@ -1,14 +1,29 @@
-import { Typography, Table, Input } from 'antd';
-import React from 'react';
+import {
+  Typography,
+  Table,
+  Input,
+  Button,
+  Form,
+  Row,
+  Space,
+  Col,
+  theme,
+} from 'antd';
+import { useState } from 'react';
+import { DownOutlined } from '@ant-design/icons';
+import { DataType } from './data';
+
 interface MyFormProps {
   title?: string;
   columns: string[] | any;
   dataSource: any;
+  searchList: string[];
 }
 
-const MyTable = ({ title, columns, dataSource }: MyFormProps) => {
+const MyTable = ({ title, columns, dataSource, searchList }: MyFormProps) => {
+  const [data, setData] = useState(dataSource);
+
   const isStringArray = (arr) => arr.every((item) => typeof item === 'string');
-  console.log({ dataSource, columns });
   const myColumns = isStringArray(columns)
     ? columns.map((item) => {
         return {
@@ -17,28 +32,95 @@ const MyTable = ({ title, columns, dataSource }: MyFormProps) => {
         };
       })
     : columns;
-  //   const myColumns = [
-  //     {
-  //       title: 'Name',
-  //       dataIndex: 'name',
-  //       render: (text: string) => <a>{text}</a>,
-  //     },
-  //     {
-  //       title: 'Age',
-  //       dataIndex: 'age',
-  //     },
-  //     {
-  //       title: 'Address',
-  //       dataIndex: 'address',
-  //     },
-  //   ];
+
+  const { token } = theme.useToken();
+  const [form] = Form.useForm();
+  const [expand, setExpand] = useState(true);
+
+  const showSearchList = expand ? searchList.slice(0, 3) : searchList;
+
+  const onFinish = (values: DataType) => {
+    const valuesToArray: { value: string; label: string }[] = Object.entries(
+      values,
+    )
+      .map(([key, value]) => ({
+        label: key,
+        value,
+      }))
+      .filter((item) => item.value);
+
+    const filterDataSource = dataSource.filter((item) => {
+      const verifyProperties = valuesToArray.map((t) => {
+        if (t.label === 'name') {
+          if (!String(item[t.label]).includes(t.value)) {
+            return false;
+          }
+          return true;
+        } else {
+          if (String(item[t.label]) !== t.value) {
+            return false;
+          }
+          return true;
+        }
+      });
+
+      return verifyProperties.every((element) => element === true)
+        ? item
+        : undefined;
+    });
+    setData(filterDataSource);
+  };
+
   return (
     <div>
       <Typography.Title level={4}>{title}</Typography.Title>
-      <div>
-        <Input placeholder="查询name" />
-      </div>
-      <Table columns={myColumns} dataSource={dataSource} />
+      <Form
+        form={form}
+        name="advanced_search"
+        style={{
+          maxWidth: 'none',
+          background: token.colorFillAlter,
+          borderRadius: token.borderRadiusLG,
+          padding: 24,
+        }}
+        autoComplete="off"
+        onFinish={onFinish}
+      >
+        <Row gutter={24}>
+          {showSearchList.map((item) => (
+            <Col span={6} key={item}>
+              <Form.Item name={item} label={item}>
+                <Input placeholder={`Please input ${item}`} />
+              </Form.Item>
+            </Col>
+          ))}
+          <Space
+            align="start"
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              margin: '0 10px',
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              Search
+            </Button>
+            <Button
+              onClick={() => {
+                form.resetFields();
+                setData(dataSource);
+              }}
+            >
+              Clear
+            </Button>
+            <Button type="link" onClick={() => setExpand(!expand)}>
+              <DownOutlined rotate={expand ? 180 : 0} rev={undefined} />
+              Collapse
+            </Button>
+          </Space>
+        </Row>
+      </Form>
+      <Table columns={myColumns} dataSource={data} />
     </div>
   );
 };

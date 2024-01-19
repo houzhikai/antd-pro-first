@@ -27,7 +27,8 @@
     "react-window": "^1.8.8",
     "reactflow": "^11.7.2",
     "rsuite": "^5.22.2",
-    "umi-request": "^1.4.0"
+    "umi-request": "^1.4.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
