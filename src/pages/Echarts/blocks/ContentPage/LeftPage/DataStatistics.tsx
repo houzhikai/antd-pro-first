@@ -1,9 +1,9 @@
 import { Table } from 'antd';
 // import { columns } from './components/columns';
-import { data } from './components/data';
+import { data } from '../../components/data';
 import { useModel } from '@umijs/max';
 
-import styles from '../index.less';
+import styles from '../../../index.less';
 
 const DataStatistics = () => {
   const { setIsShowModal, changeColor } = useModel('useEchartsModel');

@@ -8,6 +8,8 @@ import {
   Space,
   Col,
   theme,
+  Select,
+  DatePicker,
 } from 'antd';
 import { useState } from 'react';
 import { DownOutlined } from '@ant-design/icons';
@@ -17,10 +19,17 @@ interface MyFormProps {
   title?: string;
   columns: string[] | any;
   dataSource: any;
-  searchList: string[];
+  searchList: string[] | { label: string; type?: string }[];
+  searchCount?: number;
 }
 
-const MyTable = ({ title, columns, dataSource, searchList }: MyFormProps) => {
+const MyTable = ({
+  title,
+  columns,
+  dataSource,
+  searchList,
+  searchCount,
+}: MyFormProps) => {
   const [data, setData] = useState(dataSource);
 
   const isStringArray = (arr) => arr.every((item) => typeof item === 'string');
@@ -36,8 +45,11 @@ const MyTable = ({ title, columns, dataSource, searchList }: MyFormProps) => {
   const { token } = theme.useToken();
   const [form] = Form.useForm();
   const [expand, setExpand] = useState(true);
+  const searchLength = searchCount || 3;
 
-  const showSearchList = expand ? searchList.slice(0, 3) : searchList;
+  const showSearchList = expand
+    ? searchList.slice(0, searchLength)
+    : searchList;
 
   const onFinish = (values: DataType) => {
     const valuesToArray: { value: string; label: string }[] = Object.entries(
@@ -87,37 +99,55 @@ const MyTable = ({ title, columns, dataSource, searchList }: MyFormProps) => {
         onFinish={onFinish}
       >
         <Row gutter={24}>
-          {showSearchList.map((item) => (
-            <Col span={6} key={item}>
-              <Form.Item name={item} label={item}>
-                <Input placeholder={`Please input ${item}`} />
-              </Form.Item>
-            </Col>
-          ))}
-          <Space
-            align="start"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              margin: '0 10px',
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Search
-            </Button>
-            <Button
-              onClick={() => {
-                form.resetFields();
-                setData(dataSource);
+          {showSearchList.map((item) => {
+            const formLabel = typeof item === 'string' ? item : item.label;
+            return (
+              <Col span={6} key={formLabel}>
+                <Form.Item name={formLabel} label={formLabel}>
+                  {(typeof item === 'string' ||
+                    item.type === 'input' ||
+                    item.type === undefined) && (
+                    <Input placeholder={`Please input ${formLabel}`} />
+                  )}
+                  {item.type === 'select' && (
+                    <Select
+                      placeholder={`Please input ${formLabel}`}
+                      options={item.options}
+                    />
+                  )}
+                  {item.type === 'data' && (
+                    <DatePicker.RangePicker style={{ width: '100%' }} />
+                  )}
+                </Form.Item>
+              </Col>
+            );
+          })}
+          {searchList.length > searchLength ? (
+            <Space
+              align="start"
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                margin: '0 10px',
               }}
             >
-              Clear
-            </Button>
-            <Button type="link" onClick={() => setExpand(!expand)}>
-              <DownOutlined rotate={expand ? 180 : 0} rev={undefined} />
-              Collapse
-            </Button>
-          </Space>
+              <Button type="primary" htmlType="submit">
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  form.resetFields();
+                  setData(dataSource);
+                }}
+              >
+                Clear
+              </Button>
+              <Button type="link" onClick={() => setExpand(!expand)}>
+                <DownOutlined rotate={expand ? 180 : 0} />
+                Collapse
+              </Button>
+            </Space>
+          ) : null}
         </Row>
       </Form>
       <Table columns={myColumns} dataSource={data} />

@@ -5,7 +5,7 @@ import { useModel } from '@umijs/max';
 import { data } from '@/components/dataList/Echarts/data';
 import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 
-const Echarts = () => {
+const EchartsPage = () => {
   const { axis, isAxisInverse, axisValue, changeColor, changeAxisName } =
     useModel('useEchartsModel');
   useEffect(() => {
@@ -51,23 +51,23 @@ const Echarts = () => {
       },
       animation: false,
       //   其实不是一个圆，暂时先不加
-      graphic: [
-        {
-          type: 'circle',
-          scale: [1, 1], // 缩放，默认值为 [1, 1]。表示缩放的倍数。
-          z: -1, // 层级
-          origin: [25, 25], // 旋转和缩放的中心点，默认值为 [0, 0]。
-          shape: {
-            cx: 300,
-            cy: 300,
-            r: 235,
-          },
-          style: {
-            fill: 'transparent',
-            stroke: '#6e7079',
-          },
-        },
-      ],
+      // graphic: [
+      //   {
+      //     type: 'circle',
+      //     scale: [1, 1], // 缩放，默认值为 [1, 1]。表示缩放的倍数。
+      //     z: -1, // 层级
+      //     origin: [25, 25], // 旋转和缩放的中心点，默认值为 [0, 0]。
+      //     shape: {
+      //       cx: 300,
+      //       cy: 300,
+      //       r: 235,
+      //     },
+      //     style: {
+      //       fill: 'transparent',
+      //       stroke: '#6e7079',
+      //     },
+      //   },
+      // ],
       grid: {
         height: '80%',
         top: '10%',
@@ -181,10 +181,15 @@ const Echarts = () => {
     <>
       <div
         id="echart"
-        style={{ width: '600px', height: '600px', marginTop: 30 }}
+        style={{
+          width: '800px',
+          height: '800px',
+          marginTop: 30,
+          marginLeft: 30,
+        }}
       ></div>
     </>
   );
 };
 
-export default Echarts;
+export default EchartsPage;
