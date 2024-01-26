@@ -68,6 +68,11 @@ const MyTable = ({
             return false;
           }
           return true;
+        } else if (t.label === 'data') {
+          const start = new Date(t.value[0]).getTime();
+          const end = new Date(t.value[1]).getTime();
+          const currentDate = new Date(item[t.label]).getTime();
+          return currentDate >= start && currentDate <= end;
         } else {
           if (String(item[t.label]) !== t.value) {
             return false;

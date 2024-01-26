@@ -18,7 +18,7 @@ export default function MyLogo(props: MyLogoProps) {
       <div className="myLogo">
         <Image onClick={handleJumpHome} src={src} preview={false} />
       </div>
-      <h2>{title || ''}</h2>
+      <h3>{title || ''}</h3>
     </>
   );
 }

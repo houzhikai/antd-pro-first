@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import type { GetProp, UploadFile, UploadProps } from 'antd';
 import styles from '../../index.less';
@@ -55,11 +54,10 @@ const UploadExcel = () => {
         <Button
           disabled={uploading}
           type="primary"
-          icon={<UploadOutlined />}
           onClick={handleUpload}
           size="small"
         >
-          Select File
+          Upload File
         </Button>
       </Upload>
     </div>

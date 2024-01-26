@@ -30,8 +30,28 @@
 
 }
 
+// toolbar divider
+.gapSeparator {
+    float: left;
+    width: 1px;
+    height: 25px;
+    background: #d7d7d7;
+    margin-left: 17px;
+}
+
 // 自定义文字样式
 .customLabel {
     cursor: pointer;
     font-family: 'Microsoft Yahei';
+}
+
+.left {
+    max-height: 48vh;
+    overflow-y: auto;
+}
+
+.echarts-canvas {
+    // width: 1200px;
+    width: calc(100vw - 640px);
+    height: 800px;
 }

@@ -12,6 +12,7 @@ const NavAction = () => {
   return (
     <div className={styles.wrapper}>
       <MyLogo src={logo} title="WaferMap" />
+      <div className={styles.gapSeparator} />
       <ModeChange />
       <UploadExcel />
       {/* <div>已实现的功能： 1. 放大缩小，2. 调整坐标系</div> */}

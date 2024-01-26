@@ -1,5 +1,6 @@
 import { Descriptions } from 'antd';
 import React from 'react';
+import styles from '../../../index.less';
 
 const DeviceInfo = () => {
   const items = [
@@ -81,10 +82,16 @@ const DeviceInfo = () => {
     },
   ];
   return (
-    <>
-      <h2>DEVICE INFO</h2>
-      <Descriptions bordered column={2} items={items} size="small" />
-    </>
+    <div>
+      <h3>DEVICE INFO</h3>
+      <Descriptions
+        className={styles.left}
+        bordered
+        column={1}
+        items={items}
+        size="small"
+      />
+    </div>
   );
 };
 

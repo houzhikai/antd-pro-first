@@ -8,8 +8,8 @@ const ModeChange = () => {
   return (
     <div className={styles['nav-gap']} style={{ marginLeft: 20 }}>
       <Switch
-        checkedChildren="在线"
-        unCheckedChildren="离线"
+        checkedChildren="Offline"
+        unCheckedChildren="Inline"
         onChange={handleChange}
       />
     </div>

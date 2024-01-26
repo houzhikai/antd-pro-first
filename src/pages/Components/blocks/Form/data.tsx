@@ -38,7 +38,7 @@ export const data: DataType[] = [
     address: 'New York No. 1 Lake Park',
     number: '1',
     test: '3',
-    data: '2023-02-07',
+    data: '2024-02-07',
   },
   {
     key: '2',
@@ -47,7 +47,7 @@ export const data: DataType[] = [
     address: 'London No. 1 Lake Park',
     number: '2',
     test: '3',
-    data: '2023-03-07',
+    data: '2024-03-07',
   },
   {
     key: '3',
@@ -56,7 +56,7 @@ export const data: DataType[] = [
     address: 'Sydney No. 1 Lake Park',
     number: '3',
     test: '3',
-    data: '2023-04-07',
+    data: '2024-04-07',
   },
   {
     key: '4',
@@ -65,7 +65,7 @@ export const data: DataType[] = [
     address: 'Sydney No. 1 Lake Park',
     number: '4',
     test: '3',
-    data: '2023-05-07',
+    data: '2024-05-07',
   },
   {
     key: '5',
@@ -74,7 +74,7 @@ export const data: DataType[] = [
     address: 'New York No. 1 Lake Park',
     number: '1',
     test: '3',
-    data: '2023-06-07',
+    data: '2024-06-07',
   },
 ];
 

@@ -2,6 +2,7 @@ import React from 'react';
 // import Message from './blocks/Message';
 import MyTable from './blocks/Form';
 import { columnsObj, data, searchList } from './blocks/Form/data';
+import HandWrittenCode from './blocks/HandWrittenCode';
 // import AnalyzingExcel from './blocks/AnalyzingExcel';
 
 const ComponentsPages = () => {
@@ -15,6 +16,7 @@ const ComponentsPages = () => {
         searchList={searchList}
       />
       {/* <AnalyzingExcel /> */}
+      <HandWrittenCode />
     </div>
   );
 };
