@@ -111,49 +111,19 @@ const SummaryTables = () => {
       Count: '168',
       Yield: '56.38%',
     },
-    {
-      SoftBinID: '2002',
-      BinName: 'FB2',
-      Count: '0%',
-      Yield: '43.62%',
-    },
-    {
-      SoftBinID: '1001',
-      BinName: 'PB1',
-      Count: '168',
-      Yield: '56.38%',
-    },
-    {
-      SoftBinID: '2002',
-      BinName: 'FB2',
-      Count: '0%',
-      Yield: '43.62%',
-    },
-    {
-      SoftBinID: '1001',
-      BinName: 'PB1',
-      Count: '168',
-      Yield: '56.38%',
-    },
-    {
-      SoftBinID: '2002',
-      BinName: 'FB2',
-      Count: '0%',
-      Yield: '43.62%',
-    },
-    {
-      SoftBinID: '1001',
-      BinName: 'PB1',
-      Count: '168',
-      Yield: '56.38%',
-    },
   ];
   return (
     <>
       <h3>SUMMARY</h3>
-      <Table columns={columns} dataSource={dataSource} pagination={false} />
+      <Table
+        rowKey="TotalCnt"
+        columns={columns}
+        dataSource={dataSource}
+        pagination={false}
+      />
       <div style={{ marginTop: 10 }} />
       <Table
+        rowKey="SoftBinID"
         style={{ maxHeight: '20vh', overflowX: 'hidden', overflowY: 'auto' }}
         columns={detailColumns}
         dataSource={detailDataSource}

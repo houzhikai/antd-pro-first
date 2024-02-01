@@ -3,6 +3,7 @@ import React from 'react';
 import MyTable from './blocks/Form';
 import { columnsObj, data, searchList } from './blocks/Form/data';
 import HandWrittenCode from './blocks/HandWrittenCode';
+// import TestCode from './blocks/TestCode';
 // import AnalyzingExcel from './blocks/AnalyzingExcel';
 
 const ComponentsPages = () => {
@@ -17,6 +18,7 @@ const ComponentsPages = () => {
       />
       {/* <AnalyzingExcel /> */}
       <HandWrittenCode />
+      {/* <TestCode /> */}
     </div>
   );
 };

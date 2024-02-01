@@ -2,6 +2,7 @@ import NavAction from './blocks/NavAction';
 import ColorListModal from './blocks/ColorListModal';
 import LeftPage from './blocks/ContentPage/LeftPage';
 import RightPage from './blocks/ContentPage/RightPage';
+// import WorkerComponent from './blocks/ContentPage/RightPage/WorkerComponent';
 
 const WaferMap = () => {
   return (
@@ -12,6 +13,7 @@ const WaferMap = () => {
         <RightPage />
       </div>
       <ColorListModal />
+      {/* <WorkerComponent /> */}
     </>
   );
 };

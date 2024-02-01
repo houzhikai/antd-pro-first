@@ -92,3 +92,419 @@ export const standardColorList = [
   '#002060',
   '#7030a0',
 ];
+// export const series = [
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data1,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data2,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data3,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data4,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data5,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data6,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data7,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data8,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data9,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data10,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data11,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data12,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data13,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data14,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data15,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data16,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data17,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+//   {
+//     name: 'WaferMap',
+//     type: 'heatmap',
+//     data: data18,
+//     sampling: 'average',
+//     samplingThreshold: 3,
+//     label: {
+//       // 格子上是否要加上数字,数据量大的时候会导致加载过慢
+//       show: false,
+//     },
+//     itemStyle: {
+//       // 格子的边框设置
+//       borderColor: '#ccc',
+//       borderWidth: 1,
+//       borderType: 'solid',
+//     },
+//     emphasis: {
+//       itemStyle: {
+//         shadowBlur: 10,
+//         shadowColor: 'rgba(0, 0, 0, 0.5)',
+//       },
+//     },
+//   },
+// ];
