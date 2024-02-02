@@ -54,7 +54,8 @@ export default () => {
   //   ];
   // });
   const options = {
-    roam: true,
+    renderer: 'canvas',
+    // roam: 'move',
     tooltip: {
       position: 'top',
       formatter: (params) => {
@@ -63,6 +64,7 @@ export default () => {
         }，<br />Value: ${params?.data?.[2] || ''}`;
       },
     },
+    animation: false,
     grid: { height: '90%', width: '90%', left: '5%' },
     //   支持放大缩小， inside在内部放大缩小
     dataZoom: [
@@ -76,7 +78,8 @@ export default () => {
       {
         id: 'dataZoomX',
         type: 'inside',
-        xAxisIndex: 0,
+        xAxisIndex: 0, // 不要设置其他坐标的index
+        // yAxisIndex: 0,
         filterMode: 'empty',
         throttle: 0,
         preventDefaultMouseMove: true,
@@ -84,7 +87,8 @@ export default () => {
       {
         id: 'dataZoomY',
         type: 'inside',
-        yAxisIndex: 0,
+        // xAxisIndex: 0,
+        yAxisIndex: 0, // 不要设置其他坐标的index
         filterMode: 'empty',
         throttle: 0,
         preventDefaultMouseMove: true,
@@ -104,7 +108,8 @@ export default () => {
       yAxisIndex: 0,
       xAxisIndex: 0,
       data: data,
-      large: true,
+      large: true, // 启用块状渲染
+      largeThreshold: 50 * 10000, // 数据量超过阈值时启用块状渲染
       progressive: 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
       progressiveThreshold: 5 * 1000, //启用渐进式渲染的图形数量阈值，在单个系列的图形数量超过该阈值时启用渐进式渲染。
       sampling: 'average',
@@ -115,7 +120,7 @@ export default () => {
         width: 20,
         overflow: 'truncate',
       },
-      roam: true,
+      // roam: true,
       itemStyle: {
         // 格子的边框设置
         borderColor: '#ccc',
