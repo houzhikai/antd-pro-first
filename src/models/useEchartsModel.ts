@@ -6,6 +6,20 @@ import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 //   x: 'top' | 'bottom';
 //   y: 'left' | 'right';
 // }
+// type WaferMapDataProps =
+//   | {
+//       deviceInfo: {
+//         data: { label: string; children: string | number }[];
+//         title: string;
+//       };
+//       summary: {
+//         softBinList: any[];
+//         title: string;
+//         data: any[];
+//       };
+//       waferMapData: any;
+//     }
+//   | undefined;
 export default () => {
   // const [axis, setAxis] = useState<AxisProp>({ x: 'bottom', y: 'left' }); // x,y轴位置，x：只有上下，y: 只有左右
   // const [isAxisInverse, setIsAxisInverse] = useState({ x: false, y: false }); // x,y轴位置是否反转
@@ -40,6 +54,7 @@ export default () => {
 
   const xAxisValueList = takeMiddleNumber(axisValue.xMin, axisValue.xMax);
   const yAxisValueList = takeMiddleNumber(axisValue.yMin, axisValue.yMax);
+  const [waferMapData, setWaferMapData] = useState<any>();
 
   let newDataArray: any = [];
   let newDataItemLength = 5000;
@@ -129,7 +144,7 @@ export default () => {
       },
     },
   };
-
+  console.log({ waferMapData });
   return {
     // axis,
     // setAxis,
@@ -147,5 +162,7 @@ export default () => {
     changeEchartsPosition,
     setChangeEchartsPosition,
     data,
+    waferMapData,
+    setWaferMapData,
   };
 };

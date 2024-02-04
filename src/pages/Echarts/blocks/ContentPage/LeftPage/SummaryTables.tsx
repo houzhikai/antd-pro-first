@@ -32,9 +32,9 @@ const SummaryTables = () => {
   const dataSource = [
     {
       TotalCnt: 298,
-      PassCnt: 298,
-      FailCnt: 298,
-      Yield: 298,
+      PassCnt: 168,
+      FailCnt: 130,
+      Yield: '56.38%',
     },
   ];
   const detailColumns: any = [
@@ -103,7 +103,7 @@ const SummaryTables = () => {
       SoftBinID: '2002',
       BinName: 'FB2',
       Count: '0%',
-      Yield: '43.62%',
+      Yield: '0%',
     },
     {
       SoftBinID: '1001',
