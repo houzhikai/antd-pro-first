@@ -59,7 +59,6 @@ const EchartsPage = () => {
       // });
       // Object.assign(getNewOptions, { series: xxx });
       getNewOptions.series.map((item) => (item.label.show = diff < 25));
-      console.log({ getNewOptions });
       //  setOption(option, true) 实质是 setOption(option, {notMerge: true})的缩写
       myChart.setOption(getNewOptions, true);
     }

@@ -92,6 +92,84 @@ export const standardColorList = [
   '#002060',
   '#7030a0',
 ];
+export const items = [
+  {
+    label: 'LotID:',
+    children: 'FA85-1282',
+  },
+  {
+    label: 'WaferID',
+    children: '1',
+  },
+  {
+    label: 'FlowID:',
+    children: '',
+  },
+  {
+    label: 'ProductID:',
+    children: '',
+  },
+  {
+    label: 'TestProgram:',
+    children: '',
+  },
+  {
+    label: 'TesterID:',
+    children: '',
+  },
+  {
+    label: 'OperatorID:',
+    children: '',
+  },
+  {
+    label: 'StartTime:',
+    children: '2024_01_02_19_39_35',
+  },
+  {
+    label: 'EndTime:',
+    children: '2024_01_02_19_40_59',
+  },
+  {
+    label: 'NotchSide:',
+    children: '',
+  },
+  {
+    label: 'SortID:',
+    children: '',
+  },
+  {
+    label: 'GridXmax:',
+    children: '',
+  },
+  {
+    label: 'GridYmax:',
+    children: '',
+  },
+  {
+    label: 'FabSite:',
+    children: '',
+  },
+  {
+    label: 'TestSite:',
+    children: '',
+  },
+  {
+    label: 'ProbeCardID:',
+    children: '',
+  },
+  {
+    label: 'LoadBoardID:',
+    children: '',
+  },
+  {
+    label: 'CustomerID:',
+    children: '',
+  },
+  {
+    label: 'CustomerPartID:',
+    children: '',
+  },
+];
 // export const series = [
 //   {
 //     name: 'WaferMap',
@@ -506,5 +584,107 @@ export const standardColorList = [
 //         shadowColor: 'rgba(0, 0, 0, 0.5)',
 //       },
 //     },
+//   },
+// ];
+
+// export const columns = [
+//   {
+//     title: 'TotalCnt',
+//     dataIndex: 'TotalCnt',
+//   },
+//   {
+//     title: 'PassCnt',
+//     dataIndex: 'PassCnt',
+//   },
+//   {
+//     title: 'FailCnt',
+//     dataIndex: 'FailCnt',
+//   },
+//   {
+//     title: 'Yield',
+//     dataIndex: 'Yield',
+//   },
+// ];
+// export const dataSource = [
+//   {
+//     TotalCnt: 298,
+//     PassCnt: 168,
+//     FailCnt: 130,
+//     Yield: '56.38%',
+//   },
+// ];
+// export const detailColumns: any = [
+//   {
+//     title: 'SoftBinID',
+//     dataIndex: 'SoftBinID',
+//     width: '69px',
+//   },
+//   {
+//     title: 'BinName',
+//     dataIndex: 'BinName',
+//     width: '69px',
+//   },
+//   {
+//     title: 'Count',
+//     dataIndex: 'Count',
+//     width: '50px',
+//   },
+//   {
+//     title: 'Yield',
+//     dataIndex: 'Yield',
+//     width: '54px',
+//   },
+//   {
+//     title: 'Color',
+//     dataIndex: 'color',
+//     width: '55px',
+//     align: 'center',
+//     render: (text, record, index) => {
+//       const handleClick = () => {
+//         setIsShowModal((obj) => {
+//           return {
+//             ...obj,
+//             isOpen: true,
+//             order: index,
+//           };
+//         });
+//       };
+//       return (
+//         <div
+//           style={{
+//             background: changeColor[index],
+//             height: 30,
+//             cursor: 'pointer',
+//           }}
+//           onClick={handleClick}
+//         />
+//       );
+//     },
+//   },
+// ];
+// export const detailDataSource = [
+//   {
+//     SoftBinID: '2001',
+//     BinName: 'FB1',
+//     Count: '130',
+//     Yield: '43.62%',
+//   },
+//   {
+//     SoftBinID: '1002',
+//     BinName: 'PB2',
+//     Count: '0',
+//     Yield: '0%',
+//   },
+//   {
+//     SoftBinID: '2002',
+//     BinName: 'FB2',
+//     Count: '0%',
+//     Yield: '0%',
+//   },
+//   {
+//     SoftBinID: '1001',
+//     BinName: 'PB1',
+//     Count: '168',
+//     Yield: '56.38%',
 //   },
 // ];

@@ -3,7 +3,8 @@ import { Table } from 'antd';
 import { data } from '../../components/data';
 
 const SummaryTables = () => {
-  const { changeColor, setIsShowModal } = useModel('useEchartsModel');
+  const { changeColor, setIsShowModal, waferMapData } =
+    useModel('useEchartsModel');
   data.forEach((item) =>
     changeColor.forEach((p, idx) => {
       if (Number(item.key) === idx + 1) {
@@ -11,125 +12,63 @@ const SummaryTables = () => {
       }
     }),
   );
-  const columns = [
-    {
-      title: 'TotalCnt',
-      dataIndex: 'TotalCnt',
-    },
-    {
-      title: 'PassCnt',
-      dataIndex: 'PassCnt',
-    },
-    {
-      title: 'FailCnt',
-      dataIndex: 'FailCnt',
-    },
-    {
-      title: 'Yield',
-      dataIndex: 'Yield',
-    },
-  ];
-  const dataSource = [
-    {
-      TotalCnt: 298,
-      PassCnt: 168,
-      FailCnt: 130,
-      Yield: '56.38%',
-    },
-  ];
-  const detailColumns: any = [
-    {
-      title: 'SoftBinID',
-      dataIndex: 'SoftBinID',
-      width: '69px',
-    },
-    {
-      title: 'BinName',
-      dataIndex: 'BinName',
-      width: '69px',
-    },
-    {
-      title: 'Count',
-      dataIndex: 'Count',
-      width: '50px',
-    },
-    {
-      title: 'Yield',
-      dataIndex: 'Yield',
-      width: '54px',
-    },
-    {
-      title: 'Color',
-      dataIndex: 'color',
-      width: '55px',
-      align: 'center',
-      render: (text, record, index) => {
-        const handleClick = () => {
-          setIsShowModal((obj) => {
-            return {
-              ...obj,
-              isOpen: true,
-              order: index,
-            };
-          });
-        };
-        return (
-          <div
-            style={{
-              background: changeColor[index],
-              height: 30,
-              cursor: 'pointer',
-            }}
-            onClick={handleClick}
-          />
-        );
-      },
-    },
-  ];
-  const detailDataSource = [
-    {
-      SoftBinID: '2001',
-      BinName: 'FB1',
-      Count: '130',
-      Yield: '43.62%',
-    },
-    {
-      SoftBinID: '1002',
-      BinName: 'PB2',
-      Count: '0',
-      Yield: '0%',
-    },
-    {
-      SoftBinID: '2002',
-      BinName: 'FB2',
-      Count: '0%',
-      Yield: '0%',
-    },
-    {
-      SoftBinID: '1001',
-      BinName: 'PB1',
-      Count: '168',
-      Yield: '56.38%',
-    },
-  ];
+  const title = waferMapData?.summary?.title ?? '';
+  const totalColumns = waferMapData?.summary?.total?.columns ?? [];
+  const totalData = waferMapData?.summary?.total?.data ?? [];
+  const softColumns = waferMapData?.summary?.softBinList?.columns ?? [];
+  const softBinData = waferMapData?.summary?.softBinList?.data ?? [];
+  const softBinColumns = softColumns.map((item) => {
+    if (item.title === 'Color') {
+      return {
+        ...item,
+        render: (text, record, index) => {
+          const handleClick = () => {
+            setIsShowModal((obj) => {
+              return {
+                ...obj,
+                isOpen: true,
+                order: index,
+              };
+            });
+          };
+          return (
+            <div
+              style={{
+                background: changeColor[index],
+                height: 30,
+                cursor: 'pointer',
+              }}
+              onClick={handleClick}
+            />
+          );
+        },
+      };
+    }
+    return item;
+  });
   return (
     <>
-      <h3>SUMMARY</h3>
-      <Table
-        rowKey="TotalCnt"
-        columns={columns}
-        dataSource={dataSource}
-        pagination={false}
-      />
+      <h3>{title}</h3>
+      {totalData.length > 0 ? (
+        <Table
+          rowKey="TotalCnt"
+          columns={totalColumns}
+          dataSource={totalData}
+          pagination={false}
+        />
+      ) : null}
+
       <div style={{ marginTop: 10 }} />
-      <Table
-        rowKey="SoftBinID"
-        style={{ maxHeight: '20vh', overflowX: 'hidden', overflowY: 'auto' }}
-        columns={detailColumns}
-        dataSource={detailDataSource}
-        pagination={false}
-        sticky
-      />
+      {softBinData.length > 0 ? (
+        <Table
+          rowKey="SoftBinID"
+          style={{ maxHeight: '20vh', overflowX: 'hidden', overflowY: 'auto' }}
+          columns={softBinColumns}
+          dataSource={softBinData}
+          pagination={false}
+          sticky
+        />
+      ) : null}
     </>
   );
 };

@@ -42,7 +42,7 @@ export const convert = (list, colorList) => {
   const totalData = getSummaryData(summaryTotalData, summaryTotalFormTitle);
 
   const summaryBinTitle = summaryDataList[2];
-  const binColumns = getSummaryColumns(summaryTotalFormTitle, true);
+  const binColumns = getSummaryColumns(summaryBinTitle, true);
   const summaryBinData = summaryDataList.slice(3, summaryDataList.length);
   const binData = getSummaryData(summaryBinData, summaryBinTitle, colorList);
 

@@ -21,15 +21,23 @@ import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 //     }
 //   | undefined;
 export default () => {
+  const [waferMapData, setWaferMapData] = useState<any>();
+  const deviceInfoData = waferMapData?.deviceInfo?.data || [];
+  const xMax =
+    Number(
+      deviceInfoData?.filter((item) => item.label === 'GridXmax:')?.[0]
+        ?.children,
+    ) || 400;
+  const yMax =
+    Number(
+      deviceInfoData?.filter((item) => item.label === 'GridYmax:')?.[0]
+        ?.children,
+    ) || 400;
+  console.log({ waferMapData, xxx: deviceInfoData, xMax, yMax });
   // const [axis, setAxis] = useState<AxisProp>({ x: 'bottom', y: 'left' }); // x,y轴位置，x：只有上下，y: 只有左右
   // const [isAxisInverse, setIsAxisInverse] = useState({ x: false, y: false }); // x,y轴位置是否反转
   // 坐标轴上的首尾值
-  const [axisValue, setAsisValue] = useState({
-    xMin: 0,
-    xMax: 400,
-    yMin: 0,
-    yMax: 400,
-  });
+  const [axisValue, setAxisValue] = useState({ xMax, yMax });
 
   const [isShowModal, setIsShowModal] = useState({ isOpen: false, order: 0 }); // 1. 是否打开颜色选择器 2. 点击颜色的序号
 
@@ -52,9 +60,10 @@ export default () => {
     zoom: 100,
   });
 
-  const xAxisValueList = takeMiddleNumber(axisValue.xMin, axisValue.xMax);
-  const yAxisValueList = takeMiddleNumber(axisValue.yMin, axisValue.yMax);
-  const [waferMapData, setWaferMapData] = useState<any>();
+  const xAxisValueList = takeMiddleNumber(0, axisValue.xMax);
+  const yAxisValueList = takeMiddleNumber(0, axisValue.yMax);
+  // const xAxisValueList = takeMiddleNumber(axisValue.xMin, axisValue.xMax);
+  // const yAxisValueList = takeMiddleNumber(axisValue.yMin, axisValue.yMax);
 
   let newDataArray: any = [];
   let newDataItemLength = 5000;
@@ -144,14 +153,13 @@ export default () => {
       },
     },
   };
-  console.log({ waferMapData });
   return {
     // axis,
     // setAxis,
     // isAxisInverse,
     // setIsAxisInverse,
     axisValue,
-    setAsisValue,
+    setAsisValue: setAxisValue,
     isShowModal,
     setIsShowModal,
     changeColor,

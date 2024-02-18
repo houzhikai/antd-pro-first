@@ -4,7 +4,7 @@ import SummaryTables from './SummaryTables';
 
 const index = () => {
   return (
-    <div style={{ width: 350 }}>
+    <div style={{ width: 370 }}>
       <DeviceInfo />
       <SummaryTables />
       {/* <DataStatistics /> */}

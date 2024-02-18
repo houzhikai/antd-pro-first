@@ -2,7 +2,7 @@ import React from 'react';
 import EchartsPage from './Echarts';
 // import EchartsForReact from './EchartsForReact';
 
-const index = () => {
+const EchartsDataPage = () => {
   return (
     <div>
       <EchartsPage />
@@ -11,4 +11,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default EchartsDataPage;
