@@ -4,7 +4,8 @@ import { useModel } from '@umijs/max';
 import { mockData } from '../components/data';
 
 const ModeChange = () => {
-  const { setWaferMapData, mode, setMode } = useModel('useEchartsModel');
+  const { setWaferMapData, mode, setMode, waferMapData } =
+    useModel('useEchartsModel');
   // const handleChange = (checked: boolean) => {
   //   console.log(`switch to ${checked}`);
   // };
@@ -22,21 +23,31 @@ const ModeChange = () => {
   const onLineToOfflineDesc =
     'Switching to offline mode will clear the content information. Do you want to continue?';
   const title = mode ? onLineToOfflineDesc : offLineToOnlineDesc;
+  console.log({ waferMapData });
   return (
     <div className={styles['nav-gap']} style={{ marginLeft: 20 }}>
-      <Popconfirm
-        title={title}
-        onConfirm={handleConfirm}
-        okText="Yes"
-        cancelText="No"
-      >
+      {waferMapData ? (
+        <Popconfirm
+          title={title}
+          onConfirm={handleConfirm}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Switch
+            checkedChildren="Online"
+            unCheckedChildren="Offline"
+            value={mode}
+            // onChange={handleChange}
+          />
+        </Popconfirm>
+      ) : (
         <Switch
           checkedChildren="Online"
           unCheckedChildren="Offline"
           value={mode}
-          // onChange={handleChange}
+          onChange={handleConfirm}
         />
-      </Popconfirm>
+      )}
     </div>
   );
 };
