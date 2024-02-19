@@ -60,6 +60,13 @@ export const convert = (list, colorList) => {
   // 获取晶圆图的数据
   const waferMapDataList = list.slice(summaryEndIndex + 1);
   const waferMapData = getWaferMapData(waferMapDataList);
-
-  return { deviceInfo, summary, waferMapData };
+  // 获取 xMax、yMax 的值
+  const deviceInfoData = deviceInfo?.data || [];
+  const xMax = Number(
+    deviceInfoData?.filter((item) => item.label === 'GridXmax:')?.[0]?.children,
+  );
+  const yMax = Number(
+    deviceInfoData?.filter((item) => item.label === 'GridYmax:')?.[0]?.children,
+  );
+  return { deviceInfo, summary, waferMapData, xMax, yMax };
 };

@@ -65,7 +65,7 @@ const EchartsPage = () => {
     return () => {
       myChart.dispose();
     };
-  }, [changeColor, diff]);
+  }, [changeColor, diff, options]);
   return <div ref={chartRef} className={styles['echarts-canvas']} />;
 };
 

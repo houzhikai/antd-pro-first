@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Button, Upload, message } from 'antd';
 import * as XLSX from 'xlsx';
 import type { UploadProps } from 'antd';
@@ -7,18 +6,15 @@ import { convert } from './components/convert';
 import { useModel } from '@umijs/max';
 
 const UploadExcel = () => {
-  const { setWaferMapData, changeColor } = useModel('useEchartsModel');
-  const [uploading, setUploading] = useState(false);
+  const { setWaferMapData, changeColor, mode } = useModel('useEchartsModel');
   // const [fileName, setFileName] = useState('');
 
   const handleBeforeUpload = (file) => {
-    setUploading(true);
     let data = []; // 存储获取到的数据 // 通过FileReader对象读取文件
     const fileReader = new FileReader();
     // setFileName(file.name);
     // if (fileName === file.name) {
     //   message.error('当前已是该文件内容');
-    //   setUploading(false);
     //   return;
     // }
     fileReader.readAsBinaryString(file); //二进制
@@ -37,10 +33,9 @@ const UploadExcel = () => {
         }
         const excelDataObj = convert(data, changeColor);
         setWaferMapData(excelDataObj);
-        setUploading(false);
       } catch (e) {
         // 这里可以抛出文件类型错误不正确的相关提示
-        message.error('文件类型不正确');
+        message.error('Parsing file error');
         return;
       }
     };
@@ -51,13 +46,13 @@ const UploadExcel = () => {
     showUploadList: false,
     beforeUpload: handleBeforeUpload,
     listType: 'text',
-    disabled: uploading,
+    disabled: mode,
   };
 
   return (
     <div className={styles['nav-gap']}>
       <Upload {...props}>
-        <Button disabled={uploading} type="primary" size="small">
+        <Button disabled={mode} type="primary" size="small">
           Upload File
         </Button>
       </Upload>

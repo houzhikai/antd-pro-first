@@ -1,14 +1,19 @@
 import { Popconfirm, Switch, message } from 'antd';
 import styles from '../../index.less';
-import { useState } from 'react';
+import { useModel } from '@umijs/max';
+import { mockData } from '../components/data';
 
 const ModeChange = () => {
-  const [mode, setMode] = useState(false);
+  const { setWaferMapData, mode, setMode } = useModel('useEchartsModel');
   // const handleChange = (checked: boolean) => {
   //   console.log(`switch to ${checked}`);
   // };
-  const confirm = () => {
-    // TODO 补充 在线转离线 和 离线转在线 的操作
+  const handleConfirm = () => {
+    if (mode) {
+      setWaferMapData(null);
+    } else {
+      setWaferMapData(mockData);
+    }
     setMode((c) => !c);
     message.success(`Switched to ${mode ? 'offline' : 'online'} mode`);
   };
@@ -21,7 +26,7 @@ const ModeChange = () => {
     <div className={styles['nav-gap']} style={{ marginLeft: 20 }}>
       <Popconfirm
         title={title}
-        onConfirm={confirm}
+        onConfirm={handleConfirm}
         okText="Yes"
         cancelText="No"
       >

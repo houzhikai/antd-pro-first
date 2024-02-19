@@ -22,17 +22,10 @@ import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 //   | undefined;
 export default () => {
   const [waferMapData, setWaferMapData] = useState<any>();
-  const deviceInfoData = waferMapData?.deviceInfo?.data || [];
-  const xMax =
-    Number(
-      deviceInfoData?.filter((item) => item.label === 'GridXmax:')?.[0]
-        ?.children,
-    ) || 400;
-  const yMax =
-    Number(
-      deviceInfoData?.filter((item) => item.label === 'GridYmax:')?.[0]
-        ?.children,
-    ) || 400;
+  const [mode, setMode] = useState(false);
+
+  const xMax = waferMapData?.xMax || 400;
+  const yMax = waferMapData?.yMax || 400;
   // const [axis, setAxis] = useState<AxisProp>({ x: 'bottom', y: 'left' }); // x,y轴位置，x：只有上下，y: 只有左右
   // const [isAxisInverse, setIsAxisInverse] = useState({ x: false, y: false }); // x,y轴位置是否反转
   // 坐标轴上的首尾值
@@ -58,12 +51,10 @@ export default () => {
     drag: 0,
     zoom: 100,
   });
-
-  const xAxisValueList = takeMiddleNumber(0, axisValue.xMax);
-  const yAxisValueList = takeMiddleNumber(0, axisValue.yMax);
+  const xAxisValueList = takeMiddleNumber(0, xMax);
+  const yAxisValueList = takeMiddleNumber(0, yMax);
   // const xAxisValueList = takeMiddleNumber(axisValue.xMin, axisValue.xMax);
   // const yAxisValueList = takeMiddleNumber(axisValue.yMin, axisValue.yMax);
-
   let newDataArray: any = [];
   let newDataItemLength = 5000;
   for (let i = 0; i < data.length; i += newDataItemLength) {
@@ -88,7 +79,7 @@ export default () => {
       },
     },
     animation: false,
-    grid: { height: '90%', width: '90%', left: '5%' },
+    grid: { height: '88%', width: '90%', left: '5%' },
     //   支持放大缩小， inside在内部放大缩小
     dataZoom: [
       // dataZoom 的运行原理是通过 数据过滤 以及在内部设置轴的显示窗口来达到 数据窗口缩放 的效果。
@@ -130,7 +121,7 @@ export default () => {
       type: 'heatmap',
       yAxisIndex: 0,
       xAxisIndex: 0,
-      data: data,
+      data: waferMapData?.waferMapData ?? [],
       large: true, // 启用块状渲染
       largeThreshold: 50 * 10000, // 数据量超过阈值时启用块状渲染
       progressive: 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
@@ -171,5 +162,7 @@ export default () => {
     data,
     waferMapData,
     setWaferMapData,
+    mode,
+    setMode,
   };
 };
