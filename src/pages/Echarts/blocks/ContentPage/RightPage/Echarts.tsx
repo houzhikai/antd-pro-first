@@ -5,7 +5,7 @@ import { useModel } from '@umijs/max';
 import styles from '../../../index.less';
 
 const EchartsPage = () => {
-  const { changeColor, options } = useModel('useEchartsModel');
+  const { changeColorList, options } = useModel('useEchartsModel');
   const chartRef = useRef<any>(null);
   // const [chartData, setChartData] = useState(data);
   const [getNewOptions, setGetNewOptions] = useState<any>(options);
@@ -65,7 +65,7 @@ const EchartsPage = () => {
     return () => {
       myChart.dispose();
     };
-  }, [changeColor, diff, options]);
+  }, [changeColorList, diff, options]);
   return <div ref={chartRef} className={styles['echarts-canvas']} />;
 };
 

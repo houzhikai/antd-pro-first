@@ -5,11 +5,11 @@ const AlertPrompt = ({ waferMapData }) => {
   const yMax = waferMapData.yMax;
 
   const showPrompt =
-    xMax === '' && yMax === ''
+    !xMax && !yMax
       ? 'GridXmax and GridYmax'
-      : xMax === ''
+      : !xMax
       ? 'GridXmax'
-      : yMax === ''
+      : !yMax
       ? 'GridYmax'
       : '';
   return (

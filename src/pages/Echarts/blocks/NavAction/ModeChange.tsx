@@ -6,9 +6,6 @@ import { mockData } from '../components/data';
 const ModeChange = () => {
   const { setWaferMapData, mode, setMode, waferMapData } =
     useModel('useEchartsModel');
-  // const handleChange = (checked: boolean) => {
-  //   console.log(`switch to ${checked}`);
-  // };
   const handleConfirm = () => {
     if (mode) {
       setWaferMapData(null);
@@ -23,7 +20,7 @@ const ModeChange = () => {
   const onLineToOfflineDesc =
     'Switching to offline mode will clear the content information. Do you want to continue?';
   const title = mode ? onLineToOfflineDesc : offLineToOnlineDesc;
-  console.log({ waferMapData });
+
   return (
     <div className={styles['nav-gap']} style={{ marginLeft: 20 }}>
       {waferMapData ? (
@@ -37,7 +34,6 @@ const ModeChange = () => {
             checkedChildren="Online"
             unCheckedChildren="Offline"
             value={mode}
-            // onChange={handleChange}
           />
         </Popconfirm>
       ) : (

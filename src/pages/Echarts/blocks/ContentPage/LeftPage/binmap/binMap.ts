@@ -1,0 +1,60 @@
+export const binMap = {
+  HardBin: [
+    {
+      Name: 'HB1',
+      Number: 11,
+      Type: 'Fail',
+      Color: 'Red',
+    },
+    {
+      Name: 'er',
+      Number: 46,
+      Type: 'Pass',
+      Color: 'Green',
+    },
+    {
+      Name: 'HB2',
+      Number: 4564,
+      Type: 'Pass',
+      Color: 'Green',
+    },
+  ],
+  SoftBin: [
+    {
+      Name: 'FB27',
+      Number: 2001,
+      HardBin: 'HB1',
+      MaxCount: '1',
+      CheckOverflow: true,
+      Color: '#008000',
+      Comment: '',
+    },
+    {
+      Name: 'af',
+      Number: 1002,
+      HardBin: 'er',
+      MaxCount: '4294967295',
+      CheckOverflow: false,
+      Color: '#fd0003',
+      Comment: '',
+    },
+    {
+      Name: 'PB1',
+      Number: 2002,
+      HardBin: 'HB2',
+      MaxCount: '45645645',
+      CheckOverflow: false,
+      Color: '#ff6600',
+      Comment: '',
+    },
+    {
+      Name: 'PB2',
+      Number: 1001,
+      HardBin: 'HB2',
+      MaxCount: '45645645',
+      CheckOverflow: false,
+      Color: '#3f6063',
+      Comment: '',
+    },
+  ],
+};

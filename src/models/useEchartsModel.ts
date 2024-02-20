@@ -1,48 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { data } from '@/components/dataList/Echarts/data';
 import { takeMiddleNumber } from '@/components/takeMiddleNumber';
-// interface AxisProp {
-//   x: 'top' | 'bottom';
-//   y: 'left' | 'right';
-// }
-// type WaferMapDataProps =
-//   | {
-//       deviceInfo: {
-//         data: { label: string; children: string | number }[];
-//         title: string;
-//       };
-//       summary: {
-//         softBinList: any[];
-//         title: string;
-//         data: any[];
-//       };
-//       waferMapData: any;
-//     }
-//   | undefined;
+import { analysisBinMap } from '@/pages/Echarts/blocks/ContentPage/LeftPage/binmap/analysisBinMap';
+import { binMap } from '@/pages/Echarts/blocks/ContentPage/LeftPage/binmap/binMap';
+
 export default () => {
   const [waferMapData, setWaferMapData] = useState<any>();
   const [mode, setMode] = useState(false);
 
-  const xMax = waferMapData?.xMax || 400;
-  const yMax = waferMapData?.yMax || 400;
+  const xMax = waferMapData?.xMax || 40;
+  const yMax = waferMapData?.yMax || 40;
   // const [axis, setAxis] = useState<AxisProp>({ x: 'bottom', y: 'left' }); // x,y轴位置，x：只有上下，y: 只有左右
   // const [isAxisInverse, setIsAxisInverse] = useState({ x: false, y: false }); // x,y轴位置是否反转
-  // 坐标轴上的首尾值
+  // 坐标轴上的最大值
   const [axisValue, setAxisValue] = useState({ xMax, yMax });
 
   const [isShowModal, setIsShowModal] = useState({ isOpen: false, order: 0 }); // 1. 是否打开颜色选择器 2. 点击颜色的序号
+  const binMapColorList = analysisBinMap(
+    binMap.SoftBin,
+    mode,
+    waferMapData?.summary?.softBinList?.data,
+  );
+  const [changeColorList, setChangeColorList] = useState(binMapColorList); // 自定义背景颜色
 
-  const [changeColor, setChangeColor] = useState([
-    '#008000',
-    '#fd0003',
-    '#f60',
-    '#3f6063',
-    '#fffd00',
-    '#00007e',
-    '#ff00ff',
-  ]); // 自定义背景颜色
-
+  useEffect(() => {
+    setChangeColorList(binMapColorList);
+  }, [waferMapData]); // 依赖项使用 mode 时，第一次为离线且上传文件时，不能赋值颜色
   // 修改横纵轴的name
   const [changeAxisName, setChangeAxisName] = useState({ x: '', y: '' });
 
@@ -73,9 +57,11 @@ export default () => {
     tooltip: {
       position: 'top',
       formatter: (params) => {
-        return `X: ${params?.data?.[0] || ''}，<br />Y: ${
+        return `X: ${params?.data?.[0] || ''}<br />Y: ${
           params?.data?.[1] || ''
-        }，<br />Value: ${params?.data?.[2] || ''}`;
+        }<br />SoftBin: ${params?.data?.[2] || ''}<br/> SoftBin: ${
+          params?.data?.[5]
+        } <br/> HardBin: ${params?.data?.[4]}<br/>DutID: ${params?.data?.[3]}`;
       },
     },
     animation: false,
@@ -111,10 +97,14 @@ export default () => {
     xAxis: { type: 'category', data: xAxisValueList },
     yAxis: { type: 'category', data: yAxisValueList },
     visualMap: {
-      min: 1,
-      max: 7,
+      type: 'piecewise',
+      // splitNumber: 5,
+      // min: 1,
+      // max: Infinity,
       show: false,
-      inRange: { color: changeColor },
+      // inRange: { color: binMapColorList.softBinColorTableList },
+      // TODO 指定值的颜色
+      pieces: changeColorList,
     },
     series: {
       name: 'WaferMap',
@@ -143,6 +133,7 @@ export default () => {
       },
     },
   };
+
   return {
     // axis,
     // setAxis,
@@ -152,8 +143,8 @@ export default () => {
     setAsisValue: setAxisValue,
     isShowModal,
     setIsShowModal,
-    changeColor,
-    setChangeColor,
+    changeColorList,
+    setChangeColorList,
     changeAxisName,
     setChangeAxisName,
     options,
@@ -164,5 +155,6 @@ export default () => {
     setWaferMapData,
     mode,
     setMode,
+    binMapColorList,
   };
 };

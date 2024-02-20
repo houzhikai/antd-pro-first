@@ -1,17 +1,9 @@
 import { useModel } from '@umijs/max';
 import { Table } from 'antd';
-import { data } from '../../components/data';
 
 const SummaryTables = () => {
-  const { changeColor, setIsShowModal, waferMapData } =
+  const { setIsShowModal, waferMapData, changeColorList } =
     useModel('useEchartsModel');
-  data.forEach((item) =>
-    changeColor.forEach((p, idx) => {
-      if (Number(item.key) === idx + 1) {
-        return (item.color = p);
-      }
-    }),
-  );
   const title = waferMapData?.summary?.title ?? '';
   const totalColumns = waferMapData?.summary?.total?.columns ?? [];
   const totalData = waferMapData?.summary?.total?.data ?? [];
@@ -34,7 +26,7 @@ const SummaryTables = () => {
           return (
             <div
               style={{
-                background: changeColor[index],
+                background: text,
                 height: 30,
                 cursor: 'pointer',
               }}
@@ -46,6 +38,22 @@ const SummaryTables = () => {
     }
     return item;
   });
+  // Add colors to softBinTable
+  const newSoftBinData =
+    changeColorList.length > 0
+      ? softBinData
+          .map((item) => {
+            let newList: any = [];
+            changeColorList.map((t) => {
+              if (item.SoftBinID === t.value) {
+                return newList.push({ ...item, Color: t.color });
+              }
+              return newList;
+            });
+            return newList;
+          })
+          .flat(Infinity)
+      : softBinData;
   return (
     <>
       <h3>{title}</h3>
@@ -64,7 +72,7 @@ const SummaryTables = () => {
           rowKey="SoftBinID"
           style={{ maxHeight: '20vh', overflowX: 'hidden', overflowY: 'auto' }}
           columns={softBinColumns}
-          dataSource={softBinData}
+          dataSource={newSoftBinData}
           pagination={false}
           sticky
         />

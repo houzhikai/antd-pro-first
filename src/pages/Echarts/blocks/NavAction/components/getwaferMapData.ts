@@ -6,10 +6,10 @@ export const getWaferMapData = (arr) => {
     return [
       item[EXCELCOLUMNS.EMPTY],
       item[EXCELCOLUMNS.EMPTY1],
-      item[EXCELCOLUMNS.EMPTY2],
       item[EXCELCOLUMNS.EMPTY3],
       item[EXCELCOLUMNS.EMPTY4],
       item[EXCELCOLUMNS.DeviceInfo],
+      item[EXCELCOLUMNS.EMPTY2],
     ];
   });
   return newArr;

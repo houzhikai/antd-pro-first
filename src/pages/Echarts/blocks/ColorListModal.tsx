@@ -7,7 +7,7 @@ import { useState } from 'react';
 import styles from '../index.less';
 
 const ColorListModal = () => {
-  const { isShowModal, setIsShowModal, setChangeColor } =
+  const { isShowModal, setIsShowModal, setChangeColorList } =
     useModel('useEchartsModel');
   const [color, setColor] = useState<AnyColorFormat>({ hex: '#4f4a67' });
   const [isOpenColorpicker, setIsOpenColorpicker] = useState(false);
@@ -23,18 +23,27 @@ const ColorListModal = () => {
   };
 
   const handleSelectColor = (color: string) => {
-    setChangeColor((pre) => {
-      let newArr = [...pre];
-      newArr.splice(isShowModal.order, 1, color); // 选中第n个坐标，删除一个，将color替换
+    setChangeColorList((pre) => {
+      let newArr = [...pre].map((item, index) => {
+        if (isShowModal.order === index) {
+          return { ...item, color };
+        }
+        return item;
+      });
+      // newArr.splice(isShowModal.order, 1, color); // 选中第n个坐标，删除一个，将color替换
       return newArr;
     });
   };
 
   const onChange = (color: AnyColorFormat) => {
     setColor(color);
-    setChangeColor((pre) => {
-      let newArr = [...pre];
-      newArr.splice(isShowModal.order, 1, color.hex); // 选中第n个坐标，删除一个，将color替换
+    setChangeColorList((pre) => {
+      let newArr = [...pre].map((item, index) => {
+        if (isShowModal.order === index) {
+          return { ...item, color: color.hex };
+        }
+        return item;
+      });
       return newArr;
     });
   };
