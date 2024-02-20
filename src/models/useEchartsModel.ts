@@ -4,6 +4,7 @@ import { data } from '@/components/dataList/Echarts/data';
 import { takeMiddleNumber } from '@/components/takeMiddleNumber';
 import { analysisBinMap } from '@/pages/Echarts/blocks/ContentPage/LeftPage/binmap/analysisBinMap';
 import { binMap } from '@/pages/Echarts/blocks/ContentPage/LeftPage/binmap/binMap';
+import { mockData } from '@/pages/Echarts/blocks/components/data';
 
 export default () => {
   const [waferMapData, setWaferMapData] = useState<any>();
@@ -23,6 +24,15 @@ export default () => {
     waferMapData?.summary?.softBinList?.data,
   );
   const [changeColorList, setChangeColorList] = useState(binMapColorList); // 自定义背景颜色
+
+  // First time entering the page to load data
+  useEffect(() => {
+    if (mode) {
+      setWaferMapData(mockData);
+    } else {
+      setWaferMapData(null);
+    }
+  }, []);
 
   useEffect(() => {
     setChangeColorList(binMapColorList);
