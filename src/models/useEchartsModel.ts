@@ -66,12 +66,23 @@ export default () => {
     // roam: 'move',
     tooltip: {
       position: 'top',
+      // formatter: (params) => {
+      //   return `X: ${params?.data?.[0] || ''}<br />Y: ${
+      //     params?.data?.[1] || ''
+      //   }<br />HardBin: ${params?.data?.[2] || ''}<br/> SoftBin: ${
+      //     params?.data?.[5]
+      //   } <br/> TouchDown: ${params?.data?.[4]}<br/>DutID: ${
+      //     params?.data?.[3]
+      //   }`;
+      // },
       formatter: (params) => {
-        return `X: ${params?.data?.[0] || ''}<br />Y: ${
-          params?.data?.[1] || ''
-        }<br />SoftBin: ${params?.data?.[2] || ''}<br/> SoftBin: ${
+        return `TouchDown: ${params?.data?.[4]}<br/> X: ${
+          params?.data?.[0] || ''
+        }<br />Y: ${params?.data?.[1] || ''}<br /> SoftBin: ${
           params?.data?.[5]
-        } <br/> HardBin: ${params?.data?.[4]}<br/>DutID: ${params?.data?.[3]}`;
+        } <br/>HardBin: ${params?.data?.[2] || ''}<br/>  DutID: ${
+          params?.data?.[3]
+        }`;
       },
     },
     animation: false,

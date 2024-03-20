@@ -24,6 +24,7 @@
     "echarts": "^5.4.2",
     "echarts-for-react": "^3.0.2",
     "html-to-image": "^1.11.11",
+    "micmega-ui": "git+http://192.168.3.81:16080/software/platform/tools/common-component-library.git#fixWaferMap",
     "react-draggable": "^4.4.5",
     "react-window": "^1.8.8",
     "reactflow": "^11.7.2",

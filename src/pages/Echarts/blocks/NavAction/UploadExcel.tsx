@@ -6,7 +6,8 @@ import { convert } from './components/convert';
 import { useModel } from '@umijs/max';
 
 const UploadExcel = () => {
-  const { setWaferMapData, changeColor, mode } = useModel('useEchartsModel');
+  const { setWaferMapData, changeColorList, mode } =
+    useModel('useEchartsModel');
   // const [fileName, setFileName] = useState('');
 
   const handleBeforeUpload = (file) => {
@@ -31,7 +32,7 @@ const UploadExcel = () => {
             ); // break; // 如果只取第一张表，就取消注释这行
           }
         }
-        const excelDataObj = convert(data, changeColor);
+        const excelDataObj = convert(data, changeColorList);
         setWaferMapData(excelDataObj);
       } catch (e) {
         // 这里可以抛出文件类型错误不正确的相关提示
