@@ -14,11 +14,11 @@ export default function MyLogo(props: MyLogoProps) {
     history.push('/home');
   };
   return (
-    <>
-      <div className="myLogo">
-        <Image onClick={handleJumpHome} src={src} preview={false} />
+    <div className="myLogo">
+      <div>
+        <Image width={40} onClick={handleJumpHome} src={src} preview={false} />
       </div>
-      <h3>{title || ''}</h3>
-    </>
+      <h3 className="logo-title">{title || ''}</h3>
+    </div>
   );
 }
