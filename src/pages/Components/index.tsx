@@ -1,5 +1,5 @@
 import React from 'react';
-import CollapsePage from './blocks/TreePage/blocks/Collapse';
+import DraggableModal from './blocks/DraggableModal';
 // import Message from './blocks/Message';
 // import MyTable from './blocks/Form';
 // import { columnsObj, data, searchList } from './blocks/Form/data';
@@ -21,7 +21,8 @@ const ComponentsPages = () => {
       {/* <HandWrittenCode /> */}
       {/* <TestCode /> */}
       {/* <TreePage /> */}
-      <CollapsePage />
+      {/* <CollapsePage /> */}
+      <DraggableModal />
     </div>
   );
 };
