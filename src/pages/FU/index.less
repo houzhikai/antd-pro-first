@@ -33,7 +33,7 @@
         background: red;
         border-radius: 50%;
         margin-right: 6px;
-        animation: warn 1.5s ease-out 0s infinite;
+        animation: warn 1.5s infinite;
     }
 
     @keyframes warn {
@@ -43,12 +43,23 @@
         }
 
         50% {
-            opacity: 1;
+            opacity: 0;
         }
 
         100% {
             transform: scale(1.4);
-            opacity: 0;
+            opacity: 1;
         }
     }
+}
+
+@keyframes blink-smooth {
+    to {
+        color: transparent
+    }
+}
+
+.highlight {
+    color: '#1890ff';
+    animation: 0.4s blink-smooth infinite alternate;
 }
