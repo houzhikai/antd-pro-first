@@ -1,20 +1,20 @@
-import React, { createRef, useState } from "react";
-import LeftPage from "./blocks/LeftPage";
-import NavPage from "./blocks/NavPage";
-import RightPage from "./blocks/RightPage";
-import DiagLogContent from "./blocks/RightPage/DiagLogContent";
-import WebSocketComponent from "./webSocket/Client";
-import { interfaceDataList } from "./data/interfaace";
+import React, { createRef, useState } from 'react';
+import LeftPage from './blocks/LeftPage';
+import NavPage from './blocks/NavPage';
+import RightPage from './blocks/RightPage';
+import DiagLogContent from './blocks/RightPage/DiagLogContent';
+import WebSocketComponent from './webSocket/Client';
+import { interfaceDataList } from './data/interfaace';
 
 const socketRef = createRef<any>();
-import "./index.css";
+import './index.css';
 
 const CollapsePage: React.FC = () => {
   const defaultPanes = [
     {
-      label: "Slot 0",
+      label: 'Slot 0',
       children: <DiagLogContent />,
-      key: "0",
+      key: '0',
       closable: false,
     },
   ];
@@ -47,7 +47,7 @@ const CollapsePage: React.FC = () => {
         />
       </div>
       <WebSocketComponent
-        url="ws://192.168.3.17:9090"
+        url=""
         onMessage={(message) => {
           // TODO
           // console.log({ message });
