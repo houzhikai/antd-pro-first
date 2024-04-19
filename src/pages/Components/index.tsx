@@ -5,8 +5,9 @@
 // import HandWrittenCode from './blocks/HandWrittenCode';
 // import TestCode from './blocks/TestCode';
 // import AnalyzingExcel from './blocks/AnalyzingExcel';
+// import CrossPageTabCommunication from './blocks/CrossPageTabCommunication';
 
-import CrossPageTabCommunication from './blocks/CrossPageTabCommunication';
+import ProviderPage from './blocks/ProviderPage';
 
 const ComponentsPages = () => {
   return (
@@ -24,7 +25,8 @@ const ComponentsPages = () => {
       {/* <TreePage /> */}
       {/* <CollapsePage /> */}
       {/* <DraggableModal /> */}
-      <CrossPageTabCommunication />
+      {/* <CrossPageTabCommunication /> */}
+      <ProviderPage />
     </div>
   );
 };

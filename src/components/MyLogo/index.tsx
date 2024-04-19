@@ -1,5 +1,5 @@
 import { Image } from 'antd';
-import './index.less';
+import styles from './index.less';
 import { history } from '@umijs/max';
 
 interface MyLogoProps {
@@ -14,11 +14,11 @@ export default function MyLogo(props: MyLogoProps) {
     history.push('/home');
   };
   return (
-    <div className="myLogo">
+    <div className={styles.myLogo}>
       <div>
         <Image width={40} onClick={handleJumpHome} src={src} preview={false} />
       </div>
-      <h3 className="logo-title">{title || ''}</h3>
+      <div className={styles['logo-title']}>{title || ''}</div>
     </div>
   );
 }
