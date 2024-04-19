@@ -1,9 +1,11 @@
-import FuNav from './blocks/FuNav';
+// import FuNav from './blocks/FuNav';
+import TestDemo from './blocks/TestDemo';
 
 const FU = () => {
   return (
     <>
-      <FuNav />
+      {/* <FuNav /> */}
+      <TestDemo />
     </>
   );
 };
