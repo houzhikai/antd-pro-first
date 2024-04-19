@@ -8,13 +8,11 @@ const CrossPageTabCommunication = () => {
   listenMsg((info) => {
     if (info.type === 'add') {
       return setXxx((pre) => {
-        console.log('info', info.message, 'pre', pre);
         return [...info.message, ...pre];
       });
     }
   });
 
-  console.log({ list, xxx });
   return (
     <>
       {xxx.map((item) => (
