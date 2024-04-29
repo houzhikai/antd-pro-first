@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const CustomDragDropPage = ({ initValue }) => {
+interface CustomDragDropPageProps {
+  initValue: any;
+  rowKey: string;
+  children?: any;
+}
+
+const CustomDragDropPage = ({
+  initValue,
+  rowKey,
+  children,
+}: CustomDragDropPageProps) => {
   const [items, setItems] = useState(initValue);
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
-
     const newItems: any = Array.from(items);
     const [reorderedItem] = newItems.splice(result.source.index, 1);
     newItems.splice(result.destination.index, 0, reorderedItem);
-
     setItems(newItems.map((item, index) => ({ ...item, id: String(index) })));
   };
-  console.log({ items });
+
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <Droppable droppableId="droppable">
@@ -21,8 +29,8 @@ const CustomDragDropPage = ({ initValue }) => {
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {items.map((item, index) => (
               <Draggable
-                key={item.id || item.key}
-                draggableId={item.id || item.key}
+                key={item[rowKey]}
+                draggableId={item[rowKey]}
                 index={index}
               >
                 {(provided) => (
@@ -31,15 +39,20 @@ const CustomDragDropPage = ({ initValue }) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <div
-                      style={{
-                        border: '1px solid red',
-                        padding: '10px',
-                        margin: '5px 0',
-                      }}
-                    >
-                      {item.content}
-                    </div>
+                    {children ? (
+                      <>{children}</>
+                    ) : (
+                      <div
+                        style={{
+                          border: '1px solid #c5c6cc',
+                          padding: '10px',
+                          margin: '5px 0',
+                          cursor: 'move',
+                        }}
+                      >
+                        {item.content}
+                      </div>
+                    )}
                   </div>
                 )}
               </Draggable>
