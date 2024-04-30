@@ -9,7 +9,11 @@ import myFetch from './components/myFetch';
 import queryParams from './components/queryParams';
 import { routes } from './components/dataList/menu/routes';
 import { iconList } from './components/dataList/menu/iconList';
-import { custom_dark_page, custom_dark_component } from './theme/dark';
+import {
+  custom_dark_page,
+  custom_dark_component,
+  custom_dark_form,
+} from './theme/dark';
 
 import logo from './icon/logo.svg';
 
@@ -114,6 +118,9 @@ export const layout = ({ initialState }) => {
         <ConfigProvider
           theme={{
             token: obj.theme === 'dark' ? custom_dark_component : {},
+            components: {
+              Form: custom_dark_form,
+            },
           }}
         >
           {children}

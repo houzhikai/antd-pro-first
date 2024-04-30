@@ -65,3 +65,6 @@ export const custom_dark_component = {
   colorTextDisabled: '#b7b7de', // 控制禁用状态下的字体颜色。
   colorBorderSecondary: '#424242',
 };
+export const custom_dark_form = {
+  itemMarginBottom: 0,
+};

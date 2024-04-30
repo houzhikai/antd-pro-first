@@ -108,6 +108,11 @@ export default defineConfig({
       component: './Components',
     },
     {
+      name: 'bitMap',
+      path: `/bitMap`,
+      component: './BitMap',
+    },
+    {
       path: '*',
       layout: false,
       component: './404',

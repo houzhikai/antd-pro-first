@@ -75,6 +75,11 @@ export const routes = {
       path: `/components`,
       component: './Components',
     },
+    {
+      name: 'bitMap',
+      path: `/bitMap`,
+      component: './BitMap',
+    },
   ],
   access: {
     canSeeAdmin: false,

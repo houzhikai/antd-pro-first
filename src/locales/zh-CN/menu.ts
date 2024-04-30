@@ -15,6 +15,7 @@ export default {
   'menu.detail': '详情页',
   'menu.redux': 'Redux',
   'menu.components': '控件',
+  'menu.bitMap': '位图',
   // https://blog.csdn.net/huai42717/article/details/128467502
   // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': '首页',
@@ -33,4 +34,5 @@ export default {
   'menu.详情页': '详情页',
   'menu.Redux': 'Redux',
   'menu.控件': '控件',
+  'menu.位图': '位图',
 };

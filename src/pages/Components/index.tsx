@@ -3,10 +3,12 @@
 // import MyTable from './blocks/Form';
 // import { columnsObj, data, searchList } from './blocks/Form/data';
 // import HandWrittenCode from './blocks/HandWrittenCode';
-import TestCode from './blocks/TestCode';
+// import TestCode from './blocks/TestCode';
 // import AnalyzingExcel from './blocks/AnalyzingExcel';
 // import CrossPageTabCommunication from './blocks/CrossPageTabCommunication';
 // import ProviderPage from './blocks/ProviderPage';
+
+import FoldPage from './blocks/FoldPage';
 
 // import DebounceInput from './blocks/DebounceInput';
 
@@ -22,13 +24,14 @@ const ComponentsPages = () => {
       /> */}
       {/* <AnalyzingExcel /> */}
       {/* <HandWrittenCode /> */}
-      <TestCode />
+      {/* <TestCode /> */}
       {/* <TreePage /> */}
       {/* <CollapsePage /> */}
       {/* <DraggableModal /> */}
       {/* <CrossPageTabCommunication /> */}
       {/* <ProviderPage /> */}
       {/* <DebounceInput /> */}
+      <FoldPage />
     </div>
   );
 };
