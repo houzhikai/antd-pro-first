@@ -1,7 +1,8 @@
 import { mockOptions } from '../mockData/mockOptions';
 import { takeMiddleNumber } from './takeMiddleNumber';
 
-export const getOptions = (theme) => {
+export const getOptions = (theme, jumpAddress) => {
+  console.log('jumpAddress', jumpAddress);
   const maxValue = { xMax: 200, yMax: 200 };
   const xAxisValueList = takeMiddleNumber(0, maxValue.xMax);
   const yAxisValueList = takeMiddleNumber(140, maxValue.yMax);

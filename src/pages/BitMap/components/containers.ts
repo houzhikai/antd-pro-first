@@ -10,8 +10,9 @@ export const ProviderFunc = () => {
   const detailDataPageWidth = `calc(100vw - 80px - 210px - ${width}px)`;
   const [theme, setTheme] = useState('light');
   const [testValue, setTestValue] = useState(111);
+  const [jumpAddress, setJumpAddress] = useState({ x: 0, y: 0 }); // jump 地址跳转
 
-  const options = getOptions(theme);
+  const options = getOptions(theme, jumpAddress);
 
   const bitMapContextValue = {
     width,
@@ -22,6 +23,8 @@ export const ProviderFunc = () => {
     setTheme,
     testValue,
     setTestValue,
+    jumpAddress,
+    setJumpAddress,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

@@ -1,9 +1,12 @@
+import { ProviderFunc } from '../../../components/containers';
 import { Form, Input, Button, message } from 'antd';
 import React from 'react';
 
 const JumpPage = () => {
+  const { setJumpAddress } = ProviderFunc();
   const onFinish = (values) => {
     message.info(JSON.stringify(values));
+    setJumpAddress(values);
   };
   return (
     <Form name="jump" onFinish={onFinish} autoComplete="off">
