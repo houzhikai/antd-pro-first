@@ -1,5 +1,4 @@
-import { Button, Form, Select, Tooltip, message } from 'antd';
-import { options } from '../../../mockData/mockSelectOptions';
+import { Form, message } from 'antd';
 
 const NavAction = () => {
   const onFinish = (values) => {
@@ -14,7 +13,7 @@ const NavAction = () => {
       autoComplete="off"
     >
       <div style={{ display: 'flex', justifyContent: 'end', marginRight: 25 }}>
-        <Form.Item label="Template" name="Template">
+        {/* <Form.Item label="Template" name="Template">
           <Select style={{ width: 100, marginRight: 10 }} options={options} />
         </Form.Item>
 
@@ -36,9 +35,9 @@ const NavAction = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Update
+            Convert
           </Button>
-        </Form.Item>
+        </Form.Item> */}
       </div>
     </Form>
   );

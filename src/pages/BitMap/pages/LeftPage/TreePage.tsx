@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tree } from 'antd';
 import type { GetProps } from 'antd';
-import { treeData } from '../../mockData/mockTreeData';
+import { treeData1, treeData2 } from '../../mockData/mockTreeData';
 
 type DirectoryTreeProps = GetProps<typeof Tree.DirectoryTree>;
 
@@ -15,15 +15,26 @@ const TreePage: React.FC = () => {
   };
 
   return (
-    <Tree.DirectoryTree
-      style={{ background: '#f5f5f5' }}
-      checkable
-      multiple
-      defaultExpandAll
-      onSelect={onSelect}
-      onExpand={onExpand}
-      treeData={treeData}
-    />
+    <>
+      <Tree.DirectoryTree
+        style={{ background: '#f5f5f5' }}
+        checkable
+        multiple
+        defaultExpandAll
+        onSelect={onSelect}
+        onExpand={onExpand}
+        treeData={treeData1}
+      />
+      <Tree.DirectoryTree
+        style={{ background: '#f5f5f5', paddingTop: 20 }}
+        checkable
+        multiple
+        defaultExpandAll
+        onSelect={onSelect}
+        onExpand={onExpand}
+        treeData={treeData2}
+      />
+    </>
   );
 };
 

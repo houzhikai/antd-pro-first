@@ -1,12 +1,23 @@
 .bit-map-nav {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
     border-bottom: 1px solid #eee;
+    padding-bottom: 4px;
+}
+.bit-map-nav-page{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 10px;
+}
+.bit-map-nav-gap{
+    margin:0 10px;
+    cursor: pointer;
 }
 .content-page {
     display: flex;
-    height: calc(100vh - 40px - 50px - 20px);
-    margin-top: 20px;
+    height: calc(100vh - 40px - 50px - 20px - 25px);
+    margin-top: 10px;
 }
 .bit-map-left-page{
     width: 200px;

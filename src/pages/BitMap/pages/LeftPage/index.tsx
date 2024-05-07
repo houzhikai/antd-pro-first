@@ -1,5 +1,5 @@
 import TreePage from './TreePage';
-import { Button, Switch, Tooltip } from 'antd';
+// import { Button, Switch, Tooltip } from 'antd';
 import '../../index.css';
 import { ProviderFunc } from '../../components/containers';
 
@@ -7,7 +7,7 @@ const LeftPage = () => {
   const { testValue } = ProviderFunc();
   return (
     <div className="bit-map-left-page">
-      <div style={{ display: 'flex' }}>
+      {/* <div style={{ display: 'flex' }}>
         <div>
           <Button>Import</Button>
         </div>
@@ -46,10 +46,10 @@ const LeftPage = () => {
             </div>
           </Tooltip>
         </div>
-      </div>
-      <div>
+      </div> 
+       <div>
         <Switch checkedChildren="Multiple" unCheckedChildren="Single" />
-      </div>
+      </div> */}
       {testValue ? <TreePage /> : null}
     </div>
   );

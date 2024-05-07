@@ -32,7 +32,7 @@ const DropDownPage = () => {
   return (
     <div style={{ marginRight: 10 }}>
       <Dropdown menu={menuProps}>
-        <Button>Zoom</Button>
+        <Button>100%</Button>
       </Dropdown>
     </div>
   );

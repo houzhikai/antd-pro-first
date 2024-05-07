@@ -4,7 +4,7 @@ import ErrorPage from './pages/ErrorPage';
 import './index.css';
 
 const BitMapPage = () => {
-  const [isErrorPage, setIsErrorPage] = useState(true); // 是否转到错误页面
+  const [isErrorPage, setIsErrorPage] = useState(false); // 是否转到错误页面
 
   return (
     <>

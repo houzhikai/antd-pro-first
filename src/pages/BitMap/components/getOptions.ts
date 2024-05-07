@@ -5,7 +5,7 @@ export const getOptions = (theme, jumpAddress) => {
   console.log('jumpAddress', jumpAddress);
   const maxValue = { xMax: 200, yMax: 200 };
   const xAxisValueList = takeMiddleNumber(0, maxValue.xMax);
-  const yAxisValueList = takeMiddleNumber(140, maxValue.yMax);
+  const yAxisValueList = takeMiddleNumber(0, maxValue.yMax);
   return {
     renderer: 'canvas',
     tooltip: {
@@ -51,7 +51,13 @@ export const getOptions = (theme, jumpAddress) => {
       },
     ],
     grid: { width: '90%', height: '80%', left: '5%' },
-    visualMap: { type: 'piecewise', show: false }, //pieces: changeColorList
+    visualMap: {
+      type: 'piecewise',
+      show: false,
+      inRange: {
+        color: ['#ff0000'],
+      },
+    }, //pieces: changeColorList
     series: [
       {
         type: 'scatter',
