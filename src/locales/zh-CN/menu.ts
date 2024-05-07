@@ -16,6 +16,7 @@ export default {
   'menu.redux': 'Redux',
   'menu.components': '控件',
   'menu.bitMap': '位图',
+  'menu.firmwareUpdate': '固件升级二期',
   // https://blog.csdn.net/huai42717/article/details/128467502
   // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': '首页',
@@ -35,4 +36,5 @@ export default {
   'menu.Redux': 'Redux',
   'menu.控件': '控件',
   'menu.位图': '位图',
+  'menu.固件升级二期': '固件升级二期',
 };

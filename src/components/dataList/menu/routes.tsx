@@ -6,6 +6,11 @@ export const routes = {
       component: './Home',
     },
     {
+      name: 'firmwareUpdate',
+      path: `/firmwareUpdate`,
+      component: './FirmwareUpdate',
+    },
+    {
       name: 'dbm',
       path: `/dbm/site`,
       component: './DBM/Site',

@@ -13,6 +13,7 @@ import {
   custom_dark_page,
   custom_dark_component,
   custom_dark_form,
+  custom_Table,
 } from './theme/dark';
 
 import logo from './icon/logo.svg';
@@ -120,6 +121,7 @@ export const layout = ({ initialState }) => {
             token: obj.theme === 'dark' ? custom_dark_component : {},
             components: {
               Form: custom_dark_form,
+              Table: custom_Table,
             },
           }}
         >

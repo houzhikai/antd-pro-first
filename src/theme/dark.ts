@@ -68,3 +68,4 @@ export const custom_dark_component = {
 export const custom_dark_form = {
   itemMarginBottom: 0,
 };
+export const custom_Table = {};

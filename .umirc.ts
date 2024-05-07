@@ -42,6 +42,11 @@ export default defineConfig({
       component: './DBM/Site',
     },
     {
+      name: 'firmwareUpdate ',
+      path: `/firmwareUpdate`,
+      component: './FirmwareUpdate',
+    },
+    {
       name: '权限演示',
       path: '/access',
       component: './Access',
