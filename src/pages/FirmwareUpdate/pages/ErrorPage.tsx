@@ -2,10 +2,16 @@ import React from 'react';
 import { Button, Result } from 'antd';
 import { useFUProviderModule } from '../components/containers';
 
-const ErrorPage = () => {
-  const { setIsErrorPage } = useFUProviderModule();
+const ErrorPage = ({ setIsErrorPage }) => {
+  const { setErrorTimes } = useFUProviderModule();
   const handleRefresh = () => {
     setIsErrorPage(false);
+    setErrorTimes((obj) => {
+      return {
+        ...obj,
+        times: 0,
+      };
+    });
   };
 
   return (

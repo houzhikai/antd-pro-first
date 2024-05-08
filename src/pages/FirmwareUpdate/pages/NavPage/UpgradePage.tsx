@@ -3,7 +3,7 @@ import { useFUProviderModule } from '../../components/containers';
 
 const UpgradePage = () => {
   const { getDeviceList } = useFUProviderModule();
-  const isDisabled = getDeviceList?.heartbeat || 0;
+  const isDisabled = getDeviceList?.allow !== 0;
   const handleClick = (msg) => {
     message.info(msg);
   };
