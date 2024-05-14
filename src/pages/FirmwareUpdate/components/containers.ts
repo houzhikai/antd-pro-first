@@ -9,9 +9,9 @@ export const useFUProviderModule = () => {
   const [errorTimes, setErrorTimes] = useState<{
     times: number;
     aboveTimes: number;
-  }>({ times: 0, aboveTimes: 2 });
+  }>({ times: 0, aboveTimes: 99999 });
   const [startParams, setStartParams] = useState({
-    initIp: '172.168.0.100',
+    initIp: '192.168.3.223',
     vscodeId: 12345,
   }); // 所有已选择的勾选项
   const [selectedFirmwareList, setSelectedFirmwareList] = useState([]); // 所有已选择的勾选项

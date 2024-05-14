@@ -1,4 +1,4 @@
-import { ProviderFunc } from '../../../components/containers';
+import { ProviderFunc } from '../../../../components/containers';
 import { Form, Input, Button, message } from 'antd';
 import React from 'react';
 

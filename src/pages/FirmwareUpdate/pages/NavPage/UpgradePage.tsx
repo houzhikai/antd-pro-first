@@ -1,4 +1,4 @@
-import { Button, message } from 'antd';
+import { Button, Popconfirm, message } from 'antd';
 import { useFUProviderModule } from '../../components/containers';
 
 const UpgradePage = () => {
@@ -17,14 +17,20 @@ const UpgradePage = () => {
       >
         刷新
       </Button>
-      <Button
-        disabled={isDisabled}
-        className="customNavPage-gap"
-        type="primary"
-        onClick={() => handleClick('点击了 开始升级 按钮')}
+      <Popconfirm
+        title="升级后会重启整机，请确保没有正在进行的业务操作"
+        okText="Yes"
+        cancelText="No"
       >
-        开始升级
-      </Button>
+        <Button
+          disabled={isDisabled}
+          className="customNavPage-gap"
+          type="primary"
+          onClick={() => handleClick('点击了 开始升级 按钮')}
+        >
+          开始升级
+        </Button>
+      </Popconfirm>
       <Button
         disabled={isDisabled}
         className="customNavPage-gap"

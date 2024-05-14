@@ -1,3 +1,9 @@
+/* 自定义属性 */
+:root {
+    --full-page-width: 200px;
+    --full-page-height: 40%; 
+  }
+  
 .bit-map-nav {
     /* display: flex;
     justify-content: space-between; */
@@ -47,4 +53,34 @@
 .echarts-canvas{
     width: calc(100vw - 440px);
     height: 750px;
+}
+
+.echarts-full-page{
+    height: var(--full-page-height);
+    background: transparent;
+    position: relative;
+}
+.echarts-full-page-magnifying-glass{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100px;
+    background: #aec2e8;
+    cursor: move;
+    opacity: 0.6;
+}
+
+
+.information-page{
+    height: calc(100% - var(--full-page-height));
+    background: #bfa;
+    overflow-y: auto;
+}
+/* 弹窗 */
+.bit-map-color-modal{
+    display: flex;
+    align-items: center;
+}
+.bit-map-color-modal-label{
+    margin-right: 10px;
 }

@@ -43,7 +43,7 @@ const NavActive = () => {
       reader.onloadend = () => {
         setBase64List((base64List) => [
           ...base64List,
-          { name: file.name, data: '' }, //  reader.result.split('base64,')[1]
+          { name: file.name, data: reader.result.split('base64,')[1] }, //  reader.result.split('base64,')[1]
         ]);
       };
 

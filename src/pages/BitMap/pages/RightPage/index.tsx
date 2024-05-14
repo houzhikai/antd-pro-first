@@ -1,10 +1,10 @@
 import FullDataPage from './FullDataPage';
 import { Resizable } from 'react-resizable';
 import { ProviderFunc } from '../../components/containers';
+import DetailDataNavPage from './DetailDataPage/NavAction';
+import DetailDataPage from './DetailDataPage/DetailDataPage';
 
 import 'react-resizable/css/styles.css';
-import DetailDataPage from './DetailDataPage';
-import DetailDataNavPage from './DetailDataNavPage';
 
 const RightPage = () => {
   const { width, setWidth } = ProviderFunc();
