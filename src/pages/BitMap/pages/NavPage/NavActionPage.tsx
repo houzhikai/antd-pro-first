@@ -1,13 +1,18 @@
 import { FolderOpenOutlined } from '@ant-design/icons';
 import { Image, Switch } from 'antd';
 import option from '@/icon/bitmap/option.svg';
-
+import { ProviderFunc } from '../../components/containers';
 import otherColor from '@/icon/otherColor.svg';
 import '../../index.css';
-import { ProviderFunc } from '../../components/containers';
 
 const NavActionPage = () => {
-  const { setModifyColorModalObj, setModeModalObj } = ProviderFunc();
+  const {
+    setModifyColorModalObj,
+    setModeModalObj,
+    switchObj,
+    setSwitchObj,
+    setSelectedTreeDataList,
+  } = ProviderFunc();
   // 打开 mode 弹窗
   const handleOpenModeModal = () => {
     setModeModalObj((obj) => ({ ...obj, open: true }));
@@ -15,6 +20,17 @@ const NavActionPage = () => {
   // 打开 颜色选择 弹窗
   const handleOpenColorListModal = () => {
     setModifyColorModalObj((obj) => ({ ...obj, open: true }));
+  };
+
+  const handleChangeIsStack = (checked) => {
+    // 堆叠模式切换单一模式将树形勾选框清空
+    if (switchObj.isStack) {
+      setSelectedTreeDataList([]);
+    }
+    setSwitchObj((obj) => ({ ...obj, isStack: checked }));
+  };
+  const handleChangeIsLogic = (checked) => {
+    setSwitchObj((obj) => ({ ...obj, isLogical: checked }));
   };
 
   return (
@@ -33,15 +49,17 @@ const NavActionPage = () => {
       </div>
       <Switch
         className="bit-map-nav-gap"
+        defaultChecked={switchObj.isStack}
         checkedChildren="Stack"
-        defaultChecked
         unCheckedChildren="Single"
+        onChange={handleChangeIsStack}
       />
       <Switch
         className="bit-map-nav-gap"
-        checkedChildren="Logic"
-        defaultChecked
+        defaultChecked={switchObj.isLogical}
+        checkedChildren="Logical"
         unCheckedChildren="Physical"
+        onChange={handleChangeIsLogic}
       />
     </div>
   );

@@ -3,8 +3,10 @@ import { Typography, Select, Button, Input, Space } from 'antd';
 import { initLogicalOptions } from '@/pages/BitMap/components/initValues';
 import { PlusOutlined } from '@ant-design/icons';
 import ShowTagPage from './ShowTagPage';
+import { ProviderFunc } from '../../../components/containers';
 
 const LogicalTagsList = () => {
+  const { setModeSelectedOptions } = ProviderFunc();
   const defaultShowInput: {
     key: number | undefined;
     value: string;
@@ -12,9 +14,9 @@ const LogicalTagsList = () => {
   } = { key: undefined, value: '', status: undefined };
   const [isShowInput, setIsShowInput] = useState(defaultShowInput);
   const tagNameList: any = [
-    { value: 'Tag1', label: 'Tag1', location: '' },
-    { value: 'Tag2', label: 'Tag2', location: '' },
-    { value: 'Tag3', label: 'Tag3', location: '' },
+    { value: 'Tag1', label: 'Tag1', location: '/var/partner/logical/Tag1' },
+    { value: 'Tag2', label: 'Tag2', location: '/var/partner/logical/Tag2' },
+    { value: 'Tag3', label: 'Tag3', location: '/var/partner/logical/Tag3' },
   ];
   const [options, setOptions] = useState<any>([].concat(tagNameList));
   const LogicalOptions = initLogicalOptions.concat(options);
@@ -28,7 +30,7 @@ const LogicalTagsList = () => {
     setOptions((list) => [newFileName, ...list]);
   };
 
-  const handleChange = (e) => {
+  const handleChangeTagLabel = (e) => {
     const value = e.target.value;
     const status =
       options.filter((option) => option.value === value).length > 0 ||
@@ -67,6 +69,11 @@ const LogicalTagsList = () => {
     setIsShowInput(defaultShowInput);
   };
 
+  const handleChangeLogicalOptions = (value) => {
+    const newOptions = LogicalOptions.filter((item) => item.value === value)[0];
+    setModeSelectedOptions((obj) => ({ ...obj, logical: newOptions }));
+  };
+
   return (
     <div>
       <Typography.Title level={4}>
@@ -75,6 +82,7 @@ const LogicalTagsList = () => {
           style={{ marginLeft: 20, width: 200 }}
           options={LogicalOptions}
           defaultValue={initLogicalOptions[0]}
+          onChange={handleChangeLogicalOptions}
         />
       </Typography.Title>
       {options.map((tag: any, index) => {
@@ -95,7 +103,7 @@ const LogicalTagsList = () => {
                   autoFocus
                   allowClear
                   value={isShowInput.value}
-                  onChange={handleChange}
+                  onChange={handleChangeTagLabel}
                   onPressEnter={(e) => handlePressEnter(e, index)}
                   onBlur={(e) => handlePressEnter(e, index)}
                   status={isShowInput.status}

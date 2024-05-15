@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Typography, Select, Button, Input, Space } from 'antd';
 import ShowTagPage from './ShowTagPage';
+import { ProviderFunc } from '../../../components/containers';
 
 const PhysicalTagList = () => {
+  const { setModeSelectedOptions } = ProviderFunc();
   const defaultShowInput: {
     key: number | undefined;
     value: string;
@@ -11,9 +13,21 @@ const PhysicalTagList = () => {
   } = { key: undefined, value: '', status: undefined };
   const [isShowInput, setIsShowInput] = useState(defaultShowInput);
   const tagNameList: any = [
-    { value: 'physical_file1', label: 'physical_file1', location: '' },
-    { value: 'physical_file2', label: 'physical_file2', location: '' },
-    { value: 'physical_file3', label: 'physical_file3', location: '' },
+    {
+      value: 'physical_file1',
+      label: 'physical_file1',
+      location: '/var/partner/physical/physical_file1',
+    },
+    {
+      value: 'physical_file2',
+      label: 'physical_file2',
+      location: '/var/partner/physical/physical_file2',
+    },
+    {
+      value: 'physical_file3',
+      label: 'physical_file3',
+      location: '/var/partner/physical/physical_file3',
+    },
   ];
   const [options, setOptions] = useState<any>([].concat(tagNameList));
   const handleAddFile = () => {
@@ -65,6 +79,11 @@ const PhysicalTagList = () => {
     setIsShowInput(defaultShowInput);
   };
 
+  const handleChangePhysicalOptions = (value) => {
+    const newOptions = options.filter((item) => item.value === value)[0];
+    setModeSelectedOptions((obj) => ({ ...obj, physical: newOptions }));
+  };
+
   return (
     <div>
       <Typography.Title level={4}>
@@ -73,6 +92,7 @@ const PhysicalTagList = () => {
           style={{ marginLeft: 20, width: 200 }}
           options={options}
           defaultValue={options[0]}
+          onChange={handleChangePhysicalOptions}
         />
       </Typography.Title>
       {options.map((tag: any, index) => {

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ProviderFunc } from '@/pages/BitMap/components/containers';
 
+// TODO, 点击页面时会与放大镜有冲突，需要解决
 const MagnifyingGlass = () => {
   const { width, fullEchartsMaxValue, setDetailsEchartsAxisValue } =
     ProviderFunc();
   const [height, setHeight] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [rel, setRel] = useState<any>(null);
+  const [rel, setRel] = useState<any>({ x: 0, y: 0 });
 
   const ratioNumber = 1 / 2; //  占用1 / 4 位置
   const glassWidth = width * ratioNumber;
@@ -62,6 +63,7 @@ const MagnifyingGlass = () => {
       yMin: Math.round(yMinValue),
       yMax: Math.round(yMaxValue),
     };
+
     setDetailsEchartsAxisValue(axisValue);
   };
   // 鼠标拖动时的监听事件

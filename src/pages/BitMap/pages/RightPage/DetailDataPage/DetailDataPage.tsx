@@ -13,22 +13,19 @@ const DetailDataPage = () => {
     detailsEchartsAxisValue,
   } = ProviderFunc();
 
+  const options = getOptions(
+    theme,
+    jumpAddress,
+    echartsDataColor,
+    detailsEchartsAxisValue,
+  );
+
   useEffect(() => {
-    const options = getOptions(
-      theme,
-      jumpAddress,
-      echartsDataColor,
-      detailsEchartsAxisValue,
-    );
-    console.log({ options });
     const myChart = echarts.init(chartRef.current);
     myChart.setOption(options, true);
 
     // 处理窗口大小变化
-    const resizeChart = () => {
-      myChart.resize();
-    };
-
+    const resizeChart = () => myChart.resize();
     // 监听浏览器视图变化
     window.addEventListener('resize', resizeChart);
 

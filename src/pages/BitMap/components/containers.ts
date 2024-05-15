@@ -1,10 +1,21 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { initLogicalOptions } from './initValues';
+import { getColorList } from './getColorList';
 
 // 创建一个Context
 export const BitMapContext = createContext<any>(null);
 
 // 从 useContext 导出需要传递方法
 export const ProviderFunc = () => {
+  const [modeSelectedOptions, setModeSelectedOptions] = useState({
+    logical: initLogicalOptions[0],
+    physical: { value: '', label: '', location: '' },
+  }); // 设置里面选择的模块
+  const [switchObj, setSwitchObj] = useState({
+    isStack: true,
+    isLogical: true,
+  }); // 两个开关选择器，默认都是打开
+  const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
   const fullEchartsMaxValue = { xMax: 400, yMax: 200 }; // TODO, 后端传递全量数据时需要将xMAX yMAX值传递过来
   const [detailsEchartsAxisValue, setDetailsEchartsAxisValue] = useState({
     xMin: 0,
@@ -16,20 +27,9 @@ export const ProviderFunc = () => {
   const detailDataPageWidth = `calc(100vw - 80px - 210px - ${width}px)`; // 详情页面的宽度
   const [theme, setTheme] = useState('light');
   const detailsEchartsBg = theme === 'light' ? '#f5f5f5' : '#1f1f1f'; // value === 0 使用背景颜色，数据源将value = 0 去除
-  const [modifyColorModalObj, setModifyColorModalObj] = useState({
-    open: false,
-    colorList: [
-      detailsEchartsBg,
-      '#f00',
-      '#fba',
-      '#fba',
-      '#fba',
-      '#fba',
-      '#fba',
-      '#fba',
-      '#fba',
-    ],
-  }); //设置颜色列表，与 echarts 颜色的数据结构不一样
+  const [modifyColorModalObj, setModifyColorModalObj] = useState(
+    getColorList(detailsEchartsBg),
+  ); //设置颜色列表，与 echarts 颜色的数据结构不一样
   const [modeModalObj, setModeModalObj] = useState({
     open: false,
     list: [],
@@ -71,6 +71,12 @@ export const ProviderFunc = () => {
     fullEchartsMaxValue,
     detailsEchartsAxisValue,
     setDetailsEchartsAxisValue,
+    modeSelectedOptions,
+    setModeSelectedOptions,
+    switchObj,
+    setSwitchObj,
+    selectedTreeDataList,
+    setSelectedTreeDataList,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };
