@@ -10,3 +10,22 @@ export const initLogicalOptions = [
   { location: '', value: 'builtin_rdata_row', label: 'builtin_rdata_row' },
   { location: '', value: 'builtin_row_rdata', label: 'builtin_row_rdata' },
 ];
+
+export const scaleFactor = [
+  {
+    key: 0.75,
+    label: '75%',
+  },
+  {
+    key: 1,
+    label: '100%',
+  },
+  {
+    key: 1.5,
+    label: '150%',
+  },
+  {
+    key: 2,
+    label: '200%',
+  },
+];

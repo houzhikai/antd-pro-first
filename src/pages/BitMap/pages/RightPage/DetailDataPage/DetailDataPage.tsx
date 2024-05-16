@@ -11,6 +11,7 @@ const DetailDataPage = () => {
     jumpAddress,
     echartsDataColor,
     detailsEchartsAxisValue,
+    scaleNumber,
   } = ProviderFunc();
 
   const options = getOptions(
@@ -18,6 +19,7 @@ const DetailDataPage = () => {
     jumpAddress,
     echartsDataColor,
     detailsEchartsAxisValue,
+    scaleNumber,
   );
 
   useEffect(() => {
@@ -39,6 +41,7 @@ const DetailDataPage = () => {
     jumpAddress,
     echartsDataColor,
     detailsEchartsAxisValue,
+    scaleNumber,
   ]);
 
   return <div ref={chartRef} style={{ width: '100%', height: '98%' }} />;

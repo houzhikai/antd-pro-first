@@ -1,38 +1,30 @@
+import { ProviderFunc } from '@/pages/BitMap/components/containers';
+import { scaleFactor } from '@/pages/BitMap/components/initValues';
 import type { MenuProps } from 'antd';
-import { Button, Dropdown, message } from 'antd';
-
-const items: MenuProps['items'] = [
-  {
-    key: '1',
-    label: '75%',
-  },
-  {
-    key: '2',
-    label: '100%',
-  },
-  {
-    key: '3',
-    label: '150%',
-  },
-  {
-    key: '4',
-    label: '200%',
-  },
-];
+import { Button, Dropdown } from 'antd';
+import { useState } from 'react';
 
 const DropDownPage = () => {
+  const [selected, setSelected] = useState('100%');
+  const { setScaleNumber } = ProviderFunc();
+
   const handleMenuClick: MenuProps['onClick'] = (e) => {
-    message.info('暂未开发！');
-    console.log('click', e);
+    const selected = scaleFactor.filter(
+      (item) => item.key === Number(e.key),
+    )[0];
+    setSelected(selected.label);
+    setScaleNumber(() => Math.round(100 / selected.key));
   };
+
   const menuProps = {
-    items,
+    items: scaleFactor,
     onClick: handleMenuClick,
   };
+
   return (
     <div style={{ marginRight: 10 }}>
       <Dropdown menu={menuProps}>
-        <Button>100%</Button>
+        <Button>{selected}</Button>
       </Dropdown>
     </div>
   );
