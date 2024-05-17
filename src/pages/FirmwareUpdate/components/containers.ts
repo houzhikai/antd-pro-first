@@ -5,7 +5,7 @@ export const FirmwareUpdateContext = createContext<any>(null);
 
 // 从 useContext 导出需要传递方法
 export const useFUProviderModule = () => {
-  const [getDeviceList, setGetDeviceList] = useState({}); // 设备列表和心跳
+  const [getDeviceListAndHeartObj, setGetDeviceListAndHeartObj] = useState({}); // 设备列表和心跳
   const [errorTimes, setErrorTimes] = useState<{
     times: number;
     aboveTimes: number;
@@ -14,17 +14,24 @@ export const useFUProviderModule = () => {
     initIp: '192.168.3.223',
     vscodeId: 12345,
   }); // 所有已选择的勾选项
+  const [activeKey, setActiveKey] = useState(['0']);
+
   const [selectedFirmwareList, setSelectedFirmwareList] = useState([]); // 所有已选择的勾选项
+  const [indeterminateKeys, setIndeterminateKeys] = useState(false); //全选的半选样式,因为跨层较多，放在公共库中
 
   const FUContextValue = {
-    getDeviceList,
-    setGetDeviceList,
+    getDeviceListAndHeartObj,
+    setGetDeviceListAndHeartObj,
     errorTimes,
     setErrorTimes,
     startParams,
     setStartParams,
     selectedFirmwareList,
     setSelectedFirmwareList,
+    activeKey,
+    setActiveKey,
+    indeterminateKeys,
+    setIndeterminateKeys,
   };
   return { ...useContext(FirmwareUpdateContext), FUContextValue };
 };

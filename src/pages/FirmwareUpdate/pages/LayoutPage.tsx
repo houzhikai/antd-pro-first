@@ -7,19 +7,24 @@ import { mockDeviceListInterface } from './mockData/mockTableDataList';
 import '../index.css';
 import { useEffect } from 'react';
 
+// TODO 样式放在 vscode 中再调试
 const LayoutPage = ({ setIsErrorPage }) => {
-  const { setGetDeviceList, errorTimes, setErrorTimes, startParams } =
-    useFUProviderModule();
-  const fetchData = async () => {
+  const {
+    setGetDeviceListAndHeartObj,
+    errorTimes,
+    setErrorTimes,
+    startParams,
+  } = useFUProviderModule();
+  const getDeviceDataList = async () => {
     try {
       const res = await myFetch({
         url: `http://${startParams.initIp}:29000/upgrade/heartbeat`,
         params: { heartbeat: String(startParams.vscodeId) },
         isExceptionHand: true,
       });
-      setGetDeviceList(res.data);
+      setGetDeviceListAndHeartObj(res.data);
     } catch (error) {
-      setGetDeviceList(mockDeviceListInterface);
+      setGetDeviceListAndHeartObj(mockDeviceListInterface);
       setErrorTimes((obj) => {
         return {
           ...obj,
@@ -29,13 +34,13 @@ const LayoutPage = ({ setIsErrorPage }) => {
     }
   };
   useEffect(() => {
-    fetchData();
+    getDeviceDataList();
   }, []);
   useEffect(() => {
     // 设备列表接口
     const time = setInterval(() => {
       if (errorTimes.times < errorTimes.aboveTimes) {
-        fetchData();
+        getDeviceDataList();
       } else {
         setIsErrorPage(true);
         setErrorTimes((obj) => {

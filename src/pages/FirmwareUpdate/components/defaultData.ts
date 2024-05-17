@@ -1,3 +1,5 @@
+import { statusShow } from './statusShow';
+
 export const columns = [
   {
     key: 'firmware',
@@ -22,6 +24,9 @@ export const columns = [
     width: '25%',
     dataIndex: 'status',
     title: '状态',
+    render: (text) => {
+      return statusShow(text);
+    },
   },
 ];
 export const options = [

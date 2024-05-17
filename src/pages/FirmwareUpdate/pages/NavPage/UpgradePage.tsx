@@ -2,8 +2,8 @@ import { Button, Popconfirm, message } from 'antd';
 import { useFUProviderModule } from '../../components/containers';
 
 const UpgradePage = () => {
-  const { getDeviceList } = useFUProviderModule();
-  const isDisabled = getDeviceList?.allow !== 0;
+  const { getDeviceListAndHeartObj } = useFUProviderModule();
+  const isDisabled = getDeviceListAndHeartObj?.allow !== 0;
   const handleClick = (msg) => {
     message.info(msg);
   };

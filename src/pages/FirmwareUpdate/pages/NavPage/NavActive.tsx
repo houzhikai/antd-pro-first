@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { useAsyncEffect } from 'ahooks';
 
 const NavActive = () => {
-  const { getDeviceList, startParams } = useFUProviderModule();
+  const { getDeviceListAndHeartObj, startParams } = useFUProviderModule();
   const [base64List, setBase64List] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
-  const isDisabled = getDeviceList?.allow;
+  const isDisabled = getDeviceListAndHeartObj?.allow;
   // upload接口
   useAsyncEffect(async () => {
     // uploading 为 true 时，调用 上传文件夹 接口

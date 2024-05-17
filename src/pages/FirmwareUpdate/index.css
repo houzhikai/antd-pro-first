@@ -3,8 +3,9 @@
 }
 
 .level1 {
-    background: #fafafa;
+    background: #f0eded;
     border: 1px solid red;
+    color: #ccc;
   }
   
   .level2 {
