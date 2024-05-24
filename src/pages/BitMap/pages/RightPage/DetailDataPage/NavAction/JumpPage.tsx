@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { ProviderFunc } from '../../../../components/containers';
-import ConvertPage from './ConvertPage';
 
 const JumpPage = () => {
   const { setJumpAddress } = ProviderFunc();
@@ -30,7 +29,6 @@ const JumpPage = () => {
           </Form.Item>
         </div>
       </Form>
-      <ConvertPage />
     </div>
   );
 };

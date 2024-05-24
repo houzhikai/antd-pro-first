@@ -1,34 +1,60 @@
-import { mockTestList } from '@/pages/BitMap/mockData/mockTestList';
 import { getSeries } from './getFullEchartsSeries';
+import { takeMiddleNumber } from '@/pages/BitMap/components/takeMiddleNumber';
 
-export const getFullEchartsOptions = (echartsDataColor) => {
-  const maxValue = { xMax: 400, yMax: 200 };
+export const getFullEchartsOptions = (
+  theme,
+  data,
+  echartsDataColor,
+  detailsEchartsAxisValue,
+  baseConversion,
+  dots,
+) => {
+  //   const maxValue = { xMax: 400, yMax: 200 };
+  const xAxisValueList = takeMiddleNumber(
+    detailsEchartsAxisValue.xMin,
+    detailsEchartsAxisValue.xMax,
+    baseConversion,
+  );
+  const yAxisValueList = takeMiddleNumber(
+    detailsEchartsAxisValue.yMin,
+    detailsEchartsAxisValue.yMax,
+    baseConversion,
+  );
+
   return {
     renderer: 'canvas',
-    // TODO, 测试中使用，生产环境 不展示浮动信息
+    backgroundColor: '#fff',
+    tooltip: { show: false },
     // tooltip: {
+    //   show: true,
     //   position: 'top',
-    //   backgroundColor: '#f5f5f5',
-    //   textStyle: { color: '#1f1f1f' },
+    //   backgroundColor: theme === 'dark' ? '#1f1f1f' : '#f5f5f5',
+    //   textStyle: { color: theme === 'dark' ? '#938c83' : '#1f1f1f' },
     //   formatter: (params: { data: number[] }) => {
+    //     if (!Array.isArray(params.data)) return; // 不展示 markLine.emphasis的值
     //     return `
-    //        X: ${String(params?.data?.[0]) || ''}<br />
-    //        Y: ${String(params?.data?.[1]) || ''}<br />
-    //        Value: ${String(params?.data?.[2]) || ''}<br />
-    //       `;
+    //       X: ${String(params?.data?.[0]) || ''}<br />
+    //       Y: ${String(params?.data?.[1]) || ''}<br />
+    //       Value: ${String(params?.data?.[2]) || ''}<br />
+    //           `;
     //   },
     // },
-    tooltip: { show: false },
     animation: false,
     grid: { width: '100%', height: '100%', left: '0%', top: '0%' },
-    visualMap: {
-      type: 'piecewise',
+    xAxis: {
       show: false,
-      pieces: echartsDataColor,
+      type: 'category',
+      data: xAxisValueList,
+      position: 'top',
+      inverse: dots === 'TopRight' || dots === 'BottomRight',
     },
-    dataZoom: { show: false },
-    xAxis: { type: 'category', show: false, position: 'top' }, // x 轴的坐标： top/bottom
-    yAxis: { type: 'category', show: false, inverse: true }, // y 轴是否反转 true/false
-    series: getSeries(mockTestList, maxValue),
+    yAxis: {
+      show: false,
+      type: 'category',
+      data: yAxisValueList,
+      inverse: dots === 'TopLeft' || dots === 'TopRight',
+    },
+    visualMap: { show: false, type: 'piecewise', pieces: echartsDataColor }, // heatmap 必须有visualMap属性
+    series: getSeries(data),
   };
 };

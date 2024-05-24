@@ -1,42 +1,87 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { initLogicalOptions } from './initValues';
 import { getColorList } from './getColorList';
+import { generateData } from '../mockData/getGenerateData';
+import { getAxisLabelInterval } from './getAxisLabelInterval';
 
 // 创建一个Context
 export const BitMapContext = createContext<any>(null);
 
 // 从 useContext 导出需要传递方法
 export const ProviderFunc = () => {
-  const [scaleNumber, setScaleNumber] = useState(100); //  百分比： 0-100，初始值 100
+  /**
+   * 顶部操作栏
+   */
+  const [theme, setTheme] = useState('light');
+  const detailsEchartsBg = theme === 'light' ? '#f5f5f5' : '#1f1f1f'; // value === 0 使用背景颜色，数据源将value = 0 去除
+  // 设置里面选择的模块
   const [modeSelectedOptions, setModeSelectedOptions] = useState({
     logical: initLogicalOptions[0],
     physical: { value: '', label: '', location: '' },
-  }); // 设置里面选择的模块
-  const [switchObj, setSwitchObj] = useState({
-    isStack: true,
-    isLogical: true,
-  }); // 两个开关选择器，默认都是打开
-  const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
-  const fullEchartsMaxValue = { xMax: 400, yMax: 200 }; // TODO, 后端传递全量数据时需要将xMAX yMAX值传递过来
-  const [detailsEchartsAxisValue, setDetailsEchartsAxisValue] = useState({
-    xMin: 0,
-    xMax: fullEchartsMaxValue.xMax / 2,
-    yMin: 0,
-    yMax: fullEchartsMaxValue.yMax / 2,
   });
-  const [width, setWidth] = useState(200); // full-data 的宽度
-  const detailDataPageWidth = `calc(100vw - 80px - 210px - ${width}px)`; // 详情页面的宽度
-  const [theme, setTheme] = useState('light');
-  const detailsEchartsBg = theme === 'light' ? '#f5f5f5' : '#1f1f1f'; // value === 0 使用背景颜色，数据源将value = 0 去除
+  //设置颜色列表，与 echarts 颜色的数据结构不一样
   const [modifyColorModalObj, setModifyColorModalObj] = useState(
     getColorList(detailsEchartsBg),
-  ); //设置颜色列表，与 echarts 颜色的数据结构不一样
+  );
   const [modeModalObj, setModeModalObj] = useState({
     open: false,
     list: [],
   });
-  const [testValue, setTestValue] = useState(111); // 展示 DUTS 列表
+  // 两个开关选择器，默认都是打开
+  const [switchObj, setSwitchObj] = useState({
+    isStack: false,
+    isLogical: false,
+  });
+  /**
+   * 左侧树形结构
+   */
+  const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
+  const [treeDutsList, setTreeDutsList] = useState([]); // 展示 DUTS 列表
+  /**
+   * info信息，综合信息表
+   */
+
+  /**
+   * 全量数据，缩略图
+   */
+  const [width, setWidth] = useState(300); // full-data 的宽度
+  // TODO, 后端传递全量数据时需要将xMAX yMAX值传递过来,dots: TopLeft, TopRight, BottomLeft, BottomRight
+  const configInfo = {
+    // row: 行，col: 列
+    layoutConfig: { xMax: 1023, yMax: 1023, dots: 'BottomLeft' },
+    duts: { row: 1, col: 1 },
+    blocks: { row: 1, col: 8 },
+    pages: { row: 1024, col: 128 },
+  };
+  /**
+   * 详图导航栏
+   */
+  type BaseConversionProps = 'Hex' | 'Dec' | 'Oct';
+  const detailDataPageWidth = `calc(100vw - 80px - 210px - ${width}px)`; // 详情页面的宽度
+  const [scaleNumber, setScaleNumber] = useState(1); // 详图放大倍数
   const [jumpAddress, setJumpAddress] = useState({ X: 0, Y: 0 }); // jump 地址跳转
+  const [baseConversion, setBaseConversion] =
+    useState<BaseConversionProps>('Hex');
+  /**
+   * 详图数据
+   */
+  const [detailsValues, setDetailsValues] = useState({
+    //详图的首位比例，0：0%， 100：100%
+    xStart: 0,
+    xEnd: 20,
+    yStart: 0,
+    yEnd: 20,
+  });
+
+  useEffect(() => {
+    const defaultDetailValues = getAxisLabelInterval(scaleNumber);
+    setDetailsValues({
+      xStart: 0,
+      xEnd: defaultDetailValues.end.xEnd,
+      yStart: 0,
+      yEnd: defaultDetailValues.end.yEnd,
+    });
+  }, [scaleNumber]);
   const detailsEchartsColorList = modifyColorModalObj.colorList.map(
     (item, index) => {
       return {
@@ -45,6 +90,16 @@ export const ProviderFunc = () => {
       };
     },
   );
+  const [data, setData] = useState<any>([]);
+  const [times, setTimes] = useState(0); // 控制第一次不会加载echarts数据
+
+  useEffect(() => {
+    if (times > 0) {
+      setData(generateData(5000, switchObj.isStack));
+    }
+    setTimes((c) => c + 1);
+  }, [scaleNumber]);
+
   const [echartsDataColor, setEchartsDataColor] = useState(
     detailsEchartsColorList,
   ); // echarts 颜色列表
@@ -59,8 +114,8 @@ export const ProviderFunc = () => {
     detailDataPageWidth,
     theme,
     setTheme,
-    testValue,
-    setTestValue,
+    treeDutsList,
+    setTreeDutsList,
     jumpAddress,
     setJumpAddress,
     echartsDataColor,
@@ -69,9 +124,9 @@ export const ProviderFunc = () => {
     setModifyColorModalObj,
     modeModalObj,
     setModeModalObj,
-    fullEchartsMaxValue,
-    detailsEchartsAxisValue,
-    setDetailsEchartsAxisValue,
+    configInfo,
+    detailsValues,
+    setDetailsValues,
     modeSelectedOptions,
     setModeSelectedOptions,
     switchObj,
@@ -80,6 +135,10 @@ export const ProviderFunc = () => {
     setSelectedTreeDataList,
     scaleNumber,
     setScaleNumber,
+    baseConversion,
+    setBaseConversion,
+    data,
+    setData,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

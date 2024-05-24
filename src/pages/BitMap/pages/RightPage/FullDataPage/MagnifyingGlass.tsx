@@ -1,60 +1,85 @@
 import { useEffect, useRef, useState } from 'react';
 import { ProviderFunc } from '@/pages/BitMap/components/containers';
+import { getRatioNumber } from '../../../components/getRatioNumber';
+import { getGlassPosition } from '@/pages/BitMap/components/getGlassPosition';
 
 // TODO, 点击页面时会与放大镜有冲突，需要解决
-const MagnifyingGlass = () => {
+const MagnifyingGlass = ({ height }) => {
   const magnifierRef = useRef<any>(null);
-  const {
-    width,
-    fullEchartsMaxValue,
-    detailsEchartsAxisValue,
-    setDetailsEchartsAxisValue,
-  } = ProviderFunc();
-  const [height, setHeight] = useState(0);
+  const { width, configInfo, detailsValues, setDetailsValues, scaleNumber } =
+    ProviderFunc();
+
   const [dragging, setDragging] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
   const [rel, setRel] = useState<any>({ x: 0, y: 0 });
   const [isOutside, setIsOutside] = useState(false); // 判断是否点击放大镜外的区域
 
-  const ratioNumber = 1 / 2; //  占用1 / 4 位置
+  const ratioNumber = getRatioNumber(scaleNumber); // 占用详图可视区域
+  // 放大镜宽度
   const glassWidth = width * ratioNumber;
+  // 放大镜高度
   const glassHeight = height * ratioNumber;
-  // 计算缩略图的高度
-  useEffect(() => {
-    function updateSize() {
-      let vh = Math.max(
-        document.documentElement.clientHeight || 0,
-        window.innerHeight || 0,
-      );
-      // vh 100vh， 48：上下padding， 81：导航栏， 20：内容区域margin-top
-      setHeight(Math.round(((vh - 48 - 81 - 20) * 40) / 100));
-    }
+  // 圆点位置
+  const dots = configInfo.layoutConfig.dots;
+  // 放大镜初始位置, dots: TopLeft, TopRight, BottomLeft, BottomRight
+  const [defaultGlassPosition, setDefaultGlassPosition] = useState(
+    getGlassPosition(
+      configInfo.layoutConfig.dots,
+      width,
+      height,
+      glassWidth,
+      glassHeight,
+    ),
+  );
 
-    window.addEventListener('resize', updateSize);
-    updateSize();
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
+  const [pos, setPos] = useState({
+    x: defaultGlassPosition.x,
+    y: defaultGlassPosition.y,
+  });
+  useEffect(() => {
+    // dots: TopLeft, TopRight, BottomLeft, BottomRight
+    let x = defaultGlassPosition.x;
+    let y = defaultGlassPosition.y;
+    if (dots === 'TopLeft') {
+      x = Math.floor((width * detailsValues.xStart) / 100);
+      y = Math.floor((height * detailsValues.yStart) / 100);
+    } else if (dots === 'TopRight') {
+      x = Math.floor(width - (width * detailsValues.xEnd) / 100);
+      y = Math.floor((height * detailsValues.yStart) / 100);
+    } else if (dots === 'BottomLeft') {
+      x = Math.floor((width * detailsValues.xStart) / 100);
+      y = Math.floor(height - (height * detailsValues.yEnd) / 100);
+    } else if (dots === 'BottomRight') {
+      x = Math.floor(width - (width * detailsValues.xEnd) / 100);
+      y = Math.floor(height - (height * detailsValues.yEnd) / 100);
+    }
+    setDefaultGlassPosition({ x, y });
+  }, [detailsValues]);
+  // 修改放大倍数时，放大镜默认从圆点开始
+  useEffect(() => {
+    setPos({ x: defaultGlassPosition.x, y: defaultGlassPosition.y });
+  }, [scaleNumber, detailsValues, defaultGlassPosition]);
   // 点击放大镜区域外的处理逻辑
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (magnifierRef.current && !magnifierRef.current.contains(e.target)) {
         setIsOutside(true);
         // 点击放大镜区域外，详图数据不会改变
-        setDetailsEchartsAxisValue(detailsEchartsAxisValue);
+      } else {
+        setIsOutside(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       // 清除事件监听器
       document.removeEventListener('mousedown', handleClickOutside);
-      setTimeout(() => {
-        setIsOutside(false);
-      }, 500);
     };
-  }, [isOutside, detailsEchartsAxisValue]);
+  }, [isOutside]);
 
   // 鼠标按下的监听事件
   const onMouseDown = (e) => {
+    if (ratioNumber === 1) {
+      return;
+    }
     if (!isOutside) {
       e.stopPropagation();
       e.preventDefault();
@@ -65,34 +90,60 @@ const MagnifyingGlass = () => {
 
   // 拖动结束后的监听事件
   const onMouseUp = (e) => {
-    console.log(111, { isOutside });
     if (!isOutside) {
       e.stopPropagation();
       e.preventDefault();
       setDragging(false);
-      const xMin =
-        e.pageX - rel.x < 0
-          ? 0
-          : e.pageX - rel.x >= glassWidth
-          ? glassWidth
-          : e.pageX - rel.x;
-      const yMin =
-        e.pageY - rel.y < 0
-          ? 0
-          : e.pageY - rel.y >= glassHeight
-          ? glassHeight
-          : e.pageY - rel.y;
-      const yMinValue = (yMin * fullEchartsMaxValue.yMax) / height;
-      const yMaxValue =
-        ((yMin + glassHeight) * fullEchartsMaxValue.yMax) / height;
-      const axisValue = {
-        xMin: Math.round(xMin) / ratioNumber,
-        xMax: Math.round(xMin + glassWidth) / ratioNumber,
-        yMin: Math.round(yMinValue),
-        yMax: Math.round(yMaxValue),
+      let x = 0;
+      let y = 0;
+      if (e.pageX - rel.x < 0) {
+        x = 0;
+      } else if (e.pageX - rel.x > width - glassWidth) {
+        x = width - glassWidth;
+      } else {
+        x = e.pageX - rel.x;
+      }
+      if (e.pageY - rel.y < 0) {
+        y = 0;
+      } else if (e.pageY - rel.y > height - glassHeight) {
+        y = height - glassHeight;
+      } else {
+        y = e.pageY - rel.y;
+      }
+      const getDetailsValues = () => {
+        let newDetailsValues;
+        if (dots === 'TopLeft') {
+          newDetailsValues = {
+            xStart: Math.round((x / width) * 100),
+            xEnd: Math.round(((x + glassWidth) / width) * 100),
+            yStart: Math.round((y / height) * 100),
+            yEnd: Math.round(((y + glassHeight) / height) * 100),
+          };
+        } else if (dots === 'TopRight') {
+          newDetailsValues = {
+            xEnd: 100 - Math.round((x / width) * 100),
+            xStart: 100 - Math.round(((x + glassWidth) / width) * 100),
+            yStart: Math.round((y / height) * 100),
+            yEnd: Math.round(((y + glassHeight) / height) * 100),
+          };
+        } else if (dots === 'BottomLeft') {
+          newDetailsValues = {
+            xStart: Math.round((x / width) * 100),
+            xEnd: Math.round(((x + glassWidth) / width) * 100),
+            yStart: 100 - Math.round(((y + glassHeight) / height) * 100),
+            yEnd: 100 - Math.round((y / height) * 100),
+          };
+        } else if (dots === 'BottomRight') {
+          newDetailsValues = {
+            xEnd: 100 - Math.round((x / width) * 100),
+            xStart: 100 - Math.round(((x + glassWidth) / width) * 100),
+            yEnd: 100 - Math.round((y / height) * 100),
+            yStart: 100 - Math.round(((y + glassHeight) / height) * 100),
+          };
+        }
+        return newDetailsValues;
       };
-
-      setDetailsEchartsAxisValue(axisValue);
+      setDetailsValues(getDetailsValues());
     }
   };
   // 鼠标拖动时的监听事件
@@ -100,19 +151,25 @@ const MagnifyingGlass = () => {
     e.stopPropagation();
     e.preventDefault();
     if (!dragging) return;
-    setPos({
-      x:
-        e.pageX - rel.x < 0
-          ? 0
-          : e.pageX - rel.x >= glassWidth
-          ? glassWidth
-          : e.pageX - rel.x,
-      y:
-        e.pageY - rel.y < 0
-          ? 0
-          : e.pageY - rel.y >= glassHeight
-          ? glassHeight
-          : e.pageY - rel.y,
+
+    setPos(() => {
+      let x = 0;
+      let y = 0;
+      if (e.pageX - rel.x < 0) {
+        x = 0;
+      } else if (e.pageX - rel.x > width - glassWidth) {
+        x = width - glassWidth;
+      } else {
+        x = e.pageX - rel.x;
+      }
+      if (e.pageY - rel.y < 0) {
+        y = 0;
+      } else if (e.pageY - rel.y > height - glassHeight) {
+        y = height - glassHeight;
+      } else {
+        y = e.pageY - rel.y;
+      }
+      return { x, y };
     });
   };
   useEffect(() => {
@@ -122,7 +179,7 @@ const MagnifyingGlass = () => {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
-  }, [dragging, rel, isOutside]);
+  }, [dragging, isOutside]);
   return (
     //   放大镜的宽高放入style中，便于计算使用
     <div

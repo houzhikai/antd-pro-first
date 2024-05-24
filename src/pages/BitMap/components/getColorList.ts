@@ -1,16 +1,6 @@
 export const getColorList = (detailsEchartsBg) => {
   return {
     open: false,
-    colorList: [
-      detailsEchartsBg,
-      '#f00',
-      '#fba',
-      '#fba',
-      '#fba',
-      '#fba',
-      '#fba',
-      '#fba',
-      '#fba',
-    ],
+    colorList: [detailsEchartsBg, '#f00', '#fba', '#bfa'],
   };
 };

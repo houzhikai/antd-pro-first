@@ -1,10 +1,4 @@
-import { getEchartsDatList } from '../../../../components/getEchartsDataList';
-import { convertHexToBinary } from '../../../../components/convertBase';
-
-export const getSeries = (mockTestList, maxValue) => {
-  const binaryString = convertHexToBinary(mockTestList);
-  const echartsDataList = getEchartsDatList(binaryString, maxValue.xMax);
-
+export const getSeries = (data) => {
   // 不使用 过滤数据，效果不好看
   // const filterValue0 = echartsDataList.filter((item) => item[2] !== 0);
 
@@ -13,7 +7,7 @@ export const getSeries = (mockTestList, maxValue) => {
     type: 'heatmap',
     xAxisIndex: 0,
     yAxisIndex: 0,
-    data: echartsDataList,
+    data,
     large: true, // 启用块状渲染
     largeThreshold: 50 * 10000, // 数据量超过阈值时启用块状渲染
     progressive: 0, // 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。

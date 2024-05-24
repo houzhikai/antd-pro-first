@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 import { ProviderFunc } from '../../components/containers';
-import LogicalTagsList from './components/LogicalTagsList';
+// import LogicalTagsList from './components/LogicalTagsList';
 import PhysicalTagList from './components/PhysicalTagList';
 
 const ModeModalPage = () => {
@@ -24,7 +24,7 @@ const ModeModalPage = () => {
       onOk={handleOk}
       onCancel={handleCancel}
     >
-      <LogicalTagsList />
+      {/* <LogicalTagsList /> */}
       <PhysicalTagList />
       {/* <LogicalFormPage />
       <PhysicalFormPage /> */}

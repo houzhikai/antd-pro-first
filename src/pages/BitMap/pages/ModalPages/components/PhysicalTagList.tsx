@@ -6,6 +6,7 @@ import { ProviderFunc } from '../../../components/containers';
 
 const PhysicalTagList = () => {
   const { setModeSelectedOptions } = ProviderFunc();
+  const [id, setId] = useState(0);
   const defaultShowInput: {
     key: number | undefined;
     value: string;
@@ -31,11 +32,11 @@ const PhysicalTagList = () => {
   ];
   const [options, setOptions] = useState<any>([].concat(tagNameList));
   const handleAddFile = () => {
-    let id = 0;
+    setId((c) => c + 1);
     const newFileName = {
-      value: `new_file${id++}`,
-      label: `new_file${id++}`,
-      location: '',
+      value: `new_file_${id}`,
+      label: `new_file_${id}`,
+      location: `/var/user/test/new_file_${id}`,
     };
     setOptions((list) => [newFileName, ...list]);
   };
@@ -91,7 +92,7 @@ const PhysicalTagList = () => {
         <Select
           style={{ marginLeft: 20, width: 200 }}
           options={options}
-          defaultValue={options[0]}
+          // defaultValue={options[0]}
           onChange={handleChangePhysicalOptions}
         />
       </Typography.Title>

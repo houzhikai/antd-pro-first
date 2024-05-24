@@ -1,80 +1,123 @@
 import React from 'react';
 import { Tree } from 'antd';
-import { treeDataList } from '../../mockData/mockTreeData';
 import { ProviderFunc } from '../../components/containers';
 
 const TreePage: React.FC = () => {
-  const { switchObj, selectedTreeDataList, setSelectedTreeDataList } =
-    ProviderFunc();
+  const {
+    switchObj,
+    selectedTreeDataList,
+    setSelectedTreeDataList,
+    treeDutsList,
+  } = ProviderFunc();
   // 筛选相同的树形结构key值
-  const filterSameSelectedTreeDataList = (newList) => {
-    let result = newList.filter((item, index, array) => {
-      return array.findIndex((t) => t.key === item.key) === index;
-    });
-    return result.sort((a, b) => a.dut - b.dut);
-  };
+  // const filterSameSelectedTreeDataList = (newList) => {
+  //   let result = newList.filter((item, index, array) => {
+  //     return array.findIndex((t) => t.key === item.key) === index;
+  //   });
+  //   return result.sort((a, b) => a.dut - b.dut);
+  // };
 
   const handleCheck = (_, info) => {
     if (switchObj.isStack) {
-      const checkedDuts = info.checkedNodes.map((item) => ({
-        key: item.key, // 仅在 checkedKeys 中使用，convert 时需要将其去除
-        dut: item.title,
-        location: item.location,
-      }));
-      setSelectedTreeDataList(checkedDuts);
+      if (info.node.key.length === 3) {
+        const xxx = treeDutsList[0].children.slice(0, 2);
+        const checkedDuts = xxx.map((item) => ({
+          key: item.key, // 仅在 checkedKeys 中使用，convert 时需要将其去除
+          dut: item.title,
+          location: item.location,
+          details: item.details,
+        }));
+
+        setSelectedTreeDataList(checkedDuts);
+      } else {
+        const checkedDuts = info.checkedNodes.map((item) => ({
+          key: item.key, // 仅在 checkedKeys 中使用，convert 时需要将其去除
+          dut: item.title,
+          location: item.location,
+          details: item.details,
+        }));
+        setSelectedTreeDataList(checkedDuts.slice(0, 2));
+      }
+
+      // TODO， 堆叠模式目前只支持勾选两个duts
+      // setSelectedTreeDataList(checkedDuts.slice(0, 2));
     } else {
       // 只能选择一个 勾选框
-      const checkedDuts = {
-        key: info.node.key, // 仅在 checkedKeys 中使用，convert 时需要将其去除
-        dut: info.node.title,
-        location: info.node.location,
-      };
+      let checkedDuts: any = {};
+      if (info.node.key.length === 3) {
+        const xxx = treeDutsList[0].children[0];
+        checkedDuts = {
+          key: xxx.key, // 仅在 checkedKeys 中使用，convert 时需要将其去除
+          dut: xxx.title,
+          location: xxx.location,
+          details: xxx.details,
+        };
+      } else {
+        checkedDuts = {
+          key: info.node.key, // 仅在 checkedKeys 中使用，convert 时需要将其去除
+          dut: info.node.title,
+          location: info.node.location,
+          details: info.node.details,
+        };
+      }
+
       setSelectedTreeDataList([checkedDuts]);
     }
   };
-  const handleSelect = (_, info) => {
-    const isHasKey = selectedTreeDataList.some(
-      (item) => item.key === info.node.key,
-    );
-    if (isHasKey) {
-      // 存在 即 要删除key
-      setSelectedTreeDataList((list) => {
-        const newList = info.node.children
-          ? []
-          : list.filter(
-              (item) => item.key !== info.node.key && item.key.length !== 3,
-            );
-        // 过滤相同key的数组
-        let result = filterSameSelectedTreeDataList(newList);
-        return result;
-      });
-    } else {
-      // 不存在 即 要添加key
-      const newList = info.node.children
-        ? info.node.children
-            .map((item) => ({
-              key: item.key,
-              dut: item.title,
-              location: item.location,
-            }))
-            .concat({
-              key: info.node.key,
-              dut: info.node.title,
-              location: info.node.location,
-            })
-        : [
-            {
-              key: info.node.key,
-              dut: info.node.title,
-              location: info.node.location,
-            },
-          ];
-      setSelectedTreeDataList((list) => {
-        let result = filterSameSelectedTreeDataList([...list, ...newList]);
-        return result;
-      });
-    }
-  };
+  // const handleSelect = (_, info) => {
+  //   const isHasKey = selectedTreeDataList.some(
+  //     (item) => item.key === info.node.key,
+  //   );
+  //   if (isHasKey) {
+  //     // 存在 即 要删除key
+  //     setSelectedTreeDataList((list) => {
+  //       const newList = info.node.children
+  //         ? []
+  //         : list.filter(
+  //             (item) => item.key !== info.node.key && item.key.length !== 3,
+  //           );
+  //       // 过滤相同key的数组
+  //       let result = filterSameSelectedTreeDataList(newList);
+  //       console.log({ result, info });
+  //       return result;
+  //     });
+  //   } else {
+  //     // 不存在 即 要添加key
+  //     const newList = info.node.children
+  //       ? info.node.children
+  //           .map((item) => ({
+  //             key: item.key,
+  //             dut: item.title,
+  //             location: item.location,
+  //             details: info.node.details,
+  //           }))
+  //           .concat({
+  //             key: info.node.key,
+  //             dut: info.node.title,
+  //             location: info.node.location,
+  //             details: info.node.details,
+  //           })
+  //       : [
+  //           {
+  //             key: info.node.key,
+  //             dut: info.node.title,
+  //             location: info.node.location,
+  //             details: info.node.details,
+  //           },
+  //         ];
+  //     // TODO， 堆叠模式目前只支持勾选两个duts
+  //     setSelectedTreeDataList((list) => {
+  //       let result = filterSameSelectedTreeDataList([...list, ...newList]);
+  //       if (switchObj.isStack) {
+  //         result.slice(0, 2);
+  //       } else {
+  //         result.slice(0, result.length - 1);
+  //       }
+  //       console.log({ xx: switchObj.isStack, result });
+  //       return result;
+  //     });
+  //   }
+  // };
 
   const checkedKeys = selectedTreeDataList.map((item) => item.key);
   return (
@@ -85,8 +128,8 @@ const TreePage: React.FC = () => {
         checkedKeys={checkedKeys}
         defaultExpandAll
         onCheck={handleCheck}
-        onSelect={handleSelect}
-        treeData={treeDataList}
+        // onSelect={handleSelect}
+        treeData={treeDutsList}
         blockNode
       />
     </>

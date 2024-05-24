@@ -5,8 +5,8 @@
   }
   
 .bit-map-nav {
-    /* display: flex;
-    justify-content: space-between; */
+    display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid #eee;
     padding-bottom: 4px;
 }
@@ -22,12 +22,11 @@
 }
 .content-page {
     display: flex;
-    height: calc(100vh - 40px - 50px - 20px - 25px);
+    height: calc(100vh - 48px - 45px - 10px);
     margin-top: 10px;
 }
 .bit-map-left-page{
-    width: 200px;
-    margin-right: 10px;
+    width: 150px;
 }
 .bit-map-right-page{
     display: flex;
@@ -47,7 +46,7 @@
 }
 .bit-map-right-full-data-page{
     flex-grow: 1;
-    border: 1px solid #d3e3ff;
+    border: 1px solid #eee;
     width: calc(100vw - 210px - 300px);
 }
 .echarts-canvas{
@@ -59,6 +58,8 @@
     height: var(--full-page-height);
     background: transparent;
     position: relative;
+    margin-top: 10px;
+    /* border-top: 1px solid #ccc; */
 }
 .echarts-full-page-magnifying-glass{
     position: absolute;
@@ -72,9 +73,9 @@
 
 
 .information-page{
-    height: calc(100% - var(--full-page-height));
-    background: #bfa;
+    height: calc(100% - var(--full-page-height) - 24px);
     overflow-y: auto;
+    border: 1px solid #eee;
 }
 /* 弹窗 */
 .bit-map-color-modal{

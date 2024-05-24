@@ -1,7 +1,7 @@
 import FullDataPage from './FullDataPage';
 import { Resizable } from 'react-resizable';
 import { ProviderFunc } from '../../components/containers';
-import DetailDataNavPage from './DetailDataPage/NavAction';
+// import DetailDataNavPage from './DetailDataPage/NavAction';
 import DetailDataPage from './DetailDataPage/DetailDataPage';
 
 import 'react-resizable/css/styles.css';
@@ -20,18 +20,16 @@ const RightPage = () => {
         handle={<div className="bit-map-page-resizable" />}
         resizeHandles={['e']}
       >
-        <div style={{ width, border: '1px solid #d3e3ff' }}>
-          <FullDataPage />
-        </div>
+        <FullDataPage />
       </Resizable>
       <div
         style={{
           flexGrow: 1,
-          border: '1px solid #d3e3ff',
-          width: `calc(100vw - 80px - 210px - ${width}px)`,
+          // border: '1px solid #eee',
+          width: `calc(100vw - 80px - 150px - ${width}px)`,
         }}
       >
-        <DetailDataNavPage />
+        {/* <DetailDataNavPage /> */}
         <DetailDataPage />
       </div>
     </div>

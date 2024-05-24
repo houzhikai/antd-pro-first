@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ColorPicker, Modal } from 'antd';
 import { ProviderFunc } from '../../components/containers';
 import '../../index.css';
@@ -7,12 +7,20 @@ const ColorListModalPage = () => {
   const { modifyColorModalObj, setModifyColorModalObj } = ProviderFunc();
   const [colorList, setColorList] = useState(modifyColorModalObj.colorList);
 
+  useEffect(() => {
+    setColorList(modifyColorModalObj.colorList);
+  }, [modifyColorModalObj.open]);
+
   const handleOk = () => {
     setModifyColorModalObj((obj) => ({ ...obj, open: false, colorList }));
   };
 
   const handleCancel = () => {
-    setModifyColorModalObj((obj) => ({ ...obj, open: false }));
+    setModifyColorModalObj((obj) => ({
+      ...obj,
+      open: false,
+      colorList: modifyColorModalObj.colorList,
+    }));
   };
 
   return (
