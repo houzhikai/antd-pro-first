@@ -35,8 +35,27 @@ const MagnifyingGlass = ({ height }) => {
     x: defaultGlassPosition.x,
     y: defaultGlassPosition.y,
   });
+  // useEffect(() => {
+  //   // dots: TopLeft, TopRight, BottomLeft, BottomRight
+  //   let x = defaultGlassPosition.x;
+  //   let y = defaultGlassPosition.y;
+  //   if (dots === 'TopLeft') {
+  //     x = Math.floor((width * detailsValues.xStart) / 100);
+  //     y = Math.floor((height * detailsValues.yStart) / 100);
+  //   } else if (dots === 'TopRight') {
+  //     x = Math.floor(width - (width * detailsValues.xEnd) / 100);
+  //     y = Math.floor((height * detailsValues.yStart) / 100);
+  //   } else if (dots === 'BottomLeft') {
+  //     x = Math.floor((width * detailsValues.xStart) / 100);
+  //     y = Math.floor(height - (height * detailsValues.yEnd) / 100);
+  //   } else if (dots === 'BottomRight') {
+  //     x = Math.floor(width - (width * detailsValues.xEnd) / 100);
+  //     y = Math.floor(height - (height * detailsValues.yEnd) / 100);
+  //   }
+  //   setDefaultGlassPosition({ x, y });
+  // }, [detailsValues]);
+  // 修改放大倍数时，放大镜默认从圆点开始
   useEffect(() => {
-    // dots: TopLeft, TopRight, BottomLeft, BottomRight
     let x = defaultGlassPosition.x;
     let y = defaultGlassPosition.y;
     if (dots === 'TopLeft') {
@@ -53,9 +72,6 @@ const MagnifyingGlass = ({ height }) => {
       y = Math.floor(height - (height * detailsValues.yEnd) / 100);
     }
     setDefaultGlassPosition({ x, y });
-  }, [detailsValues]);
-  // 修改放大倍数时，放大镜默认从圆点开始
-  useEffect(() => {
     setPos({ x: defaultGlassPosition.x, y: defaultGlassPosition.y });
   }, [scaleNumber, detailsValues, defaultGlassPosition]);
   // 点击放大镜区域外的处理逻辑

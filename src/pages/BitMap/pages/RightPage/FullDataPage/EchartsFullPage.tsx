@@ -81,6 +81,7 @@ const EchartsFullPage = () => {
           style={{
             width: FullWidthHeight.width,
             height: FullWidthHeight.height,
+            border: '1px solid #35393b',
           }}
         />
         {/* 放大镜 */}

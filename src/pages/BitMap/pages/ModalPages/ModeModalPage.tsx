@@ -16,11 +16,14 @@ const ModeModalPage = () => {
 
   return (
     <Modal
-      width={1200}
       title="Custom Mode List"
       open={modeModalObj.open}
-      okText="Save"
-      cancelText="Cancel"
+      footer={(_, { OkBtn }) => (
+        <>
+          <OkBtn />
+        </>
+      )}
+      okText="Close"
       onOk={handleOk}
       onCancel={handleCancel}
     >

@@ -15,7 +15,7 @@ const DetailDataPage = () => {
     detailsValues,
     setDetailsValues,
   } = ProviderFunc();
-
+  console.log({ data });
   useEffect(() => {
     if (data.length > 0) {
       const myChart = echarts.init(chartRef.current);

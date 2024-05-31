@@ -23,7 +23,6 @@ export const getFullEchartsOptions = (
 
   return {
     renderer: 'canvas',
-    backgroundColor: '#fff',
     tooltip: { show: false },
     // tooltip: {
     //   show: true,

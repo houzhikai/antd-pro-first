@@ -4,9 +4,9 @@ export const getDeviceOptionalAllKeys = (tableList) => {
   }
   const newList = tableList
     ?.map((item) => {
-      return item.children
-        .filter((dut) => dut.newVersion)
-        .map((dut) => dut.key);
+      return (item.children?.filter((dut) => dut.newVersion) || [])?.map(
+        (dut) => dut.key,
+      );
     })
     .flat();
   return newList;

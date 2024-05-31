@@ -3,7 +3,7 @@ import NavPage from './NavPage';
 import { useFUProviderModule } from '../components/containers';
 import DetailsPage from './DetailsPage';
 import myFetch from '@/components/myFetch';
-import { mockDeviceListInterface } from './mockData/mockTableDataList';
+// import { mockDeviceListInterface } from './mockData/mockTableDataList';
 import '../index.css';
 import { useEffect } from 'react';
 
@@ -18,13 +18,13 @@ const LayoutPage = ({ setIsErrorPage }) => {
   const getDeviceDataList = async () => {
     try {
       const res = await myFetch({
-        url: `http://${startParams.initIp}:29000/upgrade/heartbeat`,
+        url: `http://${startParams.initIp}:28700/upgrade/heartbeat`,
         params: { heartbeat: String(startParams.vscodeId) },
         isExceptionHand: true,
       });
       setGetDeviceListAndHeartObj(res.data);
     } catch (error) {
-      setGetDeviceListAndHeartObj(mockDeviceListInterface);
+      // setGetDeviceListAndHeartObj(mockDeviceListInterface);
       setErrorTimes((obj) => {
         return {
           ...obj,

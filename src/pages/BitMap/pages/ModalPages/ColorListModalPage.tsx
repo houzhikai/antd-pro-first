@@ -34,15 +34,19 @@ const ColorListModalPage = () => {
         onCancel={handleCancel}
         destroyOnClose
       >
-        {colorList.map((color, index) => (
+        <div>File1: </div>
+        <div>File2: </div>
+        <br />
+        <div>File2 & File1</div>
+        {colorList.map((item, index) => (
           <div key={index} className="bit-map-color-modal">
-            <span className="bit-map-color-modal-label">{index}:</span>
+            <span className="bit-map-color-modal-label">{item.label}:</span>
             <ColorPicker
-              defaultValue={color}
+              defaultValue={item.color}
               onChange={(_, hexString) => {
                 setColorList((prevColors) => {
                   const newColors = [...prevColors];
-                  newColors[index] = hexString;
+                  newColors[index].color = hexString;
                   return newColors;
                 });
               }}

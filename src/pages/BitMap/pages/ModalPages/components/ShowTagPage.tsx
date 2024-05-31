@@ -22,6 +22,7 @@ const ShowTagPage = ({ tag, setOptions }) => {
       cancelText="No"
     >
       <Tag
+        style={{ marginBottom: 10 }}
         closable
         onClose={(e) => {
           e.preventDefault();

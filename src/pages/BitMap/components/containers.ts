@@ -10,9 +10,28 @@ export const BitMapContext = createContext<any>(null);
 // 从 useContext 导出需要传递方法
 export const ProviderFunc = () => {
   /**
+   * 接口参数
+   */
+  const [vscodeParams, setVscodeParams] = useState({
+    initIp: '192.168.3.71',
+    special: {
+      editmode: 'OffLine', // 参数预留，后端决定能否为空
+      timestamp: '202405241359',
+      extension: '4372',
+      project: 'bitmaptest', // 参数预留，后端决定能否为空
+      location: '/home', // 参数预留，后端决定能否为空
+    },
+  });
+  const [physicalDataPath, setPhysicalDataPath] = useState([]);
+  const [bitMapPort, setBitMapPort] = useState(''); // 获取启动服务的端口号
+  /**
    * 顶部操作栏
    */
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
+  const [openPhysicalObj, setOpenPhysicalObj] = useState({
+    open: false,
+    list: [],
+  });
   const detailsEchartsBg = theme === 'light' ? '#f5f5f5' : '#1f1f1f'; // value === 0 使用背景颜色，数据源将value = 0 去除
   // 设置里面选择的模块
   const [modeSelectedOptions, setModeSelectedOptions] = useState({
@@ -86,12 +105,12 @@ export const ProviderFunc = () => {
     (item, index) => {
       return {
         value: index,
-        color: item,
+        color: item.color,
       };
     },
   );
   const [data, setData] = useState<any>([]);
-  const [times, setTimes] = useState(0); // 控制第一次不会加载echarts数据
+  const [times, setTimes] = useState(1); // 控制第一次不会加载echarts数据
 
   useEffect(() => {
     if (times > 0) {
@@ -139,6 +158,14 @@ export const ProviderFunc = () => {
     setBaseConversion,
     data,
     setData,
+    vscodeParams,
+    setVscodeParams,
+    bitMapPort,
+    setBitMapPort,
+    openPhysicalObj,
+    setOpenPhysicalObj,
+    physicalDataPath,
+    setPhysicalDataPath,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

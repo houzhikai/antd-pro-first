@@ -1,4 +1,10 @@
-export default (data, detailsEchartsAxisValue, configInfo, scaleNumber) => {
+export default (
+  data,
+  detailsEchartsAxisValue,
+  configInfo,
+  scaleNumber,
+  theme,
+) => {
   const getSplitLine = (xSplitNumber: number, ySplitNumber) => {
     let xMultiples: { xAxis: number }[] = [];
     let yMultiples: { yAxis: number }[] = [];
@@ -65,14 +71,30 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber) => {
         symbol: 'none',
         lineStyle:
           scaleNumber === 0.125 || scaleNumber === 0.2
-            ? { width: 0, type: 'line', color: '#f4f4f4' }
-            : { width: 6, type: 'line', color: '#f4f4f4' }, // 粗线样式
+            ? {
+                width: 0,
+                type: 'line',
+                color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+              }
+            : {
+                width: 6,
+                type: 'line',
+                color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+              }, // 粗线样式
         data: [{ xAxis: 0 }, { xAxis: 1023 }, { yAxis: 0 }, { yAxis: 1023 }],
         emphasis: {
           lineStyle:
             scaleNumber === 0.125 || scaleNumber === 0.2
-              ? { width: 0, type: 'line', color: '#f4f4f4' }
-              : { width: 6, type: 'line', color: '#f4f4f4' }, // 粗线样式
+              ? {
+                  width: 0,
+                  type: 'line',
+                  color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+                }
+              : {
+                  width: 6,
+                  type: 'line',
+                  color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+                }, // 粗线样式
         },
       },
     },
@@ -93,8 +115,16 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber) => {
         symbol: 'none',
         lineStyle:
           scaleNumber === 0.125 || scaleNumber === 0.2
-            ? { width: 0, type: 'line', color: '#f4f4f4' } // 细线样式
-            : { width: 2, type: 'line', color: '#f4f4f4' },
+            ? {
+                width: 0,
+                type: 'line',
+                color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+              } // 细线样式
+            : {
+                width: 2,
+                type: 'line',
+                color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+              },
         // 放大倍数不同，markLine 对应的线位置会有偏差，需要对各个放大倍数的markLine做偏移
         data:
           scaleNumber === 64
@@ -137,9 +167,17 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber) => {
               ],
         emphasis: {
           lineStyle:
-            scaleNumber !== 0.125 || scaleNumber !== 0.2
-              ? { width: 2, type: 'line', color: '#f4f4f4' } // 细线样式
-              : { width: 0, type: 'line', color: '#f4f4f4' },
+            scaleNumber === 0.125 || scaleNumber === 0.2
+              ? {
+                  width: 0,
+                  type: 'line',
+                  color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+                }
+              : {
+                  width: 2,
+                  type: 'line',
+                  color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+                }, // 细线样式
         },
       },
     },

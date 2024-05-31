@@ -2,7 +2,7 @@ import React from 'react';
 import { Tree } from 'antd';
 import { ProviderFunc } from '../../components/containers';
 
-const TreePage: React.FC = () => {
+const TreePage = () => {
   const {
     switchObj,
     selectedTreeDataList,
@@ -26,8 +26,9 @@ const TreePage: React.FC = () => {
           dut: item.title,
           location: item.location,
           details: item.details,
+          header: treeDutsList[0].header,
+          test_info: treeDutsList[0].test_info,
         }));
-
         setSelectedTreeDataList(checkedDuts);
       } else {
         const checkedDuts = info.checkedNodes.map((item) => ({
@@ -35,6 +36,8 @@ const TreePage: React.FC = () => {
           dut: item.title,
           location: item.location,
           details: item.details,
+          header: treeDutsList[0].header,
+          test_info: treeDutsList[0].test_info,
         }));
         setSelectedTreeDataList(checkedDuts.slice(0, 2));
       }
@@ -51,6 +54,8 @@ const TreePage: React.FC = () => {
           dut: xxx.title,
           location: xxx.location,
           details: xxx.details,
+          header: treeDutsList[0].header,
+          test_info: treeDutsList[0].test_info,
         };
       } else {
         checkedDuts = {
@@ -58,9 +63,10 @@ const TreePage: React.FC = () => {
           dut: info.node.title,
           location: info.node.location,
           details: info.node.details,
+          header: treeDutsList[0].header,
+          test_info: treeDutsList[0].test_info,
         };
       }
-
       setSelectedTreeDataList([checkedDuts]);
     }
   };
@@ -123,7 +129,6 @@ const TreePage: React.FC = () => {
   return (
     <>
       <Tree
-        style={{ background: '#f5f5f5' }}
         checkable
         checkedKeys={checkedKeys}
         defaultExpandAll

@@ -1,10 +1,11 @@
 import { FolderOpenOutlined } from '@ant-design/icons';
-import { Image, Switch } from 'antd';
-import option from '@/icon/bitmap/option.svg';
+import { Button, Image, Switch } from 'antd';
 import { ProviderFunc } from '../../components/containers';
+import option from '@/icon/bitmap/option.svg';
 import otherColor from '@/icon/otherColor.svg';
 import { treeDataList } from '../../mockData/mockTreeData';
 import ConvertPage from '../RightPage/DetailDataPage/NavAction/ConvertPage';
+import myFetch from '@/components/myFetch';
 import '../../index.css';
 
 const NavActionPage = () => {
@@ -15,23 +16,22 @@ const NavActionPage = () => {
     setSwitchObj,
     setSelectedTreeDataList,
     setTreeDutsList,
+    bitMapPort,
+    vscodeParams,
+    setOpenPhysicalObj,
   } = ProviderFunc();
   // 选择文件夹
   const handleSelectFolder = async () => {
-    setTreeDutsList(treeDataList);
-
-    // try {
-    //   const res = await myFetch({
-    //     url: 'http://xxx:2087',
-    //     params: { name: 'duts', location: 'var/sss/mike' },
-    //   });
-    //   console.log({ res });
-    //   setTreeDutsList(treeDataList);
-    // } catch (error) {
-    //   console.log(111, treeDataList);
-
-    //   setTreeDutsList(treeDataList);
-    // }
+    try {
+      const res = await myFetch({
+        url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/selectbitmapdir`,
+        params: { dirName: 'afmtest_00', location: 'E:\\desktop\\afmtest_00' },
+        isExceptionHand: true,
+      });
+      setTreeDutsList(res.data);
+    } catch (error) {
+      setTreeDutsList(treeDataList);
+    }
   };
   // 打开 mode 弹窗
   const handleOpenModeModal = () => {
@@ -53,8 +53,20 @@ const NavActionPage = () => {
     setSwitchObj((obj) => ({ ...obj, isLogical: checked }));
   };
 
+  const handleOpenModal = () => {
+    setOpenPhysicalObj((obj) => ({ ...obj, open: true }));
+  };
+
   return (
     <div className="bit-map-nav-page">
+      <Button
+        className="bit-map-nav-gap"
+        type="primary"
+        size="small"
+        onClick={handleOpenModal}
+      >
+        Select Physical file
+      </Button>
       {/* 选择文件夹 */}
       <FolderOpenOutlined
         className="bit-map-nav-gap"

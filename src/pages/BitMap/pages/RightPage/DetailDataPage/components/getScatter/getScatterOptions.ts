@@ -26,7 +26,6 @@ export const getScatterOptions = (
   const axisLabelInterval = getAxisLabelInterval(scaleNumber);
   return {
     renderer: 'canvas',
-    backgroundColor: '#fff',
     tooltip: {
       show: true,
       position: 'top',
@@ -160,6 +159,7 @@ export const getScatterOptions = (
       detailsEchartsAxisValue,
       configInfo,
       scaleNumber,
+      theme,
     ),
   };
 };

@@ -63,9 +63,9 @@
 }
 .echarts-full-page-magnifying-glass{
     position: absolute;
-    top: 0;
+    /* top: 0;
     left: 0;
-    height: 100px;
+    height: 100px; */
     background: #aec2e8;
     cursor: move;
     opacity: 0.6;
@@ -84,4 +84,5 @@
 }
 .bit-map-color-modal-label{
     margin-right: 10px;
+    width: 80px;
 }
