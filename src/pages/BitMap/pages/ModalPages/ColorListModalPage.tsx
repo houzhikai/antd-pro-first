@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ColorPicker, Modal } from 'antd';
 import { ProviderFunc } from '../../components/containers';
 import '../../index.css';

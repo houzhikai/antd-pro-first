@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Typography, Select, Button, Input, Space } from 'antd';
-import { initLogicalOptions } from '@/pages/BitMap/components/initValues';
 import { PlusOutlined } from '@ant-design/icons';
 import ShowTagPage from './ShowTagPage';
 import { ProviderFunc } from '../../../components/containers';
+import { initLogicalOptions } from '../../../components/initValues';
 
 const LogicalTagsList = () => {
   const { setModeSelectedOptions } = ProviderFunc();
@@ -18,7 +18,7 @@ const LogicalTagsList = () => {
     { value: 'Tag2', label: 'Tag2', location: '/var/partner/logical/Tag2' },
     { value: 'Tag3', label: 'Tag3', location: '/var/partner/logical/Tag3' },
   ];
-  const [options, setOptions] = useState<any>([].concat(tagNameList));
+  const [options, setOptions] = useState([].concat(tagNameList));
   const LogicalOptions = initLogicalOptions.concat(options);
   const handleAddFile = () => {
     let id = 0;

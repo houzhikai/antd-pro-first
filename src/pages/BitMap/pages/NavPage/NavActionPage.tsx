@@ -1,106 +1,88 @@
-import { FolderOpenOutlined } from '@ant-design/icons';
-import { Button, Image, Switch } from 'antd';
-import { ProviderFunc } from '../../components/containers';
-import option from '@/icon/bitmap/option.svg';
-import otherColor from '@/icon/otherColor.svg';
-import { treeDataList } from '../../mockData/mockTreeData';
+import React from 'react';
+import { message, Button, Tooltip } from 'antd';
 import ConvertPage from '../RightPage/DetailDataPage/NavAction/ConvertPage';
-import myFetch from '@/components/myFetch';
+import { otherColor } from '../../icons/base64/otherColor';
+import myFetch from '../../components/myFetch';
+import { ProviderFunc } from '../../components/containers';
 import '../../index.css';
 
 const NavActionPage = () => {
   const {
     setModifyColorModalObj,
-    setModeModalObj,
-    switchObj,
-    setSwitchObj,
-    setSelectedTreeDataList,
-    setTreeDutsList,
+    setPhysicalFileList,
     bitMapPort,
     vscodeParams,
-    setOpenPhysicalObj,
+    isStack,
   } = ProviderFunc();
   // 选择文件夹
   const handleSelectFolder = async () => {
+    // TODO， vscode interface
     try {
       const res = await myFetch({
-        url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/selectbitmapdir`,
-        params: { dirName: 'afmtest_00', location: 'E:\\desktop\\afmtest_00' },
+        url: `http://${
+          vscodeParams.initIp
+        }:${bitMapPort}/bitmap/selectbitmapdir?location=${'/home/kkuser/public/partner/'}&fileName=${'afmtest_00'}`,
         isExceptionHand: true,
       });
-      setTreeDutsList(res.data);
+      if (res.result === 0) {
+        const result = JSON.parse(res.data[0].value);
+        const newKeyResult = result.map((item, index) => {
+          if (item.children) {
+            const children = item.children.map((duts, idx) => ({
+              ...duts,
+              key: `${index}-0-${idx}`,
+              location: `${item.location}${item.title}`,
+            }));
+            return { ...item, children };
+          }
+          return { ...item, key: `${index}-0` };
+        });
+        setPhysicalFileList(newKeyResult);
+      } else {
+        message.error(res.msg);
+      }
     } catch (error) {
-      setTreeDutsList(treeDataList);
+      message.error('获取文件夹数据失败');
     }
   };
-  // 打开 mode 弹窗
-  const handleOpenModeModal = () => {
-    setModeModalObj((obj) => ({ ...obj, open: true }));
-  };
+
   // 打开 颜色选择 弹窗
   const handleOpenColorListModal = () => {
     setModifyColorModalObj((obj) => ({ ...obj, open: true }));
   };
 
-  const handleChangeIsStack = (checked) => {
-    // 堆叠模式切换单一模式将树形勾选框清空
-    if (switchObj.isStack) {
-      setSelectedTreeDataList([]);
-    }
-    setSwitchObj((obj) => ({ ...obj, isStack: checked }));
-  };
-  const handleChangeIsLogic = (checked) => {
-    setSwitchObj((obj) => ({ ...obj, isLogical: checked }));
-  };
-
-  const handleOpenModal = () => {
-    setOpenPhysicalObj((obj) => ({ ...obj, open: true }));
-  };
-
   return (
     <div className="bit-map-nav-page">
+      <ConvertPage />
       <Button
         className="bit-map-nav-gap"
         type="primary"
         size="small"
-        onClick={handleOpenModal}
-      >
-        Select Physical file
-      </Button>
-      {/* 选择文件夹 */}
-      <FolderOpenOutlined
-        className="bit-map-nav-gap"
-        style={{ fontSize: 20 }}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
         onClick={handleSelectFolder}
-      />
-      {/* 打开位图关系modal */}
-      <div className="bit-map-nav-gap" onClick={handleOpenModeModal}>
-        <Image width={20} preview={false} src={option} />
-      </div>
+      >
+        Import
+      </Button>
+
       {/* 颜色选择器 */}
-      <div className="bit-map-nav-gap" onClick={handleOpenColorListModal}>
-        <Image width={20} preview={false} src={otherColor} />
-      </div>
-      {/* 单一 / 堆叠模式 */}
-      <Switch
-        className="bit-map-nav-gap"
-        defaultChecked={switchObj.isStack}
-        checkedChildren="Stack"
-        unCheckedChildren="Single"
-        onChange={handleChangeIsStack}
-      />
-      {/* 逻辑 / 物理模式 */}
-      <Switch
-        className="bit-map-nav-gap"
-        defaultChecked={switchObj.isLogical}
-        checkedChildren="Logical"
-        unCheckedChildren="Physical"
-        disabled
-        onChange={handleChangeIsLogic}
-      />
-      <ConvertPage />
+      {isStack ? (
+        <Button
+          className="bit-map-nav-gap"
+          type="text"
+          icon={<img width={20} src={otherColor} />}
+          onClick={handleOpenColorListModal}
+          disabled={!isStack}
+        />
+      ) : (
+        <Tooltip title="stack 模式可用" placement="bottom">
+          <Button
+            className="bit-map-nav-gap"
+            type="text"
+            icon={<img width={20} src={otherColor} />}
+            onClick={handleOpenColorListModal}
+            disabled={!isStack}
+          />
+        </Tooltip>
+      )}
     </div>
   );
 };

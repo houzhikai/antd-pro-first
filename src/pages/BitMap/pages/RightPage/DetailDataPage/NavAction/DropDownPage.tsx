@@ -1,8 +1,9 @@
-import { ProviderFunc } from '@/pages/BitMap/components/containers';
-import { scaleFactor } from '@/pages/BitMap/components/initValues';
-import type { MenuProps } from 'antd';
+
+import React, { useState } from 'react';
 import { Button, Dropdown } from 'antd';
-import { useState } from 'react';
+import type { MenuProps } from 'antd';
+import { ProviderFunc } from '../../../../components/containers';
+import { scaleFactor } from '../../../../components/initValues';
 
 const DropDownPage = () => {
   const [selected, setSelected] = useState('100%');

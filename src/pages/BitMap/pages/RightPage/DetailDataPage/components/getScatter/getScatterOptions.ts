@@ -1,4 +1,4 @@
-import { getAxisLabelInterval } from '@/pages/BitMap/components/getAxisLabelInterval';
+import { getAxisLabelInterval } from '../../../../../components/getAxisLabelInterval';
 import { takeMiddleNumber } from '../../../../../components/takeMiddleNumber';
 import getScatterSeries from './getScatterSeries';
 export const getScatterOptions = (
@@ -159,7 +159,7 @@ export const getScatterOptions = (
       detailsEchartsAxisValue,
       configInfo,
       scaleNumber,
-      theme,
+      theme
     ),
   };
 };
