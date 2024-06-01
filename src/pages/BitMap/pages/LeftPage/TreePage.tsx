@@ -1,6 +1,7 @@
 import React from 'react';
-import { Tree } from 'antd';
+import { Tree, message } from 'antd';
 import { ProviderFunc } from '../../components/containers';
+import myFetch from '../../components/myFetch';
 
 const TreePage = () => {
   const {
@@ -8,9 +9,11 @@ const TreePage = () => {
     selectedTreeDataList,
     setSelectedTreeDataList,
     physicalFileList,
+    vscodeParams,
+    setData,
   } = ProviderFunc();
 
-  const handleCheck = (_, info) => {
+  const handleCheck = async (_, info) => {
     if (isStack) {
       if (info.node.key.length === 3) {
         const xxx = physicalFileList[0].children.slice(0, 2);
@@ -57,7 +60,29 @@ const TreePage = () => {
           test_info: physicalFileList[0].test_info,
         };
       }
-      setSelectedTreeDataList([checkedDuts]);
+      console.log({ checkedDuts, info });
+      try {
+        const res = await myFetch({
+          url: `http://${vscodeParams.initIp}:27700/bitmap/getbitmapdata`,
+          params: {
+            mode: 1,
+            physicalDataPath: [
+              { fileName: checkedDuts.dut, location: checkedDuts.location },
+            ],
+          },
+          isExceptionHand: true,
+        });
+        if (res.result === 0) {
+          // 接口调用成功后的操作
+          setSelectedTreeDataList([checkedDuts]);
+          setData(JSON.parse(res.data[0].value) || []);
+        } else {
+          message.error(res.msg);
+        }
+      } catch (error) {
+        // setIsErrorPage(true);
+        setSelectedTreeDataList([checkedDuts]);
+      }
     }
   };
 

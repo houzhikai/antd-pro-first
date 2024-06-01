@@ -11,7 +11,7 @@ export const useFUProviderModule = () => {
     aboveTimes: number;
   }>({ times: 0, aboveTimes: 99999 });
   const [startParams, setStartParams] = useState({
-    initIp: '192.168.3.227',
+    initIp: '192.168.3.218',
     vscodeId: 12345,
   }); // 所有已选择的勾选项
   const [activeKey, setActiveKey] = useState(['0']);

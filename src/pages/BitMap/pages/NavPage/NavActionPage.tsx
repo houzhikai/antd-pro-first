@@ -5,6 +5,7 @@ import { otherColor } from '../../icons/base64/otherColor';
 import myFetch from '../../components/myFetch';
 import { ProviderFunc } from '../../components/containers';
 import '../../index.css';
+import { treeDataList } from '@/pages/BitMap copy/mockData/mockTreeData';
 
 const NavActionPage = () => {
   const {
@@ -37,12 +38,14 @@ const NavActionPage = () => {
           }
           return { ...item, key: `${index}-0` };
         });
+        console.log({ newKeyResult });
         setPhysicalFileList(newKeyResult);
       } else {
         message.error(res.msg);
       }
     } catch (error) {
       message.error('获取文件夹数据失败');
+      setPhysicalFileList(treeDataList);
     }
   };
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import { ConfigProvider } from 'antd';
+import React, { useEffect } from 'react';
+import { ConfigProvider, Spin, message } from 'antd';
 import LeftPage from './LeftPage';
 import NavPage from './NavPage';
 import RightPage from './RightPage';
@@ -21,8 +21,15 @@ import {
 } from '../components/theme';
 import '../index.css';
 
-const LayoutPage = () => {
-  const { setBitMapPort, vscodeParams, setIsErrorPage, theme } = ProviderFunc();
+const LayoutPage = ({ setIsErrorPage }) => {
+  const {
+    setBitMapPort,
+    vscodeParams,
+    theme,
+    loading,
+    setLoading,
+    bitMapPort,
+  } = ProviderFunc();
 
   useAsyncEffect(async () => {
     try {
@@ -32,9 +39,51 @@ const LayoutPage = () => {
       });
       setBitMapPort(res[0].value);
     } catch (error) {
-      setIsErrorPage(true);
+      // setIsErrorPage(true);
     }
   }, []);
+
+  // const queryConvertStatusFetch = async () => {
+  //   try {
+  //     const res = await myFetch({
+  //       url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/queryconvertstatus`,
+  //       isExceptionHand: true,
+  //     });
+  //     if (res.result === 0) {
+  //       /**
+  //        * 接口调用成功的操作,
+  //        * 1: Converting, 0: not converting
+  //        * true: Converting  false: not converting
+  //        */
+  //       setLoading(res.data[0].value === 1);
+  //     } else {
+  //       message.error(res.msg);
+  //     }
+  //   } catch (error) {
+  //     message.error('Get convert status fail');
+  //     setLoading(true);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (bitMapPort) {
+  //     console.log(11);
+  //     queryConvertStatusFetch();
+  //   }
+  // }, [bitMapPort]);
+  // useEffect(() => {
+  //   // 设备列表接口
+  //   const time = setInterval(() => {
+  //     if (loading) {
+  //       console.log(22);
+  //       queryConvertStatusFetch();
+  //     } else {
+  //       setLoading(false);
+  //     }
+  //   }, 3000);
+  //   // 清除定时器
+  //   return () => clearInterval(time);
+  // }, [loading, bitMapPort]);
 
   return (
     <ConfigProvider
@@ -56,13 +105,15 @@ const LayoutPage = () => {
           : {}
       }
     >
-      <NavPage />
-      <div className="content-page">
-        <LeftPage />
-        <RightPage />
-      </div>
-      <ModeModalPage />
-      <ColorListModalPage />
+      <Spin spinning={loading} size="large" tip="Converting">
+        <NavPage />
+        <div className="content-page">
+          <LeftPage />
+          <RightPage />
+        </div>
+        <ModeModalPage />
+        <ColorListModalPage />
+      </Spin>
     </ConfigProvider>
   );
 };

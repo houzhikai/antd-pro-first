@@ -29,7 +29,21 @@ const PhysicalTagList = () => {
     setScrambleCfgOptionsList((list) => [newFileName, ...list]);
   };
   const handleChangePhysicalOptions = (value) => {
-    setConvertModalObj((obj) => ({ ...obj, scrambleCfg: value }));
+    setConvertModalObj((obj) => {
+      const filterValue = scrambleCfgOptionsList.filter(
+        (item) => item.value === value,
+      )[0];
+      const xxx = {
+        ...obj,
+        scrambleCfg: {
+          ...obj.scrambleCfg,
+          fileName: filterValue.value,
+          location: filterValue.location,
+        },
+      };
+      console.log({ obj, value, xxx, filterValue });
+      return xxx;
+    });
   };
   const CustomFormItem = ({ children, title }) => {
     return (
@@ -60,7 +74,7 @@ const PhysicalTagList = () => {
           <Select
             style={{ marginLeft: 20, width: 200 }}
             options={scrambleCfgOptionsList}
-            value={convertModalObj.scrambleCfg}
+            value={convertModalObj.scrambleCfg.fileName}
             onChange={handleChangePhysicalOptions}
           />
         </CustomFormItem>

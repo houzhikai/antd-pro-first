@@ -22,6 +22,7 @@ export const ProviderFunc = () => {
     },
   });
   const [bitMapPort, setBitMapPort] = useState(''); // 获取启动服务的端口号
+  const [loading, setLoading] = useState<boolean>(false); // 是否禁用页面：正在convert时禁用页面
   const [theme, setTheme] = useState('light');
 
   /**
@@ -37,8 +38,11 @@ export const ProviderFunc = () => {
   // 打开 convert 弹窗， 获取里面的值
   const [convertModalObj, setConvertModalObj] = useState({
     open: false,
-    sourceDataLocation: '',
-    scrambleCfg: initScrambleOptions[0].value,
+    sourceDataLocation: 'var/xxx/xxx/sourceData',
+    scrambleCfg: {
+      fileName: initScrambleOptions[0].value,
+      location: initScrambleOptions[0].location,
+    },
     physicalOutputLocation: 'var/xxx/xxx/xxx/physicalOutputLocation',
   });
   // scrambleCfg 的 options 列表
@@ -158,6 +162,8 @@ export const ProviderFunc = () => {
     setTriggerTiming,
     isStack,
     setIsStack,
+    loading,
+    setLoading,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

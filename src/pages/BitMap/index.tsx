@@ -7,14 +7,14 @@ import './index.css';
 const BitMapPage = () => {
   const { bitMapContextValue } = ProviderFunc();
   const [isErrorPage, setIsErrorPage] = useState(false); // 是否转到错误页面
-  
+
   return (
     <BitMapContext.Provider value={bitMapContextValue}>
-        {isErrorPage ? (
-          <ErrorPage setIsErrorPage={setIsErrorPage} />
-          ) : (
-          <LayoutPage />
-        )}
+      {isErrorPage ? (
+        <ErrorPage setIsErrorPage={setIsErrorPage} />
+      ) : (
+        <LayoutPage setIsErrorPage={setIsErrorPage} />
+      )}
     </BitMapContext.Provider>
   );
 };

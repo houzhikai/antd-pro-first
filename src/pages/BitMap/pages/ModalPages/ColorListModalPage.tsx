@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ColorPicker, Modal } from 'antd';
+import { ColorPicker, Modal, Table } from 'antd';
 import { ProviderFunc } from '../../components/containers';
 import '../../index.css';
 
 const ColorListModalPage = () => {
-  const { modifyColorModalObj, setModifyColorModalObj } = ProviderFunc();
+  const { modifyColorModalObj, setModifyColorModalObj, selectedTreeDataList } =
+    ProviderFunc();
   const [colorList, setColorList] = useState(modifyColorModalObj.colorList);
 
   useEffect(() => {
@@ -23,10 +24,79 @@ const ColorListModalPage = () => {
     }));
   };
 
+  const dataSource = [
+    {
+      file1: 'Pass',
+      and: '+',
+      file2: 'Pass',
+      color: colorList[0],
+    },
+    {
+      file1: 'Fail',
+      and: '+',
+      file2: 'Pass',
+      color: colorList[1],
+    },
+    {
+      file1: 'Pass',
+      and: '+',
+      file2: 'Fail',
+      color: colorList[2],
+    },
+    {
+      file1: 'Fail',
+      and: '+',
+      file2: 'Fail',
+      color: colorList[3],
+    },
+  ];
+
+  const columns: any = [
+    {
+      title: <div>{selectedTreeDataList?.[1]?.dut || ''}</div>,
+      dataIndex: 'file2',
+      key: 'file2',
+      align: 'center',
+    },
+    {
+      title: '&',
+      dataIndex: 'and',
+      key: 'and',
+      align: 'center',
+    },
+    {
+      title: <div>{selectedTreeDataList?.[0]?.dut || ''}</div>,
+      dataIndex: 'file1',
+      key: 'file1',
+      align: 'center',
+    },
+    {
+      title: 'color',
+      dataIndex: 'color',
+      key: 'color',
+      align: 'center',
+      render: (text, _, index) => {
+        return (
+          <ColorPicker
+            defaultValue={text}
+            onChange={(_, hexString) => {
+              setColorList((prevColors) => {
+                const newColors = [...prevColors];
+                newColors[index] = hexString;
+                return newColors;
+              });
+            }}
+          />
+        );
+      },
+    },
+  ];
+
   return (
     <div>
       <Modal
         title="Color List"
+        // open={true}
         open={modifyColorModalObj.open}
         okText="Save"
         cancelText="Cancel"
@@ -34,25 +104,21 @@ const ColorListModalPage = () => {
         onCancel={handleCancel}
         destroyOnClose
       >
-        <div>File1: </div>
-        <div>File2: </div>
+        <div>
+          File1: {selectedTreeDataList?.[0]?.location || ''}/
+          {selectedTreeDataList?.[0]?.dut || ''}
+        </div>
+        <div>
+          File2: {selectedTreeDataList?.[1]?.location || ''}/
+          {selectedTreeDataList?.[1]?.dut || ''}
+        </div>
         <br />
-        <div>File2 & File1</div>
-        {colorList.map((item, index) => (
-          <div key={index} className="bit-map-color-modal">
-            <span className="bit-map-color-modal-label">{item.label}:</span>
-            <ColorPicker
-              defaultValue={item.color}
-              onChange={(_, hexString) => {
-                setColorList((prevColors) => {
-                  const newColors = [...prevColors];
-                  newColors[index].color = hexString;
-                  return newColors;
-                });
-              }}
-            />
-          </div>
-        ))}
+        <Table
+          bordered={false}
+          columns={columns}
+          dataSource={dataSource}
+          pagination={false}
+        />
       </Modal>
     </div>
   );

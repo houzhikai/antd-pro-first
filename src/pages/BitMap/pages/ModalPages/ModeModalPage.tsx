@@ -4,8 +4,13 @@ import PhysicalTagList from './components/PhysicalTagList';
 import myFetch from '../../components/myFetch';
 
 const ModeModalPage = () => {
-  const { convertModalObj, setConvertModalObj, vscodeParams, bitMapPort } =
-    ProviderFunc();
+  const {
+    convertModalObj,
+    setConvertModalObj,
+    vscodeParams,
+    bitMapPort,
+    setLoading,
+  } = ProviderFunc();
 
   const handleOk = async () => {
     const params = {
@@ -14,8 +19,8 @@ const ModeModalPage = () => {
       convertConf: {
         logicalname: '',
         logicallocation: '',
-        physicalname: '',
-        physicallocation: '',
+        physicalname: convertModalObj.scrambleCfg.fileName,
+        physicallocation: convertModalObj.scrambleCfg.location,
       }, // 模板名称+模板路径 + 配置名称+配置路径
       output: convertModalObj.physicalOutputLocation, // 物理文件输出目录
     };
@@ -39,11 +44,14 @@ const ModeModalPage = () => {
         if (res.result === 0) {
           //  接口调用成功的操作
           setConvertModalObj((obj) => ({ ...obj, open: false }));
+          setLoading(true);
         } else {
           message.error(res.msg);
         }
       } catch (error) {
         message.error('convert fail');
+        setConvertModalObj((obj) => ({ ...obj, open: false }));
+        setLoading(true);
       }
     }
   };
