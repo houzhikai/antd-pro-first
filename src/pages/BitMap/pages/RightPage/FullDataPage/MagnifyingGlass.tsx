@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { ProviderFunc } from '@/pages/BitMap/components/containers';
 import { getRatioNumber } from '../../../components/getRatioNumber';
-import {getGlassPosition} from '../../../components/getGlassPosition'
-import { ProviderFunc } from '../../../components/containers';
+import { getGlassPosition } from '@/pages/BitMap/components/getGlassPosition';
 
+// TODO, 点击页面时会与放大镜有冲突，需要解决
 const MagnifyingGlass = ({ height }) => {
-  const magnifierRef = useRef(null);
+  const magnifierRef = useRef<any>(null);
   const { width, configInfo, detailsValues, setDetailsValues, scaleNumber } =
     ProviderFunc();
 
   const [dragging, setDragging] = useState(false);
-  const [rel, setRel] = useState({ x: 0, y: 0 });
+  const [rel, setRel] = useState<any>({ x: 0, y: 0 });
   const [isOutside, setIsOutside] = useState(false); // 判断是否点击放大镜外的区域
 
   const ratioNumber = getRatioNumber(scaleNumber); // 占用详图可视区域
@@ -34,8 +35,26 @@ const MagnifyingGlass = ({ height }) => {
     x: defaultGlassPosition.x,
     y: defaultGlassPosition.y,
   });
-
-  // details echarts position change glass's position
+  // useEffect(() => {
+  //   // dots: TopLeft, TopRight, BottomLeft, BottomRight
+  //   let x = defaultGlassPosition.x;
+  //   let y = defaultGlassPosition.y;
+  //   if (dots === 'TopLeft') {
+  //     x = Math.floor((width * detailsValues.xStart) / 100);
+  //     y = Math.floor((height * detailsValues.yStart) / 100);
+  //   } else if (dots === 'TopRight') {
+  //     x = Math.floor(width - (width * detailsValues.xEnd) / 100);
+  //     y = Math.floor((height * detailsValues.yStart) / 100);
+  //   } else if (dots === 'BottomLeft') {
+  //     x = Math.floor((width * detailsValues.xStart) / 100);
+  //     y = Math.floor(height - (height * detailsValues.yEnd) / 100);
+  //   } else if (dots === 'BottomRight') {
+  //     x = Math.floor(width - (width * detailsValues.xEnd) / 100);
+  //     y = Math.floor(height - (height * detailsValues.yEnd) / 100);
+  //   }
+  //   setDefaultGlassPosition({ x, y });
+  // }, [detailsValues]);
+  // 修改放大倍数时，放大镜默认从圆点开始
   useEffect(() => {
     let x = defaultGlassPosition.x;
     let y = defaultGlassPosition.y;
@@ -184,7 +203,7 @@ const MagnifyingGlass = ({ height }) => {
         width: glassWidth,
         height: glassHeight,
         left: `${pos.x}px`,
-        top: `${pos.y + 1}px`, // 1 px ,because fullEcharts add 1px border
+        top: `${pos.y}px`,
       }}
       className="echarts-full-page-magnifying-glass"
       ref={magnifierRef}
@@ -194,5 +213,3 @@ const MagnifyingGlass = ({ height }) => {
 };
 
 export default MagnifyingGlass;
-
-

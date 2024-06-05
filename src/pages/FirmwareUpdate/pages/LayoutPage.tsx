@@ -24,6 +24,7 @@ const LayoutPage = ({ setIsErrorPage }) => {
       });
       setGetDeviceListAndHeartObj(res.data);
     } catch (error) {
+      console.log({ error });
       // setGetDeviceListAndHeartObj(mockDeviceListInterface);
       setErrorTimes((obj) => {
         return {

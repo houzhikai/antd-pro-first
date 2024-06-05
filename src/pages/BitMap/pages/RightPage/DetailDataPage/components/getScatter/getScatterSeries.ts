@@ -1,5 +1,10 @@
-export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) => {
-  const borderColor =  theme === 'dark' ? '#35393b' : '#f4f4f4'
+export default (
+  data,
+  detailsEchartsAxisValue,
+  configInfo,
+  scaleNumber,
+  theme,
+) => {
   const getSplitLine = (xSplitNumber: number, ySplitNumber) => {
     let xMultiples: { xAxis: number }[] = [];
     let yMultiples: { yAxis: number }[] = [];
@@ -31,14 +36,14 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) =
 
   const markLineStyleList = [
     {
-      lineStyle: { width: 6, type: 'line', color: borderColor }, // 粗线样式
+      lineStyle: { width: 6, type: 'line', color: '#f4f4f4' }, // 粗线样式
       data: getSplitLine(
         detailsEchartsAxisValue.xMax / configInfo.duts.col,
         detailsEchartsAxisValue.yMax / configInfo.duts.row,
       ), // 粗线位置，
     },
     {
-      lineStyle: { width: 2, type: 'line', color: borderColor }, // 细线样式, 支持隐藏：width=0时，隐藏细线
+      lineStyle: { width: 2, type: 'line', color: '#f4f4f4' }, // 细线样式, 支持隐藏：width=0时，隐藏细线
       data: getSplitLine(
         detailsEchartsAxisValue.xMax / configInfo.blocks.col,
         detailsEchartsAxisValue.yMax / configInfo.blocks.row,
@@ -47,8 +52,8 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) =
   ];
   const newMarkLineStyleList =
     scaleNumber === 0.125 ? markLineStyleList : markLineStyleList.slice(0, 2);
-
-    return [
+  console.log({ newMarkLineStyleList });
+  return [
     {
       type: 'heatmap',
       symbol: 'rect',
@@ -66,14 +71,30 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) =
         symbol: 'none',
         lineStyle:
           scaleNumber === 0.125 || scaleNumber === 0.2
-            ? { width: 0, type: 'line', color: borderColor }
-            : { width: 6, type: 'line', color: borderColor}, // 粗线样式
+            ? {
+                width: 0,
+                type: 'line',
+                color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+              }
+            : {
+                width: 6,
+                type: 'line',
+                color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+              }, // 粗线样式
         data: [{ xAxis: 0 }, { xAxis: 1023 }, { yAxis: 0 }, { yAxis: 1023 }],
         emphasis: {
           lineStyle:
             scaleNumber === 0.125 || scaleNumber === 0.2
-              ? { width: 0, type: 'line', color: borderColor }
-              : { width: 6, type: 'line', color: borderColor }, // 粗线样式
+              ? {
+                  width: 0,
+                  type: 'line',
+                  color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+                }
+              : {
+                  width: 6,
+                  type: 'line',
+                  color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+                }, // 粗线样式
         },
       },
     },
@@ -94,8 +115,16 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) =
         symbol: 'none',
         lineStyle:
           scaleNumber === 0.125 || scaleNumber === 0.2
-            ? { width: 0, type: 'line', color: borderColor } // 细线样式
-            : { width: 2, type: 'line', color: borderColor},
+            ? {
+                width: 0,
+                type: 'line',
+                color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+              } // 细线样式
+            : {
+                width: 2,
+                type: 'line',
+                color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+              },
         // 放大倍数不同，markLine 对应的线位置会有偏差，需要对各个放大倍数的markLine做偏移
         data:
           scaleNumber === 64
@@ -138,9 +167,17 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) =
               ],
         emphasis: {
           lineStyle:
-            scaleNumber !== 0.125 || scaleNumber !== 0.2
-              ? { width: 2, type: 'line', color: borderColor } // 细线样式
-              : { width: 0, type: 'line', color: borderColor },
+            scaleNumber === 0.125 || scaleNumber === 0.2
+              ? {
+                  width: 0,
+                  type: 'line',
+                  color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+                }
+              : {
+                  width: 2,
+                  type: 'line',
+                  color: theme === 'dark' ? '#35393b' : '#f4f4f4',
+                }, // 细线样式
         },
       },
     },

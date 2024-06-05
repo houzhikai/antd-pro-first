@@ -1,10 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { initScrambleOptions } from './initValues';
+import { initLogicalOptions } from './initValues';
 import { getColorList } from './getColorList';
+import { generateData } from '../mockData/getGenerateData';
 import { getAxisLabelInterval } from './getAxisLabelInterval';
 
 // 创建一个Context
-export const BitMapContext = createContext(null);
+export const BitMapContext = createContext<any>(null);
 
 // 从 useContext 导出需要传递方法
 export const ProviderFunc = () => {
@@ -16,52 +17,45 @@ export const ProviderFunc = () => {
     special: {
       editmode: 'OffLine', // 参数预留，后端决定能否为空
       timestamp: '202405241359',
-      extension: '1752719',
+      extension: '4372',
       project: 'bitmaptest', // 参数预留，后端决定能否为空
       location: '/home', // 参数预留，后端决定能否为空
     },
   });
+  const [physicalDataPath, setPhysicalDataPath] = useState([]);
   const [bitMapPort, setBitMapPort] = useState(''); // 获取启动服务的端口号
-  const [loading, setLoading] = useState<boolean>(false); // 是否禁用页面：正在convert时禁用页面
-  const [theme, setTheme] = useState('light');
-
   /**
    * 顶部操作栏
    */
-  // 触发 vscode.postMessage 的时机
-  const [triggerTiming, setTriggerTiming] = useState({
-    importPhysical: 1, // 导入物理位图文件触发的时机
-    colorList: 1, // 修改颜色触发的时机
-    sourceDataLocation: 1, // 修改源数据文件触发的时机
-    physicalOutputLocation: 1, // 修改生成物理位图文件地址触发的时机
-  });
-  // 打开 convert 弹窗， 获取里面的值
-  const [convertModalObj, setConvertModalObj] = useState({
+  const [theme, setTheme] = useState('dark');
+  const [openPhysicalObj, setOpenPhysicalObj] = useState({
     open: false,
-    sourceDataLocation: 'var/xxx/xxx/sourceData',
-    scrambleCfg: {
-      fileName: initScrambleOptions[0].value,
-      location: initScrambleOptions[0].location,
-    },
-    physicalOutputLocation: 'var/xxx/xxx/xxx/physicalOutputLocation',
+    list: [],
   });
-  // scrambleCfg 的 options 列表
-  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] =
-    useState(initScrambleOptions);
   const detailsEchartsBg = theme === 'light' ? '#f5f5f5' : '#1f1f1f'; // value === 0 使用背景颜色，数据源将value = 0 去除
-
+  // 设置里面选择的模块
+  const [modeSelectedOptions, setModeSelectedOptions] = useState({
+    logical: initLogicalOptions[0],
+    physical: { value: '', label: '', location: '' },
+  });
   //设置颜色列表，与 echarts 颜色的数据结构不一样
   const [modifyColorModalObj, setModifyColorModalObj] = useState(
     getColorList(detailsEchartsBg),
   );
-  // 是否是堆叠模式
-  const [isStack, setIsStack] = useState(false);
-
+  const [modeModalObj, setModeModalObj] = useState({
+    open: false,
+    list: [],
+  });
+  // 两个开关选择器，默认都是打开
+  const [switchObj, setSwitchObj] = useState({
+    isStack: false,
+    isLogical: false,
+  });
   /**
    * 左侧树形结构
    */
   const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
-  const [physicalFileList, setPhysicalFileList] = useState([]); // 展示 DUTS 列表
+  const [treeDutsList, setTreeDutsList] = useState([]); // 展示 DUTS 列表
   /**
    * info信息，综合信息表
    */
@@ -81,16 +75,15 @@ export const ProviderFunc = () => {
   /**
    * 详图导航栏
    */
+  type BaseConversionProps = 'Hex' | 'Dec' | 'Oct';
   const detailDataPageWidth = `calc(100vw - 80px - 210px - ${width}px)`; // 详情页面的宽度
   const [scaleNumber, setScaleNumber] = useState(1); // 详图放大倍数
   const [jumpAddress, setJumpAddress] = useState({ X: 0, Y: 0 }); // jump 地址跳转
-  const [baseConversion, setBaseConversion] = useState('Hex');
+  const [baseConversion, setBaseConversion] =
+    useState<BaseConversionProps>('Hex');
   /**
    * 详图数据
    */
-  // echarts 数据源
-  const [data, setData] = useState([]);
-
   const [detailsValues, setDetailsValues] = useState({
     //详图的首位比例，0：0%， 100：100%
     xStart: 0,
@@ -116,6 +109,15 @@ export const ProviderFunc = () => {
       };
     },
   );
+  const [data, setData] = useState<any>([]);
+  const [times, setTimes] = useState(1); // 控制第一次不会加载echarts数据
+
+  useEffect(() => {
+    if (times > 0) {
+      setData(generateData(5000, switchObj.isStack));
+    }
+    setTimes((c) => c + 1);
+  }, [scaleNumber]);
 
   const [echartsDataColor, setEchartsDataColor] = useState(
     detailsEchartsColorList,
@@ -131,19 +133,23 @@ export const ProviderFunc = () => {
     detailDataPageWidth,
     theme,
     setTheme,
-    physicalFileList,
-    setPhysicalFileList,
+    treeDutsList,
+    setTreeDutsList,
     jumpAddress,
     setJumpAddress,
     echartsDataColor,
     setEchartsDataColor,
     modifyColorModalObj,
     setModifyColorModalObj,
-    convertModalObj,
-    setConvertModalObj,
+    modeModalObj,
+    setModeModalObj,
     configInfo,
     detailsValues,
     setDetailsValues,
+    modeSelectedOptions,
+    setModeSelectedOptions,
+    switchObj,
+    setSwitchObj,
     selectedTreeDataList,
     setSelectedTreeDataList,
     scaleNumber,
@@ -156,14 +162,10 @@ export const ProviderFunc = () => {
     setVscodeParams,
     bitMapPort,
     setBitMapPort,
-    scrambleCfgOptionsList,
-    setScrambleCfgOptionsList,
-    triggerTiming,
-    setTriggerTiming,
-    isStack,
-    setIsStack,
-    loading,
-    setLoading,
+    openPhysicalObj,
+    setOpenPhysicalObj,
+    physicalDataPath,
+    setPhysicalDataPath,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

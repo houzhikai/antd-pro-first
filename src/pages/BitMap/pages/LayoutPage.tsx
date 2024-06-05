@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
-import { ConfigProvider, Spin, message } from 'antd';
 import LeftPage from './LeftPage';
 import NavPage from './NavPage';
 import RightPage from './RightPage';
 import { ProviderFunc } from '../components/containers';
 import ColorListModalPage from './ModalPages/ColorListModalPage';
 import ModeModalPage from './ModalPages/ModeModalPage';
-import { useAsyncEffect } from 'ahooks';
-import myFetch from '../components/myFetch';
+// import myFetch from '@/components/myFetch';
+// import { useAsyncEffect } from 'ahooks';
+import '../index.css';
+import OpenPhysicalModalPage from './ModalPages/OpenPhysicalModalPage';
+import { ConfigProvider } from 'antd';
 import {
   custom_dark_token,
   custom_dark_Button,
@@ -19,72 +20,24 @@ import {
   custom_dark_Modal,
   custom_dark_Select,
 } from '../components/theme';
-import '../index.css';
 
-const LayoutPage = ({ setIsErrorPage }) => {
-  const {
-    setBitMapPort,
-    vscodeParams,
-    theme,
-    loading,
-    setLoading,
-    bitMapPort,
-  } = ProviderFunc();
+const LayoutPage = () => {
+  const { theme } = ProviderFunc();
 
-  useAsyncEffect(async () => {
-    try {
-      const res = await myFetch({
-        url: `http://${vscodeParams.initIp}:27700/toolmgr/startbitmap`,
-        params: { special: vscodeParams.special },
-      });
-      setBitMapPort(res[0].value);
-    } catch (error) {
-      // setIsErrorPage(true);
-    }
-  }, []);
-
-  // const queryConvertStatusFetch = async () => {
+  // useAsyncEffect(async () => {
   //   try {
   //     const res = await myFetch({
-  //       url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/queryconvertstatus`,
-  //       isExceptionHand: true,
+  //       url: `http://${vscodeParams.initIp}:27700/toolmgr/startbitmap`,
+  //       params: { special: vscodeParams.special },
   //     });
-  //     if (res.result === 0) {
-  //       /**
-  //        * 接口调用成功的操作,
-  //        * 1: Converting, 0: not converting
-  //        * true: Converting  false: not converting
-  //        */
-  //       setLoading(res.data[0].value === 1);
-  //     } else {
-  //       message.error(res.msg);
-  //     }
+  //     setBitMapPort(res.data[0].value);
   //   } catch (error) {
-  //     message.error('Get convert status fail');
-  //     setLoading(true);
+  //     // TODO, 没有返回端口号，返回错误页面
+  //     setBitMapPort('27001');
+  //     // setIsErrorPage(true);
   //   }
-  // };
-
-  // useEffect(() => {
-  //   if (bitMapPort) {
-  //     console.log(11);
-  //     queryConvertStatusFetch();
-  //   }
-  // }, [bitMapPort]);
-  // useEffect(() => {
-  //   // 设备列表接口
-  //   const time = setInterval(() => {
-  //     if (loading) {
-  //       console.log(22);
-  //       queryConvertStatusFetch();
-  //     } else {
-  //       setLoading(false);
-  //     }
-  //   }, 3000);
-  //   // 清除定时器
-  //   return () => clearInterval(time);
-  // }, [loading, bitMapPort]);
-
+  // }, []);
+  console.log({ theme });
   return (
     <ConfigProvider
       theme={
@@ -97,23 +50,22 @@ const LayoutPage = ({ setIsErrorPage }) => {
                 Radio: custom_dark_Radio,
                 Tree: custom_dark_Tree,
                 Input: custom_dark_Input,
-                Message: custom_dark_Message,
                 Modal: custom_dark_Modal,
+                Message: custom_dark_Message,
                 Select: custom_dark_Select,
               },
             }
           : {}
       }
     >
-      <Spin spinning={loading} size="large" tip="Converting">
-        <NavPage />
-        <div className="content-page">
-          <LeftPage />
-          <RightPage />
-        </div>
-        <ModeModalPage />
-        <ColorListModalPage />
-      </Spin>
+      <NavPage />
+      <div className="content-page">
+        <LeftPage />
+        <RightPage />
+      </div>
+      <ModeModalPage />
+      <ColorListModalPage />
+      <OpenPhysicalModalPage />
     </ConfigProvider>
   );
 };

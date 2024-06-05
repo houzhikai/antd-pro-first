@@ -4,7 +4,7 @@ import { ProviderFunc } from '../../../components/containers';
 import { getScatterOptions } from './components/getScatter/getScatterOptions';
 
 const DetailDataPage = () => {
-  const chartRef = useRef(null);
+  const chartRef = useRef<any>(null);
   const {
     echartsDataColor,
     theme,
@@ -15,7 +15,7 @@ const DetailDataPage = () => {
     detailsValues,
     setDetailsValues,
   } = ProviderFunc();
-
+  console.log({ data });
   useEffect(() => {
     if (data.length > 0) {
       const myChart = echarts.init(chartRef.current);
@@ -23,6 +23,7 @@ const DetailDataPage = () => {
         theme,
         data,
         echartsDataColor,
+        // TODO，需要计算出当前的值
         {
           xMin: 0,
           xMax: configInfo.layoutConfig.xMax,
@@ -34,7 +35,7 @@ const DetailDataPage = () => {
         configInfo,
         scaleNumber,
         detailsValues,
-        );
+      );
       myChart.setOption(options, true);
       myChart.on('dataZoom', () => {
         const newOptions: any = myChart.getOption();
@@ -55,7 +56,7 @@ const DetailDataPage = () => {
         window.removeEventListener('resize', resizeChart);
       };
     }
-  }, [echartsDataColor, baseConversion, scaleNumber, detailsValues, data, chartRef.current]);
+  }, [echartsDataColor, baseConversion, scaleNumber, detailsValues, data]);
 
   return (
     <>

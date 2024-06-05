@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { ProviderFunc } from '../../../components/containers';
 import { getFullEchartsOptions } from './components/getFullEchartsOptions';
 import MagnifyingGlass from './MagnifyingGlass';
-import { getFullWidthHeight } from '../../../components/getFullWidthHeight'
+import { getFullWidthHeight } from '@/pages/BitMap/components/getFullWidthHeight';
 import '../../../index.css';
 
 const EchartsFullPage = () => {
-  const fullEChartRef = useRef(null);
+  const fullEChartRef = useRef<any>(null);
   const {
     detailDataPageWidth,
     theme,
@@ -16,7 +16,6 @@ const EchartsFullPage = () => {
     width,
     baseConversion,
     data,
-    scaleNumber,
   } = ProviderFunc();
   const [height, setHeight] = useState(width);
 
@@ -37,35 +36,40 @@ const EchartsFullPage = () => {
   }, []);
 
   useEffect(() => {
-    if(data.length>0){ 
-      const myChart = echarts.init(fullEChartRef.current);
-      const options = getFullEchartsOptions(
-        theme,
-        data,
-        echartsDataColor,
-        {
-          xMin: 0,
-          xMax: configInfo.layoutConfig.xMax,
-          yMin: 0,
-          yMax: configInfo.layoutConfig.yMax,
-        },
-        baseConversion,
-        configInfo.layoutConfig.dots,
-      );
-      myChart.setOption(options, true);
-      // 处理窗口大小变化
-      const resizeChart = () => myChart.resize();
-      // 监听浏览器视图变化
-      window.addEventListener('resize', resizeChart);
+    const options = getFullEchartsOptions(
+      theme,
+      data,
+      echartsDataColor,
+      {
+        xMin: 0,
+        xMax: configInfo.layoutConfig.xMax,
+        yMin: 0,
+        yMax: configInfo.layoutConfig.yMax,
+      },
+      baseConversion,
+      configInfo.layoutConfig.dots,
+    );
+    const myChart = echarts.init(fullEChartRef.current);
+    myChart.setOption(options, true);
+    // 处理窗口大小变化
+    const resizeChart = () => {
+      myChart.resize();
+    };
 
-      return () => {
-        myChart.dispose();
-        window.removeEventListener('resize', resizeChart);
-      };
-    }
-  }, [echartsDataColor, baseConversion, scaleNumber, detailDataPageWidth, theme, , data, fullEChartRef.current]);
+    // 监听浏览器视图变化
+    window.addEventListener('resize', resizeChart);
 
-  const FullWidthHeight = getFullWidthHeight(configInfo.layoutConfig, width, height);
+    return () => {
+      myChart.dispose();
+      window.removeEventListener('resize', resizeChart);
+    };
+  }, [detailDataPageWidth, theme, echartsDataColor, data]);
+
+  const FullWidthHeight = getFullWidthHeight(
+    configInfo.layoutConfig,
+    width,
+    height,
+  );
 
   return (
     <>
@@ -77,7 +81,7 @@ const EchartsFullPage = () => {
           style={{
             width: FullWidthHeight.width,
             height: FullWidthHeight.height,
-            border: '1px solid #34393b'
+            border: '1px solid #35393b',
           }}
         />
         {/* 放大镜 */}

@@ -10,8 +10,10 @@ export const useFUProviderModule = () => {
     times: number;
     aboveTimes: number;
   }>({ times: 0, aboveTimes: 99999 });
+
+  const initialValue = localStorage.getItem('myValue') || '192.168.3.218';
   const [startParams, setStartParams] = useState({
-    initIp: '192.168.3.218',
+    initIp: initialValue,
     vscodeId: 12345,
   }); // 所有已选择的勾选项
   const [activeKey, setActiveKey] = useState(['0']);

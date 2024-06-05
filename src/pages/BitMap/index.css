@@ -2,13 +2,12 @@
 :root {
     --full-page-width: 200px;
     --full-page-height: 40%; 
-    --border-color: #34393b;
   }
   
 .bit-map-nav {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #eee;
     padding-bottom: 4px;
 }
 .bit-map-nav-page{
@@ -47,7 +46,7 @@
 }
 .bit-map-right-full-data-page{
     flex-grow: 1;
-    border: 1px solid var(--border-color);
+    border: 1px solid #eee;
     width: calc(100vw - 210px - 300px);
 }
 .echarts-canvas{
@@ -76,7 +75,7 @@
 .information-page{
     height: calc(100% - var(--full-page-height) - 24px);
     overflow-y: auto;
-    border: 1px solid var(--border-color);
+    border: 1px solid #eee;
 }
 /* 弹窗 */
 .bit-map-color-modal{
@@ -85,5 +84,5 @@
 }
 .bit-map-color-modal-label{
     margin-right: 10px;
-    width: 100px;
+    width: 80px;
 }

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Select, message } from 'antd';
-import { ProviderFunc } from '../../../../components/containers';
-import { scaleNumberOptions } from '../../../../components/initValues';
-import myFetch from '../../../../components/myFetch';
+import { Select } from 'antd';
+import { ProviderFunc } from '@/pages/BitMap/components/containers';
+import { scaleNumberOptions } from '@/pages/BitMap/components/initValues';
+import myFetch from '@/components/myFetch';
 
 const ScalePage = () => {
-  const { scaleNumber, setScaleNumber, data, vscodeParams, bitMapPort, setData } = ProviderFunc();
+  const { scaleNumber, setScaleNumber, data, vscodeParams, bitMapPort } =
+    ProviderFunc();
 
   const handleChange = async (value) => {
     setScaleNumber(value);
@@ -15,16 +15,9 @@ const ScalePage = () => {
         url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=${value}`,
         isExceptionHand: true,
       });
-      if(res.result === 0){
-        setScaleNumber(value);
-        setData(JSON.parse(res.data[0].value) || []);
-      }else{
-        message.error(res.msg)
-      }
+      setScaleNumber(value);
       console.log({ res });
-    } catch (error) {
-      message.error('Scale fail')
-    }
+    } catch (error) {}
   };
 
   return (

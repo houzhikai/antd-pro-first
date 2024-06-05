@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import LayoutPage from './pages/LayoutPage';
 import ErrorPage from './pages/ErrorPage';
 import { ProviderFunc, BitMapContext } from './components/containers';
@@ -13,7 +13,7 @@ const BitMapPage = () => {
       {isErrorPage ? (
         <ErrorPage setIsErrorPage={setIsErrorPage} />
       ) : (
-        <LayoutPage setIsErrorPage={setIsErrorPage} />
+        <LayoutPage />
       )}
     </BitMapContext.Provider>
   );

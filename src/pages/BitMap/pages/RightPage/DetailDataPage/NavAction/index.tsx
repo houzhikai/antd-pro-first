@@ -1,5 +1,6 @@
-import React from 'react';
 import BaseConversion from './BaseConversion';
+// import ConvertPage from './ConvertPage';
+// import JumpPage from './JumpPage';
 import NavAction from './NavAction';
 import ScalePage from './ScalePage';
 
@@ -16,6 +17,9 @@ const DetailNavActionPage = () => {
     >
       <ScalePage />
       <BaseConversion />
+      {/* <DropDownPage /> */}
+      {/* <JumpPage /> */}
+      {/* <ConvertPage /> */}
       <NavAction />
     </div>
   );

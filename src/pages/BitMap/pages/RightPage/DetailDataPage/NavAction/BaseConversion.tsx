@@ -1,6 +1,5 @@
-import React from 'react';
+import { ProviderFunc } from '@/pages/BitMap/components/containers';
 import { RadioChangeEvent, Radio } from 'antd';
-import { ProviderFunc } from '../../../../components/containers';
 
 const BaseConversion = () => {
   const { baseConversion, setBaseConversion, data } = ProviderFunc();

@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
 import { Popconfirm, Tag } from 'antd';
-import { ProviderFunc } from '@/pages/BitMap/components/containers';
+import { useState } from 'react';
 
-const ShowTagPage = ({ tag }) => {
-  const { setScrambleCfgOptionsList } = ProviderFunc();
+const ShowTagPage = ({ tag, setOptions }) => {
   const [open, setOpen] = useState(false);
 
   const handleConfirm = () => {
-    setScrambleCfgOptionsList((list) => {
-      const newList = list.filter((option) => option.label !== tag.label);
-      return newList;
-    });
+    setOptions((list) => list.filter((option) => option.label !== tag.label));
     setOpen(false);
   };
   const handleCancel = () => {
@@ -28,7 +23,7 @@ const ShowTagPage = ({ tag }) => {
     >
       <Tag
         style={{ marginBottom: 10 }}
-        closable={!tag.disable}
+        closable
         onClose={(e) => {
           e.preventDefault();
           setOpen(true);

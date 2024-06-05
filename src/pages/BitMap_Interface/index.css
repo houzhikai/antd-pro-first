@@ -1,0 +1,89 @@
+/* 自定义属性 */
+:root {
+    --full-page-width: 200px;
+    --full-page-height: 40%; 
+    --border-color: #34393b;
+  }
+  
+.bit-map-nav {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 4px;
+}
+.bit-map-nav-page{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 10px;
+}
+.bit-map-nav-gap{
+    margin:0 10px;
+    cursor: pointer;
+}
+.content-page {
+    display: flex;
+    height: calc(100vh - 48px - 45px - 10px);
+    margin-top: 10px;
+}
+.bit-map-left-page{
+    width: 150px;
+}
+.bit-map-right-page{
+    display: flex;
+}
+.bit-map-page-resizable{
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: transparent;
+    right: -1px;
+    top: 0;
+    cursor: ew-resize;
+} 
+.bit-map-page-resizable:active {
+    border: 1px solid #007fd4;
+    background-color: #007fd4;
+}
+.bit-map-right-full-data-page{
+    flex-grow: 1;
+    border: 1px solid var(--border-color);
+    width: calc(100vw - 210px - 300px);
+}
+.echarts-canvas{
+    width: calc(100vw - 440px);
+    height: 750px;
+}
+
+.echarts-full-page{
+    height: var(--full-page-height);
+    background: transparent;
+    position: relative;
+    margin-top: 10px;
+    /* border-top: 1px solid #ccc; */
+}
+.echarts-full-page-magnifying-glass{
+    position: absolute;
+    /* top: 0;
+    left: 0;
+    height: 100px; */
+    background: #aec2e8;
+    cursor: move;
+    opacity: 0.6;
+}
+
+
+.information-page{
+    height: calc(100% - var(--full-page-height) - 24px);
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+}
+/* 弹窗 */
+.bit-map-color-modal{
+    display: flex;
+    align-items: center;
+}
+.bit-map-color-modal-label{
+    margin-right: 10px;
+    width: 100px;
+}
