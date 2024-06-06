@@ -1,61 +1,63 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { initLogicalOptions } from './initValues';
-import { getColorList } from './getColorList';
-import { generateData } from '../mockData/getGenerateData';
+import { initScrambleOptions } from './initValues';
 import { getAxisLabelInterval } from './getAxisLabelInterval';
+import { generateData } from '../mockData/getGenerateData';
 
 // 创建一个Context
-export const BitMapContext = createContext<any>(null);
+export const BitMapContext = createContext(null);
 
 // 从 useContext 导出需要传递方法
 export const ProviderFunc = () => {
   /**
    * 接口参数
    */
-  const [vscodeParams, setVscodeParams] = useState({
-    initIp: '192.168.3.71',
-    special: {
-      editmode: 'OffLine', // 参数预留，后端决定能否为空
-      timestamp: '202405241359',
-      extension: '4372',
-      project: 'bitmaptest', // 参数预留，后端决定能否为空
-      location: '/home', // 参数预留，后端决定能否为空
-    },
-  });
-  const [physicalDataPath, setPhysicalDataPath] = useState([]);
+  const [vscodeParams, setVscodeParams] = useState({});
   const [bitMapPort, setBitMapPort] = useState(''); // 获取启动服务的端口号
+  const [loading, setLoading] = useState<boolean>(false); // Do you want to disable the page: disable the page while converting
+  const [theme, setTheme] = useState('light');
+
   /**
    * 顶部操作栏
    */
-  const [theme, setTheme] = useState('dark');
-  const [openPhysicalObj, setOpenPhysicalObj] = useState({
+  // 触发 vscode.postMessage 的时机
+  const [triggerTiming, setTriggerTiming] = useState({
+    importPhysical: false, // 导入物理位图文件触发的时机
+    colorList: 1, // 修改颜色触发的时机
+    sourceDataLocation: 1, // 修改源数据文件触发的时机
+    physicalOutputLocation: 1, // 修改生成物理位图文件地址触发的时机
+  });
+
+  const [fullPath, setFullPath] = useState({
+    importPhysicalPath: '', // import button need location
+  });
+
+  // 打开 convert 弹窗， 获取里面的值
+  const [convertModalObj, setConvertModalObj] = useState({
     open: false,
-    list: [],
+    sourceDataLocation: '',
+    scrambleCfg: {
+      fileName: '', // initScrambleOptions[0].value,
+      location: '', // initScrambleOptions[0].location,
+    },
+    physicalOutputLocation: '',
   });
-  const detailsEchartsBg = theme === 'light' ? '#f5f5f5' : '#1f1f1f'; // value === 0 使用背景颜色，数据源将value = 0 去除
-  // 设置里面选择的模块
-  const [modeSelectedOptions, setModeSelectedOptions] = useState({
-    logical: initLogicalOptions[0],
-    physical: { value: '', label: '', location: '' },
-  });
+  // scrambleCfg 的 options 列表
+  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] =
+    useState(initScrambleOptions);
+
   //设置颜色列表，与 echarts 颜色的数据结构不一样
-  const [modifyColorModalObj, setModifyColorModalObj] = useState(
-    getColorList(detailsEchartsBg),
-  );
-  const [modeModalObj, setModeModalObj] = useState({
+  const [modifyColorModalObj, setModifyColorModalObj] = useState({
     open: false,
-    list: [],
+    colorList: [],
   });
-  // 两个开关选择器，默认都是打开
-  const [switchObj, setSwitchObj] = useState({
-    isStack: false,
-    isLogical: false,
-  });
+  // 是否是堆叠模式
+  const [isStack, setIsStack] = useState(false);
+
   /**
    * 左侧树形结构
    */
   const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
-  const [treeDutsList, setTreeDutsList] = useState([]); // 展示 DUTS 列表
+  const [physicalFileList, setPhysicalFileList] = useState([]); // 展示 DUTS 列表
   /**
    * info信息，综合信息表
    */
@@ -64,7 +66,7 @@ export const ProviderFunc = () => {
    * 全量数据，缩略图
    */
   const [width, setWidth] = useState(300); // full-data 的宽度
-  // TODO, 后端传递全量数据时需要将xMAX yMAX值传递过来,dots: TopLeft, TopRight, BottomLeft, BottomRight
+  // TODO, dots: TopLeft, TopRight, BottomLeft, BottomRight
   const configInfo = {
     // row: 行，col: 列
     layoutConfig: { xMax: 1023, yMax: 1023, dots: 'BottomLeft' },
@@ -75,15 +77,19 @@ export const ProviderFunc = () => {
   /**
    * 详图导航栏
    */
-  type BaseConversionProps = 'Hex' | 'Dec' | 'Oct';
   const detailDataPageWidth = `calc(100vw - 80px - 210px - ${width}px)`; // 详情页面的宽度
   const [scaleNumber, setScaleNumber] = useState(1); // 详图放大倍数
   const [jumpAddress, setJumpAddress] = useState({ X: 0, Y: 0 }); // jump 地址跳转
-  const [baseConversion, setBaseConversion] =
-    useState<BaseConversionProps>('Hex');
+  const [baseConversion, setBaseConversion] = useState('Hex');
   /**
    * 详图数据
    */
+  // echarts 数据源
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData(generateData(5000, isStack));
+  }, [scaleNumber]);
   const [detailsValues, setDetailsValues] = useState({
     //详图的首位比例，0：0%， 100：100%
     xStart: 0,
@@ -101,31 +107,10 @@ export const ProviderFunc = () => {
       yEnd: defaultDetailValues.end.yEnd,
     });
   }, [scaleNumber]);
-  const detailsEchartsColorList = modifyColorModalObj.colorList.map(
-    (item, index) => {
-      return {
-        value: index,
-        color: item.color,
-      };
-    },
-  );
-  const [data, setData] = useState<any>([]);
-  const [times, setTimes] = useState(1); // 控制第一次不会加载echarts数据
-
-  useEffect(() => {
-    if (times > 0) {
-      setData(generateData(5000, switchObj.isStack));
-    }
-    setTimes((c) => c + 1);
-  }, [scaleNumber]);
 
   const [echartsDataColor, setEchartsDataColor] = useState(
-    detailsEchartsColorList,
+    modifyColorModalObj.colorList,
   ); // echarts 颜色列表
-  // TODO 有且仅有一次渲染，现在会渲染多次
-  useEffect(() => {
-    setEchartsDataColor(detailsEchartsColorList);
-  }, [modifyColorModalObj.colorList]);
 
   const bitMapContextValue = {
     width,
@@ -133,23 +118,19 @@ export const ProviderFunc = () => {
     detailDataPageWidth,
     theme,
     setTheme,
-    treeDutsList,
-    setTreeDutsList,
+    physicalFileList,
+    setPhysicalFileList,
     jumpAddress,
     setJumpAddress,
     echartsDataColor,
     setEchartsDataColor,
     modifyColorModalObj,
     setModifyColorModalObj,
-    modeModalObj,
-    setModeModalObj,
+    convertModalObj,
+    setConvertModalObj,
     configInfo,
     detailsValues,
     setDetailsValues,
-    modeSelectedOptions,
-    setModeSelectedOptions,
-    switchObj,
-    setSwitchObj,
     selectedTreeDataList,
     setSelectedTreeDataList,
     scaleNumber,
@@ -162,10 +143,16 @@ export const ProviderFunc = () => {
     setVscodeParams,
     bitMapPort,
     setBitMapPort,
-    openPhysicalObj,
-    setOpenPhysicalObj,
-    physicalDataPath,
-    setPhysicalDataPath,
+    scrambleCfgOptionsList,
+    setScrambleCfgOptionsList,
+    triggerTiming,
+    setTriggerTiming,
+    isStack,
+    setIsStack,
+    loading,
+    setLoading,
+    fullPath,
+    setFullPath,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

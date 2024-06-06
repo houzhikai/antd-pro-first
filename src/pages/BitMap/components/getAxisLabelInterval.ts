@@ -25,29 +25,29 @@ export const getAxisLabelInterval = (scaleNumber) => {
     case 4:
       value = {
         end: { xEnd: 40, yEnd: 40 },
-        axisTick: { xInterval: 127, yInterval: 1024 / 8 - 1 },
-        axisLabel: { xInterval: 127, yInterval: 1024 / 8 - 1 },
+        axisTick: { xInterval: 63, yInterval: 1024 / 8 - 1 },
+        axisLabel: { xInterval: 63, yInterval: 1024 / 8 - 1 },
       };
       break;
     case 16:
       value = {
         end: { xEnd: 60, yEnd: 60 },
-        axisTick: { xInterval: 127, yInterval: 1024 / 8 - 1 },
-        axisLabel: { xInterval: 127, yInterval: 1024 / 8 - 1 },
+        axisTick: { xInterval: 31, yInterval: 1024 / 8 - 1 },
+        axisLabel: { xInterval: 31, yInterval: 1024 / 8 - 1 },
       };
       break;
     case 64:
       value = {
         end: { xEnd: 80, yEnd: 80 },
-        axisTick: { xInterval: 127, yInterval: 1024 / 4 - 1 },
-        axisLabel: { xInterval: 127, yInterval: 1024 / 4 - 1 },
+        axisTick: { xInterval: 15, yInterval: 1024 / 32 - 1 },
+        axisLabel: { xInterval: 15, yInterval: 1024 / 32 - 1 },
       };
       break;
     case 256:
       value = {
         end: { xEnd: 100, yEnd: 100 },
-        axisTick: { xInterval: 127, yInterval: 127 },
-        axisLabel: { xInterval: 127, yInterval: 1024 / 4 - 1 },
+        axisTick: { xInterval: 7, yInterval: 1024 / 32 - 1 },
+        axisLabel: { xInterval: 7, yInterval: 1024 / 32 - 1 },
       };
       break;
     default:

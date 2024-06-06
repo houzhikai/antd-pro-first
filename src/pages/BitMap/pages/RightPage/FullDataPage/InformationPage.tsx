@@ -1,16 +1,10 @@
+import React from 'react';
 import { Descriptions } from 'antd';
-// import { comprehensiveInfo } from '@/pages/BitMap/components/initValues';
+import { ProviderFunc } from '../../../components/containers';
 import '../../../index.css';
-import { ProviderFunc } from '@/pages/BitMap/components/containers';
 
 const InformationPage = () => {
   const { selectedTreeDataList } = ProviderFunc();
-  const labelStyle = {
-    width: 100,
-    background: '#e5f2f8',
-    padding: '8px 16px',
-    // border: '1px solid #fff',
-  };
   const length = selectedTreeDataList.length;
 
   const getObjConvertList = (obj) => {
@@ -19,7 +13,7 @@ const InformationPage = () => {
         Object.keys(obj).map((key) => ({
           key: key,
           label: key,
-          children: `${obj[key]}`,
+          children: String(obj[key]),
         })) || []
       );
     } else {
@@ -27,16 +21,31 @@ const InformationPage = () => {
     }
   };
 
-  const headerObj = selectedTreeDataList[length - 1]?.header || {};
-  const headerList = getObjConvertList(headerObj);
+  // const headerObj = selectedTreeDataList[length - 1]?.header || {};
+  // const headerList = getObjConvertList(headerObj);
 
-  const testInfoObj = selectedTreeDataList[length - 1]?.test_info || {};
-  const testInfoList = getObjConvertList(testInfoObj.afm_param);
+  // const testInfoObj = selectedTreeDataList[length - 1]?.test_info || {};
+  // const testInfoList = getObjConvertList(testInfoObj.afm_param);
 
-  const detailsObj = selectedTreeDataList[length - 1]?.details || {};
-  const detailsList = getObjConvertList(detailsObj);
+  
+  // const detailsObj = selectedTreeDataList[length - 1]?.details || {};
+  // const detailsList = getObjConvertList(detailsObj);
 
-  const infoList = [...headerList, ...testInfoList, ...detailsList];
+  // show select dut details
+   const infoList = selectedTreeDataList.map((item) => {
+      const detailsList =
+        Object.keys(item.details).map((key) => ({
+          key: key,
+          label: key,
+          children: String(item.details[key]),
+        })) || [];
+      return [...detailsList];
+    })
+    .flat(Infinity);
+ 
+  const labelStyle={
+    padding: '1px 16px'
+  }
 
   return (
     <>
@@ -44,6 +53,7 @@ const InformationPage = () => {
       <div className="information-page">
         <Descriptions
           labelStyle={labelStyle}
+          contentStyle={labelStyle}
           column={1}
           bordered
           items={infoList}

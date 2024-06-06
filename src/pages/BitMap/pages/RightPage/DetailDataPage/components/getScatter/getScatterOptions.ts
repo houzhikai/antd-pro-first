@@ -1,4 +1,4 @@
-import { getAxisLabelInterval } from '@/pages/BitMap/components/getAxisLabelInterval';
+import { getAxisLabelInterval } from '../../../../../components/getAxisLabelInterval';
 import { takeMiddleNumber } from '../../../../../components/takeMiddleNumber';
 import getScatterSeries from './getScatterSeries';
 export const getScatterOptions = (
@@ -16,11 +16,13 @@ export const getScatterOptions = (
     detailsEchartsAxisValue.xMin,
     detailsEchartsAxisValue.xMax,
     baseConversion,
+    scaleNumber,
   );
   const yAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.yMin,
     detailsEchartsAxisValue.yMax,
     baseConversion,
+    scaleNumber,
   );
   const dots = configInfo.layoutConfig.dots;
   const axisLabelInterval = getAxisLabelInterval(scaleNumber);
@@ -33,25 +35,38 @@ export const getScatterOptions = (
       textStyle: { color: theme === 'dark' ? '#938c83' : '#1f1f1f' },
       formatter: (params: { data: number[] }) => {
         if (!Array.isArray(params.data)) return; // 不展示 markLine.emphasis的值
-        let baseNumberList: any = [];
-        if (baseConversion === 'Hex') {
-          baseNumberList = params.data.map((item, index) =>
-            index < 2 ? item.toString(16).toUpperCase() : item,
-          );
-        } else if (baseConversion === 'Oct') {
-          baseNumberList = params.data.map((item, index) =>
-            index < 2 ? item.toString(8) : item,
-          );
-        } else {
-          baseNumberList = params.data;
-        }
+        // let baseNumberList: any = [];
+        // if (baseConversion === 'Hex') {
+        //   baseNumberList = params.data.map((item, index) =>
+        //     index < 2 ? item.toString(16).toUpperCase() : item,
+        //   );
+        // } else if (baseConversion === 'Oct') {
+        //   baseNumberList = params.data.map((item, index) =>
+        //     index < 2 ? item.toString(8) : item,
+        //   );
+        // } else {
+        //   baseNumberList = params.data;
+        // }
+        const scale = scaleNumber >= 1 ? Math.sqrt(scaleNumber) : 1;
+        let X = params.data[0] * scale || '';
+        let Y = params.data[1] * scale || '';
+        const baseX =
+          baseConversion === 'Hex'
+            ? X.toString(16).toUpperCase()
+            : baseConversion === 'Oct'
+            ? X.toString(8)
+            : X;
+        const baseY =
+          baseConversion === 'Hex'
+            ? Y.toString(16).toUpperCase()
+            : baseConversion === 'Oct'
+            ? Y.toString(8)
+            : Y;
         return `
-          XY: ${baseNumberList?.[0] || ''}, ${baseNumberList?.[1] || ''} <br />
-          Block_XY: ${String(Math.floor(params?.data?.[0] / 1024)) || ''}, ${
-          String(Math.floor(params?.data?.[1] / 1024)) || ''
-        } <br />
-          Page_XY: ${String(Math.floor(params?.data?.[0] / 128)) || ''}, ${
-          String(Math.floor(params?.data?.[1] / 1024)) || ''
+          XY: ${baseX}, ${baseY} <br />
+          Block_XY: 0, 0 <br />
+          Page_XY: ${String(Math.floor(params?.data?.[0] / 1024)) || ''}, ${
+          String(Math.floor(params?.data?.[0] / (1024 / scale / 8))) || ''
         }
           `;
       },
@@ -104,22 +119,14 @@ export const getScatterOptions = (
       // 显示坐标轴刻度。
       axisTick: {
         // 分割线偏移, alignWithLabel: 可以保证刻度线和标签对齐,
-        alignWithLabel:
-          scaleNumber === 0.2 ||
-          scaleNumber === 1 ||
-          scaleNumber === 4 ||
-          scaleNumber === 16,
+        alignWithLabel: scaleNumber !== 0.125,
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisTick.xInterval,
       },
       // 显示刻度标签，坐标刻度上的数字
       axisLabel: {
         // 分割线偏移, alignWithLabel: 可以保证刻度线和标签对齐,
-        alignWithLabel:
-          scaleNumber === 0.2 ||
-          scaleNumber === 1 ||
-          scaleNumber === 4 ||
-          scaleNumber === 16,
+        alignWithLabel: scaleNumber !== 0.125,
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.xInterval,
       },

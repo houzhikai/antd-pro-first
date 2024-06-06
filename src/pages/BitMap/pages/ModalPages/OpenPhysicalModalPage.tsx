@@ -40,14 +40,12 @@ const OpenPhysicalModalPage = () => {
         },
       ],
     };
-    console.log({ params });
     const res = await myFetch({
       // url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/converbitmapdata`,
       url: `http://192.168.3.71:27001/bitmap/converbitmapdata`,
       params,
       isExceptionHand: true,
     });
-
     console.log({ res });
   };
   return (

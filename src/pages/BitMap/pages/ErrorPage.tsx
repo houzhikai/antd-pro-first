@@ -9,7 +9,7 @@ const ErrorPage = ({ setIsErrorPage }) => {
   return (
     <Result
       status="error"
-      title="Please refresh the page"
+      title={<div style={{color: '#cfcdca'}}>Please refresh the page</div>}
       extra={[
         <Button type="primary" key="refresh" onClick={handleRefresh}>
           Refresh

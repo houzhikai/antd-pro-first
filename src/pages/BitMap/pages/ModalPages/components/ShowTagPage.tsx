@@ -1,11 +1,21 @@
+import React, { useState } from 'react';
 import { Popconfirm, Tag } from 'antd';
-import { useState } from 'react';
+import {ProviderFunc} from '../../../components/containers'
 
-const ShowTagPage = ({ tag, setOptions }) => {
+interface ShowTagPageProps {
+  tag: any;
+  key?:string
+}
+
+const ShowTagPage = ({ tag }:ShowTagPageProps) => {
+  const { setScrambleCfgOptionsList } = ProviderFunc();
   const [open, setOpen] = useState(false);
 
   const handleConfirm = () => {
-    setOptions((list) => list.filter((option) => option.label !== tag.label));
+    setScrambleCfgOptionsList((list) => {
+      const newList = list.filter((option) => option.label !== tag.label);
+      return newList;
+    });
     setOpen(false);
   };
   const handleCancel = () => {
@@ -23,7 +33,7 @@ const ShowTagPage = ({ tag, setOptions }) => {
     >
       <Tag
         style={{ marginBottom: 10 }}
-        closable
+        closable={!tag.disable}
         onClose={(e) => {
           e.preventDefault();
           setOpen(true);

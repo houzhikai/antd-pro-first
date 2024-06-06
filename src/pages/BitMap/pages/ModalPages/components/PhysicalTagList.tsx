@@ -1,145 +1,106 @@
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Typography, Select, Button, Input, Space } from 'antd';
+import { Select, Button, Input, Typography } from 'antd';
 import ShowTagPage from './ShowTagPage';
 import { ProviderFunc } from '../../../components/containers';
 
 const PhysicalTagList = () => {
-  const { setModeSelectedOptions } = ProviderFunc();
+  const { scrambleCfgOptionsList, setScrambleCfgOptionsList, convertModalObj, setConvertModalObj, 
+    setTriggerTiming } = ProviderFunc();
   const [id, setId] = useState(0);
-  const defaultShowInput: {
-    key: number | undefined;
-    value: string;
-    status: undefined | 'warning' | 'error';
-  } = { key: undefined, value: '', status: undefined };
-  const [isShowInput, setIsShowInput] = useState(defaultShowInput);
-  const tagNameList: any = [
-    {
-      value: 'physical_file1',
-      label: 'physical_file1',
-      location: '/var/partner/physical/physical_file1',
-    },
-    {
-      value: 'physical_file2',
-      label: 'physical_file2',
-      location: '/var/partner/physical/physical_file2',
-    },
-    {
-      value: 'physical_file3',
-      label: 'physical_file3',
-      location: '/var/partner/physical/physical_file3',
-    },
-  ];
-  const [options, setOptions] = useState<any>([].concat(tagNameList));
+
+  const handleModifySourceDataLocation = () => {
+    setTriggerTiming(obj=>({...obj, sourceDataLocation: obj.sourceDataLocation + 1 }))
+  };
+
   const handleAddFile = () => {
+    // TODO， vscode interface
     setId((c) => c + 1);
     const newFileName = {
       value: `new_file_${id}`,
       label: `new_file_${id}`,
       location: `/var/user/test/new_file_${id}`,
+      disable: false,
     };
-    setOptions((list) => [newFileName, ...list]);
+    setScrambleCfgOptionsList((list) => [newFileName, ...list]);
   };
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    const status =
-      options.filter((option) => option.value === value).length > 0 ||
-      value === ''
-        ? 'error'
-        : undefined;
-    setIsShowInput((obj) => {
+  const handleChangePhysicalOptions = (value) => {
+    setConvertModalObj((obj) => {
+      const filterValue = scrambleCfgOptionsList.filter((item) => item.value === value)[0];
       return {
         ...obj,
-        status,
-        value,
+        scrambleCfg: {
+          ...obj.scrambleCfg,
+          fileName: filterValue.value,
+          location: filterValue.location,
+        },
       };
     });
   };
 
-  const handlePressEnter = (e, index) => {
-    const value = e.target.value;
-
-    if (isShowInput.status !== 'error' && isShowInput.value !== '') {
-      const newOptions = options.map((item, idx) => {
-        if (index === idx) {
-          return {
-            ...item,
-            value,
-            label: value,
-          };
-        }
-        return item;
-      });
-      setOptions(newOptions);
-    }
-    if (isShowInput.value === '') {
-      setOptions(options);
-    }
-
-    setIsShowInput(defaultShowInput);
+  const CustomFormItem = ({ children, title }:any) => {
+    return (
+      <div>
+        <Typography.Title level={5}>
+          <div style={{ width: 155, display: 'inline-block' }}>{title}</div>
+          {children}
+        </Typography.Title>
+      </div>
+    );
   };
-
-  const handleChangePhysicalOptions = (value) => {
-    const newOptions = options.filter((item) => item.value === value)[0];
-    setModeSelectedOptions((obj) => ({ ...obj, physical: newOptions }));
-  };
-
   return (
-    <div>
-      <Typography.Title level={4}>
-        <span>Physical</span>
-        <Select
-          style={{ marginLeft: 20, width: 200 }}
-          options={options}
-          // defaultValue={options[0]}
-          onChange={handleChangePhysicalOptions}
+    <>
+      {/* 源数据文件夹 */}
+      <CustomFormItem title="Source Data">
+        <Input
+          style={{ margin: '0 20px', width: 400 }}
+          value={convertModalObj.sourceDataLocation}
+          disabled
         />
-      </Typography.Title>
-      {options.map((tag: any, index) => {
-        return (
-          <Space
-            key={tag.value}
-            onDoubleClick={() =>
-              setIsShowInput((obj) => ({
-                ...obj,
-                value: tag.label,
-                key: index,
-              }))
-            }
-          >
-            {isShowInput.key === index ? (
-              <div style={{ marginRight: 10 }}>
-                <Input
-                  autoFocus
-                  allowClear
-                  value={isShowInput.value}
-                  onChange={handleChange}
-                  onPressEnter={(e) => handlePressEnter(e, index)}
-                  onBlur={(e) => handlePressEnter(e, index)}
-                  status={isShowInput.status}
-                />
-              </div>
-            ) : (
-              <ShowTagPage setOptions={setOptions} tag={tag} />
-            )}
-          </Space>
-        );
-      })}
-      <Button
-        size="small"
-        type="primary"
-        onClick={handleAddFile}
-        icon={
-          <PlusOutlined
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
+        <Button type="primary" onClick={handleModifySourceDataLocation}>
+          Browse Path
+        </Button>
+      </CustomFormItem>
+      {/* 物理转换文件 */}
+      <div>
+        <CustomFormItem title="ScrambleCfg">
+          <Select
+            style={{ marginLeft: 20, width: 200 }}
+            options={scrambleCfgOptionsList}
+            value={convertModalObj.scrambleCfg.fileName}
+            onChange={handleChangePhysicalOptions}
           />
-        }
-      >
-        Add a Physical File
-      </Button>
-    </div>
+        </CustomFormItem>
+        {scrambleCfgOptionsList.map((tag: any) => {
+          return <ShowTagPage key={tag.label} tag={tag} />;
+        })}
+        <Button
+          size="small"
+          type="primary"
+          onClick={handleAddFile}
+          disabled
+          icon={
+            <PlusOutlined
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            />
+          }
+        >
+          Add a Physical File
+        </Button>
+      </div>
+      {/* 输出物理文件路径 */}
+      <CustomFormItem title="Physical Output">
+        <Input
+          style={{ margin: '0 20px', width: 400 }}
+          value={convertModalObj.physicalOutputLocation}
+          disabled
+        />
+        <Button type="primary" onClick={handleAddFile}>
+          Browse Path
+        </Button>
+      </CustomFormItem>
+    </>
   );
 };
 
