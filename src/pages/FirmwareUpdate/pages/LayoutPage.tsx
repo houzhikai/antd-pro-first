@@ -1,11 +1,11 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
+import { message } from 'antd';
 import NavPage from './NavPage';
 import { useFUProviderModule } from '../components/containers';
 import DetailsPage from './DetailsPage';
 import myFetch from '@/components/myFetch';
-// import { mockDeviceListInterface } from './mockData/mockTableDataList';
 import '../index.css';
-import { useEffect } from 'react';
+import { mockDeviceListInterface } from './mockData/mockTableDataList';
 
 // TODO 样式放在 vscode 中再调试
 const LayoutPage = ({ setIsErrorPage }) => {
@@ -14,6 +14,7 @@ const LayoutPage = ({ setIsErrorPage }) => {
     errorTimes,
     setErrorTimes,
     startParams,
+    setUbootEnv,
   } = useFUProviderModule();
   const getDeviceDataList = async () => {
     try {
@@ -22,10 +23,16 @@ const LayoutPage = ({ setIsErrorPage }) => {
         params: { heartbeat: String(startParams.vscodeId) },
         isExceptionHand: true,
       });
-      setGetDeviceListAndHeartObj(res.data);
+      if (res.result === '0') {
+        // setGetDeviceListAndHeartObj(res.data);
+
+        setGetDeviceListAndHeartObj(mockDeviceListInterface);
+      } else {
+        message.error(res.msg);
+      }
     } catch (error) {
-      console.log({ error });
-      // setGetDeviceListAndHeartObj(mockDeviceListInterface);
+      setGetDeviceListAndHeartObj(mockDeviceListInterface);
+
       setErrorTimes((obj) => {
         return {
           ...obj,
@@ -34,6 +41,19 @@ const LayoutPage = ({ setIsErrorPage }) => {
       });
     }
   };
+  useEffect(() => {
+    const ubootEnvList = (mockDeviceListInterface?.tableList || [])
+      .map((item) => item.children)
+      .flat(Infinity)
+      ?.filter((item) => item.firmware === 'Uboot')
+      .map((item, index) => {
+        return {
+          key: item.key || String(index),
+          env: item.env || 0,
+        };
+      });
+    setUbootEnv(ubootEnvList);
+  }, []);
   useEffect(() => {
     getDeviceDataList();
   }, []);
@@ -56,13 +76,13 @@ const LayoutPage = ({ setIsErrorPage }) => {
     return () => clearInterval(time);
   }, [errorTimes]); // 监听 initIp 变化 请求接口
 
+  // 轮询查状态
+
   return (
-    <div>
-      {/* <div style={{ margin: '0 auto', width: '80%' }}> */}
+    <>
       <NavPage />
       <DetailsPage />
-      {/* </div> */}
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,7 @@
 .fu-details-page{
     margin-top: 20px;
+    height: calc(100vh - 42px - 40px - 60px - 48px);
+    overflow-y: auto;
 }
 
 .level1 {

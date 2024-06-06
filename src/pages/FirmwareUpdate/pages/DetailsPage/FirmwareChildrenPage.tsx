@@ -1,5 +1,5 @@
 import { Table } from 'antd';
-import { columns } from '../../components/defaultData';
+import { GetColumns } from '../../components/defaultData';
 import { useFUProviderModule } from '../../components/containers';
 import '../../index.css';
 import { getDeviceOptionalAllKeys } from '../../components/getDeviceOptionalAllKeys';
@@ -42,6 +42,7 @@ const FirmwarePage = ({ dataSource }) => {
     return className;
   };
 
+  const columns = GetColumns();
   return (
     <Table
       size="middle"

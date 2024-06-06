@@ -54,7 +54,6 @@ const DetailsPage = () => {
       };
     });
     localStorage.setItem('myValue', value);
-    console.log({ e });
   };
 
   return (

@@ -1,11 +1,56 @@
 import { Button, Popconfirm, message } from 'antd';
 import { useFUProviderModule } from '../../components/containers';
+import { getStartUpgradeParams } from '../../components/getStartUpgradeParams';
+import myFetch from '@/components/myFetch';
 
 const UpgradePage = () => {
-  const { getDeviceListAndHeartObj } = useFUProviderModule();
+  const {
+    getDeviceListAndHeartObj,
+    selectedFirmwareList,
+    startParams,
+    ubootEnv,
+  } = useFUProviderModule();
   const isDisabled = getDeviceListAndHeartObj?.allow !== 0;
   const handleClick = (msg) => {
     message.info(msg);
+  };
+  // 开始升级
+  const handleStartUpgrade = async () => {
+    const params = getStartUpgradeParams(
+      getDeviceListAndHeartObj,
+      selectedFirmwareList,
+      ubootEnv,
+    );
+    if (startParams.initIp) {
+      try {
+        const res = await myFetch({
+          url: `http://${startParams.initIp}:28700/upgrade/updatestart`,
+          params,
+          isExceptionHand: true,
+        });
+        if (res.result === '0') {
+          console.log(111);
+        } else {
+          message.error(res.msg);
+        }
+      } catch (error) {}
+    }
+  };
+  // 终止升级
+  const handleStopUpgrade = async () => {
+    if (startParams.initIp) {
+      try {
+        const res = await myFetch({
+          url: `http://${startParams.initIp}:28700/upgrade/updatestop`,
+          isExceptionHand: true,
+        });
+        if (res.result === '0') {
+          console.log(111);
+        } else {
+          message.error(res.msg);
+        }
+      } catch (error) {}
+    }
   };
   return (
     <div>
@@ -18,28 +63,36 @@ const UpgradePage = () => {
         刷新
       </Button>
       <Popconfirm
+        disabled={isDisabled}
         title="升级后会重启整机，请确保没有正在进行的业务操作"
         okText="Yes"
         cancelText="No"
+        onConfirm={handleStartUpgrade}
       >
         <Button
           disabled={isDisabled}
           className="customNavPage-gap"
           type="primary"
-          onClick={() => handleClick('点击了 开始升级 按钮')}
         >
           开始升级
         </Button>
       </Popconfirm>
-      <Button
+      <Popconfirm
         disabled={isDisabled}
-        className="customNavPage-gap"
-        danger
-        type="primary"
-        onClick={() => handleClick('点击了 终止升级 按钮')}
+        title="正在升级的不能被中止，确认是否中止升级？"
+        okText="Yes"
+        cancelText="No"
+        onConfirm={handleStopUpgrade}
       >
-        终止升级
-      </Button>
+        <Button
+          disabled={isDisabled}
+          className="customNavPage-gap"
+          danger
+          type="primary"
+        >
+          终止升级
+        </Button>
+      </Popconfirm>
     </div>
   );
 };
