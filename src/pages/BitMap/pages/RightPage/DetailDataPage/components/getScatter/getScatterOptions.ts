@@ -80,7 +80,8 @@ export const getScatterOptions = (
         type: 'slider',
         height: 14,
         xAxisIndex: 0, // 不要设置其他坐标的index
-        filterMode: 'none',
+        filterMode: 'empty',
+        throttle: 0,
         // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
         realtime: true,
         // end: axisLabelInterval.end.xEnd,
@@ -97,7 +98,8 @@ export const getScatterOptions = (
         type: 'slider',
         width: 14,
         yAxisIndex: 0, // 不要设置其他坐标的index
-        filterMode: 'none',
+        filterMode: 'empty',
+        throttle: 0,
         // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
         realtime: true,
         // end: axisLabelInterval.end.yEnd,

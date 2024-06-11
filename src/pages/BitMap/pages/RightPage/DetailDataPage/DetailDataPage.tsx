@@ -15,29 +15,30 @@ const DetailDataPage = () => {
     detailsValues,
     setDetailsValues,
   } = ProviderFunc();
-
+  const options = getScatterOptions(
+    theme,
+    data,
+    echartsDataColor,
+    {
+      xMin: 0,
+      xMax: configInfo.layoutConfig.xMax,
+      yMin: 0,
+      yMax: configInfo.layoutConfig.yMax,
+    },
+    // detailsEchartsAxisValue,
+    baseConversion,
+    configInfo,
+    scaleNumber,
+    detailsValues,
+  );
   useEffect(() => {
     if (data.length > 0) {
       const myChart = echarts.init(chartRef.current);
-      const options = getScatterOptions(
-        theme,
-        data,
-        echartsDataColor,
-        {
-          xMin: 0,
-          xMax: configInfo.layoutConfig.xMax,
-          yMin: 0,
-          yMax: configInfo.layoutConfig.yMax,
-        },
-        // detailsEchartsAxisValue,
-        baseConversion,
-        configInfo,
-        scaleNumber,
-        detailsValues,
-      );
+
       myChart.setOption(options, true);
       myChart.on('dataZoom', () => {
         const newOptions: any = myChart.getOption();
+        console.log({ newOptions });
         const xStart = Math.round(newOptions.dataZoom[0].start);
         const xEnd = Math.round(newOptions.dataZoom[0].end);
         const yStart = Math.round(newOptions.dataZoom[1].start);
@@ -55,15 +56,7 @@ const DetailDataPage = () => {
         window.removeEventListener('resize', resizeChart);
       };
     }
-  }, [
-    echartsDataColor,
-    baseConversion,
-    scaleNumber,
-    detailsValues,
-    data,
-    chartRef.current,
-    theme,
-  ]);
+  }, [options]);
 
   return (
     <>
