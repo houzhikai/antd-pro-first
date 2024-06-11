@@ -52,6 +52,11 @@ const UpgradePage = () => {
       } catch (error) {}
     }
   };
+  // 是否有等待升级的状态
+  const isWaitUpgrade = (getDeviceListAndHeartObj?.tableList || [])
+    .map((item) => item.children)
+    .flat(Infinity)
+    .some((item) => item.status === 2);
   return (
     <div>
       <Button
@@ -63,14 +68,14 @@ const UpgradePage = () => {
         刷新
       </Button>
       <Popconfirm
-        disabled={isDisabled}
+        disabled={isDisabled || selectedFirmwareList.length === 0}
         title="升级后会重启整机，请确保没有正在进行的业务操作"
         okText="Yes"
         cancelText="No"
         onConfirm={handleStartUpgrade}
       >
         <Button
-          disabled={isDisabled}
+          disabled={isDisabled || selectedFirmwareList.length === 0}
           className="customNavPage-gap"
           type="primary"
         >
@@ -78,14 +83,14 @@ const UpgradePage = () => {
         </Button>
       </Popconfirm>
       <Popconfirm
-        disabled={isDisabled}
+        disabled={isDisabled || !isWaitUpgrade}
         title="正在升级的不能被中止，确认是否中止升级？"
         okText="Yes"
         cancelText="No"
         onConfirm={handleStopUpgrade}
       >
         <Button
-          disabled={isDisabled}
+          disabled={isDisabled || !isWaitUpgrade}
           className="customNavPage-gap"
           danger
           type="primary"
