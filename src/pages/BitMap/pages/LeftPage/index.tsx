@@ -5,7 +5,7 @@ import '../../index.css';
 
 const LeftPage = () => {
   return (
-    <div className="bit-map-left-page">
+    <div className='bit-map-left-page'>
       <TreePage />
       <StackPage />
     </div>

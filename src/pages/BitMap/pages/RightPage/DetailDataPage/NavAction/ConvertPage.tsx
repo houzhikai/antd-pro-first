@@ -8,12 +8,7 @@ const Convert = () => {
     setConvertModalObj((obj) => ({ ...obj, open: true }));
   };
   return (
-    <Button
-      style={{ marginLeft: 10 }}
-      onClick={handleClick}
-      type="primary"
-      size="small"
-    >
+    <Button style={{ marginLeft: 10 }} onClick={handleClick} type='primary' size='small'>
       Convert
     </Button>
   );

@@ -1,10 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { initScrambleOptions } from './initValues';
 import { getAxisLabelInterval } from './getAxisLabelInterval';
-import { generateData } from '../mockData/getGenerateData';
 
 // 创建一个Context
-export const BitMapContext = createContext(null);
+export const BitMapContext = createContext<any>(null);
 
 // 从 useContext 导出需要传递方法
 export const ProviderFunc = () => {
@@ -14,7 +13,7 @@ export const ProviderFunc = () => {
   const [vscodeParams, setVscodeParams] = useState({});
   const [bitMapPort, setBitMapPort] = useState(''); // 获取启动服务的端口号
   const [loading, setLoading] = useState<boolean>(false); // Do you want to disable the page: disable the page while converting
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
 
   /**
    * 顶部操作栏
@@ -42,14 +41,10 @@ export const ProviderFunc = () => {
     physicalOutputLocation: '',
   });
   // scrambleCfg 的 options 列表
-  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] =
-    useState(initScrambleOptions);
+  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] = useState(initScrambleOptions);
 
   //设置颜色列表，与 echarts 颜色的数据结构不一样
-  const [modifyColorModalObj, setModifyColorModalObj] = useState({
-    open: false,
-    colorList: [],
-  });
+  const [modifyColorModalObj, setModifyColorModalObj] = useState({ open: false, colorList: [] });
   // 是否是堆叠模式
   const [isStack, setIsStack] = useState(false);
 
@@ -87,9 +82,6 @@ export const ProviderFunc = () => {
   // echarts 数据源
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    setData(generateData(5000, isStack));
-  }, [scaleNumber]);
   const [detailsValues, setDetailsValues] = useState({
     //详图的首位比例，0：0%， 100：100%
     xStart: 0,
@@ -108,9 +100,7 @@ export const ProviderFunc = () => {
     });
   }, [scaleNumber]);
 
-  const [echartsDataColor, setEchartsDataColor] = useState(
-    modifyColorModalObj.colorList,
-  ); // echarts 颜色列表
+  const [echartsDataColor, setEchartsDataColor] = useState(modifyColorModalObj.colorList); // echarts 颜色列表
 
   const bitMapContextValue = {
     width,

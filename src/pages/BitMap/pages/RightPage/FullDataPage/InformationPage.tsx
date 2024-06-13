@@ -27,12 +27,12 @@ const InformationPage = () => {
   // const testInfoObj = selectedTreeDataList[length - 1]?.test_info || {};
   // const testInfoList = getObjConvertList(testInfoObj.afm_param);
 
-  
   // const detailsObj = selectedTreeDataList[length - 1]?.details || {};
   // const detailsList = getObjConvertList(detailsObj);
 
   // show select dut details
-   const infoList = selectedTreeDataList.map((item) => {
+  const infoList = selectedTreeDataList
+    .map((item) => {
       const detailsList =
         Object.keys(item.details).map((key) => ({
           key: key,
@@ -42,22 +42,22 @@ const InformationPage = () => {
       return [...detailsList];
     })
     .flat(Infinity);
- 
-  const labelStyle={
-    padding: '1px 16px'
-  }
+
+  const labelStyle = {
+    padding: '1px 8px',
+  };
 
   return (
     <>
       <div style={{ margin: '0', fontSize: 18 }}>Info</div>
-      <div className="information-page">
+      <div className='information-page'>
         <Descriptions
           labelStyle={labelStyle}
           contentStyle={labelStyle}
           column={1}
           bordered
           items={infoList}
-          size="small"
+          size='small'
         />
       </div>
     </>

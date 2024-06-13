@@ -1,4 +1,5 @@
 import { getAxisLabelInterval } from '../../../../../components/getAxisLabelInterval';
+import { getTooltipDutDetailsInfo } from '../../../../../components/getTooltipDutDetailsInfo';
 import { takeMiddleNumber } from '../../../../../components/takeMiddleNumber';
 import getScatterSeries from './getScatterSeries';
 export const getScatterOptions = (
@@ -9,20 +10,20 @@ export const getScatterOptions = (
   baseConversion,
   configInfo,
   scaleNumber,
-  detailsValues,
+  detailsValues
 ) => {
   //   const maxValue = { xMax: 400, yMax: 200 };
   const xAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.xMin,
     detailsEchartsAxisValue.xMax,
     baseConversion,
-    scaleNumber,
+    scaleNumber
   );
   const yAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.yMin,
     detailsEchartsAxisValue.yMax,
     baseConversion,
-    scaleNumber,
+    scaleNumber
   );
   const dots = configInfo.layoutConfig.dots;
   const axisLabelInterval = getAxisLabelInterval(scaleNumber);
@@ -34,41 +35,13 @@ export const getScatterOptions = (
       backgroundColor: theme === 'dark' ? '#1f1f1f' : '#f5f5f5',
       textStyle: { color: theme === 'dark' ? '#938c83' : '#1f1f1f' },
       formatter: (params: { data: number[] }) => {
-        if (!Array.isArray(params.data)) return; // 不展示 markLine.emphasis的值
-        // let baseNumberList: any = [];
-        // if (baseConversion === 'Hex') {
-        //   baseNumberList = params.data.map((item, index) =>
-        //     index < 2 ? item.toString(16).toUpperCase() : item,
-        //   );
-        // } else if (baseConversion === 'Oct') {
-        //   baseNumberList = params.data.map((item, index) =>
-        //     index < 2 ? item.toString(8) : item,
-        //   );
-        // } else {
-        //   baseNumberList = params.data;
-        // }
-        const scale = scaleNumber >= 1 ? Math.sqrt(scaleNumber) : 1;
-        let X = params.data[0] * scale || '';
-        let Y = params.data[1] * scale || '';
-        const baseX =
-          baseConversion === 'Hex'
-            ? X.toString(16).toUpperCase()
-            : baseConversion === 'Oct'
-            ? X.toString(8)
-            : X;
-        const baseY =
-          baseConversion === 'Hex'
-            ? Y.toString(16).toUpperCase()
-            : baseConversion === 'Oct'
-            ? Y.toString(8)
-            : Y;
-        return `
-          XY: ${baseX}, ${baseY} <br />
-          Block_XY: 0, 0 <br />
-          Page_XY: ${String(Math.floor(params?.data?.[0] / 1024)) || ''}, ${
-          String(Math.floor(params?.data?.[0] / (1024 / scale / 8))) || ''
-        }
-          `;
+        // 不展示 markLine.emphasis的值
+        if (!Array.isArray(params.data)) {
+          return;
+        } 
+        // show tooltip info
+        const tooltipInfo = getTooltipDutDetailsInfo(scaleNumber, params, baseConversion);
+        return tooltipInfo;
       },
     },
     animation: false,
@@ -81,7 +54,6 @@ export const getScatterOptions = (
         height: 14,
         xAxisIndex: 0, // 不要设置其他坐标的index
         filterMode: 'empty',
-        throttle: 0,
         // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
         realtime: true,
         // end: axisLabelInterval.end.xEnd,
@@ -99,7 +71,6 @@ export const getScatterOptions = (
         width: 14,
         yAxisIndex: 0, // 不要设置其他坐标的index
         filterMode: 'empty',
-        throttle: 0,
         // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
         realtime: true,
         // end: axisLabelInterval.end.yEnd,
@@ -132,10 +103,7 @@ export const getScatterOptions = (
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.xInterval,
       },
-      splitLine:
-        scaleNumber === 0.125
-          ? { show: true, lineStyle: { color: '#eee' } }
-          : {}, // 显示边框颜色
+      splitLine: scaleNumber === 0.125 ? { show: true, lineStyle: { color: '#eee' } } : {}, // 显示边框颜色
     },
 
     yAxis: {
@@ -157,18 +125,9 @@ export const getScatterOptions = (
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.yInterval,
       },
-      splitLine:
-        scaleNumber === 0.125
-          ? { show: true, lineStyle: { color: '#eee' } }
-          : {}, // 显示边框颜色
+      splitLine: scaleNumber === 0.125 ? { show: true, lineStyle: { color: '#eee' } } : {}, // 显示边框颜色
     },
     visualMap: { show: false, type: 'piecewise', pieces: echartsDataColor }, // heatmap 必须有visualMap属性
-    series: getScatterSeries(
-      data,
-      detailsEchartsAxisValue,
-      configInfo,
-      scaleNumber,
-      theme,
-    ),
+    series: getScatterSeries(data, detailsEchartsAxisValue, configInfo, scaleNumber, theme),
   };
 };

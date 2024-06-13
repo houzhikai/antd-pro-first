@@ -5,16 +5,8 @@ import { getScatterOptions } from './components/getScatter/getScatterOptions';
 
 const DetailDataPage = () => {
   const chartRef = useRef(null);
-  const {
-    echartsDataColor,
-    theme,
-    baseConversion,
-    configInfo,
-    data,
-    scaleNumber,
-    detailsValues,
-    setDetailsValues,
-  } = ProviderFunc();
+  const { echartsDataColor, theme, baseConversion, configInfo, data, scaleNumber, detailsValues, setDetailsValues } =
+    ProviderFunc();
   const options = getScatterOptions(
     theme,
     data,
@@ -29,7 +21,7 @@ const DetailDataPage = () => {
     baseConversion,
     configInfo,
     scaleNumber,
-    detailsValues,
+    detailsValues
   );
   useEffect(() => {
     if (data.length > 0) {
@@ -38,7 +30,6 @@ const DetailDataPage = () => {
       myChart.setOption(options, true);
       myChart.on('dataZoom', () => {
         const newOptions: any = myChart.getOption();
-        console.log({ newOptions });
         const xStart = Math.round(newOptions.dataZoom[0].start);
         const xEnd = Math.round(newOptions.dataZoom[0].end);
         const yStart = Math.round(newOptions.dataZoom[1].start);
@@ -58,13 +49,7 @@ const DetailDataPage = () => {
     }
   }, [options]);
 
-  return (
-    <>
-      {data.length > 0 && (
-        <div ref={chartRef} style={{ width: '100%', height: '100%' }} />
-      )}
-    </>
-  );
+  return <>{data.length > 0 && <div ref={chartRef} style={{ width: '100%', height: '100%' }} />}</>;
 };
 
 export default DetailDataPage;

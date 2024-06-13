@@ -5,14 +5,7 @@ import { scaleNumberOptions } from '../../../../components/initValues';
 import myFetch from '../../../../components/myFetch';
 
 const ScalePage = () => {
-  const {
-    scaleNumber,
-    setScaleNumber,
-    data,
-    vscodeParams,
-    bitMapPort,
-    setData,
-  } = ProviderFunc();
+  const { scaleNumber, setScaleNumber, data, vscodeParams, bitMapPort, setData } = ProviderFunc();
 
   const handleChange = async (value) => {
     setScaleNumber(value);
@@ -21,7 +14,7 @@ const ScalePage = () => {
       const res = await myFetch({
         url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=${value}`,
         isExceptionHand: true,
-        timeout: 10,
+        timeout: 100,
       });
       if (res.result === 0) {
         setScaleNumber(value);

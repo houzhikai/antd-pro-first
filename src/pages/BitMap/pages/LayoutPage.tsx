@@ -22,7 +22,7 @@ import {
   custom_dark_Table,
 } from '../components/theme';
 import '../index.css';
-// @ts-expect-error
+// // @ts-expect-error
 // const vscode = acquireVsCodeApi();
 
 const LayoutPage = ({ setIsErrorPage }) => {
@@ -35,46 +35,47 @@ const LayoutPage = ({ setIsErrorPage }) => {
     bitMapPort,
     setVscodeParams,
     setTheme,
-    triggerTiming,
+    // triggerTiming,
+    setTriggerTiming,
     setFullPath,
     setConvertModalObj,
     setScrambleCfgOptionsList,
     setModifyColorModalObj,
     setEchartsDataColor,
-    echartsDataColor,
+    // echartsDataColor,
   } = ProviderFunc();
 
   // useEffect(() => {
   //   vscode.postMessage({ command: 'startParams' });
   // }, []);
 
-  // useEffect(()=>{
-  //   if(triggerTiming.importPhysical){
+  // useEffect(() => {
+  //   if (triggerTiming.importPhysical) {
   //     vscode.postMessage({ command: 'importDirLocation' });
   //   }
-  // },[triggerTiming.importPhysical])
+  // }, [triggerTiming.importPhysical]);
 
   // // source file location
-  // useEffect(()=>{
-  //   if(triggerTiming.sourceDataLocation>1){
-  //   vscode.postMessage({ command: 'importSourcrFile' });
+  // useEffect(() => {
+  //   if (triggerTiming.sourceDataLocation > 1) {
+  //     vscode.postMessage({ command: 'importSourcrFile' });
   //   }
-  // },[triggerTiming.sourceDataLocation])
+  // }, [triggerTiming.sourceDataLocation]);
 
   // // output file location
-  // useEffect(()=>{
-  //   if(triggerTiming.physicalOutputLocation>1){
-  //   vscode.postMessage({ command: 'importOutputFile' });
+  // useEffect(() => {
+  //   if (triggerTiming.physicalOutputLocation > 1) {
+  //     vscode.postMessage({ command: 'importOutputFile' });
   //   }
-  // },[triggerTiming.physicalOutputLocation])
+  // }, [triggerTiming.physicalOutputLocation]);
 
-  //   // saveStackColorList
-  //   useEffect(()=>{
-  //     if(triggerTiming.colorList>1){
-  //       const colorList = echartsDataColor.map(item=>item.color)
-  //     vscode.postMessage({ command: 'saveStackColorList',text:colorList });
-  //     }
-  //   },[triggerTiming.colorList])
+  // // saveStackColorList
+  // useEffect(() => {
+  //   if (triggerTiming.colorList > 1) {
+  //     const colorList = echartsDataColor.map((item) => item.color);
+  //     vscode.postMessage({ command: 'saveStackColorList', text: colorList });
+  //   }
+  // }, [triggerTiming.colorList]);
 
   useEffect(() => {
     window.addEventListener('message', (e) => {
@@ -104,16 +105,23 @@ const LayoutPage = ({ setIsErrorPage }) => {
       } else if (e.data.command === 'params') {
         setTheme(e.data.text.theme);
       } else if (e.data.command === 'importDirLocation') {
-        setFullPath((obj) => ({ ...obj, importPhysicalPath: e.data.text }));
+        setTriggerTiming((obj) => ({ ...obj, importPhysical: false }));
+        setFullPath((obj) => ({
+          ...obj,
+          importPhysicalPath:
+            e.data.text === '' ? obj.importPhysicalPath : e.data.text,
+        }));
       } else if (e.data.command === 'importSourcrFile') {
         setConvertModalObj((obj) => ({
           ...obj,
-          sourceDataLocation: e.data.text,
+          sourceDataLocation:
+            e.data.text === '' ? obj.sourceDataLocation : e.data.text,
         }));
       } else if (e.data.command === 'importOutputFile') {
         setConvertModalObj((obj) => ({
           ...obj,
-          physicalOutputLocation: e.data.text,
+          physicalOutputLocation:
+            e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
         }));
       }
     });

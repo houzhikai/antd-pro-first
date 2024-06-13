@@ -12,7 +12,6 @@ const TreePage = () => {
     vscodeParams,
     bitMapPort,
     setData,
-    scaleNumber,
     setScaleNumber,
   } = ProviderFunc();
 
@@ -64,11 +63,10 @@ const TreePage = () => {
           url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getbitmapdata`,
           params: {
             mode: 1, // 0: stack, 1: single,
-            physicalDataPath: [
-              { title: checkedDuts.name, location: checkedDuts.location },
-            ],
+            physicalDataPath: [{ title: checkedDuts.name, location: checkedDuts.location }],
           },
           isExceptionHand: true,
+          timeout: 100,
         });
         if (res.result === 0) {
           setScaleNumber(1);
@@ -87,7 +85,7 @@ const TreePage = () => {
   return (
     <>
       <Tree
-        style={{ height: 'calc(100vh - 47px - 48px - 100px)' }}
+        style={{ height: 'calc(100vh - 47px - 48px - 100px)', overflowY: 'auto', overflowX: 'hidden' }}
         checkable
         checkedKeys={checkedKeys}
         defaultExpandAll

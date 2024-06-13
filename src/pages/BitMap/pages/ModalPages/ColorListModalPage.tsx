@@ -4,8 +4,14 @@ import { ProviderFunc } from '../../components/containers';
 import '../../index.css';
 
 const ColorListModalPage = () => {
-  const { modifyColorModalObj, setModifyColorModalObj, selectedTreeDataList, theme, setEchartsDataColor, setTriggerTiming } =
-    ProviderFunc();
+  const {
+    modifyColorModalObj,
+    setModifyColorModalObj,
+    selectedTreeDataList,
+    theme,
+    setEchartsDataColor,
+    setTriggerTiming,
+  } = ProviderFunc();
   const [colorList, setColorList] = useState(modifyColorModalObj.colorList || []);
 
   useEffect(() => {
@@ -14,11 +20,11 @@ const ColorListModalPage = () => {
 
   const handleOk = () => {
     setModifyColorModalObj((obj) => ({ ...obj, open: false, colorList }));
-    const newColorList = colorList.map((item, index)=>{
-      return {  value: index + 1,  color: item }
-    })
-    setEchartsDataColor(newColorList)
-    setTriggerTiming(obj=> ({...obj, colorList: obj.colorList + 1}))
+    const newColorList = colorList.map((item, index) => {
+      return { value: index + 1, color: item };
+    });
+    setEchartsDataColor(newColorList);
+    setTriggerTiming((obj) => ({ ...obj, colorList: obj.colorList + 1 }));
   };
 
   const handleCancel = () => {
@@ -30,8 +36,8 @@ const ColorListModalPage = () => {
   };
 
   const dataSource = [
-     // value = 1
-     {
+    // value = 1
+    {
       file1: 'Fail',
       file2: 'Pass',
       color: colorList[0],
@@ -71,7 +77,7 @@ const ColorListModalPage = () => {
       render: (text, _, index) => {
         return (
           <ColorPicker
-            style={{background: theme === 'dark' ? '#1f1f1f' : '#fff'}}
+            style={{ background: theme === 'dark' ? '#1f1f1f' : '#fff' }}
             size='small'
             defaultValue={text}
             onChange={(_, hexString) => {
@@ -90,11 +96,11 @@ const ColorListModalPage = () => {
   return (
     <div>
       <Modal
-        title="Color List"
+        title='Color List'
         // open={true}
         open={modifyColorModalObj.open}
-        okText="Save"
-        cancelText="Cancel"
+        okText='Save'
+        cancelText='Cancel'
         onOk={handleOk}
         onCancel={handleCancel}
         destroyOnClose
@@ -106,13 +112,7 @@ const ColorListModalPage = () => {
           Dut2: {selectedTreeDataList?.[1]?.location || ''}/{selectedTreeDataList?.[1]?.name || ''}
         </div>
         <br />
-        <Table
-          size='small'
-          bordered={false}
-          columns={columns}
-          dataSource={dataSource}
-          pagination={false}
-        />
+        <Table size='small' bordered={false} columns={columns} dataSource={dataSource} pagination={false} />
       </Modal>
     </div>
   );

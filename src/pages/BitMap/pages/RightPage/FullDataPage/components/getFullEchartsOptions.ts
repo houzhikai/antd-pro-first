@@ -8,19 +8,19 @@ export const getFullEchartsOptions = (
   detailsEchartsAxisValue,
   baseConversion,
   dots,
-  scaleNumber,
+  scaleNumber
 ) => {
   const xAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.xMin,
     detailsEchartsAxisValue.xMax,
     baseConversion,
-    scaleNumber,
+    scaleNumber
   );
   const yAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.yMin,
     detailsEchartsAxisValue.yMax,
     baseConversion,
-    scaleNumber,
+    scaleNumber
   );
 
   return {

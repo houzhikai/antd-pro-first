@@ -8,15 +8,26 @@ import '../../index.css';
 import { useAsyncEffect } from 'ahooks';
 
 const NavActionPage = () => {
-  const { triggerTiming, setModifyColorModalObj, setPhysicalFileList, bitMapPort, vscodeParams, isStack,setTriggerTiming, fullPath,setFullPath
+  const {
+    setModifyColorModalObj,
+    setPhysicalFileList,
+    bitMapPort,
+    vscodeParams,
+    isStack,
+    setTriggerTiming,
+    fullPath,
+    setFullPath,
+    setSelectedTreeDataList,
+    setData,
   } = ProviderFunc();
 
-  useAsyncEffect( async()=>{
-    if(triggerTiming.importPhysical && vscodeParams.initIp && fullPath.importPhysicalPath){
+  useAsyncEffect(async () => {
+    if (vscodeParams.initIp && fullPath.importPhysicalPath !== '') {
       try {
         const res = await myFetch({
           url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/selectbitmapdir?location=${fullPath.importPhysicalPath}`,
           isExceptionHand: true,
+          timeout: 300,
         });
         if (res.result === 0) {
           const result = JSON.parse(res.data[0].value);
@@ -28,34 +39,31 @@ const NavActionPage = () => {
                 location: item.location,
                 name: duts.title,
                 title: (
-                <Tooltip placement='right' title={duts.title}>
-                   <div className='bit-map-left-dut-title'>
-                    {duts.title}
-                    </div>
-                </Tooltip>
-                )
+                  <Tooltip placement='right' title={duts.title}>
+                    <div className='bit-map-left-dut-title'>{duts.title}</div>
+                  </Tooltip>
+                ),
               }));
               return { ...item, children };
             }
             return { ...item, key: `${index}-0` };
           });
           setPhysicalFileList(newKeyResult);
+          setSelectedTreeDataList([]);
+          setData([]);
         } else {
           message.error(res.msg);
         }
       } catch (error) {
         message.error('Get physical file fail');
       }
-      setFullPath(obj=>({...obj, importPhysicalPath: ''}))
-      setTimeout(() => {
-        setTriggerTiming(obj=> ({...obj, importPhysical: false}))  
-      }, 100);
+      setFullPath((obj) => ({ ...obj, importPhysicalPath: '' }));
     }
-  },[triggerTiming.importPhysical, vscodeParams.initIp,bitMapPort, fullPath.importPhysicalPath])
+  }, [vscodeParams.initIp, bitMapPort, fullPath.importPhysicalPath]);
 
   // 选择文件夹
   const handleSelectFolder = async () => {
-    setTriggerTiming(obj=> ({...obj, importPhysical: true}))  
+    setTriggerTiming((obj) => ({ ...obj, importPhysical: true }));
   };
 
   // 打开 颜色选择 弹窗
@@ -64,31 +72,26 @@ const NavActionPage = () => {
   };
 
   return (
-    <div className="bit-map-nav-page">
+    <div className='bit-map-nav-page'>
       <ConvertPage />
-      <Button
-        className="bit-map-nav-gap"
-        type="primary"
-        size="small"
-        onClick={handleSelectFolder}
-      >
+      <Button className='bit-map-nav-gap' type='primary' size='small' onClick={handleSelectFolder}>
         Import
       </Button>
 
       {/* 颜色选择器 */}
       {isStack ? (
         <Button
-          className="bit-map-nav-gap"
-          type="text"
+          className='bit-map-nav-gap'
+          type='text'
           icon={<img width={20} src={otherColor} />}
           onClick={handleOpenColorListModal}
           disabled={!isStack}
         />
       ) : (
-        <Tooltip title="stack 模式可用" placement="bottom">
+        <Tooltip title='Color Settings' placement='bottom'>
           <Button
-            className="bit-map-nav-gap"
-            type="text"
+            className='bit-map-nav-gap'
+            type='text'
             icon={<img width={20} src={otherColor} />}
             onClick={handleOpenColorListModal}
             disabled={!isStack}

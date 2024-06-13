@@ -65,7 +65,7 @@
     height: var(--full-page-height);
     background: transparent;
     position: relative;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     /* border-top: 1px solid #ccc; */
 }
 .echarts-full-page-magnifying-glass{

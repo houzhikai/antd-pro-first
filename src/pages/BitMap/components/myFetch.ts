@@ -17,10 +17,7 @@ const myFetch = (data: MyFetchProps) => {
       body: data.params ? JSON.stringify(data.params) : null,
     }).then((res) => res.json()),
     new Promise((resovle, reject) => {
-      setTimeout(
-        () => reject(false),
-        data.timeout ? data.timeout * 1000 : 3000,
-      );
+      setTimeout(() => reject(false), data.timeout ? data.timeout * 1000 : 3000);
     }),
   ]).then((res: any) => {
     if (isException) {

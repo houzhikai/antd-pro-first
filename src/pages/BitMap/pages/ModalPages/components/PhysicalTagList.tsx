@@ -5,12 +5,15 @@ import ShowTagPage from './ShowTagPage';
 import { ProviderFunc } from '../../../components/containers';
 
 const PhysicalTagList = () => {
-  const { scrambleCfgOptionsList, setScrambleCfgOptionsList, convertModalObj, setConvertModalObj, 
-    setTriggerTiming } = ProviderFunc();
+  const { scrambleCfgOptionsList, setScrambleCfgOptionsList, convertModalObj, setConvertModalObj, setTriggerTiming } =
+    ProviderFunc();
   const [id, setId] = useState(0);
 
   const handleModifySourceDataLocation = () => {
-    setTriggerTiming(obj=>({...obj, sourceDataLocation: obj.sourceDataLocation + 1 }))
+    setTriggerTiming((obj) => ({ ...obj, sourceDataLocation: obj.sourceDataLocation + 1 }));
+  };
+  const handleModifyPhysicalOutputLocation = () => {
+    setTriggerTiming((obj) => ({ ...obj, physicalOutputLocation: obj.physicalOutputLocation + 1 }));
   };
 
   const handleAddFile = () => {
@@ -38,32 +41,33 @@ const PhysicalTagList = () => {
     });
   };
 
-  const CustomFormItem = ({ children, title }:any) => {
+  const CustomFormItem = ({ children, title }: any) => {
     return (
-      <div>
-        <Typography.Title level={5}>
-          <div style={{ width: 155, display: 'inline-block' }}>{title}</div>
-          {children}
-        </Typography.Title>
+      <div style={{ margin: '10px 0' }}>
+        <div style={{ width: 155, display: 'inline-block' }}>{title}</div>
+        {children}
       </div>
     );
   };
   return (
     <>
       {/* 源数据文件夹 */}
-      <CustomFormItem title="Source Data">
-        <Input
-          style={{ margin: '0 20px', width: 400 }}
-          value={convertModalObj.sourceDataLocation}
-          disabled
-        />
-        <Button type="primary" onClick={handleModifySourceDataLocation}>
+      <CustomFormItem title='Source Data'>
+        <Input style={{ margin: '0 20px', width: 400 }} value={convertModalObj.sourceDataLocation} disabled />
+        <Button type='primary' onClick={handleModifySourceDataLocation}>
+          Browse Path
+        </Button>
+      </CustomFormItem>
+      {/* 输出物理文件路径 */}
+      <CustomFormItem title='Physical Output'>
+        <Input style={{ margin: '0 20px', width: 400 }} value={convertModalObj.physicalOutputLocation} disabled />
+        <Button type='primary' onClick={handleModifyPhysicalOutputLocation}>
           Browse Path
         </Button>
       </CustomFormItem>
       {/* 物理转换文件 */}
       <div>
-        <CustomFormItem title="ScrambleCfg">
+        <CustomFormItem title='ScrambleCfg'>
           <Select
             style={{ marginLeft: 20, width: 200 }}
             options={scrambleCfgOptionsList}
@@ -75,31 +79,15 @@ const PhysicalTagList = () => {
           return <ShowTagPage key={tag.label} tag={tag} />;
         })}
         <Button
-          size="small"
-          type="primary"
+          size='small'
+          type='primary'
           onClick={handleAddFile}
           disabled
-          icon={
-            <PlusOutlined
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            />
-          }
+          icon={<PlusOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />}
         >
           Add a Physical File
         </Button>
       </div>
-      {/* 输出物理文件路径 */}
-      <CustomFormItem title="Physical Output">
-        <Input
-          style={{ margin: '0 20px', width: 400 }}
-          value={convertModalObj.physicalOutputLocation}
-          disabled
-        />
-        <Button type="primary" onClick={handleAddFile}>
-          Browse Path
-        </Button>
-      </CustomFormItem>
     </>
   );
 };

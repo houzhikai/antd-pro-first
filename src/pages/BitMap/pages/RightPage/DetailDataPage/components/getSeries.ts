@@ -11,7 +11,7 @@ export const getSeries = (mockTestList, maxValue, detailsEchartsAxisValue) => {
       item[0] >= detailsEchartsAxisValue.xMin &&
       item[0] <= detailsEchartsAxisValue.xMax &&
       item[1] >= detailsEchartsAxisValue.yMin &&
-      item[1] <= detailsEchartsAxisValue.yMax,
+      item[1] <= detailsEchartsAxisValue.yMax
   );
 
   return [

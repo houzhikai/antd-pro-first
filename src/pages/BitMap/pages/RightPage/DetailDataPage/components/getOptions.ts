@@ -2,22 +2,10 @@ import { mockTestList } from '../../../../mockData/mockTestList';
 import { getSeries } from './getSeries';
 import { takeMiddleNumber } from '../../../../components/takeMiddleNumber';
 
-export const getOptions = (
-  theme,
-  jumpAddress,
-  echartsDataColor,
-  detailsEchartsAxisValue,
-  scaleNumber,
-) => {
+export const getOptions = (theme, jumpAddress, echartsDataColor, detailsEchartsAxisValue, scaleNumber) => {
   const maxValue = { xMax: 400, yMax: 200 };
-  const xAxisValueList = takeMiddleNumber(
-    detailsEchartsAxisValue.xMin,
-    detailsEchartsAxisValue.xMax,
-  );
-  const yAxisValueList = takeMiddleNumber(
-    detailsEchartsAxisValue.yMin,
-    detailsEchartsAxisValue.yMax,
-  );
+  const xAxisValueList = takeMiddleNumber(detailsEchartsAxisValue.xMin, detailsEchartsAxisValue.xMax);
+  const yAxisValueList = takeMiddleNumber(detailsEchartsAxisValue.yMin, detailsEchartsAxisValue.yMax);
   console.log({ scaleNumber });
   return {
     renderer: 'canvas',

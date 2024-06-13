@@ -1,10 +1,4 @@
-export default (
-  data,
-  detailsEchartsAxisValue,
-  configInfo,
-  scaleNumber,
-  theme,
-) => {
+export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) => {
   const borderColor = theme === 'dark' ? '#35393b' : '#f4f4f4';
   const getSplitLine = (xSplitNumber: number, ySplitNumber) => {
     let xMultiples: { xAxis: number }[] = [];
@@ -16,20 +10,12 @@ export default (
       return (yMultiples = []);
     }
     // 将yMax替代1000，省略一个参数传递
-    for (
-      let x = xSplitNumber;
-      x <= detailsEchartsAxisValue.yMax;
-      x += xSplitNumber
-    ) {
+    for (let x = xSplitNumber; x <= detailsEchartsAxisValue.yMax; x += xSplitNumber) {
       xMultiples.push({ xAxis: x });
     }
 
     // 将yMax替代1000，省略一个参数传递
-    for (
-      let y = ySplitNumber;
-      y <= detailsEchartsAxisValue.xMax;
-      y += ySplitNumber
-    ) {
+    for (let y = ySplitNumber; y <= detailsEchartsAxisValue.xMax; y += ySplitNumber) {
       yMultiples.push({ yAxis: y });
     }
     return [...xMultiples, ...yMultiples];
@@ -40,19 +26,18 @@ export default (
       lineStyle: { width: 6, type: 'line', color: borderColor }, // 粗线样式
       data: getSplitLine(
         detailsEchartsAxisValue.xMax / configInfo.duts.col,
-        detailsEchartsAxisValue.yMax / configInfo.duts.row,
+        detailsEchartsAxisValue.yMax / configInfo.duts.row
       ), // 粗线位置，
     },
     {
       lineStyle: { width: 2, type: 'line', color: borderColor }, // 细线样式, 支持隐藏：width=0时，隐藏细线
       data: getSplitLine(
         detailsEchartsAxisValue.xMax / configInfo.blocks.col,
-        detailsEchartsAxisValue.yMax / configInfo.blocks.row,
+        detailsEchartsAxisValue.yMax / configInfo.blocks.row
       ), // 细线位置
     },
   ];
-  const newMarkLineStyleList =
-    scaleNumber === 0.125 ? markLineStyleList : markLineStyleList.slice(0, 2);
+  const newMarkLineStyleList = scaleNumber === 0.125 ? markLineStyleList : markLineStyleList.slice(0, 2);
 
   const getPageMarkLinePosition = (scaleNumber) => {
     let data: any = [];
@@ -68,7 +53,7 @@ export default (
           { xAxis: 128 * 6 },
           { xAxis: 128 * 7 },
           { yAxis: 0 },
-          { yAxis: 521 },
+          { yAxis: 1023 },
         ];
         break;
       case 4:
@@ -82,7 +67,7 @@ export default (
           { xAxis: 64 * 6 },
           { xAxis: 64 * 7 },
           { yAxis: 0 },
-          { yAxis: 521 },
+          { yAxis: 511 },
         ];
         break;
       case 16:
@@ -96,7 +81,7 @@ export default (
           { xAxis: 32 * 6 },
           { xAxis: 32 * 7 },
           { yAxis: 0 },
-          { yAxis: 521 },
+          { yAxis: 255 },
         ];
         break;
       case 64:
@@ -110,7 +95,7 @@ export default (
           { xAxis: 16 * 6 },
           { xAxis: 16 * 7 },
           { yAxis: 0 },
-          { yAxis: 521 },
+          { yAxis: 127 },
         ];
         break;
       case 256:
@@ -124,7 +109,7 @@ export default (
           { xAxis: 8 * 6 },
           { xAxis: 8 * 7 },
           { yAxis: 0 },
-          { yAxis: 521 },
+          { yAxis: 63 },
         ];
         break;
       default:
@@ -138,7 +123,7 @@ export default (
           { xAxis: 128 * 6 },
           { xAxis: 128 * 7 },
           { yAxis: 0 },
-          { yAxis: 521 },
+          { yAxis: 1023 },
         ];
     }
     return data;
@@ -179,6 +164,14 @@ export default (
       progressive: 0, // 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
       progressiveThreshold: 5 * 1000, //启用渐进式渲染的图形数量阈值，在单个系列的图形数量超过该阈值时启用渐进式渲染。
       sampling: 'average',
+      itemStyle:
+        scaleNumber > 1
+          ? {
+              borderColor: '#ccc',
+              borderWidth: 1,
+              borderType: 'solid',
+            }
+          : {},
       markLine: {
         zlevel: 2,
         label: { show: false },
@@ -207,6 +200,14 @@ export default (
       progressive: 0, // 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
       progressiveThreshold: 5 * 1000, //启用渐进式渲染的图形数量阈值，在单个系列的图形数量超过该阈值时启用渐进式渲染。
       sampling: 'average',
+      itemStyle:
+        scaleNumber > 1
+          ? {
+              borderColor: '#ccc',
+              borderWidth: 1,
+              borderType: 'solid',
+            }
+          : {},
       markLine: {
         zlevel: 2,
         label: { show: false },
@@ -226,4 +227,26 @@ export default (
       },
     },
   ];
+  // return newMarkLineStyleList.map((item) => {
+  //   return {
+  //     type: 'heatmap',
+  //     symbol: 'rect',
+  //     symbolSize: 3, // 设置点的大小
+  //     data,
+  //     zlevel: 1,
+  //     large: true, // 启用块状渲染
+  //     largeThreshold: 50 * 10000, // 数据量超过阈值时启用块状渲染
+  //     progressive: 0, // 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
+  //     progressiveThreshold: 5 * 1000, //启用渐进式渲染的图形数量阈值，在单个系列的图形数量超过该阈值时启用渐进式渲染。
+  //     sampling: 'average',
+  //     markLine: {
+  //       zlevel: 2,
+  //       label: { show: false },
+  //       symbol: 'none',
+  //       lineStyle: item.lineStyle, // 设置markLine的宽度
+  //       data: item.data,
+  //       emphasis: { lineStyle: item.lineStyle }, // 设置鼠标悬浮时 markLine 的颜色
+  //     },
+  //   };
+  // });
 };

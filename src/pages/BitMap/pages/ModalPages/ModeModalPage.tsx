@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, message } from 'antd';
+import { Divider, Modal, message } from 'antd';
 import { ProviderFunc } from '../../components/containers';
 import PhysicalTagList from './components/PhysicalTagList';
 import myFetch from '../../components/myFetch';
@@ -22,10 +22,7 @@ const ModeModalPage = () => {
 
     if (params.selectSrcDataDir === '') {
       message.error('Source data location is empty');
-    } else if (
-      params.convertConf.physicalname === '' ||
-      params.convertConf.physicallocation === ''
-    ) {
+    } else if (params.convertConf.physicalname === '' || params.convertConf.physicallocation === '') {
       message.error('Please select scrambleCfg ');
     } else if (params.output === '') {
       message.error('Physical Output is empty');
@@ -39,7 +36,7 @@ const ModeModalPage = () => {
         if (res.result === 0) {
           //  接口调用成功的操作
           setConvertModalObj((obj) => ({ ...obj, open: false }));
-          setLoading(true)
+          setLoading(true);
         } else {
           message.error(res.msg);
         }
@@ -56,14 +53,15 @@ const ModeModalPage = () => {
   return (
     <Modal
       width={1000}
-      title="Convert List"
+      title='Convert List'
       open={convertModalObj.open}
-      okText="Convert"
-      cancelText="Cancel"
+      okText='Convert'
+      cancelText='Cancel'
       onOk={handleOk}
       onCancel={handleCancel}
       centered
     >
+      <Divider />
       <PhysicalTagList />
     </Modal>
   );

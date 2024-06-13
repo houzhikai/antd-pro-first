@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Popconfirm, Tag } from 'antd';
-import {ProviderFunc} from '../../../components/containers'
+import { ProviderFunc } from '../../../components/containers';
 
 interface ShowTagPageProps {
   tag: any;
-  key?:string
+  key?: string;
 }
 
-const ShowTagPage = ({ tag }:ShowTagPageProps) => {
+const ShowTagPage = ({ tag }: ShowTagPageProps) => {
   const { setScrambleCfgOptionsList } = ProviderFunc();
   const [open, setOpen] = useState(false);
 
@@ -25,11 +25,11 @@ const ShowTagPage = ({ tag }:ShowTagPageProps) => {
   return (
     <Popconfirm
       open={open}
-      title="Are you sure to delete this task?"
+      title='Are you sure to delete this task?'
       onConfirm={handleConfirm}
       onCancel={handleCancel}
-      okText="Yes"
-      cancelText="No"
+      okText='Yes'
+      cancelText='No'
     >
       <Tag
         style={{ marginBottom: 10 }}

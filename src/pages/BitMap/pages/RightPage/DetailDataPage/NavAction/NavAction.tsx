@@ -8,10 +8,10 @@ const NavAction = () => {
 
   return (
     <Form
-      name="basic"
+      name='basic'
       //   initialValues={{ remember: true }}
       onFinish={onFinish}
-      autoComplete="off"
+      autoComplete='off'
     >
       <div style={{ display: 'flex', justifyContent: 'end', marginRight: 25 }}>
         {/* <Form.Item label="Template" name="Template">

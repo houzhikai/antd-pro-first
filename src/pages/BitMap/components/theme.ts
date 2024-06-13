@@ -3,11 +3,11 @@ const darkBg = '#1f1f1f'; // °µÉ«Ö÷ÌâÏÂµÄÎÄ×ÖÑÕÉ«
 export const custom_dark_token = {
   colorText: darkTextColor, //default text color
   colorBorder: '#373d3e', // border color
-  colorTextDisabled: '#3f4040', // disable text color
+  colorTextDisabled: '#717171', // disable text color
   colorTextSecondary: darkTextColor, // label text color
   colorBgContainer: darkBg, // defult color background
   controlOutlineWidth: 0, // border windth, or box shadow
-  colorBorderSecondary: '#34393b', 
+  colorBorderSecondary: '#34393b',
   colorTextPlaceholder: '#555555',
   colorBgElevated: '#1f1f1f',
   lineWidthFocus: 0, // outline width
@@ -31,7 +31,7 @@ export const custom_dark_Radio = {
   buttonBg: darkBg,
 };
 export const custom_dark_Tree = {
-  nodeSelectedBg: '#1f2223', 
+  nodeSelectedBg: '#1f2223',
 };
 
 export const custom_dark_Input = {
@@ -53,15 +53,14 @@ export const custom_dark_Select = {
   optionActiveBg: '#1f2223',
 };
 
-
 export const custom_dark_Table = {
   cellPaddingBlockSM: 3,
   headerBg: '#1f1f1f',
   bodySortBg: '#181a1b',
   borderColor: '#1f1f1f',
   cellPaddingBlock: 8,
-  headerSplitColor: '#1f1f1f'
-}
+  headerSplitColor: '#1f1f1f',
+};
 
 export const custom_light_Table = {
   cellPaddingBlockSM: 3,
@@ -69,5 +68,5 @@ export const custom_light_Table = {
   bodySortBg: '#181a1b',
   borderColor: '#ffffff',
   cellPaddingBlock: 8,
-  headerSplitColor: '#ffffff'
-}
+  headerSplitColor: '#ffffff',
+};

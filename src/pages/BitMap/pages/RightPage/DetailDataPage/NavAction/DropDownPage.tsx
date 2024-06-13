@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
@@ -10,9 +9,7 @@ const DropDownPage = () => {
   const { setScaleNumber } = ProviderFunc();
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
-    const selected = scaleFactor.filter(
-      (item) => item.key === Number(e.key),
-    )[0];
+    const selected = scaleFactor.filter((item) => item.key === Number(e.key))[0];
     setSelected(selected.label);
     setScaleNumber(() => Math.round(100 / selected.key));
   };

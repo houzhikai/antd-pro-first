@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getRatioNumber } from '../../../components/getRatioNumber';
-import {getGlassPosition} from '../../../components/getGlassPosition'
+import { getGlassPosition } from '../../../components/getGlassPosition';
 import { ProviderFunc } from '../../../components/containers';
 
 const MagnifyingGlass = ({ height }) => {
   const magnifierRef = useRef(null);
-  const { width, configInfo, detailsValues, setDetailsValues, scaleNumber } =
-    ProviderFunc();
+  const { width, configInfo, detailsValues, setDetailsValues, scaleNumber } = ProviderFunc();
 
   const [dragging, setDragging] = useState(false);
   const [rel, setRel] = useState({ x: 0, y: 0 });
@@ -21,13 +20,7 @@ const MagnifyingGlass = ({ height }) => {
   const dots = configInfo.layoutConfig.dots;
   // 放大镜初始位置, dots: TopLeft, TopRight, BottomLeft, BottomRight
   const [defaultGlassPosition, setDefaultGlassPosition] = useState(
-    getGlassPosition(
-      configInfo.layoutConfig.dots,
-      width,
-      height,
-      glassWidth,
-      glassHeight,
-    ),
+    getGlassPosition(configInfo.layoutConfig.dots, width, height, glassWidth, glassHeight)
   );
 
   const [pos, setPos] = useState({
@@ -147,7 +140,9 @@ const MagnifyingGlass = ({ height }) => {
   const onMouseMove = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    if (!dragging) return;
+    if (!dragging) {
+      return;
+    }
 
     setPos(() => {
       let x = 0;
@@ -186,7 +181,7 @@ const MagnifyingGlass = ({ height }) => {
         left: `${pos.x}px`,
         top: `${pos.y + 1}px`, // 1 px ,because fullEcharts add 1px border
       }}
-      className="echarts-full-page-magnifying-glass"
+      className='echarts-full-page-magnifying-glass'
       ref={magnifierRef}
       onMouseDown={onMouseDown}
     />
@@ -194,5 +189,3 @@ const MagnifyingGlass = ({ height }) => {
 };
 
 export default MagnifyingGlass;
-
-

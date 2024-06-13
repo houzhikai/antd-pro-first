@@ -14,13 +14,7 @@ const PhysicalFormModal = () => {
         const handelChange = (value) => {
           console.log(value);
         };
-        return (
-          <Input
-            style={{ border: 'none' }}
-            value={text}
-            onChange={handelChange}
-          />
-        );
+        return <Input style={{ border: 'none' }} value={text} onChange={handelChange} />;
       },
     },
     {
@@ -32,7 +26,7 @@ const PhysicalFormModal = () => {
       key: 'option',
       dataIndex: 'option',
       title: '操作',
-      render: () => <Button type="link">Delete</Button>,
+      render: () => <Button type='link'>Delete</Button>,
     },
   ];
   const options = [
@@ -56,16 +50,11 @@ const PhysicalFormModal = () => {
         />
       </div>
       <Button
-        className="table"
-        icon={
-          <PlusOutlined
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          />
-        }
+        className='table'
+        icon={<PlusOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />}
         style={{ width: '100%' }}
-        type="dashed"
-        size="middle"
+        type='dashed'
+        size='middle'
         onClick={handleAddSoftBinRows}
       >
         Add a Physical File
