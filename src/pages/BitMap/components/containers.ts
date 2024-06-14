@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { initScrambleOptions } from './initValues';
 import { getAxisLabelInterval } from './getAxisLabelInterval';
+import { getSingleRandomData } from '../mockData/getWaferMapRandomData';
 
 // 创建一个Context
 export const BitMapContext = createContext<any>(null);
@@ -10,11 +11,22 @@ export const ProviderFunc = () => {
   /**
    * 接口参数
    */
+  const [isErrorPage, setIsErrorPage] = useState(false); // 是否转到错误页面
   const [vscodeParams, setVscodeParams] = useState({});
   const [bitMapPort, setBitMapPort] = useState(''); // 获取启动服务的端口号
-  const [loading, setLoading] = useState<boolean>(false); // Do you want to disable the page: disable the page while converting
-  const [theme, setTheme] = useState('dark');
-
+  // Do you want to disable the page: disable the page while converting
+  const [loading, setLoading] = useState<boolean>(false);
+  const [theme, setTheme] = useState('light');
+  /**
+   * waferMap UI
+   */
+  const wafermapLayout = {
+    xMin: -7,
+    xMax: 5,
+    yMin: -7,
+    yMax: 5,
+    dots: 'BottomLeft',
+  };
   /**
    * 顶部操作栏
    */
@@ -30,6 +42,9 @@ export const ProviderFunc = () => {
     importPhysicalPath: '', // import button need location
   });
 
+  // 单一模式UI
+  const [isSingleModalOpen, setSingleIsModalOpen] = useState(false);
+  const [isStackModalOpen, setIsStackModalOpen] = useState(false);
   // 打开 convert 弹窗， 获取里面的值
   const [convertModalObj, setConvertModalObj] = useState({
     open: false,
@@ -40,11 +55,25 @@ export const ProviderFunc = () => {
     },
     physicalOutputLocation: '',
   });
+
+  /**
+   * bitmap UI
+   */
   // scrambleCfg 的 options 列表
-  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] = useState(initScrambleOptions);
+  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] =
+    useState(initScrambleOptions);
 
   //设置颜色列表，与 echarts 颜色的数据结构不一样
-  const [modifyColorModalObj, setModifyColorModalObj] = useState({ open: false, colorList: [] });
+  const [modifyColorModalObj, setModifyColorModalObj] = useState({
+    open: false,
+    // TODO， vscode环境清空colorList
+    colorList: [
+      { value: 0, color: '#bfa' },
+      { value: 1, color: 'red' },
+      { value: 2, color: '#f00' },
+      { value: 3, color: '#f60' },
+    ],
+  });
   // 是否是堆叠模式
   const [isStack, setIsStack] = useState(false);
 
@@ -53,9 +82,6 @@ export const ProviderFunc = () => {
    */
   const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
   const [physicalFileList, setPhysicalFileList] = useState([]); // 展示 DUTS 列表
-  /**
-   * info信息，综合信息表
-   */
 
   /**
    * 全量数据，缩略图
@@ -79,8 +105,8 @@ export const ProviderFunc = () => {
   /**
    * 详图数据
    */
-  // echarts 数据源
-  const [data, setData] = useState([]);
+  // echarts 数据源 TODO mock 数据
+  const [data, setData] = useState(getSingleRandomData(5000));
 
   const [detailsValues, setDetailsValues] = useState({
     //详图的首位比例，0：0%， 100：100%
@@ -100,9 +126,13 @@ export const ProviderFunc = () => {
     });
   }, [scaleNumber]);
 
-  const [echartsDataColor, setEchartsDataColor] = useState(modifyColorModalObj.colorList); // echarts 颜色列表
+  const [echartsDataColor, setEchartsDataColor] = useState(
+    modifyColorModalObj.colorList,
+  ); // echarts 颜色列表
 
   const bitMapContextValue = {
+    isErrorPage,
+    setIsErrorPage,
     width,
     setWidth,
     detailDataPageWidth,
@@ -143,6 +173,11 @@ export const ProviderFunc = () => {
     setLoading,
     fullPath,
     setFullPath,
+    isSingleModalOpen,
+    setSingleIsModalOpen,
+    wafermapLayout,
+    isStackModalOpen,
+    setIsStackModalOpen,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

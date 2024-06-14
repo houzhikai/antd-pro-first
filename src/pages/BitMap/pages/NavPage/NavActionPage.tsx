@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { message, Button, Tooltip } from 'antd';
-import ConvertPage from '../RightPage/DetailDataPage/NavAction/ConvertPage';
-import { otherColor } from '../../icons/base64/otherColor';
-import myFetch from '../../components/myFetch';
-import { ProviderFunc } from '../../components/containers';
-import '../../index.css';
 import { useAsyncEffect } from 'ahooks';
+import ConvertPage from '../SingleModePages/DetailDataPage/NavAction/ConvertPage';
+import { ProviderFunc } from '../../components/containers';
+import myFetch from '../../components/myFetch';
+import '../../index.css';
 
 const NavActionPage = () => {
   const {
-    setModifyColorModalObj,
     setPhysicalFileList,
     bitMapPort,
     vscodeParams,
-    isStack,
     setTriggerTiming,
     fullPath,
     setFullPath,
@@ -39,8 +36,8 @@ const NavActionPage = () => {
                 location: item.location,
                 name: duts.title,
                 title: (
-                  <Tooltip placement='right' title={duts.title}>
-                    <div className='bit-map-left-dut-title'>{duts.title}</div>
+                  <Tooltip placement="right" title={duts.title}>
+                    <div className="bit-map-left-dut-title">{duts.title}</div>
                   </Tooltip>
                 ),
               }));
@@ -66,38 +63,17 @@ const NavActionPage = () => {
     setTriggerTiming((obj) => ({ ...obj, importPhysical: true }));
   };
 
-  // 打开 颜色选择 弹窗
-  const handleOpenColorListModal = () => {
-    setModifyColorModalObj((obj) => ({ ...obj, open: true }));
-  };
-
   return (
-    <div className='bit-map-nav-page'>
+    <div className="bit-map-nav-page">
       <ConvertPage />
-      <Button className='bit-map-nav-gap' type='primary' size='small' onClick={handleSelectFolder}>
+      <Button
+        className="bit-map-nav-gap"
+        type="primary"
+        size="small"
+        onClick={handleSelectFolder}
+      >
         Import
       </Button>
-
-      {/* 颜色选择器 */}
-      {isStack ? (
-        <Button
-          className='bit-map-nav-gap'
-          type='text'
-          icon={<img width={20} src={otherColor} />}
-          onClick={handleOpenColorListModal}
-          disabled={!isStack}
-        />
-      ) : (
-        <Tooltip title='Color Settings' placement='bottom'>
-          <Button
-            className='bit-map-nav-gap'
-            type='text'
-            icon={<img width={20} src={otherColor} />}
-            onClick={handleOpenColorListModal}
-            disabled={!isStack}
-          />
-        </Tooltip>
-      )}
     </div>
   );
 };

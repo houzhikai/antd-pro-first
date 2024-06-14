@@ -6,7 +6,7 @@ import DetailDataPage from './DetailDataPage/DetailDataPage';
 const RightPage = () => {
   const { width } = ProviderFunc();
   return (
-    <div className='bit-map-right-page'>
+    <div className="bit-map-right-page">
       <FullDataPage />
       <div
         style={{

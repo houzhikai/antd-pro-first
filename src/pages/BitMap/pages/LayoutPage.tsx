@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { ConfigProvider, Spin, message } from 'antd';
 import LeftPage from './LeftPage';
+import SingleModePages from './SingleModePages';
 import NavPage from './NavPage';
-import RightPage from './RightPage';
 import { ProviderFunc } from '../components/containers';
 import ColorListModalPage from './ModalPages/ColorListModalPage';
 import ModeModalPage from './ModalPages/ModeModalPage';
@@ -33,15 +33,15 @@ const LayoutPage = ({ setIsErrorPage }) => {
     loading,
     setLoading,
     bitMapPort,
-    setVscodeParams,
-    setTheme,
+    // setVscodeParams,
+    // setTheme,
     // triggerTiming,
-    setTriggerTiming,
-    setFullPath,
-    setConvertModalObj,
-    setScrambleCfgOptionsList,
-    setModifyColorModalObj,
-    setEchartsDataColor,
+    // setTriggerTiming,
+    // setFullPath,
+    // setConvertModalObj,
+    // setScrambleCfgOptionsList,
+    // setModifyColorModalObj,
+    // setEchartsDataColor,
     // echartsDataColor,
   } = ProviderFunc();
 
@@ -77,55 +77,55 @@ const LayoutPage = ({ setIsErrorPage }) => {
   //   }
   // }, [triggerTiming.colorList]);
 
-  useEffect(() => {
-    window.addEventListener('message', (e) => {
-      if (e.data.command === 'startParams') {
-        setVscodeParams(e.data.text.vscodeParams);
-        const defaultScrambleCfg = e.data.text.physicalConvertFiles?.[0];
-        setConvertModalObj((obj) => ({
-          ...obj,
-          sourceDataLocation: e.data.text.sourceDataLocation,
-          physicalOutputLocation: e.data.text.physicalOutputLocation,
-          scrambleCfg: {
-            fileName: defaultScrambleCfg?.label,
-            location: defaultScrambleCfg?.location,
-          },
-        }));
-        setTheme(e.data.text.theme);
-        setScrambleCfgOptionsList(e.data.text.physicalConvertFiles);
-        setModifyColorModalObj((obj) => ({
-          ...obj,
-          colorList: e.data.text.colorListCfg,
-        }));
-        // echarts data
-        const newColorList = e.data.text.colorListCfg.map((item, index) => {
-          return { value: index + 1, color: item };
-        });
-        setEchartsDataColor(newColorList);
-      } else if (e.data.command === 'params') {
-        setTheme(e.data.text.theme);
-      } else if (e.data.command === 'importDirLocation') {
-        setTriggerTiming((obj) => ({ ...obj, importPhysical: false }));
-        setFullPath((obj) => ({
-          ...obj,
-          importPhysicalPath:
-            e.data.text === '' ? obj.importPhysicalPath : e.data.text,
-        }));
-      } else if (e.data.command === 'importSourcrFile') {
-        setConvertModalObj((obj) => ({
-          ...obj,
-          sourceDataLocation:
-            e.data.text === '' ? obj.sourceDataLocation : e.data.text,
-        }));
-      } else if (e.data.command === 'importOutputFile') {
-        setConvertModalObj((obj) => ({
-          ...obj,
-          physicalOutputLocation:
-            e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
-        }));
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener('message', (e) => {
+  //     if (e.data.command === 'startParams') {
+  //       setVscodeParams(e.data.text.vscodeParams);
+  //       const defaultScrambleCfg = e.data.text.physicalConvertFiles?.[0];
+  //       setConvertModalObj((obj) => ({
+  //         ...obj,
+  //         sourceDataLocation: e.data.text.sourceDataLocation,
+  //         physicalOutputLocation: e.data.text.physicalOutputLocation,
+  //         scrambleCfg: {
+  //           fileName: defaultScrambleCfg?.label,
+  //           location: defaultScrambleCfg?.location,
+  //         },
+  //       }));
+  //       setTheme(e.data.text.theme);
+  //       setScrambleCfgOptionsList(e.data.text.physicalConvertFiles);
+  //       setModifyColorModalObj((obj) => ({
+  //         ...obj,
+  //         colorList: e.data.text.colorListCfg,
+  //       }));
+  //       // echarts data
+  //       const newColorList = e.data.text.colorListCfg.map((item, index) => {
+  //         return { value: index + 1, color: item };
+  //       });
+  //       setEchartsDataColor(newColorList);
+  //     } else if (e.data.command === 'params') {
+  //       setTheme(e.data.text.theme);
+  //     } else if (e.data.command === 'importDirLocation') {
+  //       setTriggerTiming((obj) => ({ ...obj, importPhysical: false }));
+  //       setFullPath((obj) => ({
+  //         ...obj,
+  //         importPhysicalPath:
+  //           e.data.text === '' ? obj.importPhysicalPath : e.data.text,
+  //       }));
+  //     } else if (e.data.command === 'importSourcrFile') {
+  //       setConvertModalObj((obj) => ({
+  //         ...obj,
+  //         sourceDataLocation:
+  //           e.data.text === '' ? obj.sourceDataLocation : e.data.text,
+  //       }));
+  //     } else if (e.data.command === 'importOutputFile') {
+  //       setConvertModalObj((obj) => ({
+  //         ...obj,
+  //         physicalOutputLocation:
+  //           e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
+  //       }));
+  //     }
+  //   });
+  // }, []);
 
   useAsyncEffect(async () => {
     if (vscodeParams?.initIp) {
@@ -218,7 +218,7 @@ const LayoutPage = ({ setIsErrorPage }) => {
         <NavPage />
         <div className="content-page">
           <LeftPage />
-          <RightPage />
+          <SingleModePages />
         </div>
         <ModeModalPage />
         <ColorListModalPage />

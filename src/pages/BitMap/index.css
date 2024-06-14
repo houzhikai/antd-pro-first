@@ -4,9 +4,31 @@
     --full-page-height: 40%; 
     --border-color: #34393b;
   }
+
+.wafermap-content-layout{
+    display: flex;
+    /* TODO， 在vscode中重新计算高度 */
+    height: calc(100vh - 48px - 45px - 10px);
+}
+.wafermap-echarts-page{
+    flex: 1;
+    width: calc(100vw - 300px);
+    height: calc(100vh - 48px - 45px - 10px);
+}
+.wafermap-info-page{
+    width: 300px;
+    height: calc(100vh - 48px - 45px - 10px);
+    overflow-y: auto;
+}
+.bitmap-Drawer-layout{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
   
 .bit-map-nav {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 4px;
@@ -88,8 +110,4 @@
 .bit-map-color-modal{
     display: flex;
     align-items: center;
-}
-.bit-map-color-modal-label{
-    margin-right: 10px;
-    width: 100px;
 }

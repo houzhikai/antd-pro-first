@@ -5,7 +5,14 @@ import { scaleNumberOptions } from '../../../../components/initValues';
 import myFetch from '../../../../components/myFetch';
 
 const ScalePage = () => {
-  const { scaleNumber, setScaleNumber, data, vscodeParams, bitMapPort, setData } = ProviderFunc();
+  const {
+    scaleNumber,
+    setScaleNumber,
+    data,
+    vscodeParams,
+    bitMapPort,
+    setData,
+  } = ProviderFunc();
 
   const handleChange = async (value) => {
     setScaleNumber(value);

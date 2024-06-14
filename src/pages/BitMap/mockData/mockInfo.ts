@@ -1,0 +1,18 @@
+export const mockInfo = {
+  fileName: 'lotid_waferid_20220110130640758_x3y0.phy',
+  failCount: 8191,
+  status: 'FAIL',
+  timeStamp: '20220110130640758',
+  x_num: '7',
+  y_num: '10',
+  width_mode: '8',
+  endian: 'little',
+  compress_mode: '',
+  pin_list: 'IO_Compare',
+  device_name: '',
+  project_name: '',
+  lot_id: '',
+  wafer_id: '',
+  td_serial: '',
+  comment: '',
+};

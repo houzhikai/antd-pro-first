@@ -1,6 +1,6 @@
-import { getAxisLabelInterval } from '../../../../../components/getAxisLabelInterval';
-import { getTooltipDutDetailsInfo } from '../../../../../components/getTooltipDutDetailsInfo';
-import { takeMiddleNumber } from '../../../../../components/takeMiddleNumber';
+import { getAxisLabelInterval } from '../../../../components/getAxisLabelInterval';
+import { getTooltipDutDetailsInfo } from '../../../../components/getTooltipDutDetailsInfo';
+import { takeMiddleNumber } from '../../../../components/takeMiddleNumber';
 import getScatterSeries from './getScatterSeries';
 export const getScatterOptions = (
   theme,
@@ -10,20 +10,20 @@ export const getScatterOptions = (
   baseConversion,
   configInfo,
   scaleNumber,
-  detailsValues
+  detailsValues,
 ) => {
   //   const maxValue = { xMax: 400, yMax: 200 };
   const xAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.xMin,
     detailsEchartsAxisValue.xMax,
     baseConversion,
-    scaleNumber
+    scaleNumber,
   );
   const yAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.yMin,
     detailsEchartsAxisValue.yMax,
     baseConversion,
-    scaleNumber
+    scaleNumber,
   );
   const dots = configInfo.layoutConfig.dots;
   const axisLabelInterval = getAxisLabelInterval(scaleNumber);
@@ -38,9 +38,13 @@ export const getScatterOptions = (
         // 不展示 markLine.emphasis的值
         if (!Array.isArray(params.data)) {
           return;
-        } 
+        }
         // show tooltip info
-        const tooltipInfo = getTooltipDutDetailsInfo(scaleNumber, params, baseConversion);
+        const tooltipInfo = getTooltipDutDetailsInfo(
+          scaleNumber,
+          params,
+          baseConversion,
+        );
         return tooltipInfo;
       },
     },
@@ -103,7 +107,10 @@ export const getScatterOptions = (
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.xInterval,
       },
-      splitLine: scaleNumber === 0.125 ? { show: true, lineStyle: { color: '#eee' } } : {}, // 显示边框颜色
+      splitLine:
+        scaleNumber === 0.125
+          ? { show: true, lineStyle: { color: '#eee' } }
+          : {}, // 显示边框颜色
     },
 
     yAxis: {
@@ -125,9 +132,18 @@ export const getScatterOptions = (
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.yInterval,
       },
-      splitLine: scaleNumber === 0.125 ? { show: true, lineStyle: { color: '#eee' } } : {}, // 显示边框颜色
+      splitLine:
+        scaleNumber === 0.125
+          ? { show: true, lineStyle: { color: '#eee' } }
+          : {}, // 显示边框颜色
     },
     visualMap: { show: false, type: 'piecewise', pieces: echartsDataColor }, // heatmap 必须有visualMap属性
-    series: getScatterSeries(data, detailsEchartsAxisValue, configInfo, scaleNumber, theme),
+    series: getScatterSeries(
+      data,
+      detailsEchartsAxisValue,
+      configInfo,
+      scaleNumber,
+      theme,
+    ),
   };
 };

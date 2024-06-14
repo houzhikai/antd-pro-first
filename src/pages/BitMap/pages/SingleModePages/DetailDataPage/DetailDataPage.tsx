@@ -1,12 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import { ProviderFunc } from '../../../components/containers';
-import { getScatterOptions } from './components/getScatter/getScatterOptions';
+import { getScatterOptions } from './components/getScatterOptions';
 
 const DetailDataPage = () => {
-  const chartRef = useRef(null);
-  const { echartsDataColor, theme, baseConversion, configInfo, data, scaleNumber, detailsValues, setDetailsValues } =
-    ProviderFunc();
+  const chartRef = useRef<any>(null);
+  const {
+    echartsDataColor,
+    theme,
+    baseConversion,
+    configInfo,
+    data,
+    scaleNumber,
+    detailsValues,
+    setDetailsValues,
+  } = ProviderFunc();
   const options = getScatterOptions(
     theme,
     data,
@@ -21,7 +29,7 @@ const DetailDataPage = () => {
     baseConversion,
     configInfo,
     scaleNumber,
-    detailsValues
+    detailsValues,
   );
   useEffect(() => {
     if (data.length > 0) {
@@ -49,7 +57,13 @@ const DetailDataPage = () => {
     }
   }, [options]);
 
-  return <>{data.length > 0 && <div ref={chartRef} style={{ width: '100%', height: '100%' }} />}</>;
+  return (
+    <>
+      {data.length > 0 && (
+        <div ref={chartRef} style={{ width: '100%', height: '100%' }} />
+      )}
+    </>
+  );
 };
 
 export default DetailDataPage;

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import LayoutPage from './pages/LayoutPage';
-import ErrorPage from './pages/ErrorPage';
+import React from 'react';
 import { ProviderFunc, BitMapContext } from './components/containers';
+import WaferMapLayoutPage from './pages/WaferMapLayoutPage';
+import ErrorPage from './pages/ErrorPage';
 import './index.css';
 
 const BitMapPage = () => {
-  const { bitMapContextValue } = ProviderFunc();
-  const [isErrorPage, setIsErrorPage] = useState(false); // 是否转到错误页面
+  const { bitMapContextValue, isErrorPage, setIsErrorPage } = ProviderFunc();
 
   return (
     <BitMapContext.Provider value={bitMapContextValue}>
-      {isErrorPage ? <ErrorPage setIsErrorPage={setIsErrorPage} /> : <LayoutPage setIsErrorPage={setIsErrorPage} />}
+      {isErrorPage ? (
+        <ErrorPage setIsErrorPage={setIsErrorPage} />
+      ) : (
+        <WaferMapLayoutPage />
+      )}
     </BitMapContext.Provider>
   );
 };
