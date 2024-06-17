@@ -6,7 +6,7 @@ import { getScatterOptions } from './components/getScatterOptions';
 const DetailDataPage = () => {
   const chartRef = useRef<any>(null);
   const {
-    echartsDataColor,
+    singleColor,
     theme,
     baseConversion,
     configInfo,
@@ -18,7 +18,7 @@ const DetailDataPage = () => {
   const options = getScatterOptions(
     theme,
     data,
-    echartsDataColor,
+    singleColor,
     {
       xMin: 0,
       xMax: configInfo.layoutConfig.xMax,
@@ -52,6 +52,7 @@ const DetailDataPage = () => {
 
       return () => {
         myChart.dispose();
+        myChart.off('dataZoom');
         window.removeEventListener('resize', resizeChart);
       };
     }

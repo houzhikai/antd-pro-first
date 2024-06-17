@@ -6,10 +6,12 @@ import SingleModePages from '../../SingleModePages';
 import DetailNavActionPage from '../../SingleModePages/DetailDataPage/NavAction';
 
 const SingleModeModal = () => {
-  const { isSingleModalOpen, setSingleIsModalOpen } = ProviderFunc();
+  const { isSingleModalOpen, setSingleIsModalOpen, setScaleNumber } =
+    ProviderFunc();
 
   const handleCloseDrawer = () => {
     setSingleIsModalOpen(false);
+    setScaleNumber(1);
   };
   return (
     <Drawer
@@ -32,6 +34,7 @@ const SingleModeModal = () => {
           onClick={handleCloseDrawer}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
+          onMouseDown={undefined}
         />
       }
     >

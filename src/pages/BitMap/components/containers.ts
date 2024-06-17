@@ -1,6 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { initScrambleOptions } from './initValues';
-import { getAxisLabelInterval } from './getAxisLabelInterval';
 import { getSingleRandomData } from '../mockData/getWaferMapRandomData';
 
 // 创建一个Context
@@ -21,11 +20,12 @@ export const ProviderFunc = () => {
    * waferMap UI
    */
   const wafermapLayout = {
-    xMin: -7,
-    xMax: 5,
-    yMin: -7,
-    yMax: 5,
-    dots: 'BottomLeft',
+    xMin: -70,
+    xMax: 50,
+    yMin: -70,
+    yMax: 50,
+    dots: 'BottomLeft', // TopLeft, TopRight, BottomLeft, BottomRight
+    gap: 'bottom', // bottom top left right
   };
   /**
    * 顶部操作栏
@@ -63,17 +63,6 @@ export const ProviderFunc = () => {
   const [scrambleCfgOptionsList, setScrambleCfgOptionsList] =
     useState(initScrambleOptions);
 
-  //设置颜色列表，与 echarts 颜色的数据结构不一样
-  const [modifyColorModalObj, setModifyColorModalObj] = useState({
-    open: false,
-    // TODO， vscode环境清空colorList
-    colorList: [
-      { value: 0, color: '#bfa' },
-      { value: 1, color: 'red' },
-      { value: 2, color: '#f00' },
-      { value: 3, color: '#f60' },
-    ],
-  });
   // 是否是堆叠模式
   const [isStack, setIsStack] = useState(false);
 
@@ -86,6 +75,11 @@ export const ProviderFunc = () => {
   /**
    * 全量数据，缩略图
    */
+  // 单例模式下的颜色列表，正常情况下只有1
+  const singleColor = [
+    { value: 1, color: 'red' },
+    { gt: 1, color: '#f60' },
+  ];
   const [width, setWidth] = useState(300); // full-data 的宽度
   // TODO, dots: TopLeft, TopRight, BottomLeft, BottomRight
   const configInfo = {
@@ -116,19 +110,16 @@ export const ProviderFunc = () => {
     yEnd: 20,
   });
 
-  useEffect(() => {
-    const defaultDetailValues = getAxisLabelInterval(scaleNumber);
-    setDetailsValues({
-      xStart: 0,
-      xEnd: defaultDetailValues.end.xEnd,
-      yStart: 0,
-      yEnd: defaultDetailValues.end.yEnd,
-    });
-  }, [scaleNumber]);
-
+  //设置颜色列表，与 echarts 颜色的数据结构不一样
+  const [modifyColorModalObj, setModifyColorModalObj] = useState({
+    open: false,
+    // TODO， vscode环境清空colorList
+    colorList: ['red', '#926efe', '#f60'],
+  });
+  // stack UI echarts 颜色列表
   const [echartsDataColor, setEchartsDataColor] = useState(
     modifyColorModalObj.colorList,
-  ); // echarts 颜色列表
+  );
 
   const bitMapContextValue = {
     isErrorPage,
@@ -178,6 +169,7 @@ export const ProviderFunc = () => {
     wafermapLayout,
     isStackModalOpen,
     setIsStackModalOpen,
+    singleColor,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

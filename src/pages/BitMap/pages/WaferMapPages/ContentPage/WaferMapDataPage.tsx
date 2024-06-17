@@ -2,15 +2,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { ProviderFunc } from '../../../components/containers';
 import { getWaferMapOptions } from './components/getWaferMapOptions';
+import { getWaferMapRandomData } from '@/pages/BitMap/mockData/getWaferMapRandomData';
 import '../../../index.css';
 
 const WaferMapDataPage = () => {
   const wafermapChartRef = useRef<any>(null);
-  const { theme, echartsDataColor, setSingleIsModalOpen, wafermapLayout } =
-    ProviderFunc();
-  const [wafermapEchartsHeight, setWafermapEchartsHeight] = useState(0);
+  const { theme, setSingleIsModalOpen, wafermapLayout } = ProviderFunc();
+  const [wafermapEchartsSize, setWafermapEchartsSize] = useState({
+    width: 0,
+    height: 0,
+    fullHeight: 0, // 为了计算半圆弧的半径，对其他没有作用
+  });
 
-  const options = getWaferMapOptions(theme, echartsDataColor, wafermapLayout);
+  const options = getWaferMapOptions(
+    getWaferMapRandomData(500, wafermapLayout),
+    theme,
+    wafermapLayout,
+    wafermapEchartsSize,
+  );
 
   // 计算缩略图的高度
   useEffect(() => {
@@ -20,8 +29,18 @@ const WaferMapDataPage = () => {
         document.documentElement.clientHeight || 0,
         window.innerHeight || 0,
       );
+      const vw = Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0,
+      );
       // TODO, vh 100vh， 48：上下padding， 51：导航栏， 10：内容区域margin-top
-      setWafermapEchartsHeight(Math.round(vh - 48 - 51 - 10));
+      const width = Math.round(vw - 48 - 80 - 300);
+      const height = Math.round(vh - 48 - 51 - 10);
+      setWafermapEchartsSize(
+        width > height
+          ? { width: height, height, fullHeight: height }
+          : { width, height: width, fullHeight: height },
+      );
     };
 
     window.addEventListener('resize', updateSize);
@@ -55,8 +74,8 @@ const WaferMapDataPage = () => {
       <div
         ref={wafermapChartRef}
         style={{
-          width: wafermapEchartsHeight,
-          height: wafermapEchartsHeight,
+          width: wafermapEchartsSize.width,
+          height: wafermapEchartsSize.height,
           margin: 'auto',
         }}
       />

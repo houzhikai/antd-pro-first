@@ -12,7 +12,9 @@ const ColorListModalPage = () => {
     setEchartsDataColor,
     setTriggerTiming,
   } = ProviderFunc();
-  const [colorList, setColorList] = useState(modifyColorModalObj.colorList || []);
+  const [colorList, setColorList] = useState(
+    modifyColorModalObj.colorList || [],
+  );
 
   useEffect(() => {
     setColorList(modifyColorModalObj.colorList);
@@ -78,7 +80,7 @@ const ColorListModalPage = () => {
         return (
           <ColorPicker
             style={{ background: theme === 'dark' ? '#1f1f1f' : '#fff' }}
-            size='small'
+            size="small"
             defaultValue={text}
             onChange={(_, hexString) => {
               setColorList((prevColors) => {
@@ -96,23 +98,31 @@ const ColorListModalPage = () => {
   return (
     <div>
       <Modal
-        title='Color List'
+        title="Color List"
         // open={true}
         open={modifyColorModalObj.open}
-        okText='Save'
-        cancelText='Cancel'
+        okText="Save"
+        cancelText="Cancel"
         onOk={handleOk}
         onCancel={handleCancel}
         destroyOnClose
       >
         <div>
-          Dut1: {selectedTreeDataList?.[0]?.location || ''}/{selectedTreeDataList?.[0]?.name || ''}
+          Dut1: {selectedTreeDataList?.[0]?.location || ''}/
+          {selectedTreeDataList?.[0]?.name || ''}
         </div>
         <div>
-          Dut2: {selectedTreeDataList?.[1]?.location || ''}/{selectedTreeDataList?.[1]?.name || ''}
+          Dut2: {selectedTreeDataList?.[1]?.location || ''}/
+          {selectedTreeDataList?.[1]?.name || ''}
         </div>
         <br />
-        <Table size='small' bordered={false} columns={columns} dataSource={dataSource} pagination={false} />
+        <Table
+          size="small"
+          bordered={false}
+          columns={columns}
+          dataSource={dataSource}
+          pagination={false}
+        />
       </Modal>
     </div>
   );

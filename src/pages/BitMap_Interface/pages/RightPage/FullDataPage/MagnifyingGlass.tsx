@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getRatioNumber } from '../../../components/getRatioNumber';
-import {getGlassPosition} from '../../../components/getGlassPosition'
+import { getGlassPosition } from '../../../components/getGlassPosition';
 import { ProviderFunc } from '../../../components/containers';
 
 const MagnifyingGlass = ({ height }) => {
@@ -188,11 +188,9 @@ const MagnifyingGlass = ({ height }) => {
       }}
       className="echarts-full-page-magnifying-glass"
       ref={magnifierRef}
-      onMouseDown={onMouseDown}
+      onClick={onMouseDown}
     />
   );
 };
 
 export default MagnifyingGlass;
-
-

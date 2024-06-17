@@ -5,7 +5,7 @@ import getScatterSeries from './getScatterSeries';
 export const getScatterOptions = (
   theme,
   data,
-  echartsDataColor,
+  singleColor,
   detailsEchartsAxisValue, // 详情数据最小/最大值
   baseConversion,
   configInfo,
@@ -137,7 +137,11 @@ export const getScatterOptions = (
           ? { show: true, lineStyle: { color: '#eee' } }
           : {}, // 显示边框颜色
     },
-    visualMap: { show: false, type: 'piecewise', pieces: echartsDataColor }, // heatmap 必须有visualMap属性
+    visualMap: {
+      show: false,
+      type: 'piecewise',
+      pieces: singleColor,
+    }, // heatmap 必须有visualMap属性
     series: getScatterSeries(
       data,
       detailsEchartsAxisValue,
