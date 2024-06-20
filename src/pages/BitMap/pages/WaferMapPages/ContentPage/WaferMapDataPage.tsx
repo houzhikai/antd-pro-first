@@ -15,7 +15,7 @@ const WaferMapDataPage = () => {
   });
 
   const options = getWaferMapOptions(
-    getWaferMapRandomData(500, wafermapLayout),
+    getWaferMapRandomData(3600, wafermapLayout),
     theme,
     wafermapLayout,
     wafermapEchartsSize,

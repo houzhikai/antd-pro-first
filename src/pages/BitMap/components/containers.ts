@@ -20,11 +20,11 @@ export const ProviderFunc = () => {
    * waferMap UI
    */
   const wafermapLayout = {
-    xMin: -70,
-    xMax: 50,
-    yMin: -70,
-    yMax: 50,
-    dots: 'BottomLeft', // TopLeft, TopRight, BottomLeft, BottomRight
+    xMin: -60,
+    xMax: 30,
+    yMin: -60,
+    yMax: 30,
+    dots: 'TopLeft', // TopLeft, TopRight, BottomLeft, BottomRight
     gap: 'bottom', // bottom top left right
   };
   /**
@@ -100,7 +100,7 @@ export const ProviderFunc = () => {
    * 详图数据
    */
   // echarts 数据源 TODO mock 数据
-  const [data, setData] = useState(getSingleRandomData(5000));
+  const [data, setData] = useState(getSingleRandomData(50000));
 
   const [detailsValues, setDetailsValues] = useState({
     //详图的首位比例，0：0%， 100：100%

@@ -21,10 +21,10 @@ export const getTooltipDutDetailsInfo = (
   const pageX = String(Math.floor(params?.data?.[0] / 1024));
   const pageY = String(Math.floor(params?.data?.[0] / (1024 / scale / 8)));
   //  奇数反转，偶数不反转
-  const isReversal = Number(pageY) / 2 !== 0;
+  const isReversal = Number(pageY) % 2 !== 0;
   const getIO = (X, isReversal) => {
     const ioRange = Math.floor(Number(X) / 16);
-    const io = isReversal ? 8 - (ioRange % 8) : ioRange % 8;
+    const io = isReversal ? 7 - (ioRange % 8) : ioRange % 8;
     return io;
   };
   const ioNumber = getIO(X, isReversal);

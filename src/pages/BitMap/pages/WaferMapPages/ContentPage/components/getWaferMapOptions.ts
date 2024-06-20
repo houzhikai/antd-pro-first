@@ -64,16 +64,17 @@ export const getWaferMapOptions = (
       {
         type: 'heatmap',
         data,
+        z: 0,
         large: true, // 启用块状渲染
         largeThreshold: 50 * 10000, // 数据量超过阈值时启用块状渲染
         progressive: 0, // 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
         progressiveThreshold: 5 * 1000, //启用渐进式渲染的图形数量阈值，在单个系列的图形数量超过该阈值时启用渐进式渲染。
         sampling: 'average',
-        // itemStyle: {
-        //   borderColor: '#ccc',
-        //   borderWidth: 1,
-        //   borderType: 'solid',
-        // },
+        itemStyle: {
+          borderColor: '#ccc',
+          borderWidth: 1,
+          borderType: 'solid',
+        },
       },
     ],
   };

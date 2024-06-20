@@ -47,12 +47,14 @@ export const getGraphicPosition = (gap, wafermapEchartsSize) => {
     {
       type: 'circle',
       silent: true,
+      z: 1,
       shape: { cx: circleCenter, cy: circleCenter, r: cx / 2 },
       style: { fill: 'transparent', stroke: '#5f5f5f', lineWidth: 2 },
     },
     {
       type: 'arc',
       silent: true,
+      z: 1,
       shape: {
         cx: value.cx,
         cy: value.cy,
