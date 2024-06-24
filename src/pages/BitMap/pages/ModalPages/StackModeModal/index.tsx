@@ -1,21 +1,17 @@
 import React from 'react';
-import { Button, Drawer } from 'antd';
+import { Drawer } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { ProviderFunc } from '@/pages/BitMap/components/containers';
-import { otherColor } from '@/pages/BitMap/icons/base64/otherColor';
+import StackNavAction from '../../StackModalPages/NavAction/StackNavAction';
+import StackModalPages from '../../StackModalPages/indx';
 
 const StackModeModalPage = () => {
-  const { isStackModalOpen, setIsStackModalOpen, setModifyColorModalObj } =
-    ProviderFunc();
+  const { isStackModalOpen, setIsStackModalOpen } = ProviderFunc();
 
   const handleCloseDrawer = () => {
     setIsStackModalOpen(false);
   };
 
-  // 打开 颜色选择 弹窗
-  const handleOpenColorListModal = () => {
-    setModifyColorModalObj((obj) => ({ ...obj, open: true }));
-  };
   return (
     <Drawer
       styles={{ header: { padding: '8px 16px' }, body: { padding: '0 16px' } }}
@@ -23,12 +19,7 @@ const StackModeModalPage = () => {
       title={
         <div className="bitmap-Drawer-layout">
           <div>Stack Mode</div>
-          <Button
-            className="bit-map-nav-gap"
-            type="text"
-            icon={<img width={20} src={otherColor} />}
-            onClick={handleOpenColorListModal}
-          />
+          <StackNavAction />
           <div />
         </div>
       }
@@ -45,7 +36,7 @@ const StackModeModalPage = () => {
         />
       }
     >
-      stack UI
+      <StackModalPages />
     </Drawer>
   );
 };

@@ -43,7 +43,7 @@ export const ProviderFunc = () => {
   });
 
   // 单一模式UI
-  const [isSingleModalOpen, setSingleIsModalOpen] = useState(false);
+  const [isSingleModalOpen, setSingleIsModalOpen] = useState(true);
   const [isStackModalOpen, setIsStackModalOpen] = useState(false);
   // 打开 convert 弹窗， 获取里面的值
   const [convertModalObj, setConvertModalObj] = useState({

@@ -1,19 +1,12 @@
 import React from 'react';
-import BaseConversion from './BaseConversion';
 import NavAction from './NavAction';
+import '../../../../index.css';
+import BaseConversion from './BaseConversion';
 import ScalePage from './ScalePage';
 
 const DetailNavActionPage = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 6,
-        marginLeft: '5%',
-      }}
-    >
+    <div className="flex-layout ">
       <ScalePage />
       <BaseConversion />
       <NavAction />

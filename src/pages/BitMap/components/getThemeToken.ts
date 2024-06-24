@@ -10,6 +10,7 @@ import {
   custom_dark_Select,
   custom_dark_Table,
   custom_light_Table,
+  custom_Descriptions,
 } from './theme';
 
 export const getThemeToken = (theme) => {
@@ -26,12 +27,14 @@ export const getThemeToken = (theme) => {
           Modal: custom_dark_Modal,
           Select: custom_dark_Select,
           Table: custom_dark_Table, //  dark light
+          Descriptions: custom_Descriptions,
         },
       }
     : {
         token: {},
         components: {
           Table: custom_light_Table, //  dark light
+          Descriptions: custom_Descriptions,
         },
       };
 };

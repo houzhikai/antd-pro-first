@@ -15,6 +15,10 @@ export const custom_dark_token = {
   colorTextDescription: '#fff', // description color , or tag icon color
 };
 
+export const custom_Descriptions = {
+  titleMarginBottom: 0,
+};
+
 export const custom_dark_Popconfirm = {
   colorText: darkTextColor,
   colorTextHeading: darkTextColor,

@@ -3,6 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Select, Button, Input } from 'antd';
 import ShowTagPage from './ShowTagPage';
 import { ProviderFunc } from '../../../components/containers';
+import CustomFormItemPage from '../../NavPage/CustomFormItemPage';
 
 const PhysicalTagList = () => {
   const {
@@ -54,18 +55,10 @@ const PhysicalTagList = () => {
     });
   };
 
-  const CustomFormItem = ({ children, title }: any) => {
-    return (
-      <div style={{ margin: '10px 0' }}>
-        <div style={{ width: 155, display: 'inline-block' }}>{title}</div>
-        {children}
-      </div>
-    );
-  };
   return (
     <>
       {/* 源数据文件夹 */}
-      <CustomFormItem title="Source Data">
+      <CustomFormItemPage title="Source Data">
         <Input
           style={{ margin: '0 20px', width: 400 }}
           value={convertModalObj.sourceDataLocation}
@@ -74,9 +67,9 @@ const PhysicalTagList = () => {
         <Button type="primary" onClick={handleModifySourceDataLocation}>
           Browse Path
         </Button>
-      </CustomFormItem>
+      </CustomFormItemPage>
       {/* 输出物理文件路径 */}
-      <CustomFormItem title="Physical Output">
+      <CustomFormItemPage title="Physical Output">
         <Input
           style={{ margin: '0 20px', width: 400 }}
           value={convertModalObj.physicalOutputLocation}
@@ -85,17 +78,17 @@ const PhysicalTagList = () => {
         <Button type="primary" onClick={handleModifyPhysicalOutputLocation}>
           Browse Path
         </Button>
-      </CustomFormItem>
+      </CustomFormItemPage>
       {/* 物理转换文件 */}
       <div>
-        <CustomFormItem title="ScrambleCfg">
+        <CustomFormItemPage title="ScrambleCfg">
           <Select
             style={{ marginLeft: 20, width: 200 }}
             options={scrambleCfgOptionsList}
             value={convertModalObj.scrambleCfg.fileName}
             onChange={handleChangePhysicalOptions}
           />
-        </CustomFormItem>
+        </CustomFormItemPage>
         {scrambleCfgOptionsList.map((tag: any) => {
           return <ShowTagPage key={tag.label} tag={tag} />;
         })}
