@@ -100,7 +100,7 @@ export const ProviderFunc = () => {
    * 详图数据
    */
   // echarts 数据源 TODO mock 数据
-  const [data, setData] = useState(getSingleRandomData(50000));
+  const [data, setData] = useState(getSingleRandomData(5000));
 
   const [detailsValues, setDetailsValues] = useState({
     //详图的首位比例，0：0%， 100：100%

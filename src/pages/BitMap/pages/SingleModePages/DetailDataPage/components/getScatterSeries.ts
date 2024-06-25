@@ -106,7 +106,7 @@ export default (
         break;
       case 256:
         data = [
-          { xAxis: 0 },
+          // { xAxis: 0 },
           { xAxis: 8 },
           { xAxis: 8 * 2 },
           { xAxis: 8 * 3 },
@@ -114,8 +114,8 @@ export default (
           { xAxis: 8 * 5 },
           { xAxis: 8 * 6 },
           { xAxis: 8 * 7 },
-          { yAxis: 0 },
-          { yAxis: 63 },
+          // { yAxis: 0 },
+          // { yAxis: 63 },
         ];
         break;
       default:
@@ -149,9 +149,9 @@ export default (
       case 64:
         data = [{ xAxis: 0 }, { xAxis: 127 }, { yAxis: 0 }, { yAxis: 127 }];
         break;
-      case 256:
-        data = [{ xAxis: 0 }, { xAxis: 63 }, { yAxis: 0 }, { yAxis: 63 }];
-        break;
+      // case 256:
+      //   data = [{ xAxis: -0.1 }, { xAxis: 63 }, { yAxis: 0 }, { yAxis: 63 }];
+      //   break;
       default:
         data = [{ xAxis: 0 }, { xAxis: 1023 }, { yAxis: 0 }, { yAxis: 1023 }];
     }
@@ -183,13 +183,14 @@ export default (
         label: { show: false },
         symbol: 'none',
         lineStyle:
-          scaleNumber === 0.125 || scaleNumber === 0.2
+          scaleNumber === 0.125 || scaleNumber === 256
             ? { width: 0, type: 'line', color: borderColor }
             : { width: 6, type: 'line', color: borderColor }, // 粗线样式
         data: getBlockMarkLinePosition(scaleNumber),
+        precision: 0.1, // 微调markLine的位置
         emphasis: {
           lineStyle:
-            scaleNumber === 0.125 || scaleNumber === 0.2
+            scaleNumber === 0.125 || scaleNumber === 256
               ? { width: 0, type: 'line', color: borderColor }
               : { width: 6, type: 'line', color: borderColor }, // 粗线样式
         },
@@ -219,16 +220,17 @@ export default (
         label: { show: false },
         symbol: 'none',
         lineStyle:
-          scaleNumber === 0.125 || scaleNumber === 0.2
+          scaleNumber === 0.125
             ? { width: 0, type: 'line', color: borderColor } // 细线样式
             : { width: 2, type: 'line', color: borderColor },
         // 放大倍数不同，markLine 对应的线位置会有偏差，需要对各个放大倍数的markLine做偏移
         data: getPageMarkLinePosition(scaleNumber),
+        precision: 0.1, // 微调markLine的位置
         emphasis: {
           lineStyle:
-            scaleNumber !== 0.125 || scaleNumber !== 0.2
-              ? { width: 2, type: 'line', color: borderColor } // 细线样式
-              : { width: 0, type: 'line', color: borderColor },
+            scaleNumber === 0.125
+              ? { width: 0, type: 'line', color: borderColor }
+              : { width: 2, type: 'line', color: borderColor }, // 细线样式
         },
       },
     },

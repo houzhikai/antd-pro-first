@@ -1,5 +1,11 @@
-export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) => {
-  const borderColor =  theme === 'dark' ? '#35393b' : '#f4f4f4'
+export default (
+  data,
+  detailsEchartsAxisValue,
+  configInfo,
+  scaleNumber,
+  theme,
+) => {
+  const borderColor = theme === 'dark' ? '#35393b' : '#f4f4f4';
   const getSplitLine = (xSplitNumber: number, ySplitNumber) => {
     let xMultiples: { xAxis: number }[] = [];
     let yMultiples: { yAxis: number }[] = [];
@@ -47,8 +53,7 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) =
   ];
   const newMarkLineStyleList =
     scaleNumber === 0.125 ? markLineStyleList : markLineStyleList.slice(0, 2);
-
-    return [
+  return [
     {
       type: 'heatmap',
       symbol: 'rect',
@@ -67,7 +72,7 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) =
         lineStyle:
           scaleNumber === 0.125 || scaleNumber === 0.2
             ? { width: 0, type: 'line', color: borderColor }
-            : { width: 6, type: 'line', color: borderColor}, // 粗线样式
+            : { width: 6, type: 'line', color: borderColor }, // 粗线样式
         data: [{ xAxis: 0 }, { xAxis: 1023 }, { yAxis: 0 }, { yAxis: 1023 }],
         emphasis: {
           lineStyle:
@@ -95,7 +100,7 @@ export default (data, detailsEchartsAxisValue, configInfo, scaleNumber, theme) =
         lineStyle:
           scaleNumber === 0.125 || scaleNumber === 0.2
             ? { width: 0, type: 'line', color: borderColor } // 细线样式
-            : { width: 2, type: 'line', color: borderColor},
+            : { width: 2, type: 'line', color: borderColor },
         // 放大倍数不同，markLine 对应的线位置会有偏差，需要对各个放大倍数的markLine做偏移
         data:
           scaleNumber === 64

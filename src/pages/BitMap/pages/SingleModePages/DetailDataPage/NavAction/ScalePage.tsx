@@ -15,6 +15,8 @@ const ScalePage = () => {
   } = ProviderFunc();
 
   const handleChange = async (value) => {
+    // TODO, delete
+    setScaleNumber(value);
     try {
       const res = await myFetch({
         url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=${value}`,
@@ -24,7 +26,6 @@ const ScalePage = () => {
       if (res.result === 0) {
         setScaleNumber(value);
         setData(JSON.parse(res.data[0].value) || []);
-        setScaleNumber(value);
       } else {
         message.error(res.msg);
       }

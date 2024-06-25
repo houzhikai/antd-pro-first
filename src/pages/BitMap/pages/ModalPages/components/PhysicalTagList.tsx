@@ -101,6 +101,7 @@ const PhysicalTagList = () => {
             <PlusOutlined
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
+              onMouseDown={undefined}
             />
           }
         >
