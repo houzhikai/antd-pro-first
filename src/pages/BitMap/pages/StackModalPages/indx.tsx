@@ -1,12 +1,12 @@
 import React from 'react';
 import { ProviderFunc } from '../../components/containers';
-import DetailDataPage from '../SingleModePages/DetailDataPage/DetailDataPage';
 import FullDataPage from '../SingleModePages/FullDataPage';
+import DetailDataPage from '../SingleModePages/DetailDataPage/DetailDataPage';
 
 const StackModalPages = () => {
   const { width } = ProviderFunc();
   return (
-    <div className="bit-map-right-page">
+    <div className='bit-map-right-page'>
       <FullDataPage />
       <div
         style={{

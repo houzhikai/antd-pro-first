@@ -1,10 +1,10 @@
 import React from 'react';
-import MyLogo from '@/components/MyLogo';
-import { logo } from '../../icons/base64/logo';
-import NavActionPage from '../NavPage/NavActionPage';
-import '../../index.css';
 import { Button } from 'antd';
+import NavActionPage from '../NavPage/NavActionPage';
+import { logo } from '../../icons/base64/logo';
 import { ProviderFunc } from '../../components/containers';
+import '../../index.css';
+import MyLogo from '@/components/MyLogo';
 
 const NavPages = () => {
   const { setIsStackModalOpen } = ProviderFunc();
@@ -15,9 +15,11 @@ const NavPages = () => {
     <div className="bit-map-nav">
       <MyLogo src={logo} title="BitMap" />
       <NavActionPage />
-      <Button size="small" type="primary" onClick={handleOpenStackPage}>
-        Composite
-      </Button>
+      <div className="bit-map-nav-page">
+        <Button size="small" type="primary" onClick={handleOpenStackPage}>
+          Composite
+        </Button>
+      </div>
     </div>
   );
 };

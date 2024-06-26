@@ -17,17 +17,17 @@ const ColorSettings = () => {
       {/* 颜色选择器 */}
       {isStack ? (
         <Button
-          className="bit-map-nav-gap"
-          type="text"
+          className='bit-map-nav-gap'
+          type='text'
           icon={<img width={20} src={otherColor} />}
           onClick={handleOpenColorListModal}
           disabled={!isStack}
         />
       ) : (
-        <Tooltip title="Color Settings" placement="bottom">
+        <Tooltip title='Color Settings' placement='bottom'>
           <Button
-            className="bit-map-nav-gap"
-            type="text"
+            className='bit-map-nav-gap'
+            type='text'
             icon={<img width={20} src={otherColor} />}
             onClick={handleOpenColorListModal}
             disabled={!isStack}

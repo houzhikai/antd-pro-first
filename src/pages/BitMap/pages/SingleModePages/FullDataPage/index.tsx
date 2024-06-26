@@ -6,7 +6,7 @@ import { ProviderFunc } from '../../../components/containers';
 const FullDataPage = () => {
   const { width } = ProviderFunc();
   return (
-    <div style={{ width, height: 'calc(100vh - 40px - 50px - 20px - 25px)' }}>
+    <div style={{ width, height: 'calc(100vh - 60px - 25px)' }}>
       <InformationPage />
       <EchartsFullPage />
     </div>

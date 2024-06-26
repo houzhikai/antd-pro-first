@@ -8,8 +8,8 @@ import '../../index.css';
 const NavPage = () => {
   return (
     // className="bit-map-nav"
-    <div className="bit-map-nav">
-      <MyLogo src={logo} title="BitMap" />
+    <div className='bit-map-nav'>
+      <MyLogo src={logo} title='BitMap' />
       <NavActionPage />
       <NavAction />
     </div>

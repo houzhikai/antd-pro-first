@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { ProviderFunc } from '../../../components/containers';
 import { getFullEchartsOptions } from './components/getFullEchartsOptions';
@@ -15,10 +15,12 @@ const EchartsFullPage = () => {
     configInfo,
     width,
     baseConversion,
-    data,
     scaleNumber,
     detailsValues,
     setDetailsValues,
+    singleModeData,
+    isStackModalOpen,
+    echartsDataColor,
   } = ProviderFunc();
   // 缩略图高度
   const [height, setHeight] = useState(width);
@@ -61,19 +63,19 @@ const EchartsFullPage = () => {
     return () => window.removeEventListener('resize', updateSize);
   }, []);
   // 根据详图echarts位置计算放大镜位置
-  useEffect(() => {
+  useLayoutEffect(() => {
     let x = defaultGlassPosition.x;
     let y = defaultGlassPosition.y;
-    if (dots === 'TopLeft') {
+    if (dots === 'top_left') {
       x = Math.round((width * detailsValues.xStart) / 100);
       y = Math.round((height * detailsValues.yStart) / 100);
-    } else if (dots === 'TopRight') {
+    } else if (dots === 'top_right') {
       x = Math.round(width - (width * detailsValues.xEnd) / 100);
       y = Math.round((height * detailsValues.yStart) / 100);
-    } else if (dots === 'BottomLeft') {
+    } else if (dots === 'bottom_left') {
       x = Math.round((width * detailsValues.xStart) / 100);
       y = Math.round(height - (height * detailsValues.yEnd) / 100);
-    } else if (dots === 'BottomRight') {
+    } else if (dots === 'bottom_right') {
       x = Math.round(width - (width * detailsValues.xEnd) / 100);
       y = Math.round(height - (height * detailsValues.yEnd) / 100);
     }
@@ -81,7 +83,7 @@ const EchartsFullPage = () => {
   }, [detailsValues]);
   const options = getFullEchartsOptions(
     theme,
-    data,
+    singleModeData.data,
     singleColor,
     {
       xMin: 0,
@@ -92,48 +94,52 @@ const EchartsFullPage = () => {
     baseConversion,
     configInfo.layoutConfig.dots,
     scaleNumber,
+    isStackModalOpen,
+    echartsDataColor,
   );
   // 缩略图echarts数据展示
   useEffect(() => {
-    if (data.length > 0) {
-      const myChart = echarts.init(fullEChartRef.current);
+    if (singleModeData.data.length > 0) {
+      setTimeout(() => {
+        const myChart = echarts.init(fullEChartRef.current);
 
-      myChart.setOption(options, true);
-      // 处理窗口大小变化
-      const resizeChart = () => myChart.resize();
-      // 监听浏览器视图变化
-      window.addEventListener('resize', resizeChart);
+        myChart.setOption(options, true);
+        // 处理窗口大小变化
+        const resizeChart = () => myChart.resize();
+        // 监听浏览器视图变化
+        window.addEventListener('resize', resizeChart);
 
-      return () => {
-        myChart.dispose();
-        window.removeEventListener('resize', resizeChart);
-      };
+        return () => {
+          myChart.dispose();
+          window.removeEventListener('resize', resizeChart);
+        };
+      }, 20);
     }
   }, [options]);
   const getDetailsValues = (x, y) => {
     let newDetailsValues;
-    if (dots === 'TopLeft') {
+    if (dots === 'top_left') {
       newDetailsValues = {
         xStart: Math.round((x / width) * 100),
         xEnd: Math.round(((x + glassWidth) / width) * 100),
         yStart: Math.round((y / height) * 100),
         yEnd: Math.round(((y + glassHeight) / height) * 100),
       };
-    } else if (dots === 'TopRight') {
+    } else if (dots === 'top_right') {
       newDetailsValues = {
         xEnd: 100 - Math.round((x / width) * 100),
         xStart: 100 - Math.round(((x + glassWidth) / width) * 100),
         yStart: Math.round((y / height) * 100),
         yEnd: Math.round(((y + glassHeight) / height) * 100),
       };
-    } else if (dots === 'BottomLeft') {
+    } else if (dots === 'bottom_left') {
       newDetailsValues = {
         xStart: Math.round((x / width) * 100),
         xEnd: Math.round(((x + glassWidth) / width) * 100),
         yStart: 100 - Math.round(((y + glassHeight) / height) * 100),
         yEnd: 100 - Math.round((y / height) * 100),
       };
-    } else if (dots === 'BottomRight') {
+    } else if (dots === 'bottom_right') {
       newDetailsValues = {
         xEnd: 100 - Math.round((x / width) * 100),
         xStart: 100 - Math.round(((x + glassWidth) / width) * 100),
@@ -144,7 +150,7 @@ const EchartsFullPage = () => {
     return newDetailsValues;
   };
   // 改变倍数时触发
-  useEffect(() => {
+  useLayoutEffect(() => {
     const posX =
       pos.x + Math.round(pos.glassWidth / 2) - Math.round(glassWidth / 2);
     const posY =
@@ -202,13 +208,13 @@ const EchartsFullPage = () => {
           onClick={handleClick}
         />
         {/* 放大镜 */}
-        {data.length > 0 && (
+        {singleModeData.data.length > 0 && (
           <div
             ref={glassRef}
             style={{
-              width: glassWidth,
-              height: glassHeight,
-              left: `${pos.x + 1}px`,
+              width: Math.round(glassWidth),
+              height: Math.round(glassHeight),
+              left: `${pos.x}px`,
               top: `${pos.y + 1}px`, // 1 px ,because fullEcharts add 1px border
             }}
             className="echarts-full-page-magnifying-glass"

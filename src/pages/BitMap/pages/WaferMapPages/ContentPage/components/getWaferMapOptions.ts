@@ -1,4 +1,4 @@
-import { getGraphicPosition } from '@/pages/BitMap/components/getGraphicPosition';
+import { getGraphicPosition } from '../../../../components/getGraphicPosition';
 import { getAxisDataList } from './takeAxisMiddleValue';
 
 export const getWaferMapOptions = (
@@ -24,23 +24,26 @@ export const getWaferMapOptions = (
         if (!Array.isArray(params.data)) {
           return;
         }
-        return `XY: ${params.data[0]}，${params.data[1]}，${params.data[2]}`;
+        return `XY: ${params.data[0] + wafermapLayout.xMin}，${
+          params.data[1] + wafermapLayout.yMin
+        }`;
       },
     },
-    graphic: getGraphicPosition(wafermapLayout.gap, wafermapEchartsSize),
+    graphic: getGraphicPosition(theme, wafermapLayout.gap, wafermapEchartsSize),
     xAxis: {
       type: 'category',
       data: xAxisData,
       position: 'top',
       inverse:
-        wafermapLayout.dots === 'TopRight' ||
-        wafermapLayout.dots === 'BottomRight',
+        wafermapLayout.dots === 'top_right' ||
+        wafermapLayout.dots === 'bottom_right',
     },
     yAxis: {
       type: 'category',
       data: yAxisData,
       inverse:
-        wafermapLayout.dots === 'TopLeft' || wafermapLayout.dots === 'TopRight',
+        wafermapLayout.dots === 'top_left' ||
+        wafermapLayout.dots === 'top_right',
     },
     // heatmap 必须有visualMap属性
     visualMap: {

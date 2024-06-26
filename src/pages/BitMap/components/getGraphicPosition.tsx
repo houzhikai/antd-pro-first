@@ -1,12 +1,8 @@
 // TODO，需要自适应页面大小
-export const getGraphicPosition = (gap, wafermapEchartsSize) => {
-  const cx = Math.floor(
-    wafermapEchartsSize.width - (wafermapEchartsSize.width * 5) / 100,
-  );
+export const getGraphicPosition = (theme, gap, wafermapEchartsSize) => {
+  const cx = Math.floor(wafermapEchartsSize.width - (wafermapEchartsSize.width * 5) / 100);
   //   圆心坐标
-  const circleCenter = Math.floor(
-    (wafermapEchartsSize.width * 5) / 100 + cx / 2,
-  );
+  const circleCenter = Math.floor((wafermapEchartsSize.width * 5) / 100 + cx / 2);
 
   // bottom top left right
   let value: any = {};
@@ -64,7 +60,7 @@ export const getGraphicPosition = (gap, wafermapEchartsSize) => {
         endAngle: value.endAngle,
         clockwise: value.clockwise,
       },
-      style: { fill: '#f5f5f5', stroke: '#5f5f5f', lineWidth: 2 },
+      style: { fill: theme ? '#1e1e1e' : '#fff', stroke: '#5f5f5f', lineWidth: 2 },
     },
   ];
 };

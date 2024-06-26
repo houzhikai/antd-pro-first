@@ -8,14 +8,14 @@ const ScalePage = () => {
   const {
     scaleNumber,
     setScaleNumber,
-    data,
     vscodeParams,
     bitMapPort,
-    setData,
+    setSingleModeData,
+    singleModeData,
   } = ProviderFunc();
 
   const handleChange = async (value) => {
-    // TODO, delete
+    // TODO， 待删除
     setScaleNumber(value);
     try {
       const res = await myFetch({
@@ -25,7 +25,10 @@ const ScalePage = () => {
       });
       if (res.result === 0) {
         setScaleNumber(value);
-        setData(JSON.parse(res.data[0].value) || []);
+        setSingleModeData((obj) => ({
+          ...obj,
+          data: JSON.parse(res.data[0].value) || [],
+        }));
       } else {
         message.error(res.msg);
       }
@@ -35,11 +38,11 @@ const ScalePage = () => {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center', margin: '0 10px' }}>
       <div>Scale:</div>
       <Select
         value={scaleNumber}
-        disabled={data.length === 0}
+        disabled={singleModeData.data.length === 0}
         onChange={handleChange}
         style={{ width: 80, marginLeft: 8 }}
         options={scaleNumberOptions}

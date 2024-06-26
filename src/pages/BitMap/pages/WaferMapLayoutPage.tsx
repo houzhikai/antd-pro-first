@@ -13,7 +13,7 @@ import myFetch from '../components/myFetch';
 // // @ts-expect-error
 // const vscode = acquireVsCodeApi();
 
-const WaferMapLayoutPage = () => {
+const WaferMapLayoutPage = ({ setIsErrorPage }) => {
   const {
     setBitMapPort,
     vscodeParams,
@@ -21,7 +21,7 @@ const WaferMapLayoutPage = () => {
     loading,
     setLoading,
     bitMapPort,
-    setIsErrorPage,
+    // setSelectDutsModal,
     // setVscodeParams,
     // setTheme,
     // triggerTiming,
@@ -66,6 +66,20 @@ const WaferMapLayoutPage = () => {
   //   }
   // }, [triggerTiming.colorList]);
 
+  // // stack UI select dut1 location
+  // useEffect(() => {
+  //   if (triggerTiming.stackModeDut1Location > 1) {
+  //     vscode.postMessage({ command: 'selectDutOneLocation' });
+  //   }
+  // }, [triggerTiming.stackModeDut1Location]);
+
+  // // stack UI select dut2 location
+  // useEffect(() => {
+  //   if (triggerTiming.stackModeDut2Location > 1) {
+  //     vscode.postMessage({ command: 'selectDutTwoLocation' });
+  //   }
+  // }, [triggerTiming.stackModeDut2Location]);
+
   // useEffect(() => {
   //   window.addEventListener('message', (e) => {
   //     if (e.data.command === 'startParams') {
@@ -86,6 +100,11 @@ const WaferMapLayoutPage = () => {
   //         ...obj,
   //         colorList: e.data.text.colorListCfg,
   //       }));
+  //       setSelectDutsModal((obj) => ({
+  //         ...obj,
+  //         dut1: e.data.text.selectDutOneLocation,
+  //         dut2: e.data.text.selectDutTwoLocation,
+  //       }));
   //       // echarts data
   //       const newColorList = e.data.text.colorListCfg.map((item, index) => {
   //         return { value: index + 1, color: item };
@@ -97,21 +116,22 @@ const WaferMapLayoutPage = () => {
   //       setTriggerTiming((obj) => ({ ...obj, importPhysical: false }));
   //       setFullPath((obj) => ({
   //         ...obj,
-  //         importPhysicalPath:
-  //           e.data.text === '' ? obj.importPhysicalPath : e.data.text,
+  //         importPhysicalPath: e.data.text === '' ? obj.importPhysicalPath : e.data.text,
   //       }));
   //     } else if (e.data.command === 'importSourcrFile') {
   //       setConvertModalObj((obj) => ({
   //         ...obj,
-  //         sourceDataLocation:
-  //           e.data.text === '' ? obj.sourceDataLocation : e.data.text,
+  //         sourceDataLocation: e.data.text === '' ? obj.sourceDataLocation : e.data.text,
   //       }));
   //     } else if (e.data.command === 'importOutputFile') {
   //       setConvertModalObj((obj) => ({
   //         ...obj,
-  //         physicalOutputLocation:
-  //           e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
+  //         physicalOutputLocation: e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
   //       }));
+  //     } else if (e.data.command === 'selectDutOneLocation') {
+  //       setSelectDutsModal((obj) => ({ ...obj, dut1: e.data.text }));
+  //     } else if (e.data.command === 'selectDutTwoLocation') {
+  //       setSelectDutsModal((obj) => ({ ...obj, dut2: e.data.text }));
   //     }
   //   });
   // }, []);

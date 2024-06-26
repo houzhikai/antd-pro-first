@@ -9,6 +9,8 @@ export const getFullEchartsOptions = (
   baseConversion,
   dots,
   scaleNumber,
+  isStackModalOpen,
+  echartsDataColor,
 ) => {
   const xAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.xMin,
@@ -33,18 +35,18 @@ export const getFullEchartsOptions = (
       type: 'category',
       data: xAxisValueList,
       position: 'top',
-      inverse: dots === 'TopRight' || dots === 'BottomRight',
+      inverse: dots === 'top_right' || dots === 'bottom_right',
     },
     yAxis: {
       show: false,
       type: 'category',
       data: yAxisValueList,
-      inverse: dots === 'TopLeft' || dots === 'TopRight',
+      inverse: dots === 'top_left' || dots === 'top_right',
     },
     visualMap: {
       show: false,
       type: 'piecewise',
-      pieces: singleColor,
+      pieces: isStackModalOpen ? echartsDataColor : singleColor,
     }, // heatmap 必须有visualMap属性
     series: getSeries(data),
   };

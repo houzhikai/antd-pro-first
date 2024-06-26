@@ -1,13 +1,14 @@
-import { mockInfo } from '@/pages/BitMap/mockData/mockInfo';
-import { Descriptions } from 'antd';
 import React from 'react';
+import { Descriptions } from 'antd';
+import { ProviderFunc } from '../../../components/containers';
 
 const WaferMapInfoPage = () => {
+  const { wafermapData } = ProviderFunc();
   const infoList =
-    Object.keys(mockInfo).map((key) => ({
+    Object.keys(wafermapData.info).map((key) => ({
       key: key,
       label: key,
-      children: String(mockInfo[key]),
+      children: String(wafermapData.info[key]),
     })) || [];
 
   const labelStyle = {
@@ -15,17 +16,21 @@ const WaferMapInfoPage = () => {
   };
   return (
     <div>
-      <div style={{ margin: '0', fontSize: 18 }}>Wafer Info</div>
-      <div className="wafermap-info-page">
-        <Descriptions
-          labelStyle={labelStyle}
-          contentStyle={labelStyle}
-          column={1}
-          bordered
-          items={infoList}
-          size="small"
-        />
-      </div>
+      {infoList.length > 0 && (
+        <>
+          <div style={{ margin: '0', fontSize: 18 }}>Wafer Info</div>
+          <div className='wafermap-info-page'>
+            <Descriptions
+              labelStyle={labelStyle}
+              contentStyle={labelStyle}
+              column={1}
+              bordered
+              items={infoList}
+              size='small'
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

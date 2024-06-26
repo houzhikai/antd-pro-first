@@ -214,9 +214,9 @@ const LayoutPage = ({ setIsErrorPage }) => {
             }
       }
     >
-      <Spin spinning={loading} size="large" tip="Converting">
+      <Spin spinning={loading} size='large' tip='Converting'>
         <NavPage />
-        <div className="content-page">
+        <div className='content-page'>
           <LeftPage />
           <SingleModePages />
         </div>

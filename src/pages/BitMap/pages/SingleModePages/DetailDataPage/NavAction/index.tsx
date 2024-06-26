@@ -1,12 +1,12 @@
 import React from 'react';
-import NavAction from './NavAction';
-import '../../../../index.css';
 import BaseConversion from './BaseConversion';
+import NavAction from './NavAction';
 import ScalePage from './ScalePage';
+import '../../../../index.css';
 
 const DetailNavActionPage = () => {
   return (
-    <div className="flex-layout ">
+    <div className='bitmap-Drawer-layout'>
       <ScalePage />
       <BaseConversion />
       <NavAction />

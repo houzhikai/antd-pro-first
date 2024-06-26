@@ -6,13 +6,8 @@ import { ProviderFunc } from '../../../components/containers';
 import CustomFormItemPage from '../../NavPage/CustomFormItemPage';
 
 const PhysicalTagList = () => {
-  const {
-    scrambleCfgOptionsList,
-    setScrambleCfgOptionsList,
-    convertModalObj,
-    setConvertModalObj,
-    setTriggerTiming,
-  } = ProviderFunc();
+  const { scrambleCfgOptionsList, setScrambleCfgOptionsList, convertModalObj, setConvertModalObj, setTriggerTiming } =
+    ProviderFunc();
   const [id, setId] = useState(0);
 
   const handleModifySourceDataLocation = () => {
@@ -41,9 +36,7 @@ const PhysicalTagList = () => {
   };
   const handleChangePhysicalOptions = (value) => {
     setConvertModalObj((obj) => {
-      const filterValue = scrambleCfgOptionsList.filter(
-        (item) => item.value === value,
-      )[0];
+      const filterValue = scrambleCfgOptionsList.filter((item) => item.value === value)[0];
       return {
         ...obj,
         scrambleCfg: {
@@ -58,30 +51,22 @@ const PhysicalTagList = () => {
   return (
     <>
       {/* 源数据文件夹 */}
-      <CustomFormItemPage title="Source Data">
-        <Input
-          style={{ margin: '0 20px', width: 400 }}
-          value={convertModalObj.sourceDataLocation}
-          disabled
-        />
-        <Button type="primary" onClick={handleModifySourceDataLocation}>
+      <CustomFormItemPage title='Source Data'>
+        <Input style={{ margin: '0 20px', width: 400 }} value={convertModalObj.sourceDataLocation} disabled />
+        <Button type='primary' onClick={handleModifySourceDataLocation}>
           Browse Path
         </Button>
       </CustomFormItemPage>
       {/* 输出物理文件路径 */}
-      <CustomFormItemPage title="Physical Output">
-        <Input
-          style={{ margin: '0 20px', width: 400 }}
-          value={convertModalObj.physicalOutputLocation}
-          disabled
-        />
-        <Button type="primary" onClick={handleModifyPhysicalOutputLocation}>
+      <CustomFormItemPage title='Physical Output'>
+        <Input style={{ margin: '0 20px', width: 400 }} value={convertModalObj.physicalOutputLocation} disabled />
+        <Button type='primary' onClick={handleModifyPhysicalOutputLocation}>
           Browse Path
         </Button>
       </CustomFormItemPage>
       {/* 物理转换文件 */}
       <div>
-        <CustomFormItemPage title="ScrambleCfg">
+        <CustomFormItemPage title='ScrambleCfg'>
           <Select
             style={{ marginLeft: 20, width: 200 }}
             options={scrambleCfgOptionsList}
@@ -92,19 +77,7 @@ const PhysicalTagList = () => {
         {scrambleCfgOptionsList.map((tag: any) => {
           return <ShowTagPage key={tag.label} tag={tag} />;
         })}
-        <Button
-          size="small"
-          type="primary"
-          onClick={handleAddFile}
-          disabled
-          icon={
-            <PlusOutlined
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              onMouseDown={undefined}
-            />
-          }
-        >
+        <Button size='small' type='primary' onClick={handleAddFile} disabled icon={<PlusOutlined />}>
           Add a Physical File
         </Button>
       </div>

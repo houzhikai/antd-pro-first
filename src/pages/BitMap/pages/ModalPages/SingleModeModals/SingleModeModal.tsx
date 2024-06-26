@@ -6,19 +6,19 @@ import SingleModePages from '../../SingleModePages';
 import DetailNavActionPage from '../../SingleModePages/DetailDataPage/NavAction';
 
 const SingleModeModal = () => {
-  const { isSingleModalOpen, setSingleIsModalOpen, setScaleNumber } =
-    ProviderFunc();
+  const { isSingleModalOpen, setSingleIsModalOpen, setScaleNumber, setSingleModeData } = ProviderFunc();
 
   const handleCloseDrawer = () => {
+    setSingleModeData({ data: [], info: {} });
     setSingleIsModalOpen(false);
-    setScaleNumber(1);
+    setScaleNumber(256);
   };
   return (
     <Drawer
       styles={{ header: { padding: '8px 16px' }, body: { padding: '0 16px' } }}
-      width="100vw"
+      width='100vw'
       title={
-        <div className="bitmap-Drawer-layout">
+        <div className='bitmap-Drawer-layout'>
           <div>Single Mode</div>
           <DetailNavActionPage />
           <div />
@@ -28,15 +28,8 @@ const SingleModeModal = () => {
       destroyOnClose
       open={isSingleModalOpen}
       onClose={handleCloseDrawer}
-      extra={
-        <CloseOutlined
-          style={{ cursor: 'pointer' }}
-          onClick={handleCloseDrawer}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-          onMouseDown={undefined}
-        />
-      }
+      maskClosable={false}
+      extra={<CloseOutlined style={{ cursor: 'pointer' }} onClick={handleCloseDrawer} onMouseDown={undefined} />}
     >
       <SingleModePages />
     </Drawer>

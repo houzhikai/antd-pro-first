@@ -7,13 +7,7 @@ export const takeAxisMiddleValue = (min: number, max: number) => {
 };
 
 export const getAxisDataList = (wafermapLayout) => {
-  const xAxisData = takeAxisMiddleValue(
-    wafermapLayout.xMin,
-    wafermapLayout.xMax,
-  );
-  const yAxisData = takeAxisMiddleValue(
-    wafermapLayout.yMin,
-    wafermapLayout.yMax,
-  );
+  const xAxisData = takeAxisMiddleValue(wafermapLayout.xMin, wafermapLayout.xMax);
+  const yAxisData = takeAxisMiddleValue(wafermapLayout.yMin, wafermapLayout.yMax);
   return { xAxisData, yAxisData };
 };

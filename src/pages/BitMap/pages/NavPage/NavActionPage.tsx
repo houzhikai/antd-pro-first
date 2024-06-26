@@ -7,16 +7,8 @@ import myFetch from '../../components/myFetch';
 import '../../index.css';
 
 const NavActionPage = () => {
-  const {
-    setPhysicalFileList,
-    bitMapPort,
-    vscodeParams,
-    setTriggerTiming,
-    fullPath,
-    setFullPath,
-    setSelectedTreeDataList,
-    setData,
-  } = ProviderFunc();
+  const { bitMapPort, vscodeParams, setTriggerTiming, fullPath, setFullPath, setWaferMapData, setWafermapLayout } =
+    ProviderFunc();
 
   useAsyncEffect(async () => {
     if (vscodeParams.initIp && fullPath.importPhysicalPath !== '') {
@@ -24,30 +16,19 @@ const NavActionPage = () => {
         const res = await myFetch({
           url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/selectbitmapdir?location=${fullPath.importPhysicalPath}`,
           isExceptionHand: true,
-          timeout: 300,
+          timeout: 300, // Large data volume and long parsing time
         });
         if (res.result === 0) {
           const result = JSON.parse(res.data[0].value);
-          const newKeyResult = result.map((item, index) => {
-            if (item.children) {
-              const children = item.children.map((duts, idx) => ({
-                ...duts,
-                key: `${index}-0-${idx}`,
-                location: item.location,
-                name: duts.title,
-                title: (
-                  <Tooltip placement="right" title={duts.title}>
-                    <div className="bit-map-left-dut-title">{duts.title}</div>
-                  </Tooltip>
-                ),
-              }));
-              return { ...item, children };
-            }
-            return { ...item, key: `${index}-0` };
+          setWaferMapData({ info: result.waferInfo, data: result.waferData });
+          setWafermapLayout({
+            xMin: result.waferLayout.xOrigin,
+            xMax: result.waferLayout.xMax,
+            yMin: result.waferLayout.yOrigin,
+            yMax: result.waferLayout.yMax,
+            dots: result.waferLayout.origin, // TopLeft, TopRight, BottomLeft, BottomRight
+            gap: result.waferLayout.flat, // bottom top left right
           });
-          setPhysicalFileList(newKeyResult);
-          setSelectedTreeDataList([]);
-          setData([]);
         } else {
           message.error(res.msg);
         }
@@ -64,14 +45,9 @@ const NavActionPage = () => {
   };
 
   return (
-    <div className="bit-map-nav-page">
+    <div className='bit-map-nav-page'>
       <ConvertPage />
-      <Button
-        className="bit-map-nav-gap"
-        type="primary"
-        size="small"
-        onClick={handleSelectFolder}
-      >
+      <Button className='bit-map-nav-gap' type='primary' size='small' onClick={handleSelectFolder}>
         Import
       </Button>
     </div>

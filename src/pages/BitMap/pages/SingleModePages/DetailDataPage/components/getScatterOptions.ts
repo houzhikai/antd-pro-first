@@ -11,6 +11,9 @@ export const getScatterOptions = (
   configInfo,
   scaleNumber,
   detailsValues,
+  isStackModalOpen,
+  echartsDataColor,
+  detailLayout,
 ) => {
   //   const maxValue = { xMax: 400, yMax: 200 };
   const xAxisValueList = takeMiddleNumber(
@@ -27,11 +30,12 @@ export const getScatterOptions = (
   );
   const dots = configInfo.layoutConfig.dots;
   const axisLabelInterval = getAxisLabelInterval(scaleNumber);
+  const borderColor = theme === 'dark' ? '#35393b' : '#f4f4f4';
   return {
     renderer: 'canvas',
     tooltip: {
       show: true,
-      position: 'top',
+      // position: 'top',
       backgroundColor: theme === 'dark' ? '#1f1f1f' : '#f5f5f5',
       textStyle: { color: theme === 'dark' ? '#938c83' : '#1f1f1f' },
       formatter: (params: { data: number[] }) => {
@@ -49,17 +53,35 @@ export const getScatterOptions = (
       },
     },
     animation: false,
-    grid: { width: '94%', height: '90%', left: '3%', top: '3%' },
-
+    grid: { width: '94%', height: '90%', left: 30, top: 30 },
+    graphic:
+      scaleNumber === 256
+        ? [
+            {
+              type: 'rect',
+              shape: {
+                x: 31,
+                y: 31,
+                width: (detailLayout.width * 94) / 100,
+                height: (detailLayout.height * 90) / 100,
+              },
+              style: {
+                fill: 'none',
+                stroke: '#fff',
+                lineWidth: 6,
+              },
+            },
+          ]
+        : [],
     dataZoom: [
       {
         id: 'dataZoomX',
         type: 'slider',
         height: 14,
         xAxisIndex: 0, // 不要设置其他坐标的index
-        filterMode: 'empty',
+        filterMode: 'filter',
         // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
-        realtime: true,
+        realtime: false,
         // end: axisLabelInterval.end.xEnd,
         zoomLock: true, // 只能平移，不可放大缩小
         brushSelect: false, //是否开启刷选功能。在下图的 brush 区域你可以按住鼠标左键后框选出选中部分
@@ -74,9 +96,9 @@ export const getScatterOptions = (
         type: 'slider',
         width: 14,
         yAxisIndex: 0, // 不要设置其他坐标的index
-        filterMode: 'empty',
+        filterMode: 'filter',
         // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
-        realtime: true,
+        realtime: false,
         // end: axisLabelInterval.end.yEnd,
         zoomLock: true, // 只能平移，不可放大缩小
         brushSelect: false, //是否开启刷选功能。在下图的 brush 区域你可以按住鼠标左键后框选出选中部分
@@ -92,7 +114,7 @@ export const getScatterOptions = (
       data: xAxisValueList,
       position: 'top',
       // splitArea: { show: true, areaStyle: { color: 'rgba(0,0,0,0)' } }, // 坐标轴在 grid 区域中的分隔区域，默认不显示。透明度改为0，不显示边框
-      inverse: dots === 'TopRight' || dots === 'BottomRight',
+      inverse: dots === 'top_right' || dots === 'bottom_right',
       // 显示坐标轴刻度。
       axisTick: {
         // 分割线偏移, alignWithLabel: 可以保证刻度线和标签对齐,
@@ -117,7 +139,7 @@ export const getScatterOptions = (
       type: 'category',
       data: yAxisValueList,
       // splitArea: { show: true, areaStyle: { color: 'rgba(0,0,0,0)' } },
-      inverse: dots === 'TopLeft' || dots === 'TopRight',
+      inverse: dots === 'top_left' || dots === 'top_right',
       // 显示坐标轴刻度。
       axisTick: {
         // 分割线偏移, alignWithLabel: 可以保证刻度线和标签对齐,
@@ -140,14 +162,8 @@ export const getScatterOptions = (
     visualMap: {
       show: false,
       type: 'piecewise',
-      pieces: singleColor,
+      pieces: isStackModalOpen ? echartsDataColor : singleColor,
     }, // heatmap 必须有visualMap属性
-    series: getScatterSeries(
-      data,
-      detailsEchartsAxisValue,
-      configInfo,
-      scaleNumber,
-      theme,
-    ),
+    series: getScatterSeries(data, scaleNumber, borderColor),
   };
 };

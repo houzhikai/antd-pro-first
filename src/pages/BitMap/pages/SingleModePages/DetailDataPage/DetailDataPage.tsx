@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { ProviderFunc } from '../../../components/containers';
 import { getScatterOptions } from './components/getScatterOptions';
@@ -10,14 +10,18 @@ const DetailDataPage = () => {
     theme,
     baseConversion,
     configInfo,
-    data,
+    singleModeData,
     scaleNumber,
     detailsValues,
     setDetailsValues,
+    isStackModalOpen,
+    echartsDataColor,
   } = ProviderFunc();
+
+  const [chartSize, setChartSize] = useState({ width: 0, height: 0 });
   const options = getScatterOptions(
     theme,
-    data,
+    singleModeData.data,
     singleColor,
     {
       xMin: 0,
@@ -30,37 +34,55 @@ const DetailDataPage = () => {
     configInfo,
     scaleNumber,
     detailsValues,
+    isStackModalOpen,
+    echartsDataColor,
+    chartSize,
   );
-  useEffect(() => {
-    if (data.length > 0) {
-      const myChart = echarts.init(chartRef.current);
+  console.log({ configInfo });
 
-      myChart.setOption(options, true);
-      myChart.on('dataZoom', () => {
-        const newOptions: any = myChart.getOption();
-        const xStart = Math.round(newOptions.dataZoom[0].start);
-        const xEnd = Math.round(newOptions.dataZoom[0].end);
-        const yStart = Math.round(newOptions.dataZoom[1].start);
-        const yEnd = Math.round(newOptions.dataZoom[1].end);
-        setDetailsValues({ xStart, xEnd, yStart, yEnd });
-      });
+  useLayoutEffect(() => {
+    if (singleModeData.data.length > 0) {
+      setTimeout(() => {
+        const myChart = echarts.init(chartRef.current);
 
-      // 处理窗口大小变化
-      const resizeChart = () => myChart.resize();
-      // 监听浏览器视图变化
-      window.addEventListener('resize', resizeChart);
+        myChart.setOption(options, true);
+        myChart.on(
+          'dataZoom',
+          echarts.throttle(() => {
+            const newOptions: any = myChart.getOption();
+            const xStart = Math.round(newOptions.dataZoom[0].start);
+            const xEnd = Math.round(newOptions.dataZoom[0].end);
+            const yStart = Math.round(newOptions.dataZoom[1].start);
+            const yEnd = Math.round(newOptions.dataZoom[1].end);
+            setDetailsValues({ xStart, xEnd, yStart, yEnd });
+          }, 0),
+        );
 
-      return () => {
-        myChart.dispose();
-        myChart.off('dataZoom');
-        window.removeEventListener('resize', resizeChart);
-      };
+        // 监听容器大小变化
+        const resizeObserver = new ResizeObserver(() => {
+          const width = chartRef.current.clientWidth;
+          const height = chartRef.current.clientHeight;
+          // 仅在宽度或高度发生变化时更新状态
+          if (chartSize.width !== width || chartSize.height !== height) {
+            setChartSize({ width, height });
+            myChart.resize();
+          }
+        });
+        // 观察图表容器
+        resizeObserver.observe(chartRef.current);
+
+        return () => {
+          myChart.dispose();
+          myChart.off('dataZoom');
+          resizeObserver.disconnect();
+        };
+      }, 20);
     }
   }, [options]);
 
   return (
     <>
-      {data.length > 0 && (
+      {singleModeData.data.length > 0 && (
         <div ref={chartRef} style={{ width: '100%', height: '100%' }} />
       )}
     </>
