@@ -38,13 +38,16 @@ const DetailDataPage = () => {
     echartsDataColor,
     chartSize,
   );
-  console.log({ configInfo });
 
   useLayoutEffect(() => {
     if (singleModeData.data.length > 0) {
       setTimeout(() => {
         const myChart = echarts.init(chartRef.current);
-
+        const width = myChart.getWidth();
+        const height = myChart.getHeight();
+        if (width !== chartSize.width && height !== chartSize.height) {
+          setChartSize({ width, height });
+        }
         myChart.setOption(options, true);
         myChart.on(
           'dataZoom',
@@ -58,23 +61,9 @@ const DetailDataPage = () => {
           }, 0),
         );
 
-        // 监听容器大小变化
-        const resizeObserver = new ResizeObserver(() => {
-          const width = chartRef.current.clientWidth;
-          const height = chartRef.current.clientHeight;
-          // 仅在宽度或高度发生变化时更新状态
-          if (chartSize.width !== width || chartSize.height !== height) {
-            setChartSize({ width, height });
-            myChart.resize();
-          }
-        });
-        // 观察图表容器
-        resizeObserver.observe(chartRef.current);
-
         return () => {
           myChart.dispose();
           myChart.off('dataZoom');
-          resizeObserver.disconnect();
         };
       }, 20);
     }

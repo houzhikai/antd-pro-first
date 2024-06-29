@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { initScrambleOptions } from './initValues';
 import { getSingleRandomData } from '../mockData/getWaferMapRandomData';
 
@@ -72,15 +72,6 @@ export const ProviderFunc = () => {
   const [isStack, setIsStack] = useState(false);
 
   /**
-   * single UI data and info
-   */
-  // TODO, 删除 echarts data
-  const [singleModeData, setSingleModeData] = useState({
-    data: getSingleRandomData(5000) || [],
-    info: {},
-  });
-
-  /**
    * 左侧树形结构
    */
   const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
@@ -114,47 +105,58 @@ export const ProviderFunc = () => {
     },
     is_block_continuous: true, // 现在没有用到，预留
     continuous_block_arrange: {
-      origin: 'top_left', // bottom_left,
+      origin: 'top_left', // 设置无用，以 coordinate_origin 为准
       direction: 'row2col', // col2row
     },
     need_dq_direction_reserve: {
-      page_index: 'odd', // 1M配置，默认D0-D7
+      page_index: 'odd', // 1M配置，默认D0-D7， odd: 单数 even：双数
     },
     dq: 32, // D0-D31
-    coordinate_origin: 'bottom_left', // x,y坐标系原点位置
+    coordinate_origin: 'top_left', // x,y坐标系原点位置
   };
 
+  // row: 行，col: 列
   const configInfo = {
-    // row: 行，col: 列
+    // dq
     dq: per_dut_layout.dq,
+    // 1M配置，默认D0-D7
     need_dq_direction_reserve:
       per_dut_layout.need_dq_direction_reserve.page_index,
+    // block 原点和伸展方向
     continuous_block_arrange: per_dut_layout.continuous_block_arrange,
+    // page 原点和伸展方向
     continuous_page_arrange:
       per_dut_layout.per_block_layout.continuous_page_arrange,
+    // 目前没有用到该属性， 预留
     is_block_continuous: per_dut_layout.is_block_continuous,
+    // 目前没有用到该属性， 预留
     is_page_continuous: per_dut_layout.per_block_layout.is_page_continuous,
+    // echarts 的 xMax yMax 和 原点位置
     layoutConfig: {
       xMax:
-        per_dut_layout.block_row *
-        per_dut_layout.per_block_layout.page_row *
-        per_dut_layout.per_block_layout.per_page_layout.wl_row,
-      yMax:
         per_dut_layout.block_col *
         per_dut_layout.per_block_layout.page_col *
         per_dut_layout.per_block_layout.per_page_layout.bl_col,
+      yMax:
+        per_dut_layout.block_row *
+        per_dut_layout.per_block_layout.page_row *
+        per_dut_layout.per_block_layout.per_page_layout.wl_row,
       dots: per_dut_layout.coordinate_origin,
     },
+    // duts 行列个数
     duts: { row: per_dut_layout.block_row, col: per_dut_layout.block_col },
+    // blocks 行列个数
     blocks: {
       row: per_dut_layout.per_block_layout.page_row,
       col: per_dut_layout.per_block_layout.page_col,
     },
+    // pages 行列个数
     pages: {
       row: per_dut_layout.per_block_layout.per_page_layout.wl_row,
       col: per_dut_layout.per_block_layout.per_page_layout.bl_col,
     },
   };
+
   /**
    * 详图导航栏
    */
@@ -165,8 +167,43 @@ export const ProviderFunc = () => {
   /**
    * 详图数据
    */
+
+  /**
+   * single UI data and info
+   */
+  // TODO, 删除 echarts data
+  const [singleModeData, setSingleModeData] = useState({
+    data:
+      getSingleRandomData(
+        2000,
+        configInfo.layoutConfig.xMax,
+        configInfo.layoutConfig.yMax,
+        scaleNumber,
+      ) || [],
+    info: {},
+  });
+
+  useEffect(() => {
+    setSingleModeData({
+      data:
+        getSingleRandomData(
+          2000,
+          configInfo.layoutConfig.xMax,
+          configInfo.layoutConfig.yMax,
+          scaleNumber,
+        ) || [],
+      info: {},
+    });
+  }, [scaleNumber]);
   // echarts 数据源 TODO mock 数据
-  const [data, setData] = useState(getSingleRandomData(5000));
+  const [data, setData] = useState(
+    getSingleRandomData(
+      2000,
+      configInfo.layoutConfig.xMax,
+      configInfo.layoutConfig.yMax,
+      scaleNumber,
+    ),
+  );
 
   const [detailsValues, setDetailsValues] = useState({
     //详图的首位比例，0：0%， 100：100%

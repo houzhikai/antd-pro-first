@@ -1,4 +1,9 @@
-export const takeMiddleNumber = (min: number, max: number, baseConversion, scaleNumber) => {
+export const takeMiddleNumber = (
+  min: number,
+  max: number,
+  baseConversion,
+  scaleNumber,
+) => {
   const array: string[] = [];
   for (let d = min; d <= max; d++) {
     array.push(String(d));
@@ -13,11 +18,34 @@ export const takeMiddleNumber = (min: number, max: number, baseConversion, scale
   });
   let newList: any = [];
   if (baseConversion === 'Hex') {
-    newList = filterScaleList.map((item) => Number(item).toString(16).toUpperCase());
+    newList = filterScaleList.map((item) =>
+      Number(item).toString(16).toUpperCase(),
+    );
   } else if (baseConversion === 'Oct') {
     newList = filterScaleList.map((item) => Number(item).toString(8));
   } else {
     newList = filterScaleList;
   }
   return newList;
+};
+
+// 获取坐标系的值
+export const getAxisValueObj = (
+  detailsEchartsAxisValue,
+  baseConversion,
+  scaleNumber,
+) => {
+  const xAxisValueList = takeMiddleNumber(
+    detailsEchartsAxisValue.xMin,
+    detailsEchartsAxisValue.xMax,
+    baseConversion,
+    scaleNumber,
+  );
+  const yAxisValueList = takeMiddleNumber(
+    detailsEchartsAxisValue.yMin,
+    detailsEchartsAxisValue.yMax,
+    baseConversion,
+    scaleNumber,
+  );
+  return { xAxisValueList, yAxisValueList };
 };

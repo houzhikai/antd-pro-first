@@ -1,6 +1,7 @@
 import { getAxisLabelInterval } from '../../../../components/getAxisLabelInterval';
 import { getTooltipDutDetailsInfo } from '../../../../components/getTooltipDutDetailsInfo';
-import { takeMiddleNumber } from '../../../../components/takeMiddleNumber';
+import { getAxisValueObj } from '../../../../components/takeMiddleNumber';
+import { getSingleGraphic } from './getGraphic';
 import getScatterSeries from './getScatterSeries';
 export const getScatterOptions = (
   theme,
@@ -15,27 +16,34 @@ export const getScatterOptions = (
   echartsDataColor,
   detailLayout,
 ) => {
-  //   const maxValue = { xMax: 400, yMax: 200 };
-  const xAxisValueList = takeMiddleNumber(
-    detailsEchartsAxisValue.xMin,
-    detailsEchartsAxisValue.xMax,
-    baseConversion,
-    scaleNumber,
-  );
-  const yAxisValueList = takeMiddleNumber(
-    detailsEchartsAxisValue.yMin,
-    detailsEchartsAxisValue.yMax,
+  const { xAxisValueList, yAxisValueList } = getAxisValueObj(
+    detailsEchartsAxisValue,
     baseConversion,
     scaleNumber,
   );
   const dots = configInfo.layoutConfig.dots;
   const axisLabelInterval = getAxisLabelInterval(scaleNumber);
   const borderColor = theme === 'dark' ? '#35393b' : '#f4f4f4';
+  // 合并 dataZoom 相同的参数
+  const commonDataZoomConfig = {
+    type: 'slider',
+    filterMode: 'filter',
+    // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
+    realtime: false,
+    // end: axisLabelInterval.end.xEnd,
+    zoomLock: true, // 只能平移，不可放大缩小
+    brushSelect: false, //是否开启刷选功能。在下图的 brush 区域你可以按住鼠标左键后框选出选中部分
+    showDetail: false, // 拖拽时候显示详细数值信息
+  };
+  // 显示边框颜色
+  const splitLine =
+    scaleNumber === 0.125 ? { show: true, lineStyle: { color: '#eee' } } : {};
+
   return {
     renderer: 'canvas',
     tooltip: {
       show: true,
-      // position: 'top',
+      position: 'left',
       backgroundColor: theme === 'dark' ? '#1f1f1f' : '#f5f5f5',
       textStyle: { color: theme === 'dark' ? '#938c83' : '#1f1f1f' },
       formatter: (params: { data: number[] }) => {
@@ -48,65 +56,30 @@ export const getScatterOptions = (
           scaleNumber,
           params,
           baseConversion,
+          configInfo,
         );
         return tooltipInfo;
       },
     },
     animation: false,
-    grid: { width: '94%', height: '90%', left: 30, top: 30 },
-    graphic:
-      scaleNumber === 256
-        ? [
-            {
-              type: 'rect',
-              shape: {
-                x: 31,
-                y: 31,
-                width: (detailLayout.width * 94) / 100,
-                height: (detailLayout.height * 90) / 100,
-              },
-              style: {
-                fill: 'none',
-                stroke: '#fff',
-                lineWidth: 6,
-              },
-            },
-          ]
-        : [],
+    grid: { width: '94%', height: '90%', left: 50, top: 30 },
+    graphic: getSingleGraphic(scaleNumber, detailLayout),
     dataZoom: [
       {
         id: 'dataZoomX',
-        type: 'slider',
-        height: 14,
         xAxisIndex: 0, // 不要设置其他坐标的index
-        filterMode: 'filter',
-        // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
-        realtime: false,
-        // end: axisLabelInterval.end.xEnd,
-        zoomLock: true, // 只能平移，不可放大缩小
-        brushSelect: false, //是否开启刷选功能。在下图的 brush 区域你可以按住鼠标左键后框选出选中部分
-        showDetail: false, // 拖拽时候显示详细数值信息
+        height: 14,
         start: detailsValues.xStart,
         end: detailsValues.xEnd,
-        // startValue: detailsEchartsAxisValue.xMin,
-        // endValue: detailsEchartsAxisValue.xMax,
+        ...commonDataZoomConfig,
       },
       {
         id: 'dataZoomY',
-        type: 'slider',
-        width: 14,
         yAxisIndex: 0, // 不要设置其他坐标的index
-        filterMode: 'filter',
-        // minSpan: 10, // 用于限制窗口大小的最小值（百分比值）
-        realtime: false,
-        // end: axisLabelInterval.end.yEnd,
-        zoomLock: true, // 只能平移，不可放大缩小
-        brushSelect: false, //是否开启刷选功能。在下图的 brush 区域你可以按住鼠标左键后框选出选中部分
-        showDetail: false, // 拖拽时候显示详细数值信息
+        width: 14,
         start: detailsValues.yStart,
         end: detailsValues.yEnd,
-        // startValue: detailsEchartsAxisValue.yMin,
-        // endValue: detailsEchartsAxisValue.yMax,
+        ...commonDataZoomConfig,
       },
     ],
     xAxis: {
@@ -129,10 +102,7 @@ export const getScatterOptions = (
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.xInterval,
       },
-      splitLine:
-        scaleNumber === 0.125
-          ? { show: true, lineStyle: { color: '#eee' } }
-          : {}, // 显示边框颜色
+      splitLine, // 显示边框颜色
     },
 
     yAxis: {
@@ -154,16 +124,13 @@ export const getScatterOptions = (
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.yInterval,
       },
-      splitLine:
-        scaleNumber === 0.125
-          ? { show: true, lineStyle: { color: '#eee' } }
-          : {}, // 显示边框颜色
+      splitLine, // 显示边框颜色
     },
     visualMap: {
       show: false,
       type: 'piecewise',
       pieces: isStackModalOpen ? echartsDataColor : singleColor,
     }, // heatmap 必须有visualMap属性
-    series: getScatterSeries(data, scaleNumber, borderColor),
+    series: getScatterSeries(data, scaleNumber, borderColor, configInfo),
   };
 };

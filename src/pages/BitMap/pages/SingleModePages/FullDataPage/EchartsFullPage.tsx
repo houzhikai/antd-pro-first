@@ -23,7 +23,7 @@ const EchartsFullPage = () => {
     echartsDataColor,
   } = ProviderFunc();
   // 缩略图高度
-  const [height, setHeight] = useState(width);
+  const [height] = useState(width);
   // 占用详图可视区域
   const ratioNumber = getRatioNumber(scaleNumber);
   // 放大镜宽度
@@ -47,21 +47,7 @@ const EchartsFullPage = () => {
   });
   // 圆点位置
   const dots = configInfo.layoutConfig.dots;
-  // 计算缩略图的高度
-  useEffect(() => {
-    const updateSize = () => {
-      const vh = Math.max(
-        document.documentElement.clientHeight || 0,
-        window.innerHeight || 0,
-      );
-      // vh 100vh， 48：上下padding， 81：导航栏， 20：内容区域margin-top
-      setHeight(Math.round(((vh - 48 - 81 - 20) * 40) / 100));
-    };
 
-    window.addEventListener('resize', updateSize);
-    updateSize();
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
   // 根据详图echarts位置计算放大镜位置
   useLayoutEffect(() => {
     let x = defaultGlassPosition.x;
@@ -172,15 +158,10 @@ const EchartsFullPage = () => {
   }, [scaleNumber]);
 
   const handleClick = (e) => {
-    const vh = Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0,
-    );
-    const infoHeight =
-      vh - 55 - 24 - 34 - height - Math.round(((vh - 55 - 24) * 6) / 100);
-    const x = e.clientX - e.target.offsetLeft - 16;
-    const y = e.pageY - 55 - 24 - infoHeight - 34;
-
+    // x y 相对于父节点的位置
+    const parentRect = fullEChartRef.current.getBoundingClientRect();
+    const x = e.clientX - parentRect.left;
+    const y = e.clientY - parentRect.top;
     const posX =
       x - Math.floor(glassWidth / 2) <= 0
         ? 0
@@ -204,7 +185,7 @@ const EchartsFullPage = () => {
         <div
           ref={fullEChartRef}
           // 缩略图的宽高通过计算得出，宽度初始值为300px定宽
-          style={{ height, border: '1px solid #34393b' }}
+          style={{ height: width, border: '1px solid #34393b' }}
           onClick={handleClick}
         />
         {/* 放大镜 */}
