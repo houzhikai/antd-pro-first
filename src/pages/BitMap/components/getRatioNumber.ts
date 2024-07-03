@@ -2,7 +2,7 @@ export const getRatioNumber = (scaleNumber) => {
   let value = 1;
   switch (scaleNumber) {
     case 0.125:
-      value = 0.03;
+      value = 0.01;
       break;
     case 0.2:
       value = 0.1;

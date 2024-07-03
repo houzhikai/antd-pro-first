@@ -18,24 +18,25 @@ export default (data, scaleNumber, borderColor, configInfo) => {
     itemStyle:
       scaleNumber > 1
         ? { borderColor: '#ccc', borderWidth: 1, borderType: 'solid' }
-        : {},
+        : { margin: [-4, -18, -4, -18] },
   };
 
   const commonMarkLineConfig = {
     zlevel: 2,
     label: { show: false },
     symbol: 'none',
+    precision: 0.1,
   };
 
   const getMarkLine = (width) => {
     return scaleNumber === 0.125
-      ? { width: 0, type: 'line', color: borderColor }
+      ? { width: 1, type: 'line', color: borderColor }
       : { width: width, type: 'line', color: borderColor }; // 粗线样式
   };
 
   const seriesDataList = [
     {
-      lineStyle: getMarkLine(6), // 粗线样式
+      lineStyle: scaleNumber === 256 ? getMarkLine(0) : getMarkLine(6), // 粗线样式
       data: getBlockMarkLinePosition(scaleNumber, configInfo),
       emphasis: { lineStyle: getMarkLine(6) }, // 粗线样式
     },

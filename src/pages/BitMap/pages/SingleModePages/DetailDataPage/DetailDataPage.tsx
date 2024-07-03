@@ -49,6 +49,15 @@ const DetailDataPage = () => {
           setChartSize({ width, height });
         }
         myChart.setOption(options, true);
+
+        const canvas: any = document.querySelector('[data-zr-dom-id="zr_1"]');
+        if (scaleNumber === 0.125) {
+          // 修改 margin 值
+          canvas.style.margin = '-4px -18px'; // 这里将 margin 值设置为 20px，你可以根据需要进行调整
+        } else if (scaleNumber === 256) {
+          console.log(canvas.style);
+          // canvas.style.margin = '-1px -1px'; // 这里将 margin 值设置为 20px，你可以根据需要进行调整
+        }
         myChart.on(
           'dataZoom',
           echarts.throttle(() => {

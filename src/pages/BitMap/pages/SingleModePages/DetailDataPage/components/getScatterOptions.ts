@@ -36,8 +36,8 @@ export const getScatterOptions = (
     showDetail: false, // 拖拽时候显示详细数值信息
   };
   // 显示边框颜色
-  const splitLine =
-    scaleNumber === 0.125 ? { show: true, lineStyle: { color: '#eee' } } : {};
+  // const splitLine =
+  //   scaleNumber === 0.125 ? { show: true, lineStyle: { color: '#eee' } } : {};
 
   return {
     renderer: 'canvas',
@@ -91,18 +91,18 @@ export const getScatterOptions = (
       // 显示坐标轴刻度。
       axisTick: {
         // 分割线偏移, alignWithLabel: 可以保证刻度线和标签对齐,
-        alignWithLabel: scaleNumber !== 0.125,
+        alignWithLabel: true,
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisTick.xInterval,
       },
       // 显示刻度标签，坐标刻度上的数字
       axisLabel: {
         // 分割线偏移, alignWithLabel: 可以保证刻度线和标签对齐,
-        alignWithLabel: scaleNumber !== 0.125,
+        alignWithLabel: false,
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.xInterval,
       },
-      splitLine, // 显示边框颜色
+      // splitLine, // 显示边框颜色
     },
 
     yAxis: {
@@ -113,18 +113,18 @@ export const getScatterOptions = (
       // 显示坐标轴刻度。
       axisTick: {
         // 分割线偏移, alignWithLabel: 可以保证刻度线和标签对齐,
-        alignWithLabel: scaleNumber === 1,
+        alignWithLabel: true,
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisTick.yInterval,
       },
       // 显示刻度标签，坐标刻度上的数字
       axisLabel: {
         // 分割线偏移, alignWithLabel: 可以保证刻度线和标签对齐,
-        alignWithLabel: scaleNumber === 1 || scaleNumber === 16,
+        alignWithLabel: false,
         // interval: 坐标轴刻度的显示间隔，在类目轴中有效。
         interval: axisLabelInterval.axisLabel.yInterval,
       },
-      splitLine, // 显示边框颜色
+      // splitLine, // 显示边框颜色
     },
     visualMap: {
       show: false,

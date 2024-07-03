@@ -7,7 +7,7 @@ export const getAxisLabelInterval = (scaleNumber) => {
     case 0.125:
       value = {
         axisTick: { xInterval: 0, yInterval: 0 }, //  设置刻度线每个都展示
-        axisLabel: { xInterval: 0, yInterval: 0 }, // 设置标签每隔5个展示（注意这里是从0开始计数的，所以应该设置为4）
+        axisLabel: { xInterval: 4, yInterval: 4 }, // 设置标签每隔5个展示（注意这里是从0开始计数的，所以应该设置为4）
       };
       break;
     case 0.2:

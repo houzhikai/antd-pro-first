@@ -5,11 +5,13 @@ const getLinePosition = (pageLine, scaleNumber, line, isPage) => {
     let i = 0;
     i <= pageLine.xMax / Math.sqrt(scaleNumber);
     i +=
-      pageLine.xMax /
-      //   小于 1 倍时，按照 1 倍算
-      (scaleNumber > 1 ? Math.sqrt(scaleNumber) : 1) /
-      line.col /
-      (isPage ? pageLine.duts.col : 1)
+      scaleNumber === 0.125
+        ? 1
+        : pageLine.xMax /
+          //   小于 1 倍时，按照 1 倍算
+          (scaleNumber > 1 ? Math.sqrt(scaleNumber) : 1) /
+          line.col /
+          (isPage ? pageLine.duts.col : 1)
   ) {
     xAxisNumber.push({ xAxis: i });
   }
@@ -19,11 +21,13 @@ const getLinePosition = (pageLine, scaleNumber, line, isPage) => {
     let i = 0;
     i <= pageLine.yMax / Math.sqrt(scaleNumber);
     i +=
-      pageLine.yMax /
-      //   小于 1 倍时，按照 1 倍算
-      (scaleNumber > 1 ? Math.sqrt(scaleNumber) : 1) /
-      line.row /
-      (isPage ? pageLine.duts.row : 1)
+      scaleNumber === 0.125
+        ? 1
+        : pageLine.yMax /
+          //   小于 1 倍时，按照 1 倍算
+          (scaleNumber > 1 ? Math.sqrt(scaleNumber) : 1) /
+          line.row /
+          (isPage ? pageLine.duts.row : 1)
   ) {
     yAxisNumber.push({ yAxis: i });
   }
