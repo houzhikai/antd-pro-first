@@ -122,14 +122,17 @@ const getPageXY = (X, Y, configInfo, blockId) => {
 
 const getIO = (X, isReversal, configInfo) => {
   const ioRange = Math.floor(Number(X) % configInfo.pages.col);
+  // 一个 page 可以分为 dq 份，一份占 xxx 个坐标
   const xxx = configInfo.pages.col / configInfo.dq;
   const io = isReversal
     ? configInfo.dq - 1 - Math.floor(ioRange / xxx)
-    : Math.round(ioRange / xxx) - 1;
+    : Math.round(ioRange / xxx);
   return io;
 };
 
 export const getTooltipDutDetailsInfo = (
+  { xIndex, yIndex },
+  echartsAxisNumber,
   scaleNumber,
   params,
   baseConversion,
@@ -137,8 +140,8 @@ export const getTooltipDutDetailsInfo = (
 ) => {
   // console.log({ configInfo });
   const scale = scaleNumber >= 1 ? Math.sqrt(scaleNumber) : 1;
-  const X = params.data[0] * scale;
-  const Y = params.data[1] * scale;
+  const X = params.data[0] * scale + xIndex * echartsAxisNumber;
+  const Y = params.data[1] * scale + yIndex * echartsAxisNumber;
   // 获取 XY 的坐标
   const { baseX, baseY } = getXY(baseConversion, X, Y);
   // 获取 block 的坐标

@@ -12,6 +12,8 @@ export const getFullEchartsOptions = (
   isStackModalOpen,
   echartsDataColor,
 ) => {
+  const xMax = detailsEchartsAxisValue.xMax;
+  const yMax = detailsEchartsAxisValue.yMax;
   const xAxisValueList = takeMiddleNumber(
     detailsEchartsAxisValue.xMin,
     detailsEchartsAxisValue.xMax,
@@ -24,24 +26,45 @@ export const getFullEchartsOptions = (
     baseConversion,
     scaleNumber,
   );
-
+  const fullEchartsSize =
+    detailsEchartsAxisValue.xMax > detailsEchartsAxisValue.yMax
+      ? { width: '100%', height: `${((yMax / xMax) * 100).toFixed(0)}%` }
+      : { width: `${((xMax / yMax) * 100).toFixed(0)}%`, height: '100%' };
   return {
     renderer: 'canvas',
     tooltip: { show: false },
     animation: false,
-    grid: { width: '100%', height: '100%', left: '0%', top: '0%' },
+    grid: {
+      width: fullEchartsSize.width,
+      height: fullEchartsSize.height,
+      left: '0%',
+      top: '0%',
+    },
     xAxis: {
-      show: false,
+      show: detailsEchartsAxisValue.xMax > detailsEchartsAxisValue.yMax,
       type: 'category',
       data: xAxisValueList,
-      position: 'top',
-      inverse: dots === 'top_right' || dots === 'bottom_right',
+      position: 'bottom',
+      axisLabel: { show: false },
+      axisTick: { show: false },
+      axisLine: {
+        lineStyle: {
+          color: '#35393b', // 设置x轴坐标系颜色
+        },
+      },
     },
     yAxis: {
-      show: false,
+      show: detailsEchartsAxisValue.xMax < detailsEchartsAxisValue.yMax,
       type: 'category',
+      position: 'right',
       data: yAxisValueList,
-      inverse: dots === 'top_left' || dots === 'top_right',
+      axisLabel: { show: false },
+      axisTick: { show: false },
+      axisLine: {
+        lineStyle: {
+          color: '#35393b', // 设置x轴坐标系颜色
+        },
+      },
     },
     visualMap: {
       show: false,

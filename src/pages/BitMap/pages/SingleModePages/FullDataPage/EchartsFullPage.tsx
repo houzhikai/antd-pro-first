@@ -2,7 +2,6 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 import { ProviderFunc } from '../../../components/containers';
 import { getFullEchartsOptions } from './components/getFullEchartsOptions';
-import { getRatioNumber } from '../../../components/getRatioNumber';
 import { getGlassPosition } from '../../../components/getGlassPosition';
 import '../../../index.css';
 
@@ -16,20 +15,24 @@ const EchartsFullPage = () => {
     width,
     baseConversion,
     scaleNumber,
-    detailsValues,
-    setDetailsValues,
+    selectSize,
+    setSelectSize,
     singleModeData,
     isStackModalOpen,
     echartsDataColor,
   } = ProviderFunc();
+  const xMax = configInfo.layoutConfig.xMax;
+  const yMax = configInfo.layoutConfig.yMax;
+  const fullEchartsSize =
+    xMax > yMax
+      ? { width, height: width / Number((xMax / yMax).toFixed(0)) }
+      : { width: width / Number((yMax / xMax).toFixed(0)), height: width };
   // 缩略图高度
-  const [height] = useState(width);
-  // 占用详图可视区域
-  const ratioNumber = getRatioNumber(scaleNumber);
+  const height = fullEchartsSize.height;
   // 放大镜宽度
-  const glassWidth = width * ratioNumber;
+  const glassWidth = (width * selectSize.xScalePercent) / 100;
   // 放大镜高度
-  const glassHeight = height * ratioNumber;
+  const glassHeight = (height * selectSize.yScalePercent) / 100;
   // 放大镜初始位置, dots: TopLeft, TopRight, BottomLeft, BottomRight
   const defaultGlassPosition = getGlassPosition(
     configInfo.layoutConfig.dots,
@@ -39,34 +42,20 @@ const EchartsFullPage = () => {
     glassHeight,
   );
   // 放大镜位置，x/y: 放大镜左上角位置
-  const [pos, setPos] = useState({
-    x: defaultGlassPosition.x,
-    y: defaultGlassPosition.y,
-    glassWidth,
-    glassHeight,
-  });
-  // 圆点位置
-  const dots = configInfo.layoutConfig.dots;
+  const [pos, setPos] = useState(defaultGlassPosition);
+
+  useEffect(() => {
+    setPos(defaultGlassPosition);
+  }, [selectSize.xScalePercent, selectSize.yScalePercent]);
 
   // 根据详图echarts位置计算放大镜位置
   useLayoutEffect(() => {
-    let x = defaultGlassPosition.x;
-    let y = defaultGlassPosition.y;
-    if (dots === 'top_left') {
-      x = Math.round((width * detailsValues.xStart) / 100);
-      y = Math.round((height * detailsValues.yStart) / 100);
-    } else if (dots === 'top_right') {
-      x = Math.round(width - (width * detailsValues.xEnd) / 100);
-      y = Math.round((height * detailsValues.yStart) / 100);
-    } else if (dots === 'bottom_left') {
-      x = Math.round((width * detailsValues.xStart) / 100);
-      y = Math.round(height - (height * detailsValues.yEnd) / 100);
-    } else if (dots === 'bottom_right') {
-      x = Math.round(width - (width * detailsValues.xEnd) / 100);
-      y = Math.round(height - (height * detailsValues.yEnd) / 100);
-    }
+    let x = (width * selectSize.xtoLeftPercent) / 100;
+    let y = (height * selectSize.ytoTopPercent) / 100;
+
     setPos({ x, y, glassWidth, glassHeight });
-  }, [detailsValues]);
+  }, [selectSize]);
+
   const options = getFullEchartsOptions(
     theme,
     singleModeData.data,
@@ -102,39 +91,7 @@ const EchartsFullPage = () => {
       }, 20);
     }
   }, [options]);
-  const getDetailsValues = (x, y) => {
-    let newDetailsValues;
-    if (dots === 'top_left') {
-      newDetailsValues = {
-        xStart: Math.round((x / width) * 100),
-        xEnd: Math.round(((x + glassWidth) / width) * 100),
-        yStart: Math.round((y / height) * 100),
-        yEnd: Math.round(((y + glassHeight) / height) * 100),
-      };
-    } else if (dots === 'top_right') {
-      newDetailsValues = {
-        xEnd: 100 - Math.round((x / width) * 100),
-        xStart: 100 - Math.round(((x + glassWidth) / width) * 100),
-        yStart: Math.round((y / height) * 100),
-        yEnd: Math.round(((y + glassHeight) / height) * 100),
-      };
-    } else if (dots === 'bottom_left') {
-      newDetailsValues = {
-        xStart: Math.round((x / width) * 100),
-        xEnd: Math.round(((x + glassWidth) / width) * 100),
-        yStart: 100 - Math.round(((y + glassHeight) / height) * 100),
-        yEnd: 100 - Math.round((y / height) * 100),
-      };
-    } else if (dots === 'bottom_right') {
-      newDetailsValues = {
-        xEnd: 100 - Math.round((x / width) * 100),
-        xStart: 100 - Math.round(((x + glassWidth) / width) * 100),
-        yEnd: 100 - Math.round((y / height) * 100),
-        yStart: 100 - Math.round(((y + glassHeight) / height) * 100),
-      };
-    }
-    return newDetailsValues;
-  };
+
   // 改变倍数时触发
   useLayoutEffect(() => {
     const posX =
@@ -154,7 +111,6 @@ const EchartsFullPage = () => {
         ? posY
         : 0;
     setPos({ x, y, glassWidth, glassHeight });
-    setDetailsValues(getDetailsValues(x, y));
   }, [scaleNumber]);
 
   const handleClick = (e) => {
@@ -175,7 +131,12 @@ const EchartsFullPage = () => {
         ? height - glassHeight
         : y - Math.floor(glassHeight / 2);
     setPos({ x: posX, y: posY, glassWidth, glassHeight });
-    setDetailsValues(getDetailsValues(posX, posY));
+    setSelectSize({
+      xtoLeftPercent: Math.floor((posX / width) * 100),
+      xScalePercent: selectSize.xScalePercent,
+      ytoTopPercent: Math.floor((posY / height) * 100),
+      yScalePercent: selectSize.yScalePercent,
+    });
   };
 
   return (

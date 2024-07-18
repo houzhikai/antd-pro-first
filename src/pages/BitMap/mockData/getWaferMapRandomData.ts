@@ -23,8 +23,12 @@ export const getWaferMapRandomData = (dataNumber, wafermapLayout) => {
 export const getSingleRandomData = (dataNumber, xMax, yMax, scaleNumber) => {
   const data: number[][] = [];
   for (let i = 0; i < dataNumber; i++) {
-    const x = Math.floor((Math.random() * xMax) / Math.sqrt(scaleNumber)); //生成0-400的随机数
-    const y = Math.floor((Math.random() * yMax) / Math.sqrt(scaleNumber)); //生成0-200的随机数
+    const x = Math.floor(
+      (Math.random() * xMax) / Math.sqrt(Math.max(scaleNumber, 1)),
+    ); //生成0-400的随机数
+    const y = Math.floor(
+      (Math.random() * yMax) / Math.sqrt(Math.max(scaleNumber, 1)),
+    ); //生成0-200的随机数
     const value = Math.floor(Math.random() * 2) + 1; //生成不含0的的随机数：堆叠模式下：1-3
     data.push([x, y, value]);
   }
