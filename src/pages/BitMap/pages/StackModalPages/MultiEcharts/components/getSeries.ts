@@ -21,7 +21,8 @@ export const getSeries = (
   const commonSeriesConfig = {
     type: 'heatmap',
     data,
-    // zlevel: 2,
+    // zlevel: 10,
+    // z: 10,
     large: true, // 启用块状渲染
     largeThreshold: 50 * 10000, // 数据量超过阈值时启用块状渲染
     progressive: 0, // 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
@@ -35,6 +36,7 @@ export const getSeries = (
 
   const commonMarkLineConfig = {
     // zlevel: 1,
+    // z: 1,
     label: { show: false },
     symbol: 'none',
     precision: 0.1,

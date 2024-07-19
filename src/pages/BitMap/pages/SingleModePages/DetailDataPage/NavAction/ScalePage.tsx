@@ -12,11 +12,13 @@ const ScalePage = () => {
     bitMapPort,
     setSingleModeData,
     singleModeData,
+    setEchartsIndex,
   } = ProviderFunc();
 
   const handleChange = async (value) => {
     // TODO， 待删除
     setScaleNumber(value);
+    setEchartsIndex();
     try {
       const res = await myFetch({
         url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=${value}`,

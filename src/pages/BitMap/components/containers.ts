@@ -242,7 +242,7 @@ export const ProviderFunc = () => {
     ytoTopPercent: 0,
     yScalePercent: 100,
   });
-
+  const [echartsIndex, setEchartsIndex] = useState<any>();
   const bitMapContextValue = {
     isErrorPage,
     setIsErrorPage,
@@ -301,6 +301,8 @@ export const ProviderFunc = () => {
     setSelectDutsModal,
     selectSize,
     setSelectSize,
+    echartsIndex,
+    setEchartsIndex,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

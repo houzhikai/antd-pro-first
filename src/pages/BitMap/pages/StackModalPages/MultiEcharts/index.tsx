@@ -1,13 +1,17 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import { ProviderFunc } from '@/pages/BitMap/components/containers';
 import { takeMiddleNumber } from '@/pages/BitMap/components/takeMiddleNumber';
 import { getOptions } from './components/getOptions';
 import { getPosition } from './components/getPosition';
 import { getNewData } from './components/getNewData';
-import { getBitLength } from './components/getBitLength';
 
-const MultiEcharts = () => {
+const MultiEcharts = ({
+  echartsAxisNumber,
+  echartsIndex,
+  echartsWidth,
+  echartsHeight,
+}) => {
   const {
     echartsDataColor,
     singleModeData,
@@ -16,12 +20,7 @@ const MultiEcharts = () => {
     baseConversion,
   } = ProviderFunc();
 
-  const bitLength = useMemo(
-    () => getBitLength(configInfo, scaleNumber),
-    [configInfo, scaleNumber],
-  );
   // 1x 情况下每个echarts有 xxx 个坐标
-  const echartsAxisNumber = 1024;
   const xAxisList = configInfo.layoutConfig.xMax / echartsAxisNumber;
   const yAxisList = configInfo.layoutConfig.yMax / echartsAxisNumber;
   const chartRefs = useRef<any>(
@@ -43,13 +42,19 @@ const MultiEcharts = () => {
     scaleNumber,
     echartsAxisNumber,
   );
+  console.log('遍历 echarts 的入口 外边', echartsIndex);
   // 原点位置
   const dots = configInfo.layoutConfig.dots;
   // 遍历 echarts 的入口
   const initializeCharts = useCallback(async () => {
     for (const [xIndex, row] of chartRefs.current.entries()) {
       for (const [yIndex, ref] of row.entries()) {
-        if (ref.current) {
+        const isInViewport =
+          xIndex >= echartsIndex.xStart &&
+          xIndex <= echartsIndex.xEnd &&
+          yIndex >= echartsIndex.yStart &&
+          yIndex <= echartsIndex.yEnd;
+        if (ref.current && isInViewport) {
           const chartInstance = echarts.init(ref.current);
           const position = getPosition(yIndex, xIndex);
           /**
@@ -113,25 +118,20 @@ const MultiEcharts = () => {
           chartInstance.setOption(option, true, true);
           chartInstances.current[xIndex][yIndex] = chartInstance;
 
-          // const margin = scaleNumber === 0.125 ? '3px' : '0';
-          // // 设置图表的样式
-          // if (ref.current) {
-          //   // ref.current.style.margin = margin;
-          //   const zrDom = ref.current.querySelector(
-          //     '[data-zr-dom-id="zr_2"]',
-          //   );
-          //   if (zrDom) {
-          //     zrDom.style.margin = margin;
-          //   }
-          // }
-
           // 等待一段时间，实际的异步数据获取
           // eslint-disable-next-line no-promise-executor-return
           await new Promise((resolve) => setTimeout(resolve, 10));
         }
       }
     }
-  }, [chartRefs.current, dots, newData, baseConversion, scaleNumber]);
+  }, [
+    chartRefs.current,
+    dots,
+    newData,
+    baseConversion,
+    scaleNumber,
+    echartsIndex,
+  ]);
   // 异步加载遍历画布
   useEffect(() => {
     initializeCharts();
@@ -148,16 +148,7 @@ const MultiEcharts = () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
       })();
     };
-  }, [initializeCharts()]);
-
-  const echartsWidth = useMemo(
-    () => (echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1))) * bitLength,
-    [scaleNumber, bitLength],
-  );
-  const echartsHeight = useMemo(
-    () => (echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1))) * bitLength,
-    [scaleNumber, bitLength],
-  );
+  }, [initializeCharts(), echartsIndex, scaleNumber]);
 
   return (
     <div
