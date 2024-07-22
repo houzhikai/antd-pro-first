@@ -1,18 +1,13 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ProviderFunc } from '../../components/containers';
 import FullDataPage from '../SingleModePages/FullDataPage';
 import MultiEcharts from './MultiEcharts';
 import { getBitLength } from './MultiEcharts/components/getBitLength';
+import { GetDetailsViewSize } from './MultiEcharts/components/GetDetailsViewSize';
 // import DetailDataPage from '../SingleModePages/DetailDataPage/DetailDataPage';
 
 const StackModalPages = () => {
-  const scrollRef = useRef<any>(null);
+  const viewRef = useRef<any>(null);
   const {
     width,
     selectSize,
@@ -23,7 +18,10 @@ const StackModalPages = () => {
     setEchartsIndex,
   } = ProviderFunc();
   // 每个echarts有多少个 数
-  const echartsAxisNumber = 1024;
+  const echartsAxisNumber =
+    configInfo.layoutConfig.xMax > 1024 && configInfo.layoutConfig.yMax > 1024
+      ? 512
+      : 1024;
   // bit 边长
   const bitLength = useMemo(
     () => getBitLength(configInfo, scaleNumber),
@@ -40,88 +38,51 @@ const StackModalPages = () => {
     [scaleNumber, bitLength],
   );
   // 是否拖动滚动条
-  const [isDragging, setIsDragging] = useState(false);
-  // 原点位置
-  const dots = configInfo.layoutConfig.dots;
-  // 移动滚动条时的方法
-  const getDetailsViewSize = useCallback(
-    (isMove: boolean) => {
-      const {
-        scrollTop,
-        scrollHeight,
-        clientHeight,
-        scrollLeft,
-        scrollWidth,
-        clientWidth,
-      } = scrollRef.current;
-      // 拖动滚动条时，计算当前距离占的百分比
-      const xDefaultPosition = isMove
-        ? scrollLeft
-        : dots === 'top_right' || dots === 'bottom_right'
-        ? scrollWidth - clientWidth
-        : 0;
-      const yDefaultPosition = isMove
-        ? scrollTop
-        : dots === 'bottom_left' || dots === 'bottom_right'
-        ? scrollHeight - clientHeight
-        : 0;
-      const xtoLeftPercent = Number(
-        ((xDefaultPosition / scrollWidth) * 100).toFixed(0),
-      );
-      const xScalePercent = Number(
-        ((clientWidth / scrollWidth) * 100).toFixed(0),
-      );
-      const ytoTopPercent = Number(
-        ((yDefaultPosition / scrollHeight) * 100).toFixed(0),
-      );
-      const yScalePercent = Number(
-        ((clientHeight / scrollHeight) * 100).toFixed(0),
-      );
-      const xStart = Math.floor(
-        Number((scrollWidth * (xtoLeftPercent / 100)).toFixed(0)) /
-          echartsWidth,
-      );
-      const xEnd = Math.floor(
-        (Number((scrollWidth * (xtoLeftPercent / 100)).toFixed(0)) +
-          clientWidth) /
-          echartsWidth,
-      );
-      const yStart = Math.floor(
-        Number((scrollHeight * (ytoTopPercent / 100)).toFixed(0)) /
-          echartsHeight,
-      );
-      const yEnd = Math.floor(
-        Number(
-          (scrollHeight * (ytoTopPercent / 100)).toFixed(0) + clientHeight,
-        ) / echartsHeight,
-      );
+  const [, setIsDragging] = useState(false);
 
-      setSelectSize({
-        xtoLeftPercent,
-        xScalePercent,
-        ytoTopPercent,
-        yScalePercent,
-      });
-      setEchartsIndex({
-        xStart,
-        xEnd,
-        yStart,
-        yEnd,
-      });
-    },
-    [scaleNumber, isDragging],
-  );
+  // 更改 倍数 时，初始化 layout
   useEffect(() => {
     const scrollableDiv: any = document.getElementById('wholeEcharts');
     if (scrollableDiv) {
-      getDetailsViewSize(false);
+      // getDetailsViewSize(false);
+      GetDetailsViewSize(
+        false,
+        configInfo,
+        scaleNumber,
+        setSelectSize,
+        setEchartsIndex,
+      );
     }
+  }, [scaleNumber, viewRef.current]);
+
+  // 滚轮触发事件
+  useEffect(() => {
+    let timeoutId;
+    const handleScroll = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        console.log(111, scaleNumber);
+        // getDetailsViewSize(false);
+        GetDetailsViewSize(
+          true,
+          configInfo,
+          scaleNumber,
+          setSelectSize,
+          setEchartsIndex,
+        );
+      }, 1 * 500);
+    };
+    viewRef.current.addEventListener('scroll', handleScroll);
+    // 清除事件监听器
+    return () => {
+      viewRef.current.removeEventListener('scroll', handleScroll);
+    };
   }, [scaleNumber]);
 
   // 移动放大镜时滚动条到指定位置
   useEffect(() => {
     const scrollToPosition = () => {
-      const scrollElement = scrollRef.current;
+      const scrollElement = viewRef.current;
       const scrollWidth = scrollElement.scrollWidth;
       const scrollHeight = scrollElement.scrollHeight;
       // const clientWidth = scrollElement.clientWidth;
@@ -147,7 +108,13 @@ const StackModalPages = () => {
   const handleMouseUp = () => {
     if (scaleNumber !== 256) {
       setIsDragging(false);
-      getDetailsViewSize(true);
+      GetDetailsViewSize(
+        true,
+        configInfo,
+        scaleNumber,
+        setSelectSize,
+        setEchartsIndex,
+      );
     }
   };
 
@@ -155,7 +122,7 @@ const StackModalPages = () => {
     <div className="bit-map-right-page">
       <FullDataPage />
       <div
-        ref={scrollRef}
+        ref={viewRef}
         id="wholeEcharts"
         style={{
           flexGrow: 1,

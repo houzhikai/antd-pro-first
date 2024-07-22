@@ -20,6 +20,7 @@ const EchartsFullPage = () => {
     singleModeData,
     isStackModalOpen,
     echartsDataColor,
+    setEchartsIndex,
   } = ProviderFunc();
   const xMax = configInfo.layoutConfig.xMax;
   const yMax = configInfo.layoutConfig.yMax;
@@ -33,6 +34,7 @@ const EchartsFullPage = () => {
   const glassWidth = (width * selectSize.xScalePercent) / 100;
   // 放大镜高度
   const glassHeight = (height * selectSize.yScalePercent) / 100;
+
   // 放大镜初始位置, dots: TopLeft, TopRight, BottomLeft, BottomRight
   const defaultGlassPosition = getGlassPosition(
     configInfo.layoutConfig.dots,
@@ -44,6 +46,8 @@ const EchartsFullPage = () => {
   // 放大镜位置，x/y: 放大镜左上角位置
   const [pos, setPos] = useState(defaultGlassPosition);
 
+  // 每个echarts有多少个 数
+  const echartsAxisNumber = xMax > 1024 && yMax > 1024 ? 512 : 1024;
   useEffect(() => {
     setPos(defaultGlassPosition);
   }, [selectSize.xScalePercent, selectSize.yScalePercent]);
@@ -136,6 +140,21 @@ const EchartsFullPage = () => {
       xScalePercent: selectSize.xScalePercent,
       ytoTopPercent: Math.floor((posY / height) * 100),
       yScalePercent: selectSize.yScalePercent,
+    });
+    const xStart = Math.floor(posX / (width / (xMax / echartsAxisNumber)));
+    const xEnd = Math.floor(
+      (posX + glassWidth) / (width / (xMax / echartsAxisNumber)),
+    );
+    const yStart = Math.floor(posY / (height / (yMax / echartsAxisNumber)));
+    const yEnd = Math.floor(
+      (posY + glassHeight) / (height / (yMax / echartsAxisNumber)),
+    );
+
+    setEchartsIndex({
+      xStart,
+      xEnd,
+      yStart,
+      yEnd,
     });
   };
 

@@ -42,7 +42,7 @@ const MultiEcharts = ({
     scaleNumber,
     echartsAxisNumber,
   );
-  console.log('遍历 echarts 的入口 外边', echartsIndex);
+
   // 原点位置
   const dots = configInfo.layoutConfig.dots;
   // 遍历 echarts 的入口
@@ -148,7 +148,7 @@ const MultiEcharts = ({
         await new Promise((resolve) => setTimeout(resolve, 10));
       })();
     };
-  }, [initializeCharts(), echartsIndex, scaleNumber]);
+  }, [initializeCharts(), scaleNumber]);
 
   return (
     <div

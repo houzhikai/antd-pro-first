@@ -3,6 +3,7 @@ import { Select, message } from 'antd';
 import { ProviderFunc } from '../../../../components/containers';
 import { scaleNumberOptions } from '../../../../components/initValues';
 import myFetch from '../../../../components/myFetch';
+import { GetDetailsViewSize } from '../../../StackModalPages/MultiEcharts/components/GetDetailsViewSize';
 
 const ScalePage = () => {
   const {
@@ -13,12 +14,28 @@ const ScalePage = () => {
     setSingleModeData,
     singleModeData,
     setEchartsIndex,
+    configInfo,
+    setSelectSize,
   } = ProviderFunc();
 
   const handleChange = async (value) => {
     // TODO， 待删除
     setScaleNumber(value);
     setEchartsIndex();
+
+    console.log('handleChange---------------', {
+      configInfo,
+      scaleNumber,
+      setSelectSize,
+      setEchartsIndex,
+    });
+    GetDetailsViewSize(
+      false,
+      configInfo,
+      value,
+      setSelectSize,
+      setEchartsIndex,
+    );
     try {
       const res = await myFetch({
         url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=${value}`,
