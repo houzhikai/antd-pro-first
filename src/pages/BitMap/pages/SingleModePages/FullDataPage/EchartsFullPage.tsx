@@ -21,6 +21,7 @@ const EchartsFullPage = () => {
     isStackModalOpen,
     echartsDataColor,
     setEchartsIndex,
+    setIsClick,
   } = ProviderFunc();
   const xMax = configInfo.layoutConfig.xMax;
   const yMax = configInfo.layoutConfig.yMax;
@@ -31,21 +32,20 @@ const EchartsFullPage = () => {
   // 缩略图高度
   const height = fullEchartsSize.height;
   // 放大镜宽度
-  const glassWidth = (width * selectSize.xScalePercent) / 100;
+  const glassWidth = (fullEchartsSize.width * selectSize.xScalePercent) / 100;
   // 放大镜高度
-  const glassHeight = (height * selectSize.yScalePercent) / 100;
+  const glassHeight = (fullEchartsSize.height * selectSize.yScalePercent) / 100;
 
   // 放大镜初始位置, dots: TopLeft, TopRight, BottomLeft, BottomRight
   const defaultGlassPosition = getGlassPosition(
     configInfo.layoutConfig.dots,
-    width,
-    height,
+    fullEchartsSize.width,
+    fullEchartsSize.height,
     glassWidth,
     glassHeight,
   );
   // 放大镜位置，x/y: 放大镜左上角位置
   const [pos, setPos] = useState(defaultGlassPosition);
-
   // 每个echarts有多少个 数
   const echartsAxisNumber = xMax > 1024 && yMax > 1024 ? 512 : 1024;
   useEffect(() => {
@@ -54,7 +54,7 @@ const EchartsFullPage = () => {
 
   // 根据详图echarts位置计算放大镜位置
   useLayoutEffect(() => {
-    let x = (width * selectSize.xtoLeftPercent) / 100;
+    let x = (fullEchartsSize.width * selectSize.xtoLeftPercent) / 100;
     let y = (height * selectSize.ytoTopPercent) / 100;
 
     setPos({ x, y, glassWidth, glassHeight });
@@ -97,27 +97,29 @@ const EchartsFullPage = () => {
   }, [options]);
 
   // 改变倍数时触发
-  useLayoutEffect(() => {
-    const posX =
-      pos.x + Math.round(pos.glassWidth / 2) - Math.round(glassWidth / 2);
-    const posY =
-      pos.y + Math.round(pos.glassHeight / 2) - Math.round(glassHeight / 2);
-    const x =
-      posX >= Math.round(width - glassWidth)
-        ? Math.round(width - glassWidth)
-        : posX > 0
-        ? posX
-        : 0;
-    const y =
-      posY >= Math.round(height - glassHeight)
-        ? Math.round(height - glassHeight)
-        : posY > 0
-        ? posY
-        : 0;
-    setPos({ x, y, glassWidth, glassHeight });
-  }, [scaleNumber]);
+  // useEffect(() => {
+  //   const posX =
+  //     pos.x + Math.round(pos.glassWidth / 2) - Math.round(glassWidth / 2);
+  //   const posY =
+  //     pos.y + Math.round(pos.glassHeight / 2) - Math.round(glassHeight / 2);
+  //   const x =
+  //     posX >= Math.round(fullEchartsSize.width - glassWidth)
+  //       ? Math.round(fullEchartsSize.width - glassWidth)
+  //       : posX > 0
+  //       ? posX
+  //       : 0;
+  //   const y =
+  //     posY >= Math.round(height - glassHeight)
+  //       ? Math.round(height - glassHeight)
+  //       : posY > 0
+  //       ? posY
+  //       : 0;
+  //   setPos({ x, y, glassWidth, glassHeight });
+  // }, [scaleNumber]);
 
   const handleClick = (e) => {
+    setIsClick(true);
+
     // x y 相对于父节点的位置
     const parentRect = fullEChartRef.current.getBoundingClientRect();
     const x = e.clientX - parentRect.left;
@@ -125,8 +127,8 @@ const EchartsFullPage = () => {
     const posX =
       x - Math.floor(glassWidth / 2) <= 0
         ? 0
-        : Math.round(x + glassWidth / 2) >= width
-        ? width - glassWidth
+        : Math.round(x + glassWidth / 2) >= fullEchartsSize.width
+        ? fullEchartsSize.width - glassWidth
         : x - Math.round(glassWidth / 2);
     const posY =
       y - Math.floor(glassHeight / 2) <= 0
@@ -134,28 +136,43 @@ const EchartsFullPage = () => {
         : Math.round(y + glassHeight / 2) >= height
         ? height - glassHeight
         : y - Math.floor(glassHeight / 2);
-    setPos({ x: posX, y: posY, glassWidth, glassHeight });
-    setSelectSize({
-      xtoLeftPercent: Math.floor((posX / width) * 100),
-      xScalePercent: selectSize.xScalePercent,
-      ytoTopPercent: Math.floor((posY / height) * 100),
-      yScalePercent: selectSize.yScalePercent,
-    });
-    const xStart = Math.floor(posX / (width / (xMax / echartsAxisNumber)));
-    const xEnd = Math.floor(
-      (posX + glassWidth) / (width / (xMax / echartsAxisNumber)),
-    );
-    const yStart = Math.floor(posY / (height / (yMax / echartsAxisNumber)));
-    const yEnd = Math.floor(
-      (posY + glassHeight) / (height / (yMax / echartsAxisNumber)),
-    );
 
-    setEchartsIndex({
-      xStart,
-      xEnd,
-      yStart,
-      yEnd,
-    });
+    if (
+      posX <= fullEchartsSize.width - glassWidth / 2 &&
+      posY <= fullEchartsSize.height - glassHeight / 2
+    ) {
+      setPos({ x: posX, y: posY, glassWidth, glassHeight });
+
+      setSelectSize({
+        xtoLeftPercent: Math.floor((posX / fullEchartsSize.width) * 100),
+        xScalePercent: selectSize.xScalePercent,
+        ytoTopPercent: Math.round((posY / height) * 100),
+        yScalePercent: selectSize.yScalePercent,
+      });
+      const xStart = Math.floor(
+        posX / (fullEchartsSize.width / (xMax / echartsAxisNumber)),
+      );
+      const xEnd = Math.round(
+        (posX + glassWidth) /
+          (fullEchartsSize.width / (xMax / echartsAxisNumber)),
+      );
+      const yStart = Math.floor(posY / (height / (yMax / echartsAxisNumber)));
+      const yEnd = Math.round(
+        (posY + glassHeight) / (height / (yMax / echartsAxisNumber)),
+      );
+      const xAxisList = configInfo.layoutConfig.xMax / echartsAxisNumber;
+      const yAxisList = configInfo.layoutConfig.yMax / echartsAxisNumber;
+      const isRenderAllEcharts = scaleNumber > 4;
+      setEchartsIndex({
+        xStart: isRenderAllEcharts ? 0 : xStart,
+        xEnd: isRenderAllEcharts ? xAxisList : xEnd,
+        yStart: isRenderAllEcharts ? 0 : yStart,
+        yEnd: isRenderAllEcharts ? yAxisList : yEnd,
+      });
+      setTimeout(() => {
+        setIsClick(false);
+      }, 20);
+    }
   };
 
   return (

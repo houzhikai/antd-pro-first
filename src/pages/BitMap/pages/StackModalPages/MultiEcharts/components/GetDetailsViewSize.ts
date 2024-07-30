@@ -14,7 +14,7 @@ export const GetDetailsViewSize = (
       ? 512
       : 1024;
   // bit 边长
-  const bitLength = getBitLength(configInfo, scaleNumber);
+  const bitLength = getBitLength(scaleNumber);
   // 每个 echarts 的宽度
   const echartsWidth =
     (echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1))) * bitLength;
@@ -68,17 +68,6 @@ export const GetDetailsViewSize = (
     ) / echartsHeight,
   );
 
-  console.log('GetDetailsViewSize', {
-    scrollHeight,
-    ytoTopPercent,
-    clientHeight,
-    echartsHeight,
-    yEnd,
-    xEnd,
-    xxx: Number(
-      (scrollHeight * (ytoTopPercent / 100)).toFixed(0) + clientHeight,
-    ),
-  });
   setSelectSize({
     xtoLeftPercent,
     xScalePercent,
@@ -86,10 +75,26 @@ export const GetDetailsViewSize = (
     yScalePercent,
   });
 
-  setEchartsIndex({
-    xStart,
-    xEnd,
-    yStart,
-    yEnd,
+  const xAxisList = configInfo.layoutConfig.xMax / echartsAxisNumber;
+  const yAxisList = configInfo.layoutConfig.yMax / echartsAxisNumber;
+  const isRenderAllEcharts = scaleNumber > 4;
+
+  console.log('GetDetailsViewSize', {
+    xStart: isRenderAllEcharts ? 0 : xStart,
+    xEnd: isRenderAllEcharts ? xAxisList : xEnd,
+    yStart: isRenderAllEcharts ? 0 : yStart,
+    yEnd: isRenderAllEcharts ? yAxisList : yEnd,
   });
+  setEchartsIndex({
+    xStart: isRenderAllEcharts ? 0 : xStart,
+    xEnd: isRenderAllEcharts ? xAxisList : xEnd,
+    yStart: isRenderAllEcharts ? 0 : yStart,
+    yEnd: isRenderAllEcharts ? yAxisList : yEnd,
+  });
+  // setEchartsIndex({
+  //   xStart,
+  //   xEnd,
+  //   yStart,
+  //   yEnd,
+  // });
 };

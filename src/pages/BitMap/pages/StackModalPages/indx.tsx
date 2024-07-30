@@ -16,6 +16,7 @@ const StackModalPages = () => {
     configInfo,
     echartsIndex,
     setEchartsIndex,
+    isClick,
   } = ProviderFunc();
   // 每个echarts有多少个 数
   const echartsAxisNumber =
@@ -24,7 +25,7 @@ const StackModalPages = () => {
       : 1024;
   // bit 边长
   const bitLength = useMemo(
-    () => getBitLength(configInfo, scaleNumber),
+    () => getBitLength(scaleNumber),
     [configInfo, scaleNumber],
   );
   // 每个 echarts 的宽度
@@ -38,13 +39,14 @@ const StackModalPages = () => {
     [scaleNumber, bitLength],
   );
   // 是否拖动滚动条
-  const [, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   // 更改 倍数 时，初始化 layout
   useEffect(() => {
     const scrollableDiv: any = document.getElementById('wholeEcharts');
     if (scrollableDiv) {
       // getDetailsViewSize(false);
+
       GetDetailsViewSize(
         false,
         configInfo,
@@ -61,7 +63,6 @@ const StackModalPages = () => {
     const handleScroll = () => {
       if (timeoutId) clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
-        console.log(111, scaleNumber);
         // getDetailsViewSize(false);
         GetDetailsViewSize(
           true,
@@ -70,52 +71,64 @@ const StackModalPages = () => {
           setSelectSize,
           setEchartsIndex,
         );
-      }, 1 * 500);
+      }, 1 * 20);
     };
-    viewRef.current.addEventListener('scroll', handleScroll);
+    if (!isClick && !isDragging) {
+      viewRef.current.addEventListener('scroll', handleScroll);
+    }
     // 清除事件监听器
     return () => {
-      viewRef.current.removeEventListener('scroll', handleScroll);
+      if (!isClick && !isDragging) {
+        viewRef.current.removeEventListener('scroll', handleScroll);
+      }
     };
-  }, [scaleNumber]);
+  }, [scaleNumber, isClick, isDragging]);
 
   // 移动放大镜时滚动条到指定位置
+  const scrollToPosition = () => {
+    const scrollElement = viewRef.current;
+    const scrollWidth = scrollElement.scrollWidth;
+    const scrollHeight = scrollElement.scrollHeight;
+    // const clientWidth = scrollElement.clientWidth;
+    // const clientHeight = scrollElement.clientHeight;
+    const scrollToX = Math.floor(
+      (scrollWidth * selectSize.xtoLeftPercent) / 100,
+    );
+    const scrollToY = Math.floor(
+      (scrollHeight * selectSize.ytoTopPercent) / 100,
+    );
+    scrollElement.scrollTo({
+      top: scrollToY,
+      left: scrollToX,
+      // behavior: 'smooth',
+    });
+  };
   useEffect(() => {
-    const scrollToPosition = () => {
-      const scrollElement = viewRef.current;
-      const scrollWidth = scrollElement.scrollWidth;
-      const scrollHeight = scrollElement.scrollHeight;
-      // const clientWidth = scrollElement.clientWidth;
-      // const clientHeight = scrollElement.clientHeight;
-      const scrollToX = (scrollWidth * selectSize.xtoLeftPercent) / 100;
-      const scrollToY = (scrollHeight * selectSize.ytoTopPercent) / 100;
-
-      scrollElement.scrollTo({
-        top: scrollToY,
-        left: scrollToX,
-        behavior: 'smooth',
-      });
-    };
-
-    scrollToPosition();
-  }, [selectSize]);
-  const handleMouseDown = () => {
-    if (scaleNumber !== 256) {
-      setIsDragging(true);
+    if (isClick) {
+      scrollToPosition();
     }
+  }, [selectSize, isClick]);
+
+  useEffect(() => {
+    scrollToPosition();
+  }, [selectSize.yScalePercent]);
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
   };
 
   const handleMouseUp = () => {
-    if (scaleNumber !== 256) {
+    setTimeout(() => {
       setIsDragging(false);
-      GetDetailsViewSize(
-        true,
-        configInfo,
-        scaleNumber,
-        setSelectSize,
-        setEchartsIndex,
-      );
-    }
+    }, 20);
+
+    GetDetailsViewSize(
+      true,
+      configInfo,
+      scaleNumber,
+      setSelectSize,
+      setEchartsIndex,
+    );
   };
 
   return (

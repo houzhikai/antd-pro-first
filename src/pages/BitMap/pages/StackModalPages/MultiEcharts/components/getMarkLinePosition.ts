@@ -48,6 +48,7 @@ export const getPagesMarkLinePosition = (
   configInfo,
   echartsAxisNumber,
   scaleNumber,
+  { xIndex, yIndex, xAxisList, yAxisList },
 ) => {
   const pageLine = {
     xMax: configInfo.layoutConfig.xMax,
@@ -58,32 +59,61 @@ export const getPagesMarkLinePosition = (
   };
   const getPagesLinePosition = (pageLine) => {
     let xAxisNumber: any = [];
-    for (
-      let x = 0;
-      x <= echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1));
-      x +=
-        scaleNumber === 0.125
-          ? 1
-          : pageLine.xMax /
+    const dots = configInfo.layoutConfig.dots;
+    const xxx =
+      dots === 'top_left' || dots === 'bottom_left'
+        ? xAxisList - xIndex
+        : xIndex + 1;
+    if (scaleNumber === 0.125) {
+      for (
+        let x = 0;
+        x <= echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1));
+        x += 1 // scaleNumber === 0.125
+      ) //   ? 1
+      //   : pageLine.xMax /
+      //     pageLine.duts.col /
+      //     pageLine.blocks.col /
+      //     Math.sqrt(Math.max(scaleNumber, 1))
+      {
+        xAxisNumber.push({ xAxis: x });
+      }
+    } else {
+      if (xxx % (xAxisList / pageLine.duts.col / pageLine.blocks.col) === 0) {
+        for (
+          let x = 0;
+          x <= echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1));
+          x +=
+            // scaleNumber === 0.125
+            //   ? 1
+            //   :
+            pageLine.xMax /
             pageLine.duts.col /
             pageLine.blocks.col /
             Math.sqrt(Math.max(scaleNumber, 1))
-    ) {
-      xAxisNumber.push({ xAxis: x });
+        ) {
+          xAxisNumber.push({ xAxis: x });
+        }
+      }
     }
+
     let yAxisNumber: any = [];
-    for (
-      let y = 0;
-      y <= echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1));
-      y +=
-        scaleNumber === 0.125
-          ? 1
-          : pageLine.yMax /
-            pageLine.duts.row /
-            pageLine.blocks.row /
-            Math.sqrt(Math.max(scaleNumber, 1))
+    if (
+      (yIndex + 1) % (yAxisList / pageLine.duts.row / pageLine.blocks.row) ===
+      0
     ) {
-      yAxisNumber.push({ yAxis: y });
+      for (
+        let y = 0;
+        y <= echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1));
+        y +=
+          scaleNumber === 0.125
+            ? 1
+            : pageLine.yMax /
+              pageLine.duts.row /
+              pageLine.blocks.row /
+              Math.sqrt(Math.max(scaleNumber, 1))
+      ) {
+        yAxisNumber.push({ yAxis: y });
+      }
     }
     return [...xAxisNumber, ...yAxisNumber];
   };

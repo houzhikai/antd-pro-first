@@ -123,25 +123,40 @@ const getPageXY = (X, Y, configInfo, blockId) => {
 const getIO = (X, isReversal, configInfo) => {
   const ioRange = Math.floor(Number(X) % configInfo.pages.col);
   // 一个 page 可以分为 dq 份，一份占 xxx 个坐标
+  const dq_arrange_list =
+    '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31'.split(
+      ',',
+    );
   const xxx = configInfo.pages.col / configInfo.dq;
+  console.log(dq_arrange_list.length - configInfo.dq);
   const io = isReversal
-    ? configInfo.dq - 1 - Math.floor(ioRange / xxx)
-    : Math.round(ioRange / xxx);
+    ? dq_arrange_list[configInfo.dq - 1 - Math.floor(ioRange / xxx)]
+    : dq_arrange_list[Math.floor(ioRange / xxx)];
   return io;
 };
 
 export const getTooltipDutDetailsInfo = (
-  { xIndex, yIndex },
+  { xIndex, yIndex, xAxisList, yAxisList },
   echartsAxisNumber,
   scaleNumber,
   params,
   baseConversion,
   configInfo,
 ) => {
-  // console.log({ configInfo });
+  const dots = configInfo.layoutConfig.dots;
   const scale = scaleNumber >= 1 ? Math.sqrt(scaleNumber) : 1;
-  const X = params.data[0] * scale + xIndex * echartsAxisNumber;
-  const Y = params.data[1] * scale + yIndex * echartsAxisNumber;
+  const X =
+    params.data[0] * scale +
+    (dots === 'top_right' || dots === 'bottom_right'
+      ? xAxisList - xIndex - 1
+      : xIndex) *
+      echartsAxisNumber;
+  const Y =
+    params.data[1] * scale +
+    (dots === 'bottom_left' || dots === 'bottom_right'
+      ? yAxisList - yIndex - 1
+      : yIndex) *
+      echartsAxisNumber;
   // 获取 XY 的坐标
   const { baseX, baseY } = getXY(baseConversion, X, Y);
   // 获取 block 的坐标
@@ -152,7 +167,9 @@ export const getTooltipDutDetailsInfo = (
   const isReversal =
     configInfo.need_dq_direction_reserve === 'odd'
       ? Number(pageId) % 2 !== 0
-      : Number(pageId) % 2 === 0;
+      : configInfo.need_dq_direction_reserve === 'even'
+      ? Number(pageId) % 2 === 0
+      : false;
   const ioNumber = getIO(X, isReversal, configInfo);
 
   return `

@@ -23,12 +23,6 @@ const ScalePage = () => {
     setScaleNumber(value);
     setEchartsIndex();
 
-    console.log('handleChange---------------', {
-      configInfo,
-      scaleNumber,
-      setSelectSize,
-      setEchartsIndex,
-    });
     GetDetailsViewSize(
       false,
       configInfo,

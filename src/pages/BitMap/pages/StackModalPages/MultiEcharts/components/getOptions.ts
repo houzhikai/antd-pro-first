@@ -42,6 +42,7 @@ export const getOptions = (
   echartsAxisNumber,
 ) => {
   const dots = configInfo.layoutConfig.dots;
+  const xMax = configInfo.layoutConfig.xMax;
   const axisLabelInterval = getAxisLabelInterval(scaleNumber);
 
   const borderColor = '#35393b';
@@ -54,7 +55,7 @@ export const getOptions = (
   const commonSeriesConfig = {
     type: 'heatmap',
     data,
-    // zlevel: 2,
+    zlevel: 2,
     large: true, // 启用块状渲染
     largeThreshold: 50 * 10000, // 数据量超过阈值时启用块状渲染
     progressive: 0, // 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
@@ -67,7 +68,7 @@ export const getOptions = (
   };
 
   const commonMarkLineConfig = {
-    // zlevel: 1,
+    zlevel: 1,
     label: { show: false },
     symbol: 'none',
     precision: 0.1,
@@ -90,6 +91,7 @@ export const getOptions = (
         configInfo,
         echartsAxisNumber,
         scaleNumber,
+        { xIndex, yIndex, xAxisList, yAxisList },
       ),
     },
   ];
@@ -99,12 +101,40 @@ export const getOptions = (
     // graphic: getOutSideBlocks(scaleNumber, detailLayout, position),
     tooltip: {
       transitionDuration: 0, // 提示框浮层的移动动画过渡时间，单位是 s，设置为 0 的时候会紧跟着鼠标移动。
+      position: function (point, params, dom, rect, size) {
+        let obj: any = {};
+        let viewWidth = size.viewSize[0];
+        let viewHeight = size.viewSize[1];
+
+        // 计算 tooltip 的宽度和高度
+        let tooltipWidth = dom.offsetWidth;
+        let tooltipHeight = dom.offsetHeight;
+
+        // 鼠标位置
+        let mouseX = point[0];
+        let mouseY = point[1];
+
+        // 确保 tooltip 不会超出右侧和底部边界
+        if (mouseX + tooltipWidth > viewWidth) {
+          obj.left = viewWidth - tooltipWidth + 10;
+        } else {
+          obj.left = mouseX;
+        }
+
+        if (mouseY + tooltipHeight > viewHeight) {
+          obj.top = viewHeight - tooltipHeight + 10;
+        } else {
+          obj.top = mouseY;
+        }
+
+        return obj;
+      },
       formatter: (params: { data: number[] }) => {
         // 不展示 markLine.emphasis的值
         if (!Array.isArray(params.data)) return;
         // show tooltip info
         const tooltipInfo = getTooltipDutDetailsInfo(
-          { xIndex, yIndex },
+          { xIndex, yIndex, xAxisList, yAxisList },
           echartsAxisNumber,
           scaleNumber,
           params,
@@ -129,8 +159,16 @@ export const getOptions = (
         alignWithLabel: true,
         interval: axisLabelInterval.axisLabel.xInterval,
         formatter: (value, index) => {
-          if (index === 0) {
+          const ValueToDecNumber = parseInt(
+            value,
+            baseConversion === 'Hex' ? 16 : baseConversion === 'Oct' ? 8 : 10,
+          );
+          if (dots === 'top_right') {
+            return value;
+          } else if (index === 0) {
             return '      ' + value;
+          } else if (ValueToDecNumber === xMax) {
+            return value + '       ';
           } else {
             return value;
           }
@@ -149,8 +187,8 @@ export const getOptions = (
       axisLabel: {
         alignWithLabel: true,
         interval: axisLabelInterval.axisLabel.yInterval,
-        formatter: (value, index) => {
-          if (index === 0) {
+        formatter: (value) => {
+          if (dots === 'top_left' || dots === 'top_right') {
             return '\n' + value;
           } else {
             return value;

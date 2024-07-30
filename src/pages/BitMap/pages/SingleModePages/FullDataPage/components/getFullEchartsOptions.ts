@@ -41,10 +41,11 @@ export const getFullEchartsOptions = (
       top: '0%',
     },
     xAxis: {
-      show: detailsEchartsAxisValue.xMax > detailsEchartsAxisValue.yMax,
+      show: true,
       type: 'category',
       data: xAxisValueList,
       position: 'bottom',
+      inverse: dots === 'top_right' || dots === 'bottom_right',
       axisLabel: { show: false },
       axisTick: { show: false },
       axisLine: {
@@ -54,11 +55,12 @@ export const getFullEchartsOptions = (
       },
     },
     yAxis: {
-      show: detailsEchartsAxisValue.xMax < detailsEchartsAxisValue.yMax,
+      show: true,
       type: 'category',
       position: 'right',
       data: yAxisValueList,
       axisLabel: { show: false },
+      inverse: dots === 'top_left' || dots === 'top_right',
       axisTick: { show: false },
       axisLine: {
         lineStyle: {

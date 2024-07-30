@@ -1,4 +1,5 @@
 export const getNewData = (data, scaleNumber, echartsAxisNumber) => {
+  console.log({ data, scaleNumber, echartsAxisNumber });
   if (!Array.isArray(data)) return [];
   for (let subArr of data) {
     if (!Array.isArray(subArr)) return [];

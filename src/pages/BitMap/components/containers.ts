@@ -88,14 +88,14 @@ export const ProviderFunc = () => {
   const [width, setWidth] = useState(300); // full-data 的宽度
   // TODO, dots: TopLeft, TopRight, BottomLeft, BottomRight
   const per_dut_layout = {
-    block_row: 2,
-    block_col: 2,
+    block_row: 1,
+    block_col: 1,
     per_block_layout: {
-      page_row: 8,
-      page_col: 8,
+      page_row: 32,
+      page_col: 4,
       per_page_layout: {
         wl_row: 256,
-        bl_col: 512,
+        bl_col: 1024,
       },
       is_page_continuous: true, // page序号配置是否连续，目前不支持不连续配置
       continuous_page_arrange: {
@@ -112,7 +112,7 @@ export const ProviderFunc = () => {
       page_index: 'odd', // 1M配置，默认D0-D7， odd: 单数 even：双数
     },
     dq: 32, // D0-D31
-    coordinate_origin: 'top_left', // x,y坐标系原点位置  top_left   top_right   bottom_left  bottom_right
+    coordinate_origin: 'bottom_left', // x,y坐标系原点位置  top_left   top_right   bottom_left  bottom_right
   };
 
   // row: 行，col: 列
@@ -237,13 +237,16 @@ export const ProviderFunc = () => {
 
   // 全是百分比
   const [selectSize, setSelectSize] = useState({
-    xtoLeftPercent: 0,
-    xScalePercent: 100,
-    ytoTopPercent: 0,
-    yScalePercent: 100,
+    // xtoLeftPercent: 0,
+    // xScalePercent: 100,
+    // ytoTopPercent: 0,
+    // yScalePercent: 100,
   });
   const [echartsIndex, setEchartsIndex] = useState<any>();
+  const [isClick, setIsClick] = useState(false);
   const bitMapContextValue = {
+    isClick,
+    setIsClick,
     isErrorPage,
     setIsErrorPage,
     width,
