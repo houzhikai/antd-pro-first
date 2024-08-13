@@ -1,37 +1,48 @@
 import type { CollapseProps } from 'antd';
 import { Collapse } from 'antd';
 import FirmwareChildrenPage from './FirmwareChildrenPage';
-import { statusShow } from '../../components/statusShow';
+import { statusShow } from './components/statusShow';
 import { useFUProviderModule } from '../../components/containers';
+import { StatusENUM } from './components/enum';
+import '../../index.css';
 
-const DetailsTablePage = ({ setIndeterminate }) => {
+const DetailsTablePage = ({ setIndeterminate, allKeys }) => {
   const { getDeviceListAndHeartObj, activeKey, setActiveKey } =
     useFUProviderModule();
 
   const handleChange = (selectedKeys) => {
-    const allKeys = getDeviceListAndHeartObj?.tableList?.map(
-      (item) => item.slot,
+    setIndeterminate(
+      selectedKeys.length > 0 && selectedKeys.length < allKeys.length,
     );
-    if (selectedKeys.length > 0 && selectedKeys.length < allKeys.length) {
-      setIndeterminate(true);
-    } else {
-      setIndeterminate(false);
-    }
     setActiveKey(selectedKeys);
   };
 
   const items: CollapseProps['items'] =
     getDeviceListAndHeartObj?.tableList?.map((item) => {
+      const isDisabled =
+        item.slotStatus === StatusENUM.Offline ||
+        item.slotStatus === StatusENUM.PowerOff ||
+        item.slotStatus === StatusENUM.Starting ||
+        item.slotStatus === StatusENUM.Busy;
       return {
         key: item.slot,
         label: (
-          <div>
+          <div className={isDisabled ? 'disable-row' : ''}>
             槽位号：slot {item.slot} 板类型： {item.type}
           </div>
         ),
-        extra: <div>{statusShow(item.slotStatus)}</div>,
-        // extra: genExtra(item.slotStatus),
-        children: <FirmwareChildrenPage dataSource={item.children} />,
+        extra: (
+          <div className={isDisabled ? 'disable-row' : ''}>
+            {statusShow(item.slotStatus)}
+          </div>
+        ),
+        children: (
+          <FirmwareChildrenPage
+            dataSource={item.children}
+            slot={item.slot}
+            isDisabled={isDisabled}
+          />
+        ),
       };
     });
 

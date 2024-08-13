@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { useAsyncEffect } from 'ahooks';
 
 const NavActive = () => {
-  const { getDeviceListAndHeartObj, startParams } = useFUProviderModule();
+  const { getDeviceListAndHeartObj, startParams, setIsAutoMode } =
+    useFUProviderModule();
   const [base64List, setBase64List] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const isDisabled = getDeviceListAndHeartObj?.allow;
@@ -54,7 +55,7 @@ const NavActive = () => {
     },
   };
   const handleEffectiveMode = (effectiveMode: string) => {
-    message.info(`selected : ${effectiveMode}`);
+    setIsAutoMode(effectiveMode === 'auto');
   };
   return (
     <Space>

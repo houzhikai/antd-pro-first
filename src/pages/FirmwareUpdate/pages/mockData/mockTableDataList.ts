@@ -4,8 +4,8 @@ export const mockDeviceListInterface = {
   tableList: [
     {
       slot: 0,
-      type: 'SMU',
-      slotStatus: 1,
+      type: 'SMU026',
+      slotStatus: 0,
       children: [
         {
           key: '0-1',
@@ -40,6 +40,7 @@ export const mockDeviceListInterface = {
           firmware: 'CPLD-M',
           version: 'V1.6',
           newVersion: 'V1.7',
+          status: 0,
           children: [
             {
               key: '0-5-0',
@@ -70,14 +71,13 @@ export const mockDeviceListInterface = {
               status: 6, // 传一个特定的值，前端用来显示 '-'
             },
           ],
-          status: 5,
         },
       ],
     },
     {
       slot: 1,
-      type: 'DRU',
-      slotStatus: 2,
+      type: 'DRU288',
+      slotStatus: 3,
       children: [
         {
           key: '1-1',
@@ -148,8 +148,8 @@ export const mockDeviceListInterface = {
     },
     {
       slot: 2,
-      type: 'DRU',
-      slotStatus: 3,
+      type: 'DRU288',
+      slotStatus: 5,
       children: [
         {
           key: '2-1',
@@ -184,7 +184,7 @@ export const mockDeviceListInterface = {
           firmware: 'CPLD-M',
           version: 'V1.6',
           newVersion: 'V1.8',
-          status: 5,
+          status: 0,
           children: [
             {
               key: '0-5-0',

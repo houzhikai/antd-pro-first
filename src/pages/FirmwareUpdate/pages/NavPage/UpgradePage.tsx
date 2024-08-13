@@ -4,12 +4,8 @@ import { getStartUpgradeParams } from '../../components/getStartUpgradeParams';
 import myFetch from '@/components/myFetch';
 
 const UpgradePage = () => {
-  const {
-    getDeviceListAndHeartObj,
-    selectedFirmwareList,
-    startParams,
-    ubootEnv,
-  } = useFUProviderModule();
+  const { getDeviceListAndHeartObj, selectedKeysList, startParams, ubootEnv } =
+    useFUProviderModule();
   const isDisabled = getDeviceListAndHeartObj?.allow !== 0;
   const handleClick = (msg) => {
     message.info(msg);
@@ -18,7 +14,7 @@ const UpgradePage = () => {
   const handleStartUpgrade = async () => {
     const params = getStartUpgradeParams(
       getDeviceListAndHeartObj,
-      selectedFirmwareList,
+      selectedKeysList,
       ubootEnv,
     );
     if (startParams.initIp) {
@@ -68,14 +64,14 @@ const UpgradePage = () => {
         刷新
       </Button>
       <Popconfirm
-        disabled={isDisabled || selectedFirmwareList.length === 0}
+        disabled={isDisabled || selectedKeysList.length === 0}
         title="升级后会重启整机，请确保没有正在进行的业务操作"
         okText="Yes"
         cancelText="No"
         onConfirm={handleStartUpgrade}
       >
         <Button
-          disabled={isDisabled || selectedFirmwareList.length === 0}
+          disabled={isDisabled || selectedKeysList.length === 0}
           className="customNavPage-gap"
           type="primary"
         >

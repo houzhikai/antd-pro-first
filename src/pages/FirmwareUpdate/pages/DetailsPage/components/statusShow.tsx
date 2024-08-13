@@ -1,16 +1,14 @@
-import { Tag } from 'antd';
-
 export const statusShow = (status: number | string) => {
   if (status === 0) {
     return;
   } else if (status === 1) {
-    return <div>正在升级</div>;
+    return <div style={{ background: '#1273ba', color: '#fff' }}>正在升级</div>;
   } else if (status === 2) {
-    return <Tag>等待升级</Tag>;
+    return <div style={{ background: '#838a90', color: '#fff' }}>等待升级</div>;
   } else if (status === 3) {
-    return <Tag color="#52c41a">升级完成</Tag>;
+    return <div style={{ background: '#0eb154', color: '#fff' }}>升级完成</div>;
   } else if (status === 4) {
-    return <Tag color="#ff7875">升级异常</Tag>;
+    return <div style={{ background: '#db272a', color: '#fff' }}>升级异常</div>;
   } else if (status === 5) {
     return <div>在位下线</div>;
   } else if (status === 6) {

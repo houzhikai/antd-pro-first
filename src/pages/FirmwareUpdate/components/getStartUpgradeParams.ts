@@ -1,13 +1,13 @@
 export const getStartUpgradeParams = (
   getDeviceListAndHeartObj,
-  selectedFirmwareList,
+  selectedKeysList,
   ubootEnv,
 ) => {
   const tableChildrenList = getDeviceListAndHeartObj.tableList
     .map((item) => item.children)
     .flat(Infinity);
   const selectAllFirmwareList = tableChildrenList
-    .filter((item) => selectedFirmwareList.includes(item.key))
+    .filter((item) => selectedKeysList.includes(item.key))
     .map((item) => {
       return {
         key: item.key,

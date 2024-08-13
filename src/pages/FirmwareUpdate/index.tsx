@@ -5,6 +5,7 @@ import {
   useFUProviderModule,
 } from './components/containers';
 import { useState } from 'react';
+import AfterUpgradeModal from './pages/Modals/AfterUpgradeModal';
 
 const FirmwareUpdate = () => {
   const [isErrorPage, setIsErrorPage] = useState(false); // 是否转到错误页面
@@ -15,7 +16,10 @@ const FirmwareUpdate = () => {
       {isErrorPage ? (
         <ErrorPage setIsErrorPage={setIsErrorPage} />
       ) : (
-        <LayoutPage setIsErrorPage={setIsErrorPage} />
+        <>
+          <LayoutPage setIsErrorPage={setIsErrorPage} />
+          <AfterUpgradeModal />
+        </>
       )}
     </FirmwareUpdateContext.Provider>
   );

@@ -1,6 +1,7 @@
 import { Select } from 'antd';
-import { statusShow } from './statusShow';
+import { statusShow } from '../pages/DetailsPage/components/statusShow';
 import { useFUProviderModule } from './containers';
+import '../index.css';
 
 export const options = [
   {
@@ -16,38 +17,41 @@ export const envOptions = [
   { value: 0, label: '不覆盖' },
   { value: 1, label: '覆盖' },
 ];
-export const GetColumns = () => {
+export const GetColumns = (tableWidthObj, isDisabled) => {
   const { ubootEnv, setUbootEnv } = useFUProviderModule();
+  // 60: 表格占 width 的 60%，150：状态的宽度
+  const totalWidth = (window.innerWidth * tableWidthObj.sizeRatio) / 100;
+  const width = Math.floor((totalWidth - tableWidthObj.statusWidth) / 3);
   return [
     {
       key: 'firmware',
-      width: '25%',
+      width,
       dataIndex: 'firmware',
-      title: '固件',
+      title: <div className={isDisabled ? 'disable-row' : ''}>固件</div>,
     },
     {
       key: 'version',
-      width: '25%',
+      width,
       dataIndex: 'version',
-      title: '版本',
+      title: <div className={isDisabled ? 'disable-row' : ''}>版本</div>,
     },
     {
       key: 'newVersion',
-      width: '25%',
+      width,
       dataIndex: 'newVersion',
-      title: '新版本',
+      title: <div className={isDisabled ? 'disable-row' : ''}>新版本</div>,
       render: (text, record) => {
         if (record.firmware === 'Uboot') {
           const handleChange = (value) => {
             setUbootEnv((list) => {
-              const xxx = list.map((item) => {
+              const newList = list.map((item) => {
                 if (item.key === record.key) {
                   return { ...item, env: Number(value) };
                 } else {
                   return { ...item };
                 }
               });
-              return xxx;
+              return newList;
             });
           };
           const env =
@@ -60,7 +64,9 @@ export const GetColumns = () => {
                 options={envOptions}
                 value={env}
                 onChange={handleChange}
-                disabled={!record.newVersion || record.key.length === 5}
+                disabled={
+                  isDisabled || !record.newVersion || record.key.length === 5
+                }
               />
             </div>
           );
@@ -71,9 +77,9 @@ export const GetColumns = () => {
     },
     {
       key: 'status',
-      width: '25%',
+      width: tableWidthObj.statusWidth,
       dataIndex: 'status',
-      title: '状态',
+      title: <div className={isDisabled ? 'disable-row' : ''}>状态</div>,
       render: (text) => {
         return statusShow(text);
       },

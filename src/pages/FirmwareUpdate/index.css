@@ -15,4 +15,8 @@
     color: #ccc;
     border: 1px solid red;
   }
-  
+  .disable-row{
+    background: #f5f5f5;
+    color: #6c6c6d;
+    opacity: 0.6;
+  }

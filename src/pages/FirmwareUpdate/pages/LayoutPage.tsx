@@ -45,8 +45,8 @@ const LayoutPage = ({ setIsErrorPage }) => {
     const ubootEnvList = (mockDeviceListInterface?.tableList || [])
       .map((item) => item.children)
       .flat(Infinity)
-      ?.filter((item) => item.firmware === 'Uboot')
-      .map((item, index) => {
+      ?.filter((item: any) => item.firmware === 'Uboot')
+      .map((item: any, index) => {
         return {
           key: item.key || String(index),
           env: item.env || 0,
