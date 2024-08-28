@@ -1,11 +1,6 @@
-export const getStartUpgradeParams = (
-  getDeviceListAndHeartObj,
-  selectedKeysList,
-  ubootEnv,
-) => {
-  const tableChildrenList = getDeviceListAndHeartObj.tableList
-    .map((item) => item.children)
-    .flat(Infinity);
+export const getStartUpgradeParams = (getDeviceListAndHeartObj, selectedKeysList, ubootEnv) => {
+  // filter the list with firmware versions
+  const tableChildrenList = getDeviceListAndHeartObj.tableList.map((item) => item.children).flat(Infinity).filter(item => item);
   const selectAllFirmwareList = tableChildrenList
     .filter((item) => selectedKeysList.includes(item.key))
     .map((item) => {
@@ -34,8 +29,7 @@ export const getStartUpgradeParams = (
       ...item,
       newfirmware: item.newfirmware.map((t) => {
         if (t.firmware === 'Uboot') {
-          const env = ubootEnv.filter((envList) => envList.key === t.key)[0]
-            .env;
+          const env = ubootEnv.filter((envList) => envList.key === t.key)[0].env;
           return { firmware: t.firmware, newversion: t.newverision, env };
         }
         return { firmware: t.firmware, newversion: t.newverision };

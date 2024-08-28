@@ -3,7 +3,7 @@ import { Button, Result } from 'antd';
 import { useFUProviderModule } from '../components/containers';
 
 const ErrorPage = ({ setIsErrorPage }) => {
-  const { setErrorTimes } = useFUProviderModule();
+  const { setErrorTimes, theme } = useFUProviderModule();
   const handleRefresh = () => {
     setIsErrorPage(false);
     setErrorTimes((obj) => {
@@ -16,10 +16,10 @@ const ErrorPage = ({ setIsErrorPage }) => {
 
   return (
     <Result
-      status="error"
-      title="Please refresh the page"
+      status='error'
+      title={<div style={{ color: theme === 'dark' ? '#fff' : '#000' }}>Please refresh the page</div>}
       extra={[
-        <Button type="primary" key="refresh" onClick={handleRefresh}>
+        <Button type='primary' key='refresh' onClick={handleRefresh}>
           Refresh
         </Button>,
       ]}

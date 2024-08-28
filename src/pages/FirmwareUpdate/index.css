@@ -1,22 +1,112 @@
-.fu-details-page{
-    margin-top: 20px;
-    height: calc(100vh - 42px - 40px - 60px - 48px);
-    overflow-y: auto;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.level1 {
-    background: #f0eded;
-    border: 1px solid red;
-    color: #ccc;
+.antd-table {
+  background: #f8f8f8;
+}
+
+/* Collapse components styles */
+.fu-details-page {
+  margin-top: 20px;
+  /* 42: nav page, 20: margin-top 22: all select 20 margin-top */
+  height: calc(100vh - 42px - 20px - 22px - 20px);
+  overflow-y: auto;
+}
+
+.level1,
+.level1:hover {
+  background: #f7f7f7;
+  color: #717171;
+  height: 46px;
+}
+
+.level1-dark,
+.level1-dark:hover {
+  background: #262525;
+  color: #717171;
+  height: 46px;
+}
+
+.default-cell,
+.default-cell:hover {
+  background: #f8f8f8;
+  height: 46px;
+}
+
+.default-cell-dark,
+.default-cell-dark:hover {
+  background: #353535;
+  height: 46px;
+}
+
+.disable-row {
+  color: #717171;
+  opacity: 0.6;
+  height: 46px;
+  line-height: 46px;
+}
+
+.board-status {
+  color: #717171;
+  opacity: 0.6;
+}
+
+.status-show-layout {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0 0 0 24px;
+}
+
+.upgrading {
+  animation: up 3s infinite linear;
+}
+
+@keyframes up {
+  0% {
+    transform: translateY(0);
   }
-  
-  .level2 {
-    background: #f5f5f5;
-    color: #ccc;
-    border: 1px solid red;
+
+  50% {
+    transform: translateY(-24px);
+    opacity: 0;
   }
-  .disable-row{
-    background: #f5f5f5;
-    color: #6c6c6d;
-    opacity: 0.6;
+
+  75% {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.vscode-dark .ant-message-notice-content {
+  background: #1e1e1e !important;
+  color: #fff;
+}
+.offline-status{
+  color: #c5c5c4;
+}
+
+/* @keyframes blink-smooth { to { color: transparent } } */
+@keyframes blink-smooth { 
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: 0;
+  }
+}
+.highlight {
+    color: #1890ff; 
+    animation: 0.5s blink-smooth infinite alternate; 
   }

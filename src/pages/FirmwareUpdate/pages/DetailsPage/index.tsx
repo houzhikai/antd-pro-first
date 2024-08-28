@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Checkbox, message } from 'antd';
 import DetailsTablePage from './DetailsTablePage';
-import { useFUProviderModule } from '../../components/containers';
 import { getDeviceOptionalAllKeys } from '../../components/getDeviceOptionalAllKeys';
-import myFetch from '@/components/myFetch';
 import { useAsyncEffect } from 'ahooks';
+import { useFUProviderModule } from '../../components/containers';
+import myFetch from '@/components/myFetch';
 
 const DetailsPage = () => {
   const {
@@ -86,10 +86,11 @@ const DetailsPage = () => {
           ...obj,
           status: true,
           isError: true,
-          message: '固件更新异常，请联系相关工程师检查并及时处理。',
+          message:
+            'An error was found during the upgrade process. Please contact the engineer for assistance.',
         };
       });
-    } else {
+    } else if (statusList.includes(3)) {
       // 升级中是否包含 SMU
       const isHasSMU = getDeviceListAndHeartObj.tableList.some(
         (item) => item.type === 'SMU026' && item.slotStatus === 3,
@@ -108,7 +109,8 @@ const DetailsPage = () => {
               ...obj,
               status: true,
               isError: false,
-              message: '固件更新完成，请对设备上下电以完成升级',
+              message:
+                'Firmware update completed. Please power off the device and then power on it to complete the upgrade process.',
             };
           });
         } else {
@@ -131,7 +133,9 @@ const DetailsPage = () => {
               }
             } catch (error) {
               // TODO， result = 0 时的判断
-              message.success(`slot${uiSlotList.join('，')}重启 成功`);
+              message.success(
+                `The slot${uiSlotList.join('，')} restart success`,
+              );
             }
           } else {
             // 手动模式下的判断
@@ -140,18 +144,19 @@ const DetailsPage = () => {
                 ...obj,
                 status: true,
                 isError: false,
-                message: '固件更新完成，请重启整机以完成升级',
+                message:
+                  'Firmware update completed. Please restart the device to complete the upgrade process.',
               };
             });
           }
         }
       } else {
         // 升级中不包含 SMU
-        const isHasCPLD = getDeviceListAndHeartObj.tableList
+        const isHasCPLD = getDeviceListAndHeartObj?.tableList
           .filter((item) => item.type !== 'SMU026')
           .map((t) =>
-            t.children.some(
-              (item) => item.firmware.includes('CPLD') && item.status === 3,
+            t?.children?.some(
+              (item) => item?.firmware.includes('CPLD') && item?.status === 3,
             ),
           )
           .some((item) => item);
@@ -178,7 +183,11 @@ const DetailsPage = () => {
               }
             } catch (error) {
               // TODO， result = 0 时的判断
-              message.success(`slot${uiSlotList.join('，')}上下电成功`);
+              message.success(
+                `The slot${uiSlotList.join(
+                  '，',
+                )} successfully powsered off and power on `,
+              );
             }
           } else {
             // 手动模式
@@ -187,9 +196,9 @@ const DetailsPage = () => {
                 ...obj,
                 status: true,
                 isError: false,
-                message: `固件更新完成，请对slot${uiSlotList.join(
+                message: `Firmware update completed. Please to power off slot${uiSlotList.join(
                   '， slot',
-                )}单板上下电以完成升级`,
+                )} then power on it/them to complete the upgrade process.`,
               };
             });
           }
@@ -216,7 +225,9 @@ const DetailsPage = () => {
               }
             } catch (error) {
               // TODO， result = 0 时的判断
-              message.success(`slot${uiSlotList.join('，slot')}重启成功`);
+              message.success(
+                `The slot${uiSlotList.join('，slot')} restart success`,
+              );
             }
           } else {
             // 手动模式
@@ -225,44 +236,57 @@ const DetailsPage = () => {
                 ...obj,
                 status: true,
                 isError: false,
-                message: `固件更新完成，请重启${uiSlotList.join(
+                message: `Firmware update completed. Please restart the slot ${uiSlotList.join(
                   '， slot',
-                )}单板以完成升级`,
+                )} to complete the upgrade process.`,
               };
             });
           }
         }
       }
+    } else {
+      console.log('排除 1，2，3，4的状态码');
     }
   }, [getDeviceListAndHeartObj.allow]);
 
   return (
-    <div style={{ width: `${tableWidthObj.sizeRatio}vw`, margin: '0 auto' }}>
-      <div>
-        <Checkbox
-          indeterminate={indeterminateKeys}
-          onChange={handleChangeCheckedAll}
-          checked={
-            selectedKeysList.length ===
-            getDeviceOptionalAllKeys(getDeviceListAndHeartObj?.tableList).length
-          }
+    <>
+      {getDeviceListAndHeartObj?.tableList && (
+        <div
+          style={{ width: `${tableWidthObj.sizeRatio}vw`, margin: '0 auto' }}
         >
-          全选
-        </Checkbox>
-        <Checkbox
-          indeterminate={indeterminateActiveKeys}
-          onChange={handleChangeFoldPanel}
-          checked={activeKey.length === allKeys.length}
-        >
-          全折叠
-        </Checkbox>
+          <div>
+            <Checkbox
+              indeterminate={indeterminateKeys}
+              onChange={handleChangeCheckedAll}
+              checked={
+                selectedKeysList.length > 0 &&
+                selectedKeysList.length ===
+                  getDeviceOptionalAllKeys(getDeviceListAndHeartObj?.tableList)
+                    .length &&
+                getDeviceListAndHeartObj?.tableList?.length
+              }
+            >
+              All Select
+            </Checkbox>
+            <Checkbox
+              indeterminate={indeterminateActiveKeys}
+              onChange={handleChangeFoldPanel}
+              checked={
+                activeKey.length === allKeys.length && allKeys.length !== 0
+              }
+            >
+              All Collapse
+            </Checkbox>
 
-        <DetailsTablePage
-          allKeys={allKeys}
-          setIndeterminate={setIndeterminateActiveKeys}
-        />
-      </div>
-    </div>
+            <DetailsTablePage
+              allKeys={allKeys}
+              setIndeterminate={setIndeterminateActiveKeys}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

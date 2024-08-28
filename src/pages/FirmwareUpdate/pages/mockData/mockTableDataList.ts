@@ -12,7 +12,7 @@ export const mockDeviceListInterface = {
           firmware: 'mOS',
           version: 'V1.6',
           newVersion: '',
-          status: 1, // 需要后端把枚举值列出来
+          status: 0, // 需要后端把枚举值列出来
         },
         {
           key: '0-2',
@@ -40,35 +40,35 @@ export const mockDeviceListInterface = {
           firmware: 'CPLD-M',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 0,
+          status: 1,
           children: [
             {
               key: '0-5-0',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
-              status: 6, // 传一个特定的值，前端用来显示 '-'
+              status: 6, //传一个特定的值，前端用来显示 '-'
             },
             {
               key: '0-5-1',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
-              status: 6, // 传一个特定的值，前端用来显示 '-'
+              status: 6, //传一个特定的值，前端用来显示 '-'
             },
             {
               key: '0-5-2',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
-              status: 6, // 传一个特定的值，前端用来显示 '-'
+              status: 6, //传一个特定的值，前端用来显示 '-'
             },
             {
               key: '0-5-3',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
-              status: 6, // 传一个特定的值，前端用来显示 '-'
+              status: 6, //传一个特定的值，前端用来显示 '-'
             },
           ],
         },
@@ -84,28 +84,28 @@ export const mockDeviceListInterface = {
           firmware: 'mOS',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 1,
+          status: 5,
         },
         {
           key: '1-2',
           firmware: 'Uboot',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 2,
+          status: 6,
         },
         {
           key: '1-3',
           firmware: 'WEB',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 3,
+          status: 7,
         },
         {
           key: '1-4',
           firmware: 'ET-SERVER',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 4,
+          status: 8,
         },
         {
           key: '1-5',

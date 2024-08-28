@@ -1,5 +1,6 @@
+import React from 'react';
 import CustomNavPage from './CustomNavPage';
-import logo from '@/icon/FULogo.svg';
+import { fuLogo } from '../../icons/base64/logo';
 import NavActive from './NavActive';
 import UpgradePage from './UpgradePage';
 
@@ -11,7 +12,7 @@ const NavPage = () => {
    * 内容自定义
    */
   return (
-    <CustomNavPage logo={logo} title="固件升级">
+    <CustomNavPage logo={fuLogo} title='Firmware Upgrade'>
       <NavActive />
       <UpgradePage />
     </CustomNavPage>

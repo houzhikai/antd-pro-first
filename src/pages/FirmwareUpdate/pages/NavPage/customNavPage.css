@@ -1,10 +1,14 @@
-.customNavPage-wrapper{
+.customNavPage-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
+    /* position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100; */
 }
-.customNavPage-gap{
+
+.customNavPage-gap {
     margin: 0 5px;
 }

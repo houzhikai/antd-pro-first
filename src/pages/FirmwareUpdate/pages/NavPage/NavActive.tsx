@@ -1,46 +1,53 @@
+import React, { useEffect, useState } from 'react';
 import { Button, Select, Space, Upload, UploadProps, message } from 'antd';
+import myFetch from '@/components/myFetch';
 import { useFUProviderModule } from '../../components/containers';
 import { options } from '../../components/defaultData';
-import { useState } from 'react';
-import { useAsyncEffect } from 'ahooks';
-
 const NavActive = () => {
   const { getDeviceListAndHeartObj, startParams, setIsAutoMode } =
     useFUProviderModule();
   const [base64List, setBase64List] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
-  const isDisabled = getDeviceListAndHeartObj?.allow;
-  // upload接口
-  useAsyncEffect(async () => {
-    // uploading 为 true 时，调用 上传文件夹 接口
+  const [filesLength, setFilesLength] = useState(0);
+  const isDisabled = getDeviceListAndHeartObj?.allow !== 0;
 
-    if (uploading && base64List.length !== 0) {
-      await fetch(`http://${startParams.initIp}:8000/upload`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        body: JSON.stringify(base64List),
-      })
-        .then((res) => res.json())
-        .catch(() => {
-          message.error(`上传失败`, 5);
-        })
-        .finally(() => {
-          setBase64List([]);
-        });
+  // upload接口
+  useEffect(() => {
+    // uploading 为 true 时，调用 上传文件夹 接口
+    if (!uploading) return;
+    if (filesLength === base64List.length) {
+      base64List.forEach(async (item) => {
+        try {
+          const res = await myFetch({
+            url: `http://${startParams.initIp}:8000/upload`,
+            params: item,
+            timeout: 100,
+            isExceptionHand: true,
+          });
+          if (res.result !== '0') {
+            message.error(res.msg);
+          }
+        } catch (error) {
+          message.error(`Fail to upload`, 5);
+        }
+      });
+
+      if (filesLength === base64List.length) {
+        setUploading(false);
+        setBase64List([]);
+        setFilesLength(0);
+      }
     }
-  }, [uploading, base64List]);
+  }, [uploading, base64List, filesLength]);
 
   const props: UploadProps = {
-    disabled: isDisabled,
+    disabled: isDisabled || uploading,
     showUploadList: false, // 是否展示上传列表
-    // accept: '.fw',
+    accept: '.fw',
+    directory: false,
     multiple: true,
-    listType: 'text',
-    beforeUpload: (file) => {
+    beforeUpload: (file, fileList) => {
       const reader: any = new FileReader();
-
       reader.onloadend = () => {
         setBase64List((base64List) => [
           ...base64List,
@@ -50,30 +57,36 @@ const NavActive = () => {
 
       reader.readAsDataURL(file);
       setUploading(true);
+      setFilesLength(fileList.length);
       // 阻止自动上传
       return false;
     },
   };
+
   const handleEffectiveMode = (effectiveMode: string) => {
     setIsAutoMode(effectiveMode === 'auto');
   };
+
   return (
     <Space>
       {/*  TODO, 需要保存到 vscode 中，避免刷新页面恢复成 自动模式 */}
       <div className="customNavPage-gap">
-        生效模式：
+        Activation Mode:
         <Select
-          disabled={isDisabled !== 0}
+          disabled={isDisabled}
           defaultValue="auto"
-          style={{ marginLeft: 10 }}
-          size="small"
+          style={{ marginLeft: 10, width: 90 }}
           onChange={handleEffectiveMode}
           options={options}
         />
       </div>
       <Upload {...props}>
-        <Button type="primary" disabled={isDisabled !== 0}>
-          上传文件
+        <Button
+          loading={uploading}
+          type="primary"
+          disabled={isDisabled || uploading}
+        >
+          Upload Files
         </Button>
       </Upload>
     </Space>

@@ -1,4 +1,5 @@
-import { Select } from 'antd';
+import React from 'react';
+import { Checkbox } from 'antd';
 import { statusShow } from '../pages/DetailsPage/components/statusShow';
 import { useFUProviderModule } from './containers';
 import '../index.css';
@@ -6,43 +7,40 @@ import '../index.css';
 export const options = [
   {
     value: 'auto',
-    label: '自动',
+    label: 'Auto',
   },
   {
     value: 'manual',
-    label: '手动',
+    label: 'Manual',
   },
 ];
-export const envOptions = [
-  { value: 0, label: '不覆盖' },
-  { value: 1, label: '覆盖' },
-];
+// export const envOptions = [
+//   { value: 0, label: '不覆盖' },
+//   { value: 1, label: '覆盖' },
+// ];
 export const GetColumns = (tableWidthObj, isDisabled) => {
-  const { ubootEnv, setUbootEnv } = useFUProviderModule();
+  const { ubootEnv, setUbootEnv, selectedKeysList } = useFUProviderModule();
   // 60: 表格占 width 的 60%，150：状态的宽度
   const totalWidth = (window.innerWidth * tableWidthObj.sizeRatio) / 100;
   const width = Math.floor((totalWidth - tableWidthObj.statusWidth) / 3);
+  const tableCellPosition = '24px';
   return [
     {
       key: 'firmware',
       width,
       dataIndex: 'firmware',
-      title: <div className={isDisabled ? 'disable-row' : ''}>固件</div>,
-    },
-    {
-      key: 'version',
-      width,
-      dataIndex: 'version',
-      title: <div className={isDisabled ? 'disable-row' : ''}>版本</div>,
-    },
-    {
-      key: 'newVersion',
-      width,
-      dataIndex: 'newVersion',
-      title: <div className={isDisabled ? 'disable-row' : ''}>新版本</div>,
+      title: (
+        <div
+          style={{ marginLeft: tableCellPosition, height: 46, lineHeight: '46px' }}
+          className={isDisabled ? 'disable-row' : ''}
+        >
+          Firmware
+        </div>
+      ),
       render: (text, record) => {
         if (record.firmware === 'Uboot') {
-          const handleChange = (value) => {
+          const handleChange = (e) => {
+            const value = e.target.checked;
             setUbootEnv((list) => {
               const newList = list.map((item) => {
                 if (item.key === record.key) {
@@ -54,20 +52,22 @@ export const GetColumns = (tableWidthObj, isDisabled) => {
               return newList;
             });
           };
-          const env =
-            ubootEnv.filter((item) => item.key === record.key)?.[0]?.env || 0;
+          const env = ubootEnv.filter((item) => item.key === record.key)?.[0]?.env;
+          const hasSelectKey = selectedKeysList.includes(record.key);
           return (
             <div>
               {text}
-              <Select
-                style={{ width: 100, marginLeft: 4 }}
-                options={envOptions}
-                value={env}
+              <Checkbox
+                style={{ marginLeft: 10 }}
+                // TODO, cancel selectkey , env is been cancelled
+                checked={!hasSelectKey ? false : env}
                 onChange={handleChange}
                 disabled={
-                  isDisabled || !record.newVersion || record.key.length === 5
+                  isDisabled || !record.newVersion || record.key.length === 5 || !hasSelectKey
                 }
-              />
+              >
+                Override Env Variables
+              </Checkbox>
             </div>
           );
         } else {
@@ -76,12 +76,38 @@ export const GetColumns = (tableWidthObj, isDisabled) => {
       },
     },
     {
+      key: 'version',
+      width,
+      dataIndex: 'version',
+      title: (
+        <div style={{ marginLeft: tableCellPosition }} className={isDisabled ? 'disable-row' : ''}>
+          Current Version
+        </div>
+      ),
+      render: (text) => <div style={{ marginLeft: tableCellPosition }}>{text}</div>,
+    },
+    {
+      key: 'newVersion',
+      width,
+      dataIndex: 'newVersion',
+      title: (
+        <div style={{ marginLeft: tableCellPosition }} className={isDisabled ? 'disable-row' : ''}>
+          New Version
+        </div>
+      ),
+      render: (text) => <div style={{ marginLeft: tableCellPosition }}>{text}</div>,
+    },
+    {
       key: 'status',
       width: tableWidthObj.statusWidth,
       dataIndex: 'status',
-      title: <div className={isDisabled ? 'disable-row' : ''}>状态</div>,
+      title: (
+        <div style={{ marginLeft: tableCellPosition }} className={isDisabled ? 'disable-row' : ''}>
+          Status
+        </div>
+      ),
       render: (text) => {
-        return statusShow(text);
+        return statusShow(text, 46);
       },
     },
   ];

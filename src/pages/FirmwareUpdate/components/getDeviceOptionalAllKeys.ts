@@ -10,12 +10,10 @@ export const getDeviceOptionalAllKeys = (tableList) => {
         item.slotStatus !== StatusENUM.Offline &&
         item.slotStatus !== StatusENUM.PowerOff &&
         item.slotStatus !== StatusENUM.Starting &&
-        item.slotStatus !== StatusENUM.Busy,
+        item.slotStatus !== StatusENUM.Busy
     )
     ?.map((item) => {
-      return (item.children?.filter((dut) => dut.newVersion) || [])?.map(
-        (dut) => dut.key,
-      );
+      return (item.children?.filter((dut) => dut.newVersion) || [])?.map((dut) => dut.key);
     })
     .flat();
   return newList;

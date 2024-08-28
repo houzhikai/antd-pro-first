@@ -1,5 +1,5 @@
+import React, { useEffect } from 'react';
 import { Modal } from 'antd';
-import { useEffect } from 'react';
 import { useFUProviderModule } from '../../components/containers';
 
 const AfterUpgradeModal = () => {
@@ -16,15 +16,15 @@ const AfterUpgradeModal = () => {
 
   const config = {
     width: '50vw',
-    title: (
-      <div style={{ fontWeight: 800 }}>
-        {promptUser.isError ? '升级异常' : '升级完成'}
-      </div>
-    ),
+    title: <div style={{ fontWeight: 800 }}>
+      {promptUser.isError
+        ? 'Firmware upgrade failed'
+        : 'Firmware update completed, awaiting effectiveness'}
+    </div>,
     centered: true,
     content: <>{promptUser.message}</>,
     maskClosable: false,
-    okText: '确定',
+    okText: 'OK',
     onOk: handleOk,
   };
   useEffect(() => {
