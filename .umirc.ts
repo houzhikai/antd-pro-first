@@ -113,6 +113,11 @@ export default defineConfig({
       component: './Components',
     },
     {
+      name: 'canvasPage',
+      path: `/canvasPage`,
+      component: './CanvasPage',
+    },
+    {
       name: 'bitMap',
       path: `/bitMap`,
       component: './BitMap',

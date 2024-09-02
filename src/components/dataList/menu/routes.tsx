@@ -76,6 +76,11 @@ export const routes = {
       component: './Redux',
     },
     {
+      name: 'canvasPage',
+      path: `/canvasPage`,
+      component: './CanvasPage',
+    },
+    {
       name: 'components',
       path: `/components`,
       component: './Components',
