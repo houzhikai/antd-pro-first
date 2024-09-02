@@ -35,7 +35,7 @@ export const useFUProviderModule = () => {
   // 生效模式  true：自动模式， false： 手动模式
   // TODO，需要vscode存储当前模式
   const [isAutoMode, setIsAutoMode] = useState(true);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
 
   /**
    * 页面内容区域

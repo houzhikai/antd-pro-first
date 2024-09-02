@@ -79,6 +79,17 @@ const DetailsPage = () => {
     );
     if (statusList.includes(1) || statusList.includes(2)) {
       // TODO，都是 正在升级 或者 等待升级 时的操作
+      const xxx = getDeviceListAndHeartObj.tableList
+        .map((board) =>
+          board.children
+            .filter(
+              (slot) =>
+                slot.status === 1 || slot.status === 2 || slot.status === 3,
+            )
+            .map((item) => item.key),
+        )
+        .flat();
+      setSelectedKeysList(xxx);
     } else if (statusList.includes(4)) {
       // 升级异常时打开弹窗
       setPromptUser((obj) => {

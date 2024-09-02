@@ -5,7 +5,7 @@ export const mockDeviceListInterface = {
     {
       slot: 0,
       type: 'SMU026',
-      slotStatus: 0,
+      slotStatus: 2,
       children: [
         {
           key: '0-1',
@@ -77,7 +77,7 @@ export const mockDeviceListInterface = {
     {
       slot: 1,
       type: 'DRU288',
-      slotStatus: 3,
+      slotStatus: 1,
       children: [
         {
           key: '1-1',
