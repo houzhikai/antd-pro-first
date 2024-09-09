@@ -1,17 +1,20 @@
-import { Button, ConfigProvider, Typography } from "antd";
-import React, { useEffect, useImperativeHandle, useState } from "react";
-import CustomNavPage from "./CustomNavPage";
-import { getThemeToken } from "./getThemeToken";
-import MyErrorPage from "../MyErrorPage";
-import "./index.less";
+import { ConfigProvider, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import CustomNavPage from './CustomNavPage';
+import { getThemeToken } from './getThemeToken';
+import MyErrorPage from '../MyErrorPage';
+import './index.less';
+import enUS from 'antd/locale/en_US';
+import zhCN from 'antd/locale/zh_CN';
 
 interface MyLayoutPageProps {
   logo: string;
   errorTitle?: React.ReactNode | string;
   title?: string;
-  theme: "dark" | "light";
+  theme: 'dark' | 'light';
   navExtra?: React.ReactNode | string;
   isShowErrorPage?: boolean;
+  defaultLocale?: 'en-US' | 'zh-CN';
   children: any;
 }
 
@@ -22,16 +25,21 @@ const MyLayoutPage = ({
   theme,
   navExtra,
   isShowErrorPage,
+  defaultLocale,
   children,
 }: MyLayoutPageProps) => {
   const [isErrorPage, setIsErrorPage] = useState<boolean>(true);
+  const [locale, setLocale] = useState<any>();
 
   useEffect(() => {
     setIsErrorPage(isShowErrorPage || false);
   }, [isShowErrorPage]);
+  useEffect(() => {
+    setLocale(defaultLocale === 'zh-CN' ? zhCN : enUS);
+  }, [defaultLocale]);
 
   return (
-    <ConfigProvider theme={getThemeToken(theme)}>
+    <ConfigProvider theme={getThemeToken(theme)} locale={locale}>
       {isErrorPage ? (
         <MyErrorPage
           theme={theme}
@@ -45,7 +53,7 @@ const MyLayoutPage = ({
           </CustomNavPage>
           <div
             className={
-              theme === "dark" ? "my-layout-content-dark" : "my-layout-content"
+              theme === 'dark' ? 'my-layout-content-dark' : 'my-layout-content'
             }
           >
             <Typography.Text>{children}</Typography.Text>
