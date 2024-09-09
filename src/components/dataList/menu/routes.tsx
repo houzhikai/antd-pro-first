@@ -6,6 +6,11 @@ export const routes = {
       component: './Home',
     },
     {
+      name: 'lowCodePlatform',
+      path: `/lowCodePlatform`,
+      component: './LowCodePlatform',
+    },
+    {
       name: 'firmwareUpdate',
       path: `/firmwareUpdate`,
       component: './FirmwareUpdate',

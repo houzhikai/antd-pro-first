@@ -1,6 +1,7 @@
 export default {
   'menu.home': '首页',
   'menu.dbm': 'DBM',
+  'menu.lowCodePlatform': '低代码平台',
   'menu.access': '权限演示',
   'menu.table': '表格',
   'menu.fu': '固件升级',
@@ -22,6 +23,7 @@ export default {
   // 消除 [React Intl] Missing message: “menu.power“ for locale: “zh-CN“, using default message as fallback.报错
   'menu.首页': '首页',
   'menu.DBM': 'DBM',
+  'menu.低代码平台': '低代码平台',
   'menu.权限演示': '权限演示',
   'menu.表格': '表格',
   'menu.固件升级': '固件升级',

@@ -42,6 +42,11 @@ export default defineConfig({
       component: './DBM/Site',
     },
     {
+      name: 'lowCodePlatform',
+      path: `/lowCodePlatform`,
+      component: './LowCodePlatform',
+    },
+    {
       name: 'firmwareUpdate ',
       path: `/firmwareUpdate`,
       component: './FirmwareUpdate',
