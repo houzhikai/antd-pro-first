@@ -1,0 +1,48 @@
+:where(.css-dev-only-do-not-override-1biumlu).ant-pro-layout .ant-pro-layout-content {
+    padding: 0 2px;
+}
+
+@border: #ccc;
+
+.layout-page {
+    display: flex;
+    height: calc(100vh - 73px);
+}
+
+.sider-page {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid @border;
+    border-right: none;
+}
+
+.content-page {
+    flex: 1;
+    border: 1px solid @border;
+
+    .element-item {
+        border: 1px dashed #838382;
+        margin-top: 6px;
+        padding: 0 6px;
+        min-height: 32px;
+        line-height: 32px;
+    }
+}
+
+// right-page
+
+.right-page {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid @border;
+    border-left: none;
+}
+
+.right-page-item {
+    display: flex;
+    line-height: 32px;
+
+    .label {
+        width: 50px;
+    }
+}

@@ -53,6 +53,11 @@
   opacity: 0.6;
 }
 
+.noUpgrade{
+  color: red;
+  background: #f00 !important;
+}
+
 .status-show-layout {
   display: flex;
   justify-content: start;

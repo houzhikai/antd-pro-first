@@ -32,6 +32,7 @@ export const useFUProviderModule = () => {
   /**
    * 操作栏
    */
+  const [isNormalMode, setIsNormalMode] = useState(true);
   // 生效模式  true：自动模式， false： 手动模式
   // TODO，需要vscode存储当前模式
   const [isAutoMode, setIsAutoMode] = useState(true);
@@ -58,6 +59,8 @@ export const useFUProviderModule = () => {
    */
   const tableWidthObj = { sizeRatio: 70, statusWidth: 150 };
 
+  const [isAllowUpgradeList, setIsAllowUpgradeList] = useState([]);
+
   const FUContextValue = {
     getDeviceListAndHeartObj,
     setGetDeviceListAndHeartObj,
@@ -81,6 +84,10 @@ export const useFUProviderModule = () => {
     hasWaitingAndUpgrading,
     theme,
     setTheme,
+    isNormalMode,
+    setIsNormalMode,
+    isAllowUpgradeList,
+    setIsAllowUpgradeList,
   };
   return { ...useContext(FirmwareUpdateContext), FUContextValue };
 };

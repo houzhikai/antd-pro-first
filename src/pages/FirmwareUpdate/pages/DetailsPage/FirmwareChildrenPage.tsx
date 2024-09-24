@@ -22,6 +22,7 @@ const FirmwarePage = ({
     hasWaitingAndUpgrading,
     theme,
     setUbootEnv,
+    isAllowUpgradeList,
   } = useFUProviderModule();
   const allKeys = getDeviceOptionalAllKeys(getDeviceListAndHeartObj.tableList);
 
@@ -110,6 +111,12 @@ const FirmwarePage = ({
     },
   };
   const classNameFn = (record: any) => {
+    console.log(record, isAllowUpgradeList);
+
+    let xxx = '';
+    if (isAllowUpgradeList.includes(record.key)) {
+      xxx = 'noUpgrade';
+    }
     let className = '';
     if (!record.newVersion || record.key.length === 5) {
       className = theme === 'dark' ? 'level1-dark' : 'level1';
@@ -118,7 +125,7 @@ const FirmwarePage = ({
     } else {
       className = theme === 'dark' ? 'default-cell-dark' : 'default-cell';
     }
-    return className;
+    return `${className} ${xxx}`;
   };
 
   const columns = GetColumns(tableWidthObj, isDisabled);

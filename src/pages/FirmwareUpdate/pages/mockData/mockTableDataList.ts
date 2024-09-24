@@ -5,7 +5,7 @@ export const mockDeviceListInterface = {
     {
       slot: 0,
       type: 'SMU026',
-      slotStatus: 2,
+      slotStatus: 0,
       children: [
         {
           key: '0-1',
@@ -17,30 +17,30 @@ export const mockDeviceListInterface = {
         {
           key: '0-2',
           firmware: 'Uboot',
-          version: 'V1.6',
+          version: 'V1.8',
           newVersion: 'V1.7',
-          status: 2,
+          status: 0,
         },
         {
           key: '0-3',
           firmware: 'WEB',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 3,
+          status: 0,
         },
         {
           key: '0-4',
           firmware: 'ET-SERVER',
-          version: 'V1.6',
+          version: 'V1.6.1',
           newVersion: 'V1.7',
-          status: 4,
+          status: 0,
         },
         {
           key: '0-5',
           firmware: 'CPLD-M',
-          version: 'V1.6',
+          version: 'V2.6',
           newVersion: 'V1.7',
-          status: 1,
+          status: 0,
           children: [
             {
               key: '0-5-0',
@@ -77,42 +77,42 @@ export const mockDeviceListInterface = {
     {
       slot: 1,
       type: 'DRU288',
-      slotStatus: 1,
+      slotStatus: 0,
       children: [
         {
           key: '1-1',
           firmware: 'mOS',
-          version: 'V1.6',
+          version: 'V1.8',
           newVersion: 'V1.7',
-          status: 5,
+          status: 0,
         },
         {
           key: '1-2',
           firmware: 'Uboot',
-          version: 'V1.6',
+          version: 'V2.6',
           newVersion: 'V1.7',
-          status: 6,
+          status: 0,
         },
         {
           key: '1-3',
           firmware: 'WEB',
-          version: 'V1.6',
+          version: 'V1.8',
           newVersion: 'V1.7',
-          status: 7,
+          status: 0,
         },
         {
           key: '1-4',
           firmware: 'ET-SERVER',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 8,
+          status: 0,
         },
         {
           key: '1-5',
           firmware: 'CPLD-M',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 5,
+          status: 0,
           children: [
             {
               key: '0-5-0',
@@ -149,35 +149,35 @@ export const mockDeviceListInterface = {
     {
       slot: 2,
       type: 'DRU288',
-      slotStatus: 5,
+      slotStatus: 0,
       children: [
         {
           key: '2-1',
           firmware: 'mOS',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 1,
+          status: 0,
         },
         {
           key: '2-2',
           firmware: 'Uboot',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 2,
+          status: 0,
         },
         {
           key: '2-3',
           firmware: 'WEB',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 3,
+          status: 0,
         },
         {
           key: '2-4',
           firmware: 'ET-SERVER',
           version: 'V1.6',
           newVersion: 'V1.7',
-          status: 4,
+          status: 0,
         },
         {
           key: '2-5',

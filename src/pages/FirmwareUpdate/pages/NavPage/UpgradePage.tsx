@@ -3,6 +3,7 @@ import { Button, Popconfirm, message } from 'antd';
 import { getStartUpgradeParams } from '../../components/getStartUpgradeParams';
 import myFetch from '@/components/myFetch';
 import { useFUProviderModule } from '../../components/containers';
+import { getVerifyParams } from '../../components/getVerifyParams';
 
 const UpgradePage = () => {
   const {
@@ -12,10 +13,22 @@ const UpgradePage = () => {
     ubootEnv,
     hasWaitingAndUpgrading,
     isAutoMode,
+    isNormalMode,
+    setIsAllowUpgradeList,
   } = useFUProviderModule();
   const isDisabled = getDeviceListAndHeartObj?.allow !== 0;
   // 开始升级
   const handleStartUpgrade = async () => {
+    const notUpgradeKeys = getVerifyParams(
+      getDeviceListAndHeartObj,
+      selectedKeysList,
+    );
+    console.log({ notUpgradeKeys });
+    setIsAllowUpgradeList(notUpgradeKeys);
+    if (isNormalMode && notUpgradeKeys) {
+      return;
+    }
+
     const params = getStartUpgradeParams(
       getDeviceListAndHeartObj,
       selectedKeysList,

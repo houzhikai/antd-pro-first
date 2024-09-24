@@ -4,8 +4,12 @@ import myFetch from '@/components/myFetch';
 import { useFUProviderModule } from '../../components/containers';
 import { options } from '../../components/defaultData';
 const NavActive = () => {
-  const { getDeviceListAndHeartObj, startParams, setIsAutoMode } =
-    useFUProviderModule();
+  const {
+    getDeviceListAndHeartObj,
+    startParams,
+    setIsAutoMode,
+    setIsNormalMode,
+  } = useFUProviderModule();
   const [base64List, setBase64List] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [filesLength, setFilesLength] = useState(0);
@@ -67,8 +71,27 @@ const NavActive = () => {
     setIsAutoMode(effectiveMode === 'auto');
   };
 
+  const handleMode = (mode) => {
+    const newMode = mode === 'normal';
+    setIsNormalMode(newMode);
+  };
+
+  const modeOptions = [
+    { value: 'normal', label: '常规' },
+    { value: 'xxx', label: '强制' },
+  ];
   return (
     <Space>
+      <div className="customNavPage-gap">
+        模式:
+        <Select
+          disabled={isDisabled}
+          defaultValue="常规"
+          style={{ marginLeft: 10, width: 90 }}
+          onChange={handleMode}
+          options={modeOptions}
+        />
+      </div>
       {/*  TODO, 需要保存到 vscode 中，避免刷新页面恢复成 自动模式 */}
       <div className="customNavPage-gap">
         Activation Mode:
