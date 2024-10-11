@@ -115,28 +115,28 @@ export const mockDeviceListInterface = {
           status: 0,
           children: [
             {
-              key: '0-5-0',
+              key: '1-5-0',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
               status: 6, // 传一个特定的值，前端用来显示 '-'
             },
             {
-              key: '0-5-1',
+              key: '1-5-1',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
               status: 6, // 传一个特定的值，前端用来显示 '-'
             },
             {
-              key: '0-5-2',
+              key: '1-5-2',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
               status: 6, // 传一个特定的值，前端用来显示 '-'
             },
             {
-              key: '0-5-3',
+              key: '1-5-3',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
@@ -187,28 +187,28 @@ export const mockDeviceListInterface = {
           status: 0,
           children: [
             {
-              key: '0-5-0',
+              key: '2-5-0',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
               status: 6, // 传一个特定的值，前端用来显示 '-'
             },
             {
-              key: '0-5-1',
+              key: '2-5-1',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
               status: 6, // 传一个特定的值，前端用来显示 '-'
             },
             {
-              key: '0-5-2',
+              key: '2-5-2',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',
               status: 6, // 传一个特定的值，前端用来显示 '-'
             },
             {
-              key: '0-5-3',
+              key: '2-5-3',
               firmware: 'CPLD-M',
               version: 'V1.6',
               newVersion: '-',

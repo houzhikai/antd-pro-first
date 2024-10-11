@@ -10,11 +10,21 @@ export const getDeviceOptionalAllKeys = (tableList) => {
         item.slotStatus !== StatusENUM.Offline &&
         item.slotStatus !== StatusENUM.PowerOff &&
         item.slotStatus !== StatusENUM.Starting &&
-        item.slotStatus !== StatusENUM.Busy
+        item.slotStatus !== StatusENUM.Busy,
     )
     ?.map((item) => {
-      return (item.children?.filter((dut) => dut.newVersion) || [])?.map((dut) => dut.key);
+      const slotList = item.children?.filter((dut) => dut.newVersion);
+      return slotList.map((dut) => {
+        if (dut.children) {
+          return dut.children
+            .map((t) => t.key)
+            .flat()
+            .concat(dut.key);
+        } else {
+          return dut.key;
+        }
+      });
     })
     .flat();
-  return newList;
+  return newList.flat();
 };

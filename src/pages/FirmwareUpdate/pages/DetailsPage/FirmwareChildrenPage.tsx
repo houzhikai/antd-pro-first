@@ -25,16 +25,27 @@ const FirmwarePage = ({
     isAllowUpgradeList,
   } = useFUProviderModule();
   const allKeys = getDeviceOptionalAllKeys(getDeviceListAndHeartObj.tableList);
-
+  const getSelectedRowKeys = (selectedRows) => {
+    const newList = selectedRows
+      .map((item) => {
+        if (item.children) {
+          return item.children.map((t) => t.key).concat(item.key);
+        } else {
+          return item.key;
+        }
+      })
+      .flat();
+    return Array.from(new Set(newList));
+  };
   const rowSelection = {
     checkStrictly: false, //状态下节点选择完全受控, false 表示受父节点控制
     selectedRowKeys: selectedKeysList,
-    onChange: (selectedRowKeys: React.Key[], _, { type }) => {
+    onChange: (selectedRowKeys: React.Key[], selectedRows, { type }) => {
       if (type !== 'all') return;
       // 修改后选择的key值列表
       const newList = modifyList(
         selectedKeysList,
-        selectedRowKeys,
+        getSelectedRowKeys(selectedRows),
         slot,
       ).flat();
       setSelectedKeysList(newList);
@@ -43,26 +54,32 @@ const FirmwarePage = ({
       );
       // panel 全选 半选判断
       setIndeterminateItemTableKeys((list) => {
-        const newList = list.map((slotObj) => {
+        const newItemSlotList = list.map((slotObj) => {
           if (slotObj.slot === slot) {
             return {
               ...slotObj,
               indeterminate:
-                selectedRowKeys.length > 0 &&
-                selectedRowKeys.length < itemTablesKeys.length,
+                newList.length > 0 && newList.length < itemTablesKeys.length,
             };
           } else {
             return slotObj;
           }
         });
-        return newList;
+        return newItemSlotList;
       });
     },
     onSelect: (record, selectedKeys, selectedRows) => {
       const isIncludes = selectedKeysList.includes(record.key);
+      const getAddKeys = (record) => {
+        if (record.children) {
+          return record.children.map((item) => item.key).concat(record.key);
+        } else {
+          return record.key;
+        }
+      };
       const newList = isIncludes
-        ? selectedKeysList.filter((item) => item !== record.key)
-        : selectedKeysList.concat(record.key);
+        ? selectedKeysList.filter((item) => !item.includes(record.key))
+        : selectedKeysList.concat(getAddKeys(record));
       // 所有选择的 selectKeys 值
       setSelectedKeysList(newList);
       // 全选 半选判断
@@ -71,19 +88,19 @@ const FirmwarePage = ({
       );
       // panel 全选 半选判断
       setIndeterminateItemTableKeys((list) => {
-        const newList = list.map((slotObj) => {
+        const newItemTableList = list.map((slotObj) => {
           if (slotObj.slot === slot) {
             return {
               ...slotObj,
               indeterminate:
-                selectedRows.length > 0 &&
-                selectedRows.length < itemTablesKeys.length,
+                getSelectedRowKeys(selectedRows).length > 0 &&
+                getSelectedRowKeys(selectedRows).length < itemTablesKeys.length,
             };
           } else {
             return slotObj;
           }
         });
-        return newList;
+        return newItemTableList;
       });
 
       const hasSelectKey = newList.includes(record.key);
@@ -111,8 +128,6 @@ const FirmwarePage = ({
     },
   };
   const classNameFn = (record: any) => {
-    console.log(record, isAllowUpgradeList);
-
     let xxx = '';
     if (isAllowUpgradeList.includes(record.key)) {
       xxx = 'noUpgrade';

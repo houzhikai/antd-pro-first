@@ -53,13 +53,19 @@ const DetailsTablePage = ({ setIndeterminate, allKeys }) => {
         item.slotStatus === StatusENUM.PowerOff ||
         item.slotStatus === StatusENUM.Starting ||
         item.slotStatus === StatusENUM.Busy;
-      const selectItemTablesKeys = selectedKeysList.filter((t) =>
-        t.includes(`${item.slot}-`),
+      const selectItemTablesKeys = Array.from(
+        new Set(selectedKeysList.filter((t) => t.includes(`${item.slot}-`))),
       );
       const itemTablesKeys = item.children
         .filter((item) => item.newVersion)
-        .map((item) => item.key);
-
+        .map((item) => {
+          if (item.children) {
+            return item.children.map((t) => t.key).concat(item.key);
+          } else {
+            return item.key;
+          }
+        })
+        .flat();
       // panel 勾选框功能
       const handleChangeCheckedAll = (e) => {
         const checked = e.target.checked;
