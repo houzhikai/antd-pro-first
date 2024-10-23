@@ -3,10 +3,22 @@ import { Button, Divider, Input, Modal, message } from 'antd';
 import CustomFormItemPage from '../../NavPage/CustomFormItemPage';
 import myFetch from '../../../components/myFetch';
 import { ProviderFunc } from '../../../components/containers';
+import { GetDetailsViewSize } from '../MultiEcharts/components/GetDetailsViewSize';
 
 const SelectDutsPage = () => {
-  const { vscodeParams, bitMapPort, setSingleModeData, selectDutsModal, setSelectDutsModal, setTriggerTiming } =
-    ProviderFunc();
+  const {
+    vscodeParams,
+    bitMapPort,
+    setSingleModeData,
+    selectDutsModal,
+    setSelectDutsModal,
+    setTriggerTiming,
+    setConfigInfo,
+    setScaleNumber,
+    scaleNumber,
+    setSelectSize,
+    setEchartsIndex,
+  } = ProviderFunc();
 
   const handleOpenModal = () => {
     setSelectDutsModal((obj) => ({ ...obj, open: true }));
@@ -40,7 +52,46 @@ const SelectDutsPage = () => {
         timeout: 100,
       });
       if (res.result === 0) {
+        setScaleNumber(256);
         const result = JSON.parse(res.data[0].value);
+
+        const layoutConfig = result.layoutConfig;
+        // get bitmap layout
+        const config = {
+          // dq
+          dq: layoutConfig.dq,
+          dq_arrange: layoutConfig.dq_arrange,
+          // 1M配置，默认D0-D7
+          need_dq_direction_reserve: layoutConfig.need_dq_direction_reserve.page_index,
+          // block 原点和伸展方向
+          continuous_block_arrange: layoutConfig.per_dut_layout.continuous_block_arrange,
+          // page 原点和伸展方向
+          continuous_page_arrange: layoutConfig.per_dut_layout.per_block_layout.continuous_page_arrange,
+          // 目前没有用到该属性， 预留
+          is_block_continuous: layoutConfig.per_dut_layout.is_block_continuous,
+          // 目前没有用到该属性， 预留
+          is_page_continuous: layoutConfig.per_dut_layout.per_block_layout.is_page_continuous,
+          // echarts 的 xMax yMax 和 原点位置
+          layoutConfig: {
+            xMax: layoutConfig.per_dut_layout.x_max,
+            yMax: layoutConfig.per_dut_layout.y_max,
+            dots: layoutConfig.coordinate_origin,
+          },
+          // duts 行列个数
+          duts: { row: layoutConfig.per_dut_layout.block_row, col: layoutConfig.per_dut_layout.block_col },
+          // blocks 行列个数
+          blocks: {
+            row: layoutConfig.per_dut_layout.per_block_layout.page_row,
+            col: layoutConfig.per_dut_layout.per_block_layout.page_col,
+          },
+          // pages 行列个数
+          pages: {
+            row: layoutConfig.per_dut_layout.per_block_layout.per_page_layout.wl_row,
+            col: layoutConfig.per_dut_layout.per_block_layout.per_page_layout.bl_col,
+          },
+        };
+        setConfigInfo(config);
+
         const ratio = await myFetch({
           url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=256`,
           isExceptionHand: true,
@@ -49,6 +100,10 @@ const SelectDutsPage = () => {
         if (ratio.result === 0) {
           setSingleModeData({ data: JSON.parse(ratio.data[0].value || []), info: result.dutInfo });
           setSelectDutsModal((obj) => ({ ...obj, open: false }));
+          const scrollableDiv: any = document.getElementById('wholeEcharts');
+          if (scrollableDiv) {
+            GetDetailsViewSize(false, config, 256, setSelectSize, setEchartsIndex);
+          }
         } else {
           message.error(ratio.msg);
         }
@@ -56,7 +111,7 @@ const SelectDutsPage = () => {
         message.error(res.msg);
       }
     } catch (error) {
-      message.error('get data error');
+      message.error('Error: Get Scale failed.');
     }
   };
 
@@ -87,6 +142,7 @@ const SelectDutsPage = () => {
         okText='Import'
         cancelText='Cancel'
         onOk={handleImport}
+        maskClosable={false}
       >
         <Divider />
         <CustomFormItemPage title='Dut 1:' width={80}>

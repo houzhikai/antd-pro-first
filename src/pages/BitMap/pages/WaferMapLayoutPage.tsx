@@ -21,16 +21,17 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
     loading,
     setLoading,
     bitMapPort,
-    // setSelectDutsModal,
-    // setVscodeParams,
-    // setTheme,
+    setSelectDutsModal,
+    setVscodeParams,
+    setTheme,
     // triggerTiming,
-    // setTriggerTiming,
-    // setFullPath,
-    // setConvertModalObj,
-    // setScrambleCfgOptionsList,
-    // setModifyColorModalObj,
-    // setEchartsDataColor,
+    setTriggerTiming,
+    setFullPath,
+    setConvertModalObj,
+    setScrambleCfgOptionsList,
+    scrambleCfgOptionsList,
+    setModifyColorModalObj,
+    setEchartsDataColor,
     // echartsDataColor,
   } = ProviderFunc();
 
@@ -58,6 +59,32 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
   //   }
   // }, [triggerTiming.physicalOutputLocation]);
 
+  // //scrmble file list
+  // useEffect(() => {
+  //   if (triggerTiming.importScrambleFile > 1) {
+  //     vscode.postMessage({ command: 'importScrambleFile' });
+  //   }
+  // }, [triggerTiming.importScrambleFile]);
+
+  // useEffect(() => {
+  //   if (triggerTiming.deleteScrambleFile !== '') {
+  //     vscode.postMessage({ command: 'deleteScrambleFile', text: triggerTiming.deleteScrambleFile });
+  //     setTriggerTiming((obj) => ({
+  //       ...obj,
+  //       deleteScrambleFile: '',
+  //     }));
+  //   }
+  // }, [triggerTiming.deleteScrambleFile]);
+  // useEffect(() => {
+  //   if (triggerTiming.changeScrambleFile !== '') {
+  //     vscode.postMessage({ command: 'changeScrambleFile', text: triggerTiming.changeScrambleFile });
+  //     setTriggerTiming((obj) => ({
+  //       ...obj,
+  //       changeScrambleFile: '',
+  //     }));
+  //   }
+  // }, [triggerTiming.changeScrambleFile]);
+
   // // saveStackColorList
   // useEffect(() => {
   //   if (triggerTiming.colorList > 1) {
@@ -80,61 +107,127 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
   //   }
   // }, [triggerTiming.stackModeDut2Location]);
 
-  // useEffect(() => {
-  //   window.addEventListener('message', (e) => {
-  //     if (e.data.command === 'startParams') {
-  //       setVscodeParams(e.data.text.vscodeParams);
-  //       const defaultScrambleCfg = e.data.text.physicalConvertFiles?.[0];
-  //       setConvertModalObj((obj) => ({
-  //         ...obj,
-  //         sourceDataLocation: e.data.text.sourceDataLocation,
-  //         physicalOutputLocation: e.data.text.physicalOutputLocation,
-  //         scrambleCfg: {
-  //           fileName: defaultScrambleCfg?.label,
-  //           location: defaultScrambleCfg?.location,
-  //         },
-  //       }));
-  //       setTheme(e.data.text.theme);
-  //       setScrambleCfgOptionsList(e.data.text.physicalConvertFiles);
-  //       setModifyColorModalObj((obj) => ({
-  //         ...obj,
-  //         colorList: e.data.text.colorListCfg,
-  //       }));
-  //       setSelectDutsModal((obj) => ({
-  //         ...obj,
-  //         dut1: e.data.text.selectDutOneLocation,
-  //         dut2: e.data.text.selectDutTwoLocation,
-  //       }));
-  //       // echarts data
-  //       const newColorList = e.data.text.colorListCfg.map((item, index) => {
-  //         return { value: index + 1, color: item };
-  //       });
-  //       setEchartsDataColor(newColorList);
-  //     } else if (e.data.command === 'params') {
-  //       setTheme(e.data.text.theme);
-  //     } else if (e.data.command === 'importDirLocation') {
-  //       setTriggerTiming((obj) => ({ ...obj, importPhysical: false }));
-  //       setFullPath((obj) => ({
-  //         ...obj,
-  //         importPhysicalPath: e.data.text === '' ? obj.importPhysicalPath : e.data.text,
-  //       }));
-  //     } else if (e.data.command === 'importSourcrFile') {
-  //       setConvertModalObj((obj) => ({
-  //         ...obj,
-  //         sourceDataLocation: e.data.text === '' ? obj.sourceDataLocation : e.data.text,
-  //       }));
-  //     } else if (e.data.command === 'importOutputFile') {
-  //       setConvertModalObj((obj) => ({
-  //         ...obj,
-  //         physicalOutputLocation: e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
-  //       }));
-  //     } else if (e.data.command === 'selectDutOneLocation') {
-  //       setSelectDutsModal((obj) => ({ ...obj, dut1: e.data.text }));
-  //     } else if (e.data.command === 'selectDutTwoLocation') {
-  //       setSelectDutsModal((obj) => ({ ...obj, dut2: e.data.text }));
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    window.addEventListener('message', (e) => {
+      if (e.data.command === 'startParams') {
+        setVscodeParams(e.data.text.vscodeParams);
+        setConvertModalObj((obj) => ({
+          ...obj,
+          sourceDataLocation: e.data.text.sourceDataLocation,
+          physicalOutputLocation: e.data.text.physicalOutputLocation,
+          scrambleCfg: {
+            fileName: e.data.text.selectScrambleCfg,
+            location:
+              e.data.text.physicalConvertFiles.find(
+                (item) => item.label === e.data.text.selectScrambleCfg,
+              )?.location ?? '',
+          },
+        }));
+        setTheme(e.data.text.theme);
+        setScrambleCfgOptionsList(() => e.data.text.physicalConvertFiles);
+        setModifyColorModalObj((obj) => ({
+          ...obj,
+          colorList: e.data.text.colorListCfg,
+        }));
+        setSelectDutsModal((obj) => ({
+          ...obj,
+          dut1: e.data.text.selectDutOneLocation,
+          dut2: e.data.text.selectDutTwoLocation,
+        }));
+        // echarts data
+        const newColorList = e.data.text.colorListCfg.map((item, index) => {
+          return { value: index + 1, color: item };
+        });
+        setEchartsDataColor(newColorList);
+      } else if (e.data.command === 'params') {
+        setTheme(e.data.text.theme);
+      } else if (e.data.command === 'importDirLocation') {
+        setTriggerTiming((obj) => ({ ...obj, importPhysical: false }));
+        setFullPath((obj) => ({
+          ...obj,
+          importPhysicalPath:
+            e.data.text === '' ? obj.importPhysicalPath : e.data.text,
+        }));
+      } else if (e.data.command === 'importSourcrFile') {
+        setConvertModalObj((obj) => ({
+          ...obj,
+          sourceDataLocation:
+            e.data.text === '' ? obj.sourceDataLocation : e.data.text,
+        }));
+      } else if (e.data.command === 'importOutputFile') {
+        setConvertModalObj((obj) => ({
+          ...obj,
+          physicalOutputLocation:
+            e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
+        }));
+      } else if (e.data.command === 'importScrambleFile') {
+        if (!e.data.result) {
+          //show error
+          message.error(e.data.message);
+        } else {
+          setScrambleCfgOptionsList(e.data.text);
+        }
+      } else if (e.data.command === 'deleteScrambleFile') {
+        if (!e.data.result) {
+          //show error
+          message.error(e.data.message);
+        } else {
+          setScrambleCfgOptionsList((list) => {
+            const newList = list.filter(
+              (option) => option.label !== e.data.text,
+            );
+            return newList;
+          });
+          setConvertModalObj((obj) => {
+            return {
+              ...obj,
+              scrambleCfg: {
+                ...obj.scrambleCfg,
+                fileName:
+                  obj.scrambleCfg.fileName === e.data.text
+                    ? ''
+                    : obj.scrambleCfg.fileName,
+                location:
+                  obj.scrambleCfg.fileName === e.data.text
+                    ? ''
+                    : obj.scrambleCfg.location,
+              },
+            };
+          });
+        }
+      } else if (e.data.command === 'changeScrambleFile') {
+        if (!e.data.result) {
+          //show error
+          message.error(e.data.message);
+        } else {
+          if (!scrambleCfgOptionsList) {
+            return;
+          }
+
+          const filterValue = scrambleCfgOptionsList?.filter(
+            (item) => item.value === e.data.text,
+          )?.[0] || {
+            fileName: '',
+            location: '',
+          };
+          setConvertModalObj((obj) => {
+            return {
+              ...obj,
+              scrambleCfg: {
+                ...obj.scrambleCfg,
+                fileName: filterValue.value,
+                location: filterValue.location,
+              },
+            };
+          });
+        }
+      } else if (e.data.command === 'selectDutOneLocation') {
+        setSelectDutsModal((obj) => ({ ...obj, dut1: e.data.text }));
+      } else if (e.data.command === 'selectDutTwoLocation') {
+        setSelectDutsModal((obj) => ({ ...obj, dut2: e.data.text }));
+      }
+    });
+  }, [scrambleCfgOptionsList]);
 
   useAsyncEffect(async () => {
     if (vscodeParams?.initIp) {
@@ -176,7 +269,7 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
         }
       }
     } catch (error) {
-      message.error('Get convert status fail');
+      message.error('Error:	Failed to get convert status.');
     }
   };
 

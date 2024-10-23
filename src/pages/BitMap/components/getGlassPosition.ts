@@ -1,10 +1,4 @@
-export const getGlassPosition = (
-  val,
-  width,
-  height,
-  glassWidth,
-  glassHeight,
-) => {
+export const getGlassPosition = (val, width, height, glassWidth, glassHeight) => {
   let value = { x: 0, y: height - glassHeight, glassWidth, glassHeight };
   switch (val) {
     case 'top_left':

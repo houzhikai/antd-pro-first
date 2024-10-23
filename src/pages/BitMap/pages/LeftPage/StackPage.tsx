@@ -48,7 +48,7 @@ const StackPage = () => {
       }
     } catch (error) {
       // setIsErrorPage(true);
-      message.error('Get bitmap data fail');
+      message.error('Error: Get bitmap data failed.');
     }
   };
 

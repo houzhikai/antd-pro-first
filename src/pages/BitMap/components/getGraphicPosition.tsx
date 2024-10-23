@@ -60,7 +60,7 @@ export const getGraphicPosition = (theme, gap, wafermapEchartsSize) => {
         endAngle: value.endAngle,
         clockwise: value.clockwise,
       },
-      style: { fill: theme ? '#1e1e1e' : '#fff', stroke: '#5f5f5f', lineWidth: 2 },
+      style: { fill: theme === 'dark' ? '#1e1e1e' : '#fff', stroke: '#5f5f5f', lineWidth: 2 },
     },
   ];
 };

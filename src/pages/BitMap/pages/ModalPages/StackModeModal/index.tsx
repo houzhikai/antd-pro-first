@@ -29,8 +29,9 @@ const StackModeModalPage = () => {
       open={isStackModalOpen}
       onClose={handleCloseDrawer}
       extra={<CloseOutlined style={{ cursor: 'pointer' }} onClick={handleCloseDrawer} onMouseDown={undefined} />}
+      destroyOnClose
     >
-      <StackModalPages />
+      {singleModeData.data.length > 0 && <StackModalPages />}
     </Drawer>
   );
 };

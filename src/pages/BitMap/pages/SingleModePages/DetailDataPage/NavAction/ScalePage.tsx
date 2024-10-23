@@ -19,17 +19,6 @@ const ScalePage = () => {
   } = ProviderFunc();
 
   const handleChange = async (value) => {
-    // TODO， 待删除
-    setScaleNumber(value);
-    setEchartsIndex();
-
-    GetDetailsViewSize(
-      false,
-      configInfo,
-      value,
-      setSelectSize,
-      setEchartsIndex,
-    );
     try {
       const res = await myFetch({
         url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=${value}`,
@@ -37,7 +26,9 @@ const ScalePage = () => {
         timeout: 100,
       });
       if (res.result === 0) {
+        setEchartsIndex();
         setScaleNumber(value);
+        GetDetailsViewSize(false, configInfo, value, setSelectSize, setEchartsIndex);
         setSingleModeData((obj) => ({
           ...obj,
           data: JSON.parse(res.data[0].value) || [],

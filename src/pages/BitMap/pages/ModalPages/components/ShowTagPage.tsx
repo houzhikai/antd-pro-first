@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Popconfirm, Tag } from 'antd';
+import { Popconfirm, Tag, Tooltip } from 'antd';
 import { ProviderFunc } from '../../../components/containers';
 
 interface ShowTagPageProps {
@@ -8,14 +8,15 @@ interface ShowTagPageProps {
 }
 
 const ShowTagPage = ({ tag }: ShowTagPageProps) => {
-  const { setScrambleCfgOptionsList } = ProviderFunc();
+  const { setScrambleCfgOptionsList, setTriggerTiming } = ProviderFunc();
   const [open, setOpen] = useState(false);
 
   const handleConfirm = () => {
-    setScrambleCfgOptionsList((list) => {
-      const newList = list.filter((option) => option.label !== tag.label);
-      return newList;
-    });
+    //delete scramble file
+    setTriggerTiming((obj) => ({
+      ...obj,
+      deleteScrambleFile: tag.label,
+    }));
     setOpen(false);
   };
   const handleCancel = () => {
@@ -39,7 +40,9 @@ const ShowTagPage = ({ tag }: ShowTagPageProps) => {
           setOpen(true);
         }}
       >
-        {tag.label}
+        <Tooltip title={tag.location} overlayStyle={{ maxWidth: 800 }}>
+          {tag.label}
+        </Tooltip>
       </Tag>
     </Popconfirm>
   );

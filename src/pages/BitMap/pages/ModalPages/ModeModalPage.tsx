@@ -41,7 +41,7 @@ const ModeModalPage = () => {
           message.error(res.msg);
         }
       } catch (error) {
-        message.error('convert fail');
+        message.error('Error: Get convert failed.');
       }
     }
   };

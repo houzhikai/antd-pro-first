@@ -25,29 +25,17 @@ const PhysicalTagList = () => {
 
   const handleAddFile = () => {
     // TODO， vscode interface
-    setId((c) => c + 1);
-    const newFileName = {
-      value: `new_file_${id}`,
-      label: `new_file_${id}`,
-      location: `/var/user/test/new_file_${id}`,
-      disable: false,
-    };
-    setScrambleCfgOptionsList((list) => [newFileName, ...list]);
+    setTriggerTiming((obj) => ({
+      ...obj,
+      importScrambleFile: obj.importScrambleFile + 1,
+    }));
   };
   const handleChangePhysicalOptions = (value) => {
-    setConvertModalObj((obj) => {
-      const filterValue = scrambleCfgOptionsList.filter((item) => item.value === value)[0];
-      return {
-        ...obj,
-        scrambleCfg: {
-          ...obj.scrambleCfg,
-          fileName: filterValue.value,
-          location: filterValue.location,
-        },
-      };
-    });
+    setTriggerTiming((obj) => ({
+      ...obj,
+      changeScrambleFile: value,
+    }));
   };
-
   return (
     <>
       {/* 源数据文件夹 */}
@@ -77,7 +65,7 @@ const PhysicalTagList = () => {
         {scrambleCfgOptionsList.map((tag: any) => {
           return <ShowTagPage key={tag.label} tag={tag} />;
         })}
-        <Button size='small' type='primary' onClick={handleAddFile} disabled icon={<PlusOutlined />}>
+        <Button size='small' type='primary' onClick={handleAddFile} icon={<PlusOutlined />}>
           Add a Physical File
         </Button>
       </div>

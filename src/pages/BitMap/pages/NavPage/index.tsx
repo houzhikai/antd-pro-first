@@ -1,6 +1,6 @@
 import React from 'react';
 import NavActionPage from './NavActionPage';
-import MyLogo from '@/components/MyLogo';
+import MyLogo from '../../../../commons/MyLogo';
 import NavAction from '../SingleModePages/DetailDataPage/NavAction';
 import { logo } from '../../icons/base64/logo';
 import '../../index.css';

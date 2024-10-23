@@ -1,27 +1,25 @@
-import { getAxisLabelInterval } from '@/pages/BitMap/components/getAxisLabelInterval';
 // import { getSeries } from './getSeries';
-import { getTooltipDutDetailsInfo } from '@/pages/BitMap/components/getTooltipDutDetailsInfo';
-import {
-  getBlockMarkLinePosition,
-  getPagesMarkLinePosition,
-} from './getMarkLinePosition';
+import { getAxisLabelInterval } from '../../../../components/getAxisLabelInterval';
+import { getTooltipDutDetailsInfo } from '../../../../components/getTooltipDutDetailsInfo';
+import { getEchartsAxisNumber } from './getEchartsAxisNumber';
+import { getBlockMarkLinePosition, getPagesMarkLinePosition } from './getMarkLinePosition';
 
 const getGrid = (position) => {
   let grid = {};
   switch (position) {
     case 'hasXY':
       grid = {
-        width: `calc(100% - 40px)`,
-        height: `calc(100% - 40px)`,
-        top: 40,
-        left: 40,
+        width: 'calc(100% - 42px)',
+        height: 'calc(100% - 42px)',
+        top: 42,
+        left: 42,
       };
       break;
     case 'hasX':
-      grid = { width: '100%', height: `calc(100% - 40px)`, top: 40, left: 0 };
+      grid = { width: '100%', height: 'calc(100% - 42px)', top: 42, left: 0 };
       break;
     case 'hasY':
-      grid = { width: `calc(100% - 40px)`, height: '100%', top: 0, left: 40 };
+      grid = { width: 'calc(100% - 42px)', height: '100%', top: 0, left: 42 };
       break;
     default:
       grid = { width: '100%', height: '100%', top: 0, left: 0 };
@@ -40,81 +38,78 @@ export const getOptions = (
   configInfo,
   baseConversion,
   echartsAxisNumber,
+  isSingleModalOpen,
+  singleColor,
+  theme
 ) => {
   const dots = configInfo.layoutConfig.dots;
   const xMax = configInfo.layoutConfig.xMax;
-  const axisLabelInterval = getAxisLabelInterval(scaleNumber);
+  const yMax = configInfo.layoutConfig.yMax;
+  const axisLabelInterval = getAxisLabelInterval(scaleNumber, xMax, yMax);
 
-  const borderColor = '#35393b';
+  const borderColor = theme === 'dark' ? '#35393b' : '#cecece';
   const getMarkLine = (width) => {
-    return scaleNumber === 0.125
-      ? { width: 1, type: 'line', color: borderColor }
-      : { width: width, type: 'line', color: width > 2 ? '#fff' : borderColor }; // 粗线样式
+    return { width: width, type: 'line', color: width > 2 ? (theme === 'dark' ? '#999' : '#aaa') : borderColor };
   };
 
   const commonSeriesConfig = {
     type: 'heatmap',
     data,
-    zlevel: 2,
+    zlevel: 3, // stutter time annotation
     large: true, // 启用块状渲染
     largeThreshold: 50 * 10000, // 数据量超过阈值时启用块状渲染
     progressive: 0, // 5000, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。
     progressiveThreshold: 5 * 10000, //启用渐进式渲染的图形数量阈值，在单个系列的图形数量超过该阈值时启用渐进式渲染。
     sampling: 'average',
-    itemStyle:
-      scaleNumber > 1
-        ? { borderColor: '#fafafa', borderWidth: 1, borderType: 'solid' }
-        : {},
+    itemStyle: { borderColor: '#fafafa', borderWidth: 1, borderType: 'solid' },
   };
 
   const commonMarkLineConfig = {
-    zlevel: 1,
     label: { show: false },
     symbol: 'none',
     precision: 0.1,
+    silent: true, // 图形是否不响应和触发鼠标事件
   };
-
   const seriesDataList = [
     {
+      z: 1, // stutter time annotation
+      lineStyle: getMarkLine(2),
+      data: getPagesMarkLinePosition(configInfo, echartsAxisNumber, scaleNumber, {
+        xIndex,
+        yIndex,
+        xAxisList,
+        yAxisList,
+      }),
+    },
+    {
+      z: 2, // stutter time annotation
       lineStyle: getMarkLine(4), // 粗线样式
       data: getBlockMarkLinePosition(
         configInfo,
         echartsAxisNumber,
         scaleNumber,
         { xIndex, yIndex, xAxisList, yAxisList },
-        dots,
-      ),
-    },
-    {
-      lineStyle: getMarkLine(2),
-      data: getPagesMarkLinePosition(
-        configInfo,
-        echartsAxisNumber,
-        scaleNumber,
-        { xIndex, yIndex, xAxisList, yAxisList },
+        dots
       ),
     },
   ];
-
+  // ** 不可以使用 split 属性，因为现在是多个echarts拼接而来，后面没有label，不会出现block/page线 **
   return {
     grid: getGrid(position),
     // graphic: getOutSideBlocks(scaleNumber, detailLayout, position),
     tooltip: {
       transitionDuration: 0, // 提示框浮层的移动动画过渡时间，单位是 s，设置为 0 的时候会紧跟着鼠标移动。
       position: function (point, params, dom, rect, size) {
-        let obj: any = {};
-        let viewWidth = size.viewSize[0];
-        let viewHeight = size.viewSize[1];
+        const obj: any = {};
+        const viewWidth = size.viewSize[0];
+        const viewHeight = size.viewSize[1];
 
-        // 计算 tooltip 的宽度和高度
-        let tooltipWidth = dom.offsetWidth;
-        let tooltipHeight = dom.offsetHeight;
+        const tooltipWidth = dom.offsetWidth;
+        const tooltipHeight = dom.offsetHeight;
 
-        // 鼠标位置
-        let mouseX = point[0];
-        let mouseY = point[1];
+        const mouseX = point[0];
+        const mouseY = point[1];
 
-        // 确保 tooltip 不会超出右侧和底部边界
         if (mouseX + tooltipWidth > viewWidth) {
           obj.left = viewWidth - tooltipWidth + 10;
         } else {
@@ -126,12 +121,13 @@ export const getOptions = (
         } else {
           obj.top = mouseY;
         }
-
         return obj;
       },
       formatter: (params: { data: number[] }) => {
         // 不展示 markLine.emphasis的值
-        if (!Array.isArray(params.data)) return;
+        if (!Array.isArray(params.data)) {
+          return;
+        }
         // show tooltip info
         const tooltipInfo = getTooltipDutDetailsInfo(
           { xIndex, yIndex, xAxisList, yAxisList },
@@ -139,7 +135,7 @@ export const getOptions = (
           scaleNumber,
           params,
           baseConversion,
-          configInfo,
+          configInfo
         );
         return tooltipInfo;
       },
@@ -152,25 +148,37 @@ export const getOptions = (
       position: 'top',
       inverse: dots === 'top_right' || dots === 'bottom_right',
       axisTick: {
-        alignWithLabel: true,
+        alignWithLabel: scaleNumber !== 0.125,
         interval: axisLabelInterval.axisTick.xInterval,
       },
       axisLabel: {
         alignWithLabel: true,
         interval: axisLabelInterval.axisLabel.xInterval,
         formatter: (value, index) => {
-          const ValueToDecNumber = parseInt(
-            value,
-            baseConversion === 'Hex' ? 16 : baseConversion === 'Oct' ? 8 : 10,
-          );
-          if (dots === 'top_right') {
+          console.log({ xAxisList: value })
+          const valueToDecNumber = parseInt(value, baseConversion === 'Hex' ? 16 : baseConversion === 'Oct' ? 8 : 10);
+          if (xMax < 1024 || yMax < 1024) {
+            if (scaleNumber === 256) {
+              return xMax.toString(baseConversion === 'Hex' ? 16 : baseConversion === 'Oct' ? 8 : 10);
+            } else {
+              return value + '    ';
+            }
+          }
+          if (dots === 'top_right' || dots === 'bottom_right') {
+            return value + '    ';
+          }
+          if (index === 0 && valueToDecNumber === 0) {
             return value;
-          } else if (index === 0) {
+          } else if (index === 0 && valueToDecNumber !== 0) {
             return '      ' + value;
-          } else if (ValueToDecNumber === xMax) {
-            return value + '       ';
+          } else if (valueToDecNumber === xMax) {
+            return value + '           ';
           } else {
-            return value;
+            if (scaleNumber === 0.125) {
+              return ' ' + value;
+            } else {
+              return value;
+            }
           }
         },
       },
@@ -181,27 +189,52 @@ export const getOptions = (
       data: yAxisValueList,
       inverse: dots === 'top_left' || dots === 'top_right',
       axisTick: {
-        alignWithLabel: true,
+        alignWithLabel: scaleNumber !== 0.125,
         interval: axisLabelInterval.axisTick.yInterval,
       },
       axisLabel: {
         alignWithLabel: true,
         interval: axisLabelInterval.axisLabel.yInterval,
-        formatter: (value) => {
-          if (dots === 'top_left' || dots === 'top_right') {
-            return '\n' + value;
-          } else {
-            return value;
+        formatter: (value, index) => {
+          const valueToDecNumber = parseInt(value, baseConversion === 'Hex' ? 16 : baseConversion === 'Oct' ? 8 : 10);
+          const echartsNumber = getEchartsAxisNumber(configInfo, scaleNumber);
+          console.log({ value, valueToDecNumber, yMax, index, yAxisList, yAxisValueList })
+          if (yMax <= 1024 || xMax <= 1024) {
+            if (valueToDecNumber !== 0 && valueToDecNumber !== yMax) {
+              console.log(111, { valueToDecNumber })
+              return;
+            } else {
+              console.log(222, value, valueToDecNumber)
+            }
           }
+          if (valueToDecNumber === 0 && (dots === 'bottom_left' || dots === 'bottom_right')) {
+            return value + '\n';
+          }
+          if (valueToDecNumber === yMax && (dots === 'bottom_left' || dots === 'bottom_right')) {
+            console.log({ value, valueToDecNumber, yMax });
+            return '\n' + value;
+          }
+          if (valueToDecNumber % echartsNumber === 0) {
+            if (dots === 'top_right' || dots === 'top_left') {
+              if (valueToDecNumber === yMax) {
+                return value + '\n';
+              }
+              return '\n' + value;
+            } else {
+              return value + '\n';
+            }
+          }
+          return value;
         },
       },
     },
-    visualMap: { show: false, type: 'piecewise', pieces: echartsDataColor },
+    visualMap: { show: false, type: 'piecewise', pieces: isSingleModalOpen ? singleColor : echartsDataColor },
     series: seriesDataList.map((item) => {
       return {
         ...commonSeriesConfig,
         markLine: {
           ...commonMarkLineConfig,
+          z: item.z,
           lineStyle: item.lineStyle, // 标线样式
           data: item.data,
           emphasis: { disabled: true }, //关闭 高亮样式

@@ -8,8 +8,16 @@ import { message } from 'antd';
 
 const WaferMapDataPage = () => {
   const wafermapChartRef = useRef<any>(null);
-  const { theme, setSingleIsModalOpen, wafermapLayout, wafermapData, vscodeParams, bitMapPort, setSingleModeData } =
-    ProviderFunc();
+  const {
+    theme,
+    setSingleIsModalOpen,
+    wafermapLayout,
+    wafermapData,
+    vscodeParams,
+    bitMapPort,
+    setSingleModeData,
+    setConfigInfo,
+  } = ProviderFunc();
   const [wafermapEchartsSize, setWafermapEchartsSize] = useState({
     width: 0,
     height: 0,
@@ -69,6 +77,42 @@ const WaferMapDataPage = () => {
               });
               if (res.result === 0) {
                 const result = JSON.parse(res.data[0].value);
+                const layoutConfig = result.layoutConfig;
+                // get bitmap layout
+                setConfigInfo({
+                  // dq
+                  dq: layoutConfig.dq,
+                  dq_arrange: layoutConfig.dq_arrange,
+                  // 1M配置，默认D0-D7
+                  need_dq_direction_reserve: layoutConfig.need_dq_direction_reserve.page_index,
+                  // block 原点和伸展方向
+                  continuous_block_arrange: layoutConfig.per_dut_layout.continuous_block_arrange,
+                  // page 原点和伸展方向
+                  continuous_page_arrange: layoutConfig.per_dut_layout.per_block_layout.continuous_page_arrange,
+                  // 目前没有用到该属性， 预留
+                  is_block_continuous: layoutConfig.per_dut_layout.is_block_continuous,
+                  // 目前没有用到该属性， 预留
+                  is_page_continuous: layoutConfig.per_dut_layout.per_block_layout.is_page_continuous,
+                  // echarts 的 xMax yMax 和 原点位置
+                  layoutConfig: {
+                    xMax: layoutConfig.per_dut_layout.x_max,
+                    yMax: layoutConfig.per_dut_layout.y_max,
+                    dots: layoutConfig.coordinate_origin,
+                  },
+                  // duts 行列个数
+                  duts: { row: layoutConfig.per_dut_layout.block_row, col: layoutConfig.per_dut_layout.block_col },
+                  // blocks 行列个数
+                  blocks: {
+                    row: layoutConfig.per_dut_layout.per_block_layout.page_row,
+                    col: layoutConfig.per_dut_layout.per_block_layout.page_col,
+                  },
+                  // pages 行列个数
+                  pages: {
+                    row: layoutConfig.per_dut_layout.per_block_layout.per_page_layout.wl_row,
+                    col: layoutConfig.per_dut_layout.per_block_layout.per_page_layout.bl_col,
+                  },
+                });
+
                 const ratio = await myFetch({
                   url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=256`,
                   isExceptionHand: true,
@@ -84,7 +128,7 @@ const WaferMapDataPage = () => {
                 message.error(res.msg);
               }
             } catch (error) {
-              message.error('get data error');
+              message.error('Error: Get scale failed');
             }
           }
         })();

@@ -1,32 +1,25 @@
 import { getGraphicPosition } from '../../../../components/getGraphicPosition';
 import { getAxisDataList } from './takeAxisMiddleValue';
 
-export const getWaferMapOptions = (
-  data,
-  theme,
-  wafermapLayout,
-  wafermapEchartsSize,
-) => {
+export const getWaferMapOptions = (data, theme, wafermapLayout, wafermapEchartsSize) => {
   const { xAxisData, yAxisData } = getAxisDataList(wafermapLayout);
 
   return {
     renderer: 'canvas',
-    backgroundColor: theme === 'dark' ? '#1f1f1f' : '#f5f5f5', // #fff
+    backgroundColor: theme === 'dark' ? '#1f1f1f' : '#ffffff', // #fff
     animation: false,
     grid: { width: '94%', height: '94%', left: '5%', top: '5%' },
     tooltip: {
       show: true,
       position: 'top',
-      backgroundColor: theme === 'dark' ? '#1f1f1f' : '#f5f5f5',
+      backgroundColor: theme === 'dark' ? '#1f1f1f' : '#ffffff',
       textStyle: { color: theme === 'dark' ? '#938c83' : '#1f1f1f' },
       formatter: (params: { data: number[] }) => {
         // 不展示 markLine.emphasis的值
         if (!Array.isArray(params.data)) {
           return;
         }
-        return `XY: ${params.data[0] + wafermapLayout.xMin}，${
-          params.data[1] + wafermapLayout.yMin
-        }`;
+        return `XY: ${params.data[0] + wafermapLayout.xMin}，${params.data[1] + wafermapLayout.yMin}`;
       },
     },
     graphic: getGraphicPosition(theme, wafermapLayout.gap, wafermapEchartsSize),
@@ -34,16 +27,12 @@ export const getWaferMapOptions = (
       type: 'category',
       data: xAxisData,
       position: 'top',
-      inverse:
-        wafermapLayout.dots === 'top_right' ||
-        wafermapLayout.dots === 'bottom_right',
+      inverse: wafermapLayout.dots === 'top_right' || wafermapLayout.dots === 'bottom_right',
     },
     yAxis: {
       type: 'category',
       data: yAxisData,
-      inverse:
-        wafermapLayout.dots === 'top_left' ||
-        wafermapLayout.dots === 'top_right',
+      inverse: wafermapLayout.dots === 'top_left' || wafermapLayout.dots === 'top_right',
     },
     // heatmap 必须有visualMap属性
     visualMap: {

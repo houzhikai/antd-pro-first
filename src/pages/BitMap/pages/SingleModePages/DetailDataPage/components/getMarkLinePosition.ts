@@ -1,5 +1,5 @@
 const getLinePosition = (pageLine, scaleNumber, line, isPage) => {
-  let xAxisNumber: any = [];
+  const xAxisNumber: any = [];
   // 使用for循环生成256的倍数，直到8192
   for (
     let i = 0;
@@ -15,7 +15,7 @@ const getLinePosition = (pageLine, scaleNumber, line, isPage) => {
   ) {
     xAxisNumber.push({ xAxis: i });
   }
-  let yAxisNumber: any = [];
+  const yAxisNumber: any = [];
   // 使用for循环生成256的倍数，直到8192
   for (
     let i = 0;

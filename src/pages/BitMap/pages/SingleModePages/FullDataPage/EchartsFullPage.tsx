@@ -3,6 +3,7 @@ import * as echarts from 'echarts';
 import { ProviderFunc } from '../../../components/containers';
 import { getFullEchartsOptions } from './components/getFullEchartsOptions';
 import { getGlassPosition } from '../../../components/getGlassPosition';
+import { getEchartsAxisNumber } from '../../StackModalPages/MultiEcharts/components/getEchartsAxisNumber';
 import '../../../index.css';
 
 const EchartsFullPage = () => {
@@ -42,20 +43,20 @@ const EchartsFullPage = () => {
     fullEchartsSize.width,
     fullEchartsSize.height,
     glassWidth,
-    glassHeight,
+    glassHeight
   );
-  // 放大镜位置，x/y: 放大镜左上角位置
+
   const [pos, setPos] = useState(defaultGlassPosition);
-  // 每个echarts有多少个 数
-  const echartsAxisNumber = xMax > 1024 && yMax > 1024 ? 512 : 1024;
+
+  const echartsAxisNumber = getEchartsAxisNumber(configInfo, scaleNumber);
   useEffect(() => {
     setPos(defaultGlassPosition);
   }, [selectSize.xScalePercent, selectSize.yScalePercent]);
 
   // 根据详图echarts位置计算放大镜位置
   useLayoutEffect(() => {
-    let x = (fullEchartsSize.width * selectSize.xtoLeftPercent) / 100;
-    let y = (height * selectSize.ytoTopPercent) / 100;
+    const x = (fullEchartsSize.width * selectSize.xtoLeftPercent) / 100;
+    const y = (height * selectSize.ytoTopPercent) / 100;
 
     setPos({ x, y, glassWidth, glassHeight });
   }, [selectSize]);
@@ -74,7 +75,7 @@ const EchartsFullPage = () => {
     configInfo.layoutConfig.dots,
     scaleNumber,
     isStackModalOpen,
-    echartsDataColor,
+    echartsDataColor
   );
   // 缩略图echarts数据展示
   useEffect(() => {
@@ -84,38 +85,17 @@ const EchartsFullPage = () => {
 
         myChart.setOption(options, true);
         // 处理窗口大小变化
-        const resizeChart = () => myChart.resize();
-        // 监听浏览器视图变化
-        window.addEventListener('resize', resizeChart);
+        // const resizeChart = () => myChart.resize();
+        // // 监听浏览器视图变化, cancel resize adaptive
+        // window.addEventListener('resize', resizeChart);
 
         return () => {
           myChart.dispose();
-          window.removeEventListener('resize', resizeChart);
+          // window.removeEventListener('resize', resizeChart);
         };
       }, 20);
     }
   }, [options]);
-
-  // 改变倍数时触发
-  // useEffect(() => {
-  //   const posX =
-  //     pos.x + Math.round(pos.glassWidth / 2) - Math.round(glassWidth / 2);
-  //   const posY =
-  //     pos.y + Math.round(pos.glassHeight / 2) - Math.round(glassHeight / 2);
-  //   const x =
-  //     posX >= Math.round(fullEchartsSize.width - glassWidth)
-  //       ? Math.round(fullEchartsSize.width - glassWidth)
-  //       : posX > 0
-  //       ? posX
-  //       : 0;
-  //   const y =
-  //     posY >= Math.round(height - glassHeight)
-  //       ? Math.round(height - glassHeight)
-  //       : posY > 0
-  //       ? posY
-  //       : 0;
-  //   setPos({ x, y, glassWidth, glassHeight });
-  // }, [scaleNumber]);
 
   const handleClick = (e) => {
     setIsClick(true);
@@ -128,19 +108,16 @@ const EchartsFullPage = () => {
       x - Math.floor(glassWidth / 2) <= 0
         ? 0
         : Math.round(x + glassWidth / 2) >= fullEchartsSize.width
-        ? fullEchartsSize.width - glassWidth
-        : x - Math.round(glassWidth / 2);
+          ? fullEchartsSize.width - glassWidth
+          : x - Math.round(glassWidth / 2);
     const posY =
       y - Math.floor(glassHeight / 2) <= 0
         ? 0
         : Math.round(y + glassHeight / 2) >= height
-        ? height - glassHeight
-        : y - Math.floor(glassHeight / 2);
+          ? height - glassHeight
+          : y - Math.floor(glassHeight / 2);
 
-    if (
-      posX <= fullEchartsSize.width - glassWidth / 2 &&
-      posY <= fullEchartsSize.height - glassHeight / 2
-    ) {
+    if (posX <= fullEchartsSize.width - glassWidth / 2 && posY <= fullEchartsSize.height - glassHeight / 2) {
       setPos({ x: posX, y: posY, glassWidth, glassHeight });
 
       setSelectSize({
@@ -149,20 +126,13 @@ const EchartsFullPage = () => {
         ytoTopPercent: Math.round((posY / height) * 100),
         yScalePercent: selectSize.yScalePercent,
       });
-      const xStart = Math.floor(
-        posX / (fullEchartsSize.width / (xMax / echartsAxisNumber)),
-      );
-      const xEnd = Math.round(
-        (posX + glassWidth) /
-          (fullEchartsSize.width / (xMax / echartsAxisNumber)),
-      );
+      const xStart = Math.floor(posX / (fullEchartsSize.width / (xMax / echartsAxisNumber)));
+      const xEnd = Math.round((posX + glassWidth) / (fullEchartsSize.width / (xMax / echartsAxisNumber)));
       const yStart = Math.floor(posY / (height / (yMax / echartsAxisNumber)));
-      const yEnd = Math.round(
-        (posY + glassHeight) / (height / (yMax / echartsAxisNumber)),
-      );
-      const xAxisList = configInfo.layoutConfig.xMax / echartsAxisNumber;
-      const yAxisList = configInfo.layoutConfig.yMax / echartsAxisNumber;
-      const isRenderAllEcharts = scaleNumber > 4;
+      const yEnd = Math.round((posY + glassHeight) / (height / (yMax / echartsAxisNumber)));
+      const xAxisList = Math.max(configInfo.layoutConfig.xMax / echartsAxisNumber, 1);
+      const yAxisList = Math.max(configInfo.layoutConfig.yMax / echartsAxisNumber, 1);
+      const isRenderAllEcharts = scaleNumber > 1;
       setEchartsIndex({
         xStart: isRenderAllEcharts ? 0 : xStart,
         xEnd: isRenderAllEcharts ? xAxisList : xEnd,
@@ -178,7 +148,7 @@ const EchartsFullPage = () => {
   return (
     <>
       <div style={{ margin: '5px 0', fontSize: 18 }}>Overview</div>
-      <div className="echarts-full-page">
+      <div className='echarts-full-page'>
         <div
           ref={fullEChartRef}
           // 缩略图的宽高通过计算得出，宽度初始值为300px定宽
@@ -195,7 +165,7 @@ const EchartsFullPage = () => {
               left: `${pos.x}px`,
               top: `${pos.y + 1}px`, // 1 px ,because fullEcharts add 1px border
             }}
-            className="echarts-full-page-magnifying-glass"
+            className='echarts-full-page-magnifying-glass'
           />
         )}
       </div>

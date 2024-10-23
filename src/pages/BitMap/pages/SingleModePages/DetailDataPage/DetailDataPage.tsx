@@ -36,7 +36,7 @@ const DetailDataPage = () => {
     detailsValues,
     isStackModalOpen,
     echartsDataColor,
-    chartSize,
+    chartSize
   );
 
   useLayoutEffect(() => {
@@ -67,7 +67,7 @@ const DetailDataPage = () => {
             const yStart = Math.round(newOptions.dataZoom[1].start);
             const yEnd = Math.round(newOptions.dataZoom[1].end);
             setDetailsValues({ xStart, xEnd, yStart, yEnd });
-          }, 0),
+          }, 0)
         );
 
         return () => {
@@ -78,13 +78,7 @@ const DetailDataPage = () => {
     }
   }, [options]);
 
-  return (
-    <>
-      {singleModeData.data.length > 0 && (
-        <div ref={chartRef} style={{ width: '100%', height: '100%' }} />
-      )}
-    </>
-  );
+  return <>{singleModeData.data.length > 0 && <div ref={chartRef} style={{ width: '100%', height: '100%' }} />}</>;
 };
 
 export default DetailDataPage;

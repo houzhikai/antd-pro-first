@@ -4,105 +4,89 @@ import FullDataPage from '../SingleModePages/FullDataPage';
 import MultiEcharts from './MultiEcharts';
 import { getBitLength } from './MultiEcharts/components/getBitLength';
 import { GetDetailsViewSize } from './MultiEcharts/components/GetDetailsViewSize';
+import { getEchartsAxisNumber } from './MultiEcharts/components/getEchartsAxisNumber';
 // import DetailDataPage from '../SingleModePages/DetailDataPage/DetailDataPage';
 
 const StackModalPages = () => {
   const viewRef = useRef<any>(null);
-  const {
-    width,
-    selectSize,
-    setSelectSize,
-    scaleNumber,
-    configInfo,
-    echartsIndex,
-    setEchartsIndex,
-    isClick,
-  } = ProviderFunc();
-  // 每个echarts有多少个 数
-  const echartsAxisNumber =
-    configInfo.layoutConfig.xMax > 1024 && configInfo.layoutConfig.yMax > 1024
-      ? 512
-      : 1024;
-  // bit 边长
-  const bitLength = useMemo(
-    () => getBitLength(scaleNumber),
-    [configInfo, scaleNumber],
-  );
-  // 每个 echarts 的宽度
+  const { width, selectSize, setSelectSize, scaleNumber, configInfo, echartsIndex, setEchartsIndex, isClick } =
+    ProviderFunc();
+  // setting echarts number
+  // const echartsAxisNumber = configInfo.layoutConfig.xMax > 1024 && configInfo.layoutConfig.yMax > 1024 ? 512 : 1024;
+  /**
+   * 1. xmax & ymax < 1024, return 1024
+   * 2. xmax <= 1024, ymax > 1024, return xmax
+   * 3. xmax > 1024, ymax <= 1024, return ymax
+   * 4. xmax & ymax > 1024, return 512
+   */
+
+  const echartsAxisNumber = getEchartsAxisNumber(configInfo, scaleNumber);
+
+  // setting bit length
+  const bitLength = useMemo(() => getBitLength(scaleNumber), [configInfo, scaleNumber]);
+  // setting echarts width
   const echartsWidth = useMemo(
     () => (echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1))) * bitLength,
-    [scaleNumber, bitLength],
+    [scaleNumber, bitLength, configInfo]
   );
-  // 每个 echarts 的高度
+  // setting echarts height
   const echartsHeight = useMemo(
     () => (echartsAxisNumber / Math.sqrt(Math.max(scaleNumber, 1))) * bitLength,
-    [scaleNumber, bitLength],
+    [scaleNumber, bitLength, configInfo]
   );
-  // 是否拖动滚动条
+
   const [isDragging, setIsDragging] = useState(false);
 
-  // 更改 倍数 时，初始化 layout
+  // ¸deffrent scale view details
   useEffect(() => {
     const scrollableDiv: any = document.getElementById('wholeEcharts');
     if (scrollableDiv) {
       // getDetailsViewSize(false);
-
-      GetDetailsViewSize(
-        false,
-        configInfo,
-        scaleNumber,
-        setSelectSize,
-        setEchartsIndex,
-      );
+      GetDetailsViewSize(false, configInfo, scaleNumber, setSelectSize, setEchartsIndex);
     }
   }, [scaleNumber, viewRef.current]);
 
-  // 滚轮触发事件
+  // scroll even
   useEffect(() => {
     let timeoutId;
     const handleScroll = () => {
-      if (timeoutId) clearTimeout(timeoutId);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       timeoutId = setTimeout(() => {
         // getDetailsViewSize(false);
-        GetDetailsViewSize(
-          true,
-          configInfo,
-          scaleNumber,
-          setSelectSize,
-          setEchartsIndex,
-        );
+        GetDetailsViewSize(true, configInfo, scaleNumber, setSelectSize, setEchartsIndex);
       }, 1 * 20);
     };
-    if (!isClick && !isDragging) {
+    if (!isClick && !isDragging && viewRef.current) {
+      // setTimeout(() => {
       viewRef.current.addEventListener('scroll', handleScroll);
+      // }, 20);
     }
-    // 清除事件监听器
+    // clear scroll event listener
     return () => {
-      if (!isClick && !isDragging) {
+      if (!isClick && !isDragging && viewRef.current) {
         viewRef.current.removeEventListener('scroll', handleScroll);
       }
     };
   }, [scaleNumber, isClick, isDragging]);
 
-  // 移动放大镜时滚动条到指定位置
+  // move glass div, jump specify position
   const scrollToPosition = () => {
     const scrollElement = viewRef.current;
     const scrollWidth = scrollElement.scrollWidth;
     const scrollHeight = scrollElement.scrollHeight;
     // const clientWidth = scrollElement.clientWidth;
     // const clientHeight = scrollElement.clientHeight;
-    const scrollToX = Math.floor(
-      (scrollWidth * selectSize.xtoLeftPercent) / 100,
-    );
-    const scrollToY = Math.floor(
-      (scrollHeight * selectSize.ytoTopPercent) / 100,
-    );
+    const scrollToX = Math.floor((scrollWidth * selectSize.xtoLeftPercent) / 100);
+    const scrollToY = Math.floor((scrollHeight * selectSize.ytoTopPercent) / 100);
     scrollElement.scrollTo({
       top: scrollToY,
       left: scrollToX,
       // behavior: 'smooth',
     });
   };
+
   useEffect(() => {
     if (isClick) {
       scrollToPosition();
@@ -111,6 +95,7 @@ const StackModalPages = () => {
 
   useEffect(() => {
     scrollToPosition();
+    // when scaleNumber change
   }, [selectSize.yScalePercent]);
 
   const handleMouseDown = () => {
@@ -118,25 +103,19 @@ const StackModalPages = () => {
   };
 
   const handleMouseUp = () => {
-    setTimeout(() => {
-      setIsDragging(false);
-    }, 20);
+    GetDetailsViewSize(true, configInfo, scaleNumber, setSelectSize, setEchartsIndex);
 
-    GetDetailsViewSize(
-      true,
-      configInfo,
-      scaleNumber,
-      setSelectSize,
-      setEchartsIndex,
-    );
+    setIsDragging(false);
+    // setTimeout(() => {
+    // }, 20);
   };
 
   return (
-    <div className="bit-map-right-page">
+    <div className='bit-map-right-page'>
       <FullDataPage />
       <div
         ref={viewRef}
-        id="wholeEcharts"
+        id='wholeEcharts'
         style={{
           flexGrow: 1,
           // border: '1px solid #7a7164',
@@ -144,7 +123,7 @@ const StackModalPages = () => {
           height: 'calc(100vh - 50px - 20px)',
           overflow: 'auto',
           marginLeft: 6,
-          willChange: 'transform' /* 提示浏览器可能会发生滚动 */,
+          willChange: 'transform' /* scroll opt */,
         }}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

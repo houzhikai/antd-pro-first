@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { initScrambleOptions } from './initValues';
 import { getSingleRandomData } from '../mockData/getWaferMapRandomData';
+// import { initScrambleOptions } from './initValues';
+// import { getSingleRandomData } from '../mockData/getWaferMapRandomData';
 
 // 创建一个Context
 export const BitMapContext = createContext<any>(null);
@@ -37,6 +38,9 @@ export const ProviderFunc = () => {
     colorList: 1, // 修改颜色触发的时机
     sourceDataLocation: 1, // 修改源数据文件触发的时机
     physicalOutputLocation: 1, // 修改生成物理位图文件地址触发的时机
+    importScrambleFile: 1, //
+    deleteScrambleFile: '', //
+    changeScrambleFile: '',
     stackModeDut1Location: 1,
     stackModeDut2Location: 1,
   });
@@ -65,8 +69,7 @@ export const ProviderFunc = () => {
    * bitmap UI
    */
   // scrambleCfg 的 options 列表
-  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] =
-    useState(initScrambleOptions);
+  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] = useState();
 
   // 是否是堆叠模式
   const [isStack, setIsStack] = useState(false);
@@ -116,7 +119,7 @@ export const ProviderFunc = () => {
   };
 
   // row: 行，col: 列
-  const configInfo = {
+  const configInfo1 = {
     // dq
     dq: per_dut_layout.dq,
     // 1M配置，默认D0-D7
@@ -156,7 +159,7 @@ export const ProviderFunc = () => {
       col: per_dut_layout.per_block_layout.per_page_layout.bl_col,
     },
   };
-
+  const [configInfo, setConfigInfo] = useState(configInfo1);
   /**
    * 详图导航栏
    */
@@ -171,7 +174,6 @@ export const ProviderFunc = () => {
   /**
    * single UI data and info
    */
-  // TODO, 删除 echarts data
   const [singleModeData, setSingleModeData] = useState({
     data:
       getSingleRandomData(
@@ -205,28 +207,21 @@ export const ProviderFunc = () => {
     ),
   );
 
+  //详图的首位比例，0：0%， 100：100%
   const [detailsValues, setDetailsValues] = useState({
-    //详图的首位比例，0：0%， 100：100%
     xStart: 0,
     xEnd: 20,
     yStart: 0,
     yEnd: 20,
   });
-
   //设置颜色列表，与 echarts 颜色的数据结构不一样
   const [modifyColorModalObj, setModifyColorModalObj] = useState({
     open: false,
-    // TODO， vscode环境清空colorList
-    colorList: ['red', '#926efe', '#f60'],
+    colorList: [],
   });
   // stack UI echarts 颜色列表
   const [echartsDataColor, setEchartsDataColor] = useState(
-    [
-      { value: 1, color: 'red' },
-      { value: 2, color: '#bfa' },
-      { value: 3, color: '#f60' },
-    ],
-    //  modifyColorModalObj.colorList,
+    modifyColorModalObj.colorList,
   );
   // stack UI two duts
   const [selectDutsModal, setSelectDutsModal] = useState({
@@ -242,11 +237,12 @@ export const ProviderFunc = () => {
     // ytoTopPercent: 0,
     // yScalePercent: 100,
   });
+  // get window view x/y index
   const [echartsIndex, setEchartsIndex] = useState<any>();
+  // full-echarts's onlcik event
   const [isClick, setIsClick] = useState(false);
+
   const bitMapContextValue = {
-    isClick,
-    setIsClick,
     isErrorPage,
     setIsErrorPage,
     width,
@@ -265,6 +261,7 @@ export const ProviderFunc = () => {
     convertModalObj,
     setConvertModalObj,
     configInfo,
+    setConfigInfo,
     detailsValues,
     setDetailsValues,
     selectedTreeDataList,
@@ -306,6 +303,8 @@ export const ProviderFunc = () => {
     setSelectSize,
     echartsIndex,
     setEchartsIndex,
+    isClick,
+    setIsClick,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };

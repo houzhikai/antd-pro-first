@@ -122,13 +122,10 @@ const getPageXY = (X, Y, configInfo, blockId) => {
 
 const getIO = (X, isReversal, configInfo) => {
   const ioRange = Math.floor(Number(X) % configInfo.pages.col);
+  console.log({ configInfo, dq_arrange: configInfo.dq_arrange });
+  const dq_arrange_list = configInfo.dq_arrange.split(',');
   // 一个 page 可以分为 dq 份，一份占 xxx 个坐标
-  const dq_arrange_list =
-    '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31'.split(
-      ',',
-    );
   const xxx = configInfo.pages.col / configInfo.dq;
-  console.log(dq_arrange_list.length - configInfo.dq);
   const io = isReversal
     ? dq_arrange_list[configInfo.dq - 1 - Math.floor(ioRange / xxx)]
     : dq_arrange_list[Math.floor(ioRange / xxx)];
@@ -163,7 +160,7 @@ export const getTooltipDutDetailsInfo = (
   const { blockX, blockY, blockId } = getBlockXY(X, Y, configInfo);
   // 获取 page 的坐标
   const { pageX, pageY, pageId } = getPageXY(X, Y, configInfo, blockId);
-  // 获取 IO
+  // 获取 IO , enum: odd even ''
   const isReversal =
     configInfo.need_dq_direction_reserve === 'odd'
       ? Number(pageId) % 2 !== 0

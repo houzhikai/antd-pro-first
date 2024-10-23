@@ -33,7 +33,7 @@ const NavActionPage = () => {
           message.error(res.msg);
         }
       } catch (error) {
-        message.error('Get physical file fail');
+        message.error('Error: Failed to open file name or directory name.');
       }
       setFullPath((obj) => ({ ...obj, importPhysicalPath: '' }));
     }

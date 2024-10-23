@@ -1,7 +1,4 @@
-import {
-  getBlockMarkLinePosition,
-  getPageMarkLinePosition,
-} from './getMarkLinePosition';
+import { getBlockMarkLinePosition, getPageMarkLinePosition } from './getMarkLinePosition';
 
 export default (data, scaleNumber, borderColor, configInfo) => {
   const commonSeriesConfig = {
@@ -16,9 +13,7 @@ export default (data, scaleNumber, borderColor, configInfo) => {
     progressiveThreshold: 5 * 1000, //启用渐进式渲染的图形数量阈值，在单个系列的图形数量超过该阈值时启用渐进式渲染。
     sampling: 'average',
     itemStyle:
-      scaleNumber > 1
-        ? { borderColor: '#ccc', borderWidth: 1, borderType: 'solid' }
-        : { margin: [-4, -18, -4, -18] },
+      scaleNumber > 1 ? { borderColor: '#ccc', borderWidth: 1, borderType: 'solid' } : { margin: [-4, -18, -4, -18] },
   };
 
   const commonMarkLineConfig = {

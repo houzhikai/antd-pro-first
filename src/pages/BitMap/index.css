@@ -101,7 +101,7 @@
 
 
 .information-page{
-    height: 472px;
+    height: 470px;
     overflow-y: auto;
     border: 1px solid var(--border-color);
 }

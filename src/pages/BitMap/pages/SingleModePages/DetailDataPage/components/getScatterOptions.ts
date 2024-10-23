@@ -14,13 +14,9 @@ export const getScatterOptions = (
   detailsValues,
   isStackModalOpen,
   echartsDataColor,
-  detailLayout,
+  detailLayout
 ) => {
-  const { xAxisValueList, yAxisValueList } = getAxisValueObj(
-    detailsEchartsAxisValue,
-    baseConversion,
-    scaleNumber,
-  );
+  const { xAxisValueList, yAxisValueList } = getAxisValueObj(detailsEchartsAxisValue, baseConversion, scaleNumber);
   const dots = configInfo.layoutConfig.dots;
   const axisLabelInterval = getAxisLabelInterval(scaleNumber);
   const borderColor = theme === 'dark' ? '#35393b' : '#f4f4f4';
@@ -52,12 +48,7 @@ export const getScatterOptions = (
           return;
         }
         // show tooltip info
-        const tooltipInfo = getTooltipDutDetailsInfo(
-          scaleNumber,
-          params,
-          baseConversion,
-          configInfo,
-        );
+        const tooltipInfo = getTooltipDutDetailsInfo(scaleNumber, params, baseConversion, configInfo);
         return tooltipInfo;
       },
     },
