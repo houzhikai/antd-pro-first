@@ -5,6 +5,7 @@ import { getWaferMapOptions } from './components/getWaferMapOptions';
 import myFetch from '../../../components/myFetch';
 import '../../../index.css';
 import { message } from 'antd';
+import { GetDetailsViewSize } from '../../BitMapPages/DetailsEcharts/components/GetDetailsViewSize';
 
 const WaferMapDataPage = () => {
   const wafermapChartRef = useRef<any>(null);
@@ -15,8 +16,8 @@ const WaferMapDataPage = () => {
     wafermapData,
     vscodeParams,
     bitMapPort,
-    setSingleModeData,
-    setConfigInfo,
+    setBitmapData,
+    setConfigInfo, setSelectSize, setEchartsIndex
   } = ProviderFunc();
   const [wafermapEchartsSize, setWafermapEchartsSize] = useState({
     width: 0,
@@ -53,7 +54,7 @@ const WaferMapDataPage = () => {
 
       myWafermapChart.setOption(options);
 
-      myWafermapChart.on('click', function (params: any) {
+      myWafermapChart.on('dblclick', function (params: any) {
         // click not support async function
         (async function () {
           const fileName =
@@ -65,21 +66,23 @@ const WaferMapDataPage = () => {
             )[0][3] || '';
           // open sinfleUI when pass dut is not equal to 0
           if (params.data[2] !== 0) {
+            console.log('准备进入bitmap页面')
             try {
               const res = await myFetch({
                 url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getbitmapdata`,
                 params: {
                   mode: 1, // 0: Stack 1: single
                   physicalDataPath: [{ fileName, location: wafermapData.info['location'] || '' }],
+                  dataAxis: [[0, 0, 0, 0]]
                 },
                 isExceptionHand: true,
                 timeout: 100,
               });
               if (res.result === 0) {
+                console.log('调用 bitmapdata 接口')
                 const result = JSON.parse(res.data[0].value);
                 const layoutConfig = result.layoutConfig;
-                // get bitmap layout
-                setConfigInfo({
+                const config = {
                   // dq
                   dq: layoutConfig.dq,
                   dq_arrange: layoutConfig.dq_arrange,
@@ -111,19 +114,19 @@ const WaferMapDataPage = () => {
                     row: layoutConfig.per_dut_layout.per_block_layout.per_page_layout.wl_row,
                     col: layoutConfig.per_dut_layout.per_block_layout.per_page_layout.bl_col,
                   },
-                });
-
-                const ratio = await myFetch({
-                  url: `http://${vscodeParams.initIp}:${bitMapPort}/bitmap/getcompressdata?ratio=256`,
-                  isExceptionHand: true,
-                  timeout: 100,
-                });
-                if (ratio.result === 0) {
-                  setSingleIsModalOpen(true);
-                  setSingleModeData({ data: JSON.parse(ratio.data[0].value || []), info: result.dutInfo });
-                } else {
-                  message.error(ratio.msg);
                 }
+                // get bitmap layout
+                setConfigInfo(config);
+                // 打开 bitmap 页面 
+                setSingleIsModalOpen(true);
+                // 获取 bitmap 数据
+                setBitmapData({ data: result['256xdata'] || [], info: result.dutInfo });
+
+                const scrollableDiv: any = document.getElementById('wholeEcharts');
+                if (scrollableDiv) {
+                  GetDetailsViewSize(false, config, 256, setSelectSize, setEchartsIndex);
+                }
+                console.log('获取完json数据')
               } else {
                 message.error(res.msg);
               }

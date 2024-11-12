@@ -61,8 +61,9 @@ export const custom_dark_Table = {
   cellPaddingBlockSM: 3,
   headerBg: '#1f1f1f',
   bodySortBg: '#181a1b',
-  borderColor: '#1f1f1f',
-  cellPaddingBlock: 8,
+  borderColor: '#2f3334',
+  cellPaddingBlock: 3, // 单元格纵向内间距
+  cellPaddingInline: 3, // 单元格横向内间距
   headerSplitColor: '#1f1f1f',
 };
 
@@ -70,7 +71,12 @@ export const custom_light_Table = {
   cellPaddingBlockSM: 3,
   headerBg: '#ffffff',
   bodySortBg: '#181a1b',
-  borderColor: '#ffffff',
-  cellPaddingBlock: 8,
+  borderColor: '#f1f1f1',
+  cellPaddingBlock: 3, // 单元格纵向内间距
+  cellPaddingInline: 3, // 单元格横向内间距
   headerSplitColor: '#ffffff',
 };
+
+export const custom_Cascader = {
+  optionSelectedBg: '#0060c0',
+}

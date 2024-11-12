@@ -1,12 +1,12 @@
 import React from 'react';
-import NavPages from './NavPages';
 import WaferMapDataPage from './ContentPage/WaferMapDataPage';
 import WaferMapInfoPage from './ContentPage/WaferMapInfoPage';
+import WaferMapNavPage from './WaferMapNavPage';
 
 const WaferMapPages = () => {
   return (
     <div>
-      <NavPages />
+      <WaferMapNavPage />
       <div className='wafermap-content-layout'>
         <WaferMapDataPage />
         <WaferMapInfoPage />

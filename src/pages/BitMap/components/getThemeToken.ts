@@ -11,30 +11,33 @@ import {
   custom_dark_Table,
   custom_light_Table,
   custom_Descriptions,
+  custom_Cascader
 } from './theme';
 
 export const getThemeToken = (theme) => {
   return theme === 'dark'
     ? {
-        token: custom_dark_token,
-        components: {
-          Button: custom_dark_Button,
-          Popconfirm: custom_dark_Popconfirm,
-          Radio: custom_dark_Radio,
-          Tree: custom_dark_Tree,
-          Input: custom_dark_Input,
-          Message: custom_dark_Message,
-          Modal: custom_dark_Modal,
-          Select: custom_dark_Select,
-          Table: custom_dark_Table, //  dark light
-          Descriptions: custom_Descriptions,
-        },
-      }
+      token: custom_dark_token,
+      components: {
+        Button: custom_dark_Button,
+        Popconfirm: custom_dark_Popconfirm,
+        Radio: custom_dark_Radio,
+        Tree: custom_dark_Tree,
+        Input: custom_dark_Input,
+        Message: custom_dark_Message,
+        Modal: custom_dark_Modal,
+        Select: custom_dark_Select,
+        Table: custom_dark_Table, //  dark light
+        Descriptions: custom_Descriptions,
+        Cascader: custom_Cascader
+      },
+    }
     : {
-        token: {},
-        components: {
-          Table: custom_light_Table, //  dark light
-          Descriptions: custom_Descriptions,
-        },
-      };
+      token: {},
+      components: {
+        Table: custom_light_Table, //  dark light
+        Descriptions: custom_Descriptions,
+        Cascader: custom_Cascader
+      },
+    };
 };

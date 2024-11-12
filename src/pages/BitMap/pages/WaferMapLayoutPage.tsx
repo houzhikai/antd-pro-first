@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { ConfigProvider, Spin, message } from 'antd';
+import { ConfigProvider, message } from 'antd';
 import WaferMapPages from './WaferMapPages/WaferMapPages';
-import SingleModeModal from './ModalPages/SingleModeModals/SingleModeModal';
-import StackModeModalPage from './ModalPages/StackModeModal';
 import ColorListModalPage from './ModalPages/ColorListModalPage';
 import ModeModalPage from './ModalPages/ModeModalPage';
 import { getThemeToken } from '../components/getThemeToken';
-import { ProviderFunc } from '../components/containers';
 import { useAsyncEffect } from 'ahooks';
 import myFetch from '../components/myFetch';
+import BitMapModalPages from './BitMapPages';
+import { ProviderFunc } from '../components/containers';
 
 // // @ts-expect-error
 // const vscode = acquireVsCodeApi();
@@ -21,18 +20,24 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
     loading,
     setLoading,
     bitMapPort,
-    setSelectDutsModal,
-    setVscodeParams,
-    setTheme,
+    // setSelectDutsModal,
+    // setVscodeParams,
+    // setTheme,
     // triggerTiming,
-    setTriggerTiming,
-    setFullPath,
-    setConvertModalObj,
-    setScrambleCfgOptionsList,
-    scrambleCfgOptionsList,
-    setModifyColorModalObj,
-    setEchartsDataColor,
+    // setTriggerTiming,
+    // setFullPath,
+    // setConvertModalObj,
+    // setScrambleCfgOptionsList,
+    // scrambleCfgOptionsList,
+    // setModifyColorModalObj,
+    // setEchartsDataColor,
     // echartsDataColor,
+    // echartsIndex,
+    // isStackModalOpen,
+    // bitmapColorModalObj,
+    // setBitmapColorModalObj,
+    // setWaferIDPath,
+    // waferIDPath
   } = ProviderFunc();
 
   // useEffect(() => {
@@ -44,6 +49,12 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
   //     vscode.postMessage({ command: 'importDirLocation' });
   //   }
   // }, [triggerTiming.importPhysical]);
+
+  // useEffect(() => {
+  //   if (triggerTiming.importWaferIDPath) {
+  //     vscode.postMessage({ command: 'importWaferIDPath', text: waferIDPath });
+  //   }
+  // }, [triggerTiming.importWaferIDPath]);
 
   // // source file location
   // useEffect(() => {
@@ -88,8 +99,8 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
   // // saveStackColorList
   // useEffect(() => {
   //   if (triggerTiming.colorList > 1) {
-  //     const colorList = echartsDataColor.map((item) => item.color);
-  //     vscode.postMessage({ command: 'saveStackColorList', text: colorList });
+  //     // const colorList = echartsDataColor.map((item) => item.color);
+  //     vscode.postMessage({ command: 'saveStackColorList', text: bitmapColorModalObj.colorList });
   //   }
   // }, [triggerTiming.colorList]);
 
@@ -107,127 +118,118 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
   //   }
   // }, [triggerTiming.stackModeDut2Location]);
 
-  useEffect(() => {
-    window.addEventListener('message', (e) => {
-      if (e.data.command === 'startParams') {
-        setVscodeParams(e.data.text.vscodeParams);
-        setConvertModalObj((obj) => ({
-          ...obj,
-          sourceDataLocation: e.data.text.sourceDataLocation,
-          physicalOutputLocation: e.data.text.physicalOutputLocation,
-          scrambleCfg: {
-            fileName: e.data.text.selectScrambleCfg,
-            location:
-              e.data.text.physicalConvertFiles.find(
-                (item) => item.label === e.data.text.selectScrambleCfg,
-              )?.location ?? '',
-          },
-        }));
-        setTheme(e.data.text.theme);
-        setScrambleCfgOptionsList(() => e.data.text.physicalConvertFiles);
-        setModifyColorModalObj((obj) => ({
-          ...obj,
-          colorList: e.data.text.colorListCfg,
-        }));
-        setSelectDutsModal((obj) => ({
-          ...obj,
-          dut1: e.data.text.selectDutOneLocation,
-          dut2: e.data.text.selectDutTwoLocation,
-        }));
-        // echarts data
-        const newColorList = e.data.text.colorListCfg.map((item, index) => {
-          return { value: index + 1, color: item };
-        });
-        setEchartsDataColor(newColorList);
-      } else if (e.data.command === 'params') {
-        setTheme(e.data.text.theme);
-      } else if (e.data.command === 'importDirLocation') {
-        setTriggerTiming((obj) => ({ ...obj, importPhysical: false }));
-        setFullPath((obj) => ({
-          ...obj,
-          importPhysicalPath:
-            e.data.text === '' ? obj.importPhysicalPath : e.data.text,
-        }));
-      } else if (e.data.command === 'importSourcrFile') {
-        setConvertModalObj((obj) => ({
-          ...obj,
-          sourceDataLocation:
-            e.data.text === '' ? obj.sourceDataLocation : e.data.text,
-        }));
-      } else if (e.data.command === 'importOutputFile') {
-        setConvertModalObj((obj) => ({
-          ...obj,
-          physicalOutputLocation:
-            e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
-        }));
-      } else if (e.data.command === 'importScrambleFile') {
-        if (!e.data.result) {
-          //show error
-          message.error(e.data.message);
-        } else {
-          setScrambleCfgOptionsList(e.data.text);
-        }
-      } else if (e.data.command === 'deleteScrambleFile') {
-        if (!e.data.result) {
-          //show error
-          message.error(e.data.message);
-        } else {
-          setScrambleCfgOptionsList((list) => {
-            const newList = list.filter(
-              (option) => option.label !== e.data.text,
-            );
-            return newList;
-          });
-          setConvertModalObj((obj) => {
-            return {
-              ...obj,
-              scrambleCfg: {
-                ...obj.scrambleCfg,
-                fileName:
-                  obj.scrambleCfg.fileName === e.data.text
-                    ? ''
-                    : obj.scrambleCfg.fileName,
-                location:
-                  obj.scrambleCfg.fileName === e.data.text
-                    ? ''
-                    : obj.scrambleCfg.location,
-              },
-            };
-          });
-        }
-      } else if (e.data.command === 'changeScrambleFile') {
-        if (!e.data.result) {
-          //show error
-          message.error(e.data.message);
-        } else {
-          if (!scrambleCfgOptionsList) {
-            return;
-          }
+  // useEffect(() => {
+  //   window.addEventListener('message', (e) => {
+  //     if (e.data.command === 'startParams') {
+  //       setVscodeParams(e.data.text.vscodeParams);
+  //       setConvertModalObj((obj) => ({
+  //         ...obj,
+  //         sourceDataLocation: e.data.text.sourceDataLocation,
+  //         physicalOutputLocation: e.data.text.physicalOutputLocation,
+  //         scrambleCfg: {
+  //           fileName: e.data.text.selectScrambleCfg,
+  //           location:
+  //             e.data.text.physicalConvertFiles.find((item) => item.label === e.data.text.selectScrambleCfg)?.location ??
+  //             '',
+  //         },
+  //       }));
+  //       setTheme(e.data.text.theme);
+  //       setScrambleCfgOptionsList(() => e.data.text.physicalConvertFiles);
+  //       setBitmapColorModalObj((obj) => ({ ...obj, colorList: e.data.text.colorListCfg }))
+  //       // setModifyColorModalObj((obj) => ({
+  //       //   ...obj,
+  //       //   colorList: e.data.text.colorListCfg,
+  //       // }));
+  //       setSelectDutsModal((obj) => ({
+  //         ...obj,
+  //         dut1: e.data.text.selectDutOneLocation,
+  //         dut2: e.data.text.selectDutTwoLocation,
+  //       }));
+  //       // echarts data
+  //       const newColorList = e.data.text.colorListCfg.map((item, index) => {
+  //         return { value: index + 1, color: item };
+  //       });
+  //       setEchartsDataColor(newColorList);
+  //     } else if (e.data.command === 'params') {
+  //       setTheme(e.data.text.theme);
+  //     } else if (e.data.command === 'importDirLocation') {
+  //       setTriggerTiming((obj) => ({ ...obj, importPhysical: false }));
+  //       setFullPath((obj) => ({
+  //         ...obj,
+  //         importPhysicalPath: e.data.text === '' ? obj.importPhysicalPath : e.data.text,
+  //       }));
+  //     } else if (e.data.command === 'importWaferIDPath') {
+  //       setTriggerTiming((obj) => ({ ...obj, importWaferIDPath: false }));
+  //       setWaferIDPath(e.data.text)
+  //     }
+  //     else if (e.data.command === 'importSourcrFile') {
+  //       setConvertModalObj((obj) => ({
+  //         ...obj,
+  //         sourceDataLocation: e.data.text === '' ? obj.sourceDataLocation : e.data.text,
+  //       }));
+  //     } else if (e.data.command === 'importOutputFile') {
+  //       setConvertModalObj((obj) => ({
+  //         ...obj,
+  //         physicalOutputLocation: e.data.text === '' ? obj.physicalOutputLocation : e.data.text,
+  //       }));
+  //     } else if (e.data.command === 'importScrambleFile') {
+  //       if (!e.data.result) {
+  //         //show error
+  //         message.error(e.data.message);
+  //       } else {
+  //         setScrambleCfgOptionsList(e.data.text);
+  //       }
+  //     } else if (e.data.command === 'deleteScrambleFile') {
+  //       if (!e.data.result) {
+  //         //show error
+  //         message.error(e.data.message);
+  //       } else {
+  //         setScrambleCfgOptionsList((list) => {
+  //           const newList = list.filter((option) => option.label !== e.data.text);
+  //           return newList;
+  //         });
+  //         setConvertModalObj((obj) => {
+  //           return {
+  //             ...obj,
+  //             scrambleCfg: {
+  //               ...obj.scrambleCfg,
+  //               fileName: obj.scrambleCfg.fileName === e.data.text ? '' : obj.scrambleCfg.fileName,
+  //               location: obj.scrambleCfg.fileName === e.data.text ? '' : obj.scrambleCfg.location,
+  //             },
+  //           };
+  //         });
+  //       }
+  //     } else if (e.data.command === 'changeScrambleFile') {
+  //       if (!e.data.result) {
+  //         //show error
+  //         message.error(e.data.message);
+  //       } else {
+  //         if (!scrambleCfgOptionsList) {
+  //           return;
+  //         }
 
-          const filterValue = scrambleCfgOptionsList?.filter(
-            (item) => item.value === e.data.text,
-          )?.[0] || {
-            fileName: '',
-            location: '',
-          };
-          setConvertModalObj((obj) => {
-            return {
-              ...obj,
-              scrambleCfg: {
-                ...obj.scrambleCfg,
-                fileName: filterValue.value,
-                location: filterValue.location,
-              },
-            };
-          });
-        }
-      } else if (e.data.command === 'selectDutOneLocation') {
-        setSelectDutsModal((obj) => ({ ...obj, dut1: e.data.text }));
-      } else if (e.data.command === 'selectDutTwoLocation') {
-        setSelectDutsModal((obj) => ({ ...obj, dut2: e.data.text }));
-      }
-    });
-  }, [scrambleCfgOptionsList]);
+  //         const filterValue = scrambleCfgOptionsList?.filter((item) => item.value === e.data.text)?.[0] || {
+  //           fileName: '',
+  //           location: '',
+  //         };
+  //         setConvertModalObj((obj) => {
+  //           return {
+  //             ...obj,
+  //             scrambleCfg: {
+  //               ...obj.scrambleCfg,
+  //               fileName: filterValue.value,
+  //               location: filterValue.location,
+  //             },
+  //           };
+  //         });
+  //       }
+  //     } else if (e.data.command === 'selectDutOneLocation') {
+  //       setSelectDutsModal((obj) => ({ ...obj, dut1: e.data.text }));
+  //     } else if (e.data.command === 'selectDutTwoLocation') {
+  //       setSelectDutsModal((obj) => ({ ...obj, dut2: e.data.text }));
+  //     }
+  //   });
+  // }, [scrambleCfgOptionsList]);
 
   useAsyncEffect(async () => {
     if (vscodeParams?.initIp) {
@@ -292,13 +294,19 @@ const WaferMapLayoutPage = ({ setIsErrorPage }) => {
 
   return (
     <ConfigProvider theme={getThemeToken(theme)}>
-      <Spin spinning={loading} size="large" tip="Converting">
+      {/* {loading && (
+        <LoadingPage
+          theme={theme}
+          isMask={true}
+          isLoadingPage={{ message: 'Converting' }}
+        />
+      )} */}
+      <>
         <WaferMapPages />
-        <SingleModeModal />
-        <StackModeModalPage />
+        <BitMapModalPages />
         <ModeModalPage />
         <ColorListModalPage />
-      </Spin>
+      </>
     </ConfigProvider>
   );
 };

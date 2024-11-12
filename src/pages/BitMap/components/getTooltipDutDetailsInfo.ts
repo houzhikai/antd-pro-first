@@ -1,29 +1,14 @@
 // 获取 XY 的坐标
 const getXY = (baseConversion, X, Y) => {
-  const baseX =
-    baseConversion === 'Hex'
-      ? X.toString(16).toUpperCase()
-      : baseConversion === 'Oct'
-      ? X.toString(8)
-      : X;
-  const baseY =
-    baseConversion === 'Hex'
-      ? Y.toString(16).toUpperCase()
-      : baseConversion === 'Oct'
-      ? Y.toString(8)
-      : Y;
+  const baseX = baseConversion === 'Hex' ? X.toString(16).toUpperCase() : baseConversion === 'Oct' ? X.toString(8) : X;
+  const baseY = baseConversion === 'Hex' ? Y.toString(16).toUpperCase() : baseConversion === 'Oct' ? Y.toString(8) : Y;
   return { baseX, baseY };
 };
 
 const getBlockXY = (X, Y, configInfo) => {
-  const blockX = Math.floor(
-    X / (configInfo.layoutConfig.xMax / configInfo.duts.row),
-  );
-  const blockY = Math.floor(
-    Y / (configInfo.layoutConfig.yMax / configInfo.duts.col),
-  );
-  const isFirstRow =
-    configInfo.continuous_block_arrange.direction.slice(0, 3) === 'row';
+  const blockX = Math.floor(X / (configInfo.layoutConfig.xMax / configInfo.duts.row));
+  const blockY = Math.floor(Y / (configInfo.layoutConfig.yMax / configInfo.duts.col));
+  const isFirstRow = configInfo.continuous_block_arrange.direction.slice(0, 3) === 'row';
 
   const blockId = isFirstRow ? blockX + blockY * 2 : blockX * 2 + blockY;
   return { blockX, blockY, blockId };
@@ -32,26 +17,17 @@ const getBlockXY = (X, Y, configInfo) => {
 const getPageXY = (X, Y, configInfo, blockId) => {
   const blockDotsPosition = configInfo.layoutConfig.dots;
   const pageDotsPosition = configInfo.continuous_page_arrange.origin;
-  const isRowPageDirection =
-    configInfo.continuous_page_arrange.direction.slice(0, 3) === 'row';
+  const isRowPageDirection = configInfo.continuous_page_arrange.direction.slice(0, 3) === 'row';
   let pageX = '';
   let pageY = '';
   // 初始化 pageX 的值
   const defaultPageX =
-    Math.floor(
-      X /
-        (configInfo.layoutConfig.xMax /
-          configInfo.duts.col /
-          configInfo.blocks.col),
-    ) % configInfo.blocks.col;
+    Math.floor(X / (configInfo.layoutConfig.xMax / configInfo.duts.col / configInfo.blocks.col)) %
+    configInfo.blocks.col;
   // 初始化 pageY 的值
   const defaultPageY =
-    Math.floor(
-      Y /
-        (configInfo.layoutConfig.yMax /
-          configInfo.duts.row /
-          configInfo.blocks.row),
-    ) % configInfo.blocks.row;
+    Math.floor(Y / (configInfo.layoutConfig.yMax / configInfo.duts.row / configInfo.blocks.row)) %
+    configInfo.blocks.row;
   // 判断条件，整理 pageX pageY 的值
   if (blockDotsPosition === 'bottom_left') {
     if (pageDotsPosition === 'bottom_left') {
@@ -111,18 +87,13 @@ const getPageXY = (X, Y, configInfo, blockId) => {
     }
   }
   const pageId = isRowPageDirection
-    ? Number(pageX) +
-      Number(pageY) * configInfo.blocks.col +
-      configInfo.blocks.row * configInfo.blocks.col * blockId
-    : Number(pageX) * configInfo.blocks.row +
-      Number(pageY) +
-      configInfo.blocks.row * configInfo.blocks.col * blockId;
+    ? Number(pageX) + Number(pageY) * configInfo.blocks.col + configInfo.blocks.row * configInfo.blocks.col * blockId
+    : Number(pageX) * configInfo.blocks.row + Number(pageY) + configInfo.blocks.row * configInfo.blocks.col * blockId;
   return { pageX, pageY, pageId };
 };
 
 const getIO = (X, isReversal, configInfo) => {
   const ioRange = Math.floor(Number(X) % configInfo.pages.col);
-  console.log({ configInfo, dq_arrange: configInfo.dq_arrange });
   const dq_arrange_list = configInfo.dq_arrange.split(',');
   // 一个 page 可以分为 dq 份，一份占 xxx 个坐标
   const xxx = configInfo.pages.col / configInfo.dq;
@@ -138,22 +109,16 @@ export const getTooltipDutDetailsInfo = (
   scaleNumber,
   params,
   baseConversion,
-  configInfo,
+  configInfo
 ) => {
   const dots = configInfo.layoutConfig.dots;
   const scale = scaleNumber >= 1 ? Math.sqrt(scaleNumber) : 1;
   const X =
     params.data[0] * scale +
-    (dots === 'top_right' || dots === 'bottom_right'
-      ? xAxisList - xIndex - 1
-      : xIndex) *
-      echartsAxisNumber;
+    (dots === 'top_right' || dots === 'bottom_right' ? xAxisList - xIndex - 1 : xIndex) * echartsAxisNumber;
   const Y =
     params.data[1] * scale +
-    (dots === 'bottom_left' || dots === 'bottom_right'
-      ? yAxisList - yIndex - 1
-      : yIndex) *
-      echartsAxisNumber;
+    (dots === 'bottom_left' || dots === 'bottom_right' ? yAxisList - yIndex - 1 : yIndex) * echartsAxisNumber;
   // 获取 XY 的坐标
   const { baseX, baseY } = getXY(baseConversion, X, Y);
   // 获取 block 的坐标
@@ -165,8 +130,8 @@ export const getTooltipDutDetailsInfo = (
     configInfo.need_dq_direction_reserve === 'odd'
       ? Number(pageId) % 2 !== 0
       : configInfo.need_dq_direction_reserve === 'even'
-      ? Number(pageId) % 2 === 0
-      : false;
+        ? Number(pageId) % 2 === 0
+        : false;
   const ioNumber = getIO(X, isReversal, configInfo);
 
   return `

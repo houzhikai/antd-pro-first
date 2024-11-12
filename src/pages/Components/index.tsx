@@ -8,7 +8,8 @@
 // import CrossPageTabCommunication from './blocks/CrossPageTabCommunication';
 // import ProviderPage from './blocks/ProviderPage';
 
-import AxisDemoPage from './blocks/AxisDemoPage';
+// import AxisDemoPage from './blocks/AxisDemoPage';
+import ModalPage from './blocks/ModalPage';
 
 // import FoldPage from './blocks/FoldPage';
 // import TestPage from './blocks/TestLayoutPage';
@@ -36,7 +37,8 @@ const ComponentsPages = () => {
       {/* <DebounceInput /> */}
       {/* <FoldPage /> */}
       {/* <TestPage /> */}
-      <AxisDemoPage />
+      {/* <AxisDemoPage /> */}
+      <ModalPage />
     </div>
   );
 };

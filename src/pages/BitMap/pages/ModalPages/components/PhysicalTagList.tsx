@@ -3,7 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Select, Button, Input } from 'antd';
 import ShowTagPage from './ShowTagPage';
 import { ProviderFunc } from '../../../components/containers';
-import CustomFormItemPage from '../../NavPage/CustomFormItemPage';
+import CustomFormItemPage from './CustomFormItemPage';
 
 const PhysicalTagList = () => {
   const { scrambleCfgOptionsList, setScrambleCfgOptionsList, convertModalObj, setConvertModalObj, setTriggerTiming } =

@@ -1,30 +1,33 @@
 /* 自定义属性 */
 :root {
     --full-page-width: 200px;
-    --full-page-height: 40%; 
+    --full-page-height: 40%;
     --border-color: #34393b;
-  }
+}
 
-.wafermap-content-layout{
+.wafermap-content-layout {
     display: flex;
     height: calc(100vh - 60px - 10px);
 }
-.wafermap-echarts-page{
+
+.wafermap-echarts-page {
     flex: 1;
-    width: calc(100vw - 300px);
+    width: calc(100vw - 400px);
     height: calc(100vh - 60px - 10px);
 }
-.wafermap-info-page{
+
+.wafermap-info-page {
     width: 300px;
     height: calc(100vh - 60px - 10px);
     overflow-y: auto;
 }
-.bitmap-Drawer-layout{
+
+.bitmap-Drawer-layout {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-  
+
 .bit-map-nav {
     display: flex;
     align-items: center;
@@ -32,34 +35,41 @@
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 4px;
 }
-.bit-map-nav-page{
+
+.bit-map-nav-page {
     display: flex;
     justify-content: start;
     align-items: center;
     margin-top: 10px;
 }
-.bit-map-nav-gap{
-    margin:0 10px;
+
+.bit-map-nav-gap {
+    margin: 0 10px;
     cursor: pointer;
 }
+
 .content-page {
     display: flex;
     height: calc(100vh - 48px - 45px - 10px);
     margin-top: 10px;
 }
-.bit-map-left-dut-title{
+
+.bit-map-left-dut-title {
     width: 80px;
     white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.bit-map-left-page{
+
+.bit-map-left-page {
     width: 150px;
 }
-.bit-map-right-page{
+
+.bit-map-right-page {
     display: flex;
 }
-.bit-map-page-resizable{
+
+.bit-map-page-resizable {
     position: absolute;
     width: 2px;
     height: 100%;
@@ -67,29 +77,33 @@
     right: -1px;
     top: 0;
     cursor: ew-resize;
-} 
+}
+
 .bit-map-page-resizable:active {
     border: 1px solid #007fd4;
     background-color: #007fd4;
 }
-.bit-map-right-full-data-page{
+
+.bit-map-right-full-data-page {
     flex-grow: 1;
     border: 1px solid var(--border-color);
     width: calc(100vw - 210px - 300px);
 }
-.echarts-canvas{
+
+.echarts-canvas {
     width: calc(100vw - 440px);
     height: 750px;
 }
 
-.echarts-full-page{
+.echarts-full-page {
     height: var(--full-page-height);
     background: transparent;
     position: relative;
     /* margin-top: 10px; */
     /* border-top: 1px solid #ccc; */
 }
-.echarts-full-page-magnifying-glass{
+
+.echarts-full-page-magnifying-glass {
     position: absolute;
     /* top: 0;
     left: 0;
@@ -100,13 +114,58 @@
 }
 
 
-.information-page{
+.information-page {
     height: 470px;
     overflow-y: auto;
     border: 1px solid var(--border-color);
 }
+
 /* 弹窗 */
-.bit-map-color-modal{
+.bit-map-color-modal {
     display: flex;
     align-items: center;
+}
+
+.xAxisList {
+    position: sticky;
+    /* background: #1e1e1e; */
+    height: 20px;
+    z-index: 2;
+    top: 0;
+    margin-left: 80px;
+    padding-bottom: 4px;
+    padding-left: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* .xAxisValue::after{
+    content: "safsdf";
+    color:red;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background-color: #1e1e1e; 
+} */
+
+.yAxisValue {
+    position: sticky;
+    /* background: #1e1e1e; */
+    z-index: 2;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 10px;
+}
+
+.vscode-dark .ant-select-arrow {
+    color: #fff;
+}
+
+.vscode-dark .ant-message-notice-content {
+    background: #1e1e1e !important;
+    color: #fff;
 }

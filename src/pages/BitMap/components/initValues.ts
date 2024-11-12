@@ -48,3 +48,9 @@ export const scaleNumberOptions = [
   { value: 64, label: 64 },
   { value: 256, label: 256 },
 ];
+export const rotateOptions = [
+  { value: 0, label: 0 },
+  { value: 90, label: 90 },
+  { value: 180, label: 180 },
+  { value: 270, label: 270 },
+]

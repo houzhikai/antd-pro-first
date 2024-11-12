@@ -3,6 +3,7 @@ import { ColorPicker, Modal, Table } from 'antd';
 import { ProviderFunc } from '../../components/containers';
 import '../../index.css';
 
+// 保留二期的 颜色配置的代码
 const ColorListModalPage = () => {
   const { modifyColorModalObj, setModifyColorModalObj, selectDutsModal, theme, setEchartsDataColor, setTriggerTiming } =
     ProviderFunc();

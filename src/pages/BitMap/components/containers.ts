@@ -1,7 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { getSingleRandomData } from '../mockData/getWaferMapRandomData';
-// import { initScrambleOptions } from './initValues';
-// import { getSingleRandomData } from '../mockData/getWaferMapRandomData';
+import { createContext, useContext, useState } from 'react';
 
 // 创建一个Context
 export const BitMapContext = createContext<any>(null);
@@ -43,6 +40,7 @@ export const ProviderFunc = () => {
     changeScrambleFile: '',
     stackModeDut1Location: 1,
     stackModeDut2Location: 1,
+    importWaferIDPath: false,
   });
 
   const [fullPath, setFullPath] = useState({
@@ -51,9 +49,10 @@ export const ProviderFunc = () => {
   // wafermap UI echarts and info
   const [wafermapData, setWaferMapData] = useState({ data: [], info: {} });
 
-  // 单一模式UI
-  const [isSingleModalOpen, setSingleIsModalOpen] = useState(false);
-  const [isStackModalOpen, setIsStackModalOpen] = useState(true);
+  // 打开单例模式的弹窗
+  const [isSingleModalOpen, setSingleIsModalOpen] = useState(true);
+  // 打开堆叠模式的UI
+  const [isStackModalOpen, setIsStackModalOpen] = useState(false);
   // 打开 convert 弹窗， 获取里面的值
   const [convertModalObj, setConvertModalObj] = useState({
     open: false,
@@ -64,148 +63,40 @@ export const ProviderFunc = () => {
     },
     physicalOutputLocation: '',
   });
+  // scrambleCfg 的 options 列表
+  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] = useState();
 
   /**
    * bitmap UI
    */
-  // scrambleCfg 的 options 列表
-  const [scrambleCfgOptionsList, setScrambleCfgOptionsList] = useState();
-
-  // 是否是堆叠模式
-  const [isStack, setIsStack] = useState(false);
-
-  /**
-   * 左侧树形结构
-   */
-  const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
-  const [physicalFileList, setPhysicalFileList] = useState([]); // 展示 DUTS 列表
-
-  /**
-   * 全量数据，缩略图
-   */
   // 单例模式下的颜色列表，正常情况下只有1
-  const singleColor = [
-    { value: 1, color: 'red' },
-    { gt: 1, color: '#f60' },
-  ];
-  const [width, setWidth] = useState(300); // full-data 的宽度
-  // TODO, dots: TopLeft, TopRight, BottomLeft, BottomRight
-  const per_dut_layout = {
-    block_row: 1,
-    block_col: 1,
-    per_block_layout: {
-      page_row: 32,
-      page_col: 4,
-      per_page_layout: {
-        wl_row: 256,
-        bl_col: 1024,
-      },
-      is_page_continuous: true, // page序号配置是否连续，目前不支持不连续配置
-      continuous_page_arrange: {
-        origin: 'top_left', // bottom_left,
-        direction: 'row2col', // col2row
-      },
-    },
-    is_block_continuous: true, // 现在没有用到，预留
-    continuous_block_arrange: {
-      origin: 'top_left', // 设置无用，以 coordinate_origin 为准
-      direction: 'row2col', // col2row
-    },
-    need_dq_direction_reserve: {
-      page_index: 'odd', // 1M配置，默认D0-D7， odd: 单数 even：双数
-    },
-    dq: 32, // D0-D31
-    coordinate_origin: 'bottom_left', // x,y坐标系原点位置  top_left   top_right   bottom_left  bottom_right
-  };
+  const [width] = useState(300); // full-data 的宽度
+  const [configInfo, setConfigInfo] = useState<any>({});
 
-  // row: 行，col: 列
-  const configInfo1 = {
-    // dq
-    dq: per_dut_layout.dq,
-    // 1M配置，默认D0-D7
-    need_dq_direction_reserve:
-      per_dut_layout.need_dq_direction_reserve.page_index,
-    // block 原点和伸展方向
-    continuous_block_arrange: per_dut_layout.continuous_block_arrange,
-    // page 原点和伸展方向
-    continuous_page_arrange:
-      per_dut_layout.per_block_layout.continuous_page_arrange,
-    // 目前没有用到该属性， 预留
-    is_block_continuous: per_dut_layout.is_block_continuous,
-    // 目前没有用到该属性， 预留
-    is_page_continuous: per_dut_layout.per_block_layout.is_page_continuous,
-    // echarts 的 xMax yMax 和 原点位置
-    layoutConfig: {
-      xMax:
-        per_dut_layout.block_col *
-        per_dut_layout.per_block_layout.page_col *
-        per_dut_layout.per_block_layout.per_page_layout.bl_col,
-      yMax:
-        per_dut_layout.block_row *
-        per_dut_layout.per_block_layout.page_row *
-        per_dut_layout.per_block_layout.per_page_layout.wl_row,
-      dots: per_dut_layout.coordinate_origin,
-    },
-    // duts 行列个数
-    duts: { row: per_dut_layout.block_row, col: per_dut_layout.block_col },
-    // blocks 行列个数
-    blocks: {
-      row: per_dut_layout.per_block_layout.page_row,
-      col: per_dut_layout.per_block_layout.page_col,
-    },
-    // pages 行列个数
-    pages: {
-      row: per_dut_layout.per_block_layout.per_page_layout.wl_row,
-      col: per_dut_layout.per_block_layout.per_page_layout.bl_col,
-    },
-  };
-  const [configInfo, setConfigInfo] = useState(configInfo1);
+  // 颜色设置，只关心个数，不关心属于哪个dut
+  const [bitmapColorModalObj, setBitmapColorModalObj] = useState({
+    open: false,
+    colorList: [],
+  });
   /**
-   * 详图导航栏
+   * bitmap导航栏
    */
+  // 默认展示 wafermap ID的路径，支持修改waferID path，但是不用保存到配置文件中
+  const [waferIDPath, setWaferIDPath] = useState('');
   const detailDataPageWidth = `calc(100vw - 80px - 210px - ${width}px)`; // 详情页面的宽度
   const [scaleNumber, setScaleNumber] = useState(256); // 详图放大倍数
   const [jumpAddress, setJumpAddress] = useState({ X: 0, Y: 0 }); // jump 地址跳转
   const [baseConversion, setBaseConversion] = useState('Hex');
+  // 旋转 度数
+  const [rotateNumber, setRotateNumber] = useState(0);
   /**
    * 详图数据
    */
 
   /**
-   * single UI data and info
+   * echarts 数据源(data: echarts 数据，info： dut信息)
    */
-  const [singleModeData, setSingleModeData] = useState({
-    data:
-      getSingleRandomData(
-        2000,
-        configInfo.layoutConfig.xMax,
-        configInfo.layoutConfig.yMax,
-        scaleNumber,
-      ) || [],
-    info: {},
-  });
-
-  useEffect(() => {
-    setSingleModeData({
-      data:
-        getSingleRandomData(
-          2000,
-          configInfo.layoutConfig.xMax,
-          configInfo.layoutConfig.yMax,
-          scaleNumber,
-        ) || [],
-      info: {},
-    });
-  }, [scaleNumber]);
-  // echarts 数据源 TODO mock 数据
-  const [data, setData] = useState(
-    getSingleRandomData(
-      2000,
-      configInfo.layoutConfig.xMax,
-      configInfo.layoutConfig.yMax,
-      scaleNumber,
-    ),
-  );
+  const [bitmapData, setBitmapData] = useState({ data: [], info: {} });
 
   //详图的首位比例，0：0%， 100：100%
   const [detailsValues, setDetailsValues] = useState({
@@ -214,6 +105,33 @@ export const ProviderFunc = () => {
     yStart: 0,
     yEnd: 20,
   });
+
+  /**
+   * 全是百分比，计算详图的起始、最终位置
+   * xtoLeftPercent: 0,
+   * xScalePercent: 100,
+   * ytoTopPercent: 0,
+   * yScalePercent: 100,
+   */
+  const [selectSize, setSelectSize] = useState({});
+  // get window view x/y index
+  const [echartsIndex, setEchartsIndex] = useState<any>();
+  // full-echarts's onlcik event
+  const [isClick, setIsClick] = useState(false);
+
+  /**
+   * 左侧树形结构
+   * 一期代码，之后不再使用
+   * 以下代码可以忽略
+   */
+  const [selectedTreeDataList, setSelectedTreeDataList] = useState([]); // 选择数据的勾选框数据
+  const [physicalFileList, setPhysicalFileList] = useState([]); // 展示 DUTS 列表
+  const [isStack, setIsStack] = useState(false);
+  // const [singleColor, setSingleColor] = useState([
+  //   { value: 0, color: 'green' },
+  //   { value: 1, color: 'red' },
+  //   { gt: 1, color: '#f60' },
+  // ]);
   //设置颜色列表，与 echarts 颜色的数据结构不一样
   const [modifyColorModalObj, setModifyColorModalObj] = useState({
     open: false,
@@ -229,24 +147,12 @@ export const ProviderFunc = () => {
     dut1: '', // '/home/kkuser/public/partner/LotId001/WaferId001/20240618202723663/afmtest_00/physical/lotid001_waferid001_202405212033_x3y5.phy',
     dut2: '', // '/home/kkuser/public/partner/LotId001/WaferId001/20240618202723663/afmtest_00/physical/lotid001_waferid001_202405212032_x-2y-2.phy',
   });
-
-  // 全是百分比
-  const [selectSize, setSelectSize] = useState({
-    // xtoLeftPercent: 0,
-    // xScalePercent: 100,
-    // ytoTopPercent: 0,
-    // yScalePercent: 100,
-  });
-  // get window view x/y index
-  const [echartsIndex, setEchartsIndex] = useState<any>();
-  // full-echarts's onlcik event
-  const [isClick, setIsClick] = useState(false);
+  //以上代码可以忽略
 
   const bitMapContextValue = {
     isErrorPage,
     setIsErrorPage,
     width,
-    setWidth,
     detailDataPageWidth,
     theme,
     setTheme,
@@ -270,8 +176,6 @@ export const ProviderFunc = () => {
     setScaleNumber,
     baseConversion,
     setBaseConversion,
-    data,
-    setData,
     vscodeParams,
     setVscodeParams,
     bitMapPort,
@@ -292,11 +196,12 @@ export const ProviderFunc = () => {
     setWafermapLayout,
     isStackModalOpen,
     setIsStackModalOpen,
-    singleColor,
+    // singleColor,
+    // setSingleColor,
     wafermapData,
     setWaferMapData,
-    singleModeData,
-    setSingleModeData,
+    bitmapData,
+    setBitmapData,
     selectDutsModal,
     setSelectDutsModal,
     selectSize,
@@ -305,6 +210,12 @@ export const ProviderFunc = () => {
     setEchartsIndex,
     isClick,
     setIsClick,
+    bitmapColorModalObj,
+    setBitmapColorModalObj,
+    rotateNumber,
+    setRotateNumber,
+    waferIDPath,
+    setWaferIDPath,
   };
   return { ...useContext(BitMapContext), bitMapContextValue };
 };
