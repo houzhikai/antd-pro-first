@@ -3,7 +3,7 @@ import { Menu } from 'antd';
 import MyErrorPage from '@/components/commons/MyErrorPage';
 import { useDBMPageProvider } from '../../components/container';
 import VirtualTablePage from './VirtualTablePage';
-import ActionBarPage from '../ActionBarPage';
+import ActionBarPage from './ActionBarPage';
 import '../../index.css';
 
 const DBMContentPage = () => {
