@@ -9,7 +9,8 @@
 // import ProviderPage from './blocks/ProviderPage';
 
 // import AxisDemoPage from './blocks/AxisDemoPage';
-import ModalPage from './blocks/ModalPage';
+import DBMPage from './blocks/DBMPage';
+// import ModalPage from './blocks/ModalPage';
 
 // import FoldPage from './blocks/FoldPage';
 // import TestPage from './blocks/TestLayoutPage';
@@ -38,7 +39,8 @@ const ComponentsPages = () => {
       {/* <FoldPage /> */}
       {/* <TestPage /> */}
       {/* <AxisDemoPage /> */}
-      <ModalPage />
+      {/* <ModalPage /> */}
+      <DBMPage />
     </div>
   );
 };

@@ -1,0 +1,83 @@
+:where(.css-dev-only-do-not-override-15n3nqz).ant-pro-layout .ant-pro-layout-content {
+    padding: 0;
+    margin: 0;
+}
+.wrapper {
+  display: flex;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  padding: 0 20px;
+  padding-bottom: 10px;
+
+  .left {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.content {
+  margin-top: 22px;
+}
+
+.rs-table-cell-content {
+  border: 1px solid #f0f0f0;
+  padding: 3px;
+  padding-top: 0;
+  line-height: 8px !important;
+  font-size: 16px;
+  color: #575757;
+}
+
+.ant-pro-page-container-children-content {
+  padding: 16px;
+}
+
+.ant-input-borderless {
+  padding: 3px !important;
+}
+
+.rs-table-cell-first {
+  background: #ccc;
+}
+
+.rs-table-cell-header .rs-table-cell-content {
+  padding: 18px 10px;
+}
+
+/*  loading 面向屏幕居中 */
+.rs-table-body-info {
+  top: 50vh;
+  width: calc(100vw - 500px);
+}
+
+.default {
+  height: 24px;
+  line-height: 20px;
+}
+
+.selected {
+  /* // border: 1px solid #ccc; */
+  cursor: pointer;
+  height: 24px;
+  line-height: 20px;
+  background: #0078d4;
+  color: #fff;
+  border-radius: 2px;
+
+  &:hover {
+    cursor: pointer;
+    background: #0078d4;
+    color: #fff;
+  }
+}
