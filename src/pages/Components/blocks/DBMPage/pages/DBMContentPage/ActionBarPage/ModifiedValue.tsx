@@ -1,9 +1,9 @@
 import { Input, message } from 'antd';
 import { useState } from 'react';
 import myFetch from '@/components/myFetch';
-import { useDBMPageProvider } from '../../components/container';
-import { changeMode } from '../../components/changeMode';
-import { getDataKey } from '../../components/getDataKey';
+import { changeMode } from '../../../components/changeMode';
+import { useDBMPageProvider } from '../../../components/container';
+import { getDataKey } from '../../../components/getDataKey';
 
 const { Search } = Input;
 

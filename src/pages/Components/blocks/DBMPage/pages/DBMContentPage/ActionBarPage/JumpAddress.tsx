@@ -1,6 +1,6 @@
 import { Input, message } from 'antd';
-import { useDBMPageProvider } from '../../components/container';
-import { getMaxAddress } from '../../components/getMaxAddress';
+import { useDBMPageProvider } from '../../../components/container';
+import { getMaxAddress } from '../../../components/getMaxAddress';
 
 const { Search } = Input;
 

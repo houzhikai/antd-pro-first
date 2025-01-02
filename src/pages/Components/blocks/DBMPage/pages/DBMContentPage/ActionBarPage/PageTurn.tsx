@@ -1,7 +1,7 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Button, Input } from 'antd';
 import { useCallback } from 'react';
-import { useDBMPageProvider } from '../../components/container';
+import { useDBMPageProvider } from '../../../components/container';
 
 const PageTurn = () => {
   const { page, setPage, pageVal, setPageVal, setData } = useDBMPageProvider();

@@ -1,7 +1,7 @@
-import { useDBMPageProvider } from '../../components/container';
+import { useDBMPageProvider } from '../../../components/container';
 import JumpAddress from './JumpAddress';
 import ModifiedValue from './ModifiedValue';
-import PageTurn from './pageTurn';
+import PageTurn from './PageTurn';
 
 const ActionBarPage = () => {
   const { data } = useDBMPageProvider();

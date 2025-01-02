@@ -6,7 +6,7 @@ import myFetch from '@/components/myFetch';
 import { changeMode } from '../../../components/changeMode';
 import { takeMiddleRectangleAddress } from '../../../components/takeMiddleAddress';
 import { useDBMPageProvider } from '../../../components/container';
-import '../index.css';
+import '../../../index.css';
 
 const InputCell = ({
   rowData,

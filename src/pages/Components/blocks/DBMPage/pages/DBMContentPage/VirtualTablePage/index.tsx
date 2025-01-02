@@ -7,7 +7,7 @@ import InputCell from './InputCell';
 import { columnsList } from './columnsList';
 import { LoadingOutlined } from '@ant-design/icons';
 
-import '../index.css';
+import '../../../index.css';
 import { useDBMPageProvider } from '../../../components/container';
 import { getMaxAddress } from '../../../components/getMaxAddress';
 import {
