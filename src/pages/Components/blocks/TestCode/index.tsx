@@ -1,5 +1,10 @@
 // import React, { useEffect, useState } from 'react';
 
+import MyLogo from '@/components/MyLogo';
+import png from '@/icon/DBMLogo.svg';
+import detailPng from './output64x64.png';
+import { Image } from 'antd';
+
 // import { Button } from 'antd';
 // import { useEffect, useState } from 'react';
 
@@ -98,7 +103,18 @@ const TestCode = () => {
 
   // 继承方式
 
-  return <div>111</div>;
+  // return <MyLogo src={png} title="test-png" />;
+  return (
+    <Image
+      preview={false}
+      srcSet="small.jpg 640w, medium.jpg 1280w, large.jpg 1920"
+      sizes="(max-width: 640px) 640px, (max-width: 1280px) 1280px, 1920px"
+      src={detailPng}
+      alt="test-png"
+      width={1000}
+      height={1000}
+    />
+  );
 };
 
 export default TestCode;

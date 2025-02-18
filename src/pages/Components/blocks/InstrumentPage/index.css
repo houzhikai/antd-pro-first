@@ -1,0 +1,64 @@
+:where(.css-dev-only-do-not-override-15n3nqz).ant-pro-layout .ant-pro-layout-content {
+    padding: 0;
+    margin: 0;
+}
+
+  /* //主页样式 */
+  .ins-layout {
+    display: flex;
+    height: calc(100vh - 65px - 20px);
+  }
+  /* head-content-page */
+  .content-root {
+    padding: 5px 5%;
+    flex: 1;
+  
+    .content-descriptions {
+      padding-bottom: 20px;
+    }
+  }
+/* 单板控制 */
+  .ins-SMUActionBoard-item{
+    margin-left: 10px;
+  }
+  .ins-SMUActionBoard-title{
+    font-size: 16px;
+    line-height: 1.5;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.88);
+    margin-bottom: 22px;
+}
+.ins-SMUActionBoard-content{
+  border: 1px solid #d6d6d6;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  padding: 10px;
+  .ins-SMUActionBoard-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.ins-SMUActionBoard-item{
+  margin: 10px;
+  margin-top: 0;
+}
+/* Loading 样式 */
+.show-spin {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+  background: rgb(255 255 255 / 60%);
+  transform: translate(-50%, -50%);
+  padding-top: 46vh;
+  padding-left: 0;
+}
+.ins-action-board{
+  display: flex;
+  justify-content: end;
+  
+}

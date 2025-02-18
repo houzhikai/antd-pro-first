@@ -1,0 +1,24 @@
+.ant-badge-status-processing::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 50%;
+    animation: antStatusProcessing 1.2s infinite ease-in-out;
+    content: '';
+}
+
+.ant-badge-status-dot {
+    position: relative;
+    top: -1px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+
+@keyframes blink-smooth { to { color: transparent } }
+.highlight { color: '#1890ff'; animation: 0.5s blink-smooth infinite alternate; }
