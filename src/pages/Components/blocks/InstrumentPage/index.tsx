@@ -10,7 +10,8 @@ import InsContentPage from './pages/InsContentPage';
 import './index.css';
 
 const InstrumentPage = () => {
-  const { InstrumentPageValues, isErrorPage } = useInstrumentPageProvider();
+  const { InstrumentPageValues, isErrorPage, locales } =
+    useInstrumentPageProvider();
   return (
     <InstrumentPageContext.Provider value={InstrumentPageValues}>
       <MyLayoutPage
@@ -18,7 +19,7 @@ const InstrumentPage = () => {
         errorTitle="Please refresh the page"
         title="Instrument"
         theme={'dark'}
-        defaultLocale="zh-CN"
+        defaultLocale={locales}
         navExtra={<InsNavExtraPage />}
         isShowErrorPage={isErrorPage}
       >
