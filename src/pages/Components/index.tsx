@@ -10,7 +10,8 @@
 
 // import AxisDemoPage from './blocks/AxisDemoPage';
 // import DBMPage from './blocks/DBMPage';
-import InstrumentPage from './blocks/InstrumentPage';
+import ENUMPage from './blocks/ENUMPage';
+// import InstrumentPage from './blocks/InstrumentPage';
 // import ModalPage from './blocks/ModalPage';
 
 // import FoldPage from './blocks/FoldPage';
@@ -42,7 +43,8 @@ const ComponentsPages = () => {
       {/* <AxisDemoPage /> */}
       {/* <ModalPage /> */}
       {/* <DBMPage /> */}
-      <InstrumentPage />
+      {/* <InstrumentPage /> */}
+      <ENUMPage />
     </div>
   );
 };

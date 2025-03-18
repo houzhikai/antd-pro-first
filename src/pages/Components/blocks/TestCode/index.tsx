@@ -1,7 +1,7 @@
 // import React, { useEffect, useState } from 'react';
 
-import MyLogo from '@/components/MyLogo';
-import png from '@/icon/DBMLogo.svg';
+// import MyLogo from '@/components/MyLogo';
+// import png from '@/icon/DBMLogo.svg';
 import detailPng from './output64x64.png';
 import { Image } from 'antd';
 
